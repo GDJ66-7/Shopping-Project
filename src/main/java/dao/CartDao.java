@@ -115,6 +115,4 @@ public class CartDao {
 		row = stmt.executeUpdate();
 		return row;
 	}
-	
-
-}
+}	
