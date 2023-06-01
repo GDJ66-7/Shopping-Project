@@ -83,12 +83,13 @@
 	insertImgP.setProductSaveFilename(proSaveFilename);
 	insertImgP.setProductFiletype(proType);
 	
-	int row = pDao.insertProduct(insertP, insertImgP);
-	System.out.println(row + "<-- insertProductAction row");
+	 pDao.insertProduct(insertP, insertImgP);
 	
+	 /*
 	if(row > 0) {
 		System.out.println("상품추가성공");
 	} else {
 		System.out.println("상품추가실패");
 	}
+	 */
 %>
