@@ -1,6 +1,6 @@
 package vo;
 
-public class product_img {
+public class ProductImg {
 	private int productNo;
 	private String productOriFilename;
 	private String productSaveFilename;

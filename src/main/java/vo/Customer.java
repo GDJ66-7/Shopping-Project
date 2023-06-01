@@ -6,7 +6,7 @@ public class Customer {
 	private String cstmAddress;
 	private String cstmEmail;
 	private String cstmBirth;
-	private int cstmPhone;
+	private String cstmPhone;
 	private String cstmGender;
 	private String cstmRank;
 	private int cstmPoint;
@@ -44,10 +44,10 @@ public class Customer {
 	public void setCstmBirth(String cstmBirth) {
 		this.cstmBirth = cstmBirth;
 	}
-	public int getCstmPhone() {
+	public String getCstmPhone() {
 		return cstmPhone;
 	}
-	public void setCstmPhone(int cstmPhone) {
+	public void setCstmPhone(String cstmPhone) {
 		this.cstmPhone = cstmPhone;
 	}
 	public String getCstmGender() {

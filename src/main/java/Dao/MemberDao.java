@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import util.DBUtil;
-import vo.Id;
+import vo.IdList;
 
 public class MemberDao {
 	// 1) 로그인
-	public int login(Id id) throws Exception {
+	public int login(IdList id) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();

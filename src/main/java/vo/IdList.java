@@ -1,6 +1,6 @@
 package vo;
 
-public class Id {
+public class IdList {
 	private String id;
 	private String pw;
 	private String active;

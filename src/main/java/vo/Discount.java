@@ -5,7 +5,7 @@ public class Discount {
 	private int productNo;
 	private String discountStart;
 	private String discountEnd;
-	private int discountRate;
+	private double discountRate;
 	private String createdate;
 	private String updatedate;
 	public int getDiscountNo() {
@@ -32,7 +32,7 @@ public class Discount {
 	public void setDiscountEnd(String discountEnd) {
 		this.discountEnd = discountEnd;
 	}
-	public int getDiscountRate() {
+	public double getDiscountRate() {
 		return discountRate;
 	}
 	public void setDiscountRate(int discountRate) {
