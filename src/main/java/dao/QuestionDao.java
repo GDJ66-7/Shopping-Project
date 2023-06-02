@@ -3,11 +3,37 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import util.DBUtil;
 import vo.Question;
 
 public class QuestionDao {
+	
+	// 상품 상세정보에서 보이는 문의 목록 -- 작성일자 내림차순
+	public ArrayList<HashMap<String, Object>> selectQuestionListByPage(int beginRow, int rowPerPage) throws Exception{
+		ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+		DBUtil DButil = new DBUtil();
+		Connection conn = DButil.getConnection();
+		String sql = "SELECT q_no qNo, product_no productNo, id, q_category category, q_title title, q_content content, createdate FROM question ORDER BY createdate DESC limit ?,?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);
+		stmt.setInt(2, rowPerPage);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			HashMap<String, Object> q = new HashMap<>();
+			q.put("qNo", rs.getString("qNo"));
+			q.put("productNo", rs.getInt("productNo"));
+			q.put("id", rs.getString("id"));
+			q.put("category", rs.getString("category"));
+			q.put("title", rs.getString("title"));
+			q.put("content", rs.getString("content"));
+			q.put("createdate", rs.getString("createdate"));
+		}
+			return list;
+		}
+		
 	
 	// 문의 상세정보
 	public Question selectQuestionOne(int qNo) throws Exception {
@@ -71,11 +97,29 @@ public class QuestionDao {
 		Connection conn = DButil.getConnection();
 		String sql = "UPDATE question SET q_category = ?, q_title = ?, q_content = ? WHERE q_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1,question.getqCategory());
-		stmt.setString(2,question.getqTitle());
-		stmt.setString(3,question.getqContent());
-		stmt.setInt(4,question.getqNo());
+		stmt.setString(1, question.getqCategory());
+		stmt.setString(2, question.getqTitle());
+		stmt.setString(3, question.getqContent());
+		stmt.setInt(4, question.getqNo());
+		row = stmt.executeUpdate();
 		
 		return row;
+	}
+	
+	
+	// 5) 문의 전체 row (view 페이징에 사용)
+	public int selectQuestionCnt() throws Exception {
+		
+		int totalrow = 0;
+		DBUtil DButil = new DBUtil();
+		Connection conn = DButil.getConnection();
+		String sql = "SELETE count(*) from question";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			totalrow = rs.getInt("count(*)");
+		}
+		return totalrow;
 	}
 }

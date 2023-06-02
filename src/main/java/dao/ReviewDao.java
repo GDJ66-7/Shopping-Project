@@ -9,11 +9,11 @@ import java.util.HashMap;
 import util.DBUtil;
 import vo.Review;
 
-
 public class ReviewDao {
 	
+	// 리뷰 -----> 이미지 파일 inner join 예정
 	// 1) 리뷰 추가
-	public int insertReview(Review review) throws Exception {
+	public int insertReview(Review review) throws Exception { // 리뷰 이미지 추가예정
 		
 		int row = 0;
 		DBUtil DButil = new DBUtil();
@@ -60,14 +60,16 @@ public class ReviewDao {
 		return row;
 	}
 	
-	// 4) 제품페이지에서 보이는 리뷰 목록 + 페이징 (제목,내용,사진,작성일자(내림차순)) -- 쿼리 미완성
-	public ArrayList<HashMap<String, Object>> selectReviewByPage(int beginRow, int rowPerPage) throws Exception{
+	// 4) 제품페이지에서 보이는 리뷰 목록 + 페이징 (제목,내용,사진,작성일자(내림차순))
+	public ArrayList<HashMap<String, Object>> selectReviewListByPage(int beginRow, int rowPerPage) throws Exception{
 	ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 	DBUtil DButil = new DBUtil();
 	Connection conn = DButil.getConnection();
-	String sql = "SELETE r.order_no orderNo, r.review_title reviewTitle, r.review_content reviewContent, r.createdate createdate, r.updatedate updatedate"
+	String sql = "SELECT p.productNo, r.order_no orderNo, r.review_title reviewTitle, r.review_content reviewContent, r.createdate createdate, r.updatedate updatedate"
 				+ ",img.review_ori_filename reviewOriFilename, img.review_save_filename reviewSaveFilename, img.review_filetype reviewFiletype "
-				+ "FROM review r INNER JOIN review_img img ON r.order_no = img.order_no ORDER BY r.createdate DESC LIMIT ?,?";
+				+ "FROM review r INNER JOIN review_img img ON r.order_no = img.order_no "
+				+ "INNER JOIN product p ON p.product_no = r.order_no "
+				+ "ORDER BY r.createdate DESC LIMIT ?,?";
 	PreparedStatement stmt = conn.prepareStatement(sql);
 	stmt.setInt(1, beginRow);
 	stmt.setInt(2, rowPerPage);
@@ -77,6 +79,8 @@ public class ReviewDao {
 		r.put("reviewTitle", rs.getString("reviewTitle"));
 		r.put("reviewContent", rs.getString("reviewContent"));
 		r.put("reviewSaveFilename", rs.getString("reviewSaveFilename"));
+		r.put("createdate", rs.getString("createdate"));
+		
 		list.add(r);
 	}
 		return list;
@@ -86,7 +90,7 @@ public class ReviewDao {
 	// 5) 리뷰 전체 row (view 페이징에 사용)
 	public int selectReviewCnt() throws Exception {
 		
-		int row = 0;
+		int totalrow = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
 		String sql = "SELETE count(*) from review";
@@ -94,9 +98,9 @@ public class ReviewDao {
 		ResultSet rs = stmt.executeQuery();
 		
 		if(rs.next()) {
-			row = rs.getInt("count(*)");
+			totalrow = rs.getInt("count(*)");
 		}
-		return row;
+		return totalrow;
 	}
 
 }

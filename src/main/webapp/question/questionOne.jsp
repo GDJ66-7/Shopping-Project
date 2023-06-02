@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문의 수정하기</title>
+<title>문의 상세정보창</title>
 </head>
 <body>
 
