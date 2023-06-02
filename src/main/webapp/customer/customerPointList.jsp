@@ -2,17 +2,16 @@
 <%@ page import = "dao.*" %>
 <%@ page import = "java.util.*" %>
 <%
-// 세션 확인 관리자만 들어올 수 있도록
-if(session.getAttribute("loginEmpId1") == null 
-		|| session.getAttribute("loginEmpId2") == null
-		|| session.getAttribute("loginCstmId") == null
-		|| session.getAttribute("loginCstmId") != null
-		|| session.getAttribute("loginCstmId").equals("")
-		|| !session.getAttribute("loginCstmId").equals("")){
+//새션 확인 로그인 안되어있다면 못들어와야됩니다.
+	if(session.getAttribute("loginEmpId1") == null 
+		|| session.getAttribute("loginEmpId2") != null
+		|| session.getAttribute("loginCstmId") != null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
-//보여줄페이지 첫번째 행 선언
+//세션아이디 변수에 저장
+	String id = (String)(session.getAttribute("loginCstmId"));
+	//보여줄페이지 첫번째 행 선언
 	int currentPage = 1; 
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -21,12 +20,15 @@ if(session.getAttribute("loginEmpId1") == null
 	int rowPerPage = 10;
 	// 시작할 행 알고리즘 사용
 	int beginRow = (currentPage -1) * rowPerPage;
-	//모든 고객 포인트 리스트 메소드 사용
+	
+	//세션아이디 디버깅
+	System.out.println(id+"<-- id");	
+	//고객 포인트 리스트 메소드 사용
 	PointDao li = new PointDao();
-	ArrayList<HashMap<String, Object>> pointList = li.pointList(beginRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> list = li.cstmPointList(beginRow, rowPerPage, id);
 	//총 행의 수를 얻기위한 메소드 사용
-		PointDao tr = new PointDao();
-		int totalRow = tr.pointRow();
+	PointDao tr = new PointDao();
+	int totalRow = tr.selectPointRow(id);
 	System.out.println(totalRow+"<-- totalRow");
 	// 라스트 페이즐 구하기 위한 변수선언
 	int lastPage = totalRow/rowPerPage;
@@ -39,7 +41,7 @@ if(session.getAttribute("loginEmpId1") == null
 	// startPage에서 9를 더한값이 마지막 출력될 Page이지만 lastPage보다 커지면 endPage는 lastpage로변환
 	int endPage = startPage+9;
 	if(endPage > lastPage){
-		endPage = lastPage;
+	endPage = lastPage;
 	}
 	System.out.println(startPage+"<-- startPage");
 	System.out.println(endPage+"<-- endPage");
@@ -51,18 +53,20 @@ if(session.getAttribute("loginEmpId1") == null
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>고객포인트 목록</h1>
+	<h1>포인트 내역 목록</h1>
 	<%
-		for(HashMap<String, Object> s : pointList){
+		for(HashMap<String, Object> s : list){
 	%>
 		<table>
 			<tr>
-				<td>고객아이디</td>
-				<td>포인트</td>
+				<td>주문번호</td>
+				<td>포인트 추가 또는 감소</td>
+				<td>적립일자</td>
 			</tr>
 			<tr>
-				<td><%=(String)(s.get("고객아이디"))%></td>
-				<td><%=(Integer)(s.get("포인트"))%></td>
+				<td><%=(Integer)(s.get("주문번호"))%></td>
+				<td><%=(String)(s.get("증감"))%><%=(Integer)(s.get("포인트"))%></td>
+				<td><%=(String)(s.get("적립일자"))%></td>
 			</tr>
 		</table>
 	<%
@@ -72,17 +76,17 @@ if(session.getAttribute("loginEmpId1") == null
 		<%
 			if(startPage > 5){
 		%>
-			<a href="<%=request.getContextPath()%>/point/pointHistoryList.jsp?currentPage=<%=startPage-1%>">이전</a>
+			<a href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=startPage-1%>">이전</a>
 		<%
 			}
 			for(int i = startPage; i<=endPage; i++){
 		%>
-			<a href="<%=request.getContextPath()%>/point/pointHistoryList.jsp?currentPage=<%=i%>"><%=i%></a>
+			<a href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=i%>"><%=i%></a>
 		<%
 			}
 			if(endPage<lastPage){
 		%>
-			<a href="<%=request.getContextPath()%>/point/pointHistoryList.jsp?currentPage=<%=endPage+1%>">다음</a>
+			<a href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=endPage+1%>">다음</a>
 		<%
 			}
 		%>

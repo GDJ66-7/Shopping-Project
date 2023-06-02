@@ -5,6 +5,8 @@
 <%@ page import = "dao.*" %>
 <%@ page import = "java.util.*" %>
 <%
+	//입력값 한글 깨지지 않기 위해 인코딩
+	request.setCharacterEncoding("utf-8");
 	//새션 확인 로그인 되어있다면 못들어와야됩니다.
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
@@ -68,13 +70,14 @@
 		String cstmPhone = request.getParameter("cstmPhone");
 		String cstmGender = request.getParameter("cstmGender");
 		String cstmAgree = request.getParameter("cstmAgree");
-		
+		//IdList 클래스에 변수값저장
 		IdList idList = new IdList();
 		idList.setId(id);
 		idList.setPw(pw);
-		
+		//MemberDao 메소드 사용 선언
 		MemberDao insertId = new MemberDao();
 		int row = insertId.insertId(idList);
+		// Method 받아오는 값에 따라 상황별 분기
 		if(row == 3){
 			msg = URLEncoder.encode("이미 있는 아이디입니다. 다른아이디로 바꿔주시길바랍니다.","utf-8");
 			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);

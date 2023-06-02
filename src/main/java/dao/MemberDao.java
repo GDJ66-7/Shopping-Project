@@ -25,10 +25,7 @@ public class MemberDao {
 		stmt.setString(1, id.getId());
 		stmt.setString(2, id.getPw());
 		row = stmt.executeUpdate();
-		ResultSet acRs = stmt.executeQuery();
-		if(acRs.next()) {
-			active = acRs.getString(2);
-		}
+		
 		//활성화가 y인지 n인지 확인하기
 		if(active.equals('y')) {
 			// 고객로그인시 마지막 로그인일자 업데이트
@@ -98,7 +95,7 @@ public class MemberDao {
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
 		// id 중복체크
-		String checkIdSql = "SELECT count(*) FROM id_list WHERE = id = ?";
+		String checkIdSql = "SELECT count(*) FROM id_list WHERE id = ?";
 		//id테이블 데이터값 입력쿼리
 		String idSql = "INSERT INTO id_list(id, pw, active, createdate, updatedate) values(?, PASSWORD(?), 'y', now(), now())";
 		// 비밀번호 이력 테이블에 데이터값 입력 쿼리
@@ -107,8 +104,12 @@ public class MemberDao {
 		//id중복체크
 		PreparedStatement checkStmt = conn.prepareStatement(checkIdSql);
 			checkStmt.setString(1, idList.getId());
-			int row3 = checkStmt.executeUpdate();
-			
+			ResultSet rs = checkStmt.executeQuery();
+			int row3 = 0;
+			if(rs.next()) {
+				row3 = rs.getInt(1);
+			}
+			if(row3 == 0) {
 		// id테이블 벨류값 넣기
 		PreparedStatement  idStmt = conn.prepareStatement(idSql);
 			idStmt.setString(1, idList.getId());
@@ -124,6 +125,7 @@ public class MemberDao {
 			
 			if(row1 > 0 && row2 > 0) {
 				row = 1;
+				}
 			}
 			if(row3 > 0) {
 				row = 3;
@@ -138,7 +140,7 @@ public class MemberDao {
 		Connection conn =  dbUtil.getConnection();
 		
 		// 고객 테이블 데이터 값 입력 쿼리
-		String customerSql = "INSERT INTO customer(id, cstm_name, cstm_address, cstm_email, cstm_birth, cstm_phone, cstm_gender, cstm_rank, cstm_point, cstm_agress, createdate, updatedate) values(?,?,?,?,?,?,?,'BRONZE',0,?,now(),now())";
+		String customerSql = "INSERT INTO customer(id, cstm_name, cstm_address, cstm_email, cstm_birth, cstm_phone, cstm_gender, cstm_rank, cstm_point,cstm_last_login, cstm_agree, createdate, updatedate) values(?,?,?,?,?,?,?,'BRONZE',0,now(),?,now(),now())";
 		
 		PreparedStatement customerStmt = conn.prepareStatement(customerSql);
 		customerStmt.setString(1, customer.getId());
@@ -194,7 +196,7 @@ public class MemberDao {
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
 		// 비밀번호 id_list 테이블에 입력
-		String sql = "UPDATE id_List SET pw = PASSWORD(?) WHERE id = ?";
+		String sql = "UPDATE id_list SET pw = PASSWORD(?), updatedate now() WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, idList.getPw());
 		stmt.setString(2, idList.getId());
@@ -225,14 +227,14 @@ public class MemberDao {
 		return idListRow;
 	}
 	//비밀번호 맞는지 확인
-	public int checkPw(IdList idList) throws Exception {
+	public int checkPw(IdList onePw) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
 		String sql = "SELECT count(*) FROM id_list WHERE id = ? AND pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, idList.getId());
-		stmt.setString(2, idList.getPw());
+		stmt.setString(1, onePw.getId());
+		stmt.setString(2, onePw.getPw());
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			row = rs.getInt(1);

@@ -1,12 +1,21 @@
 package vo;
 
 public class ProductImg {
+	
+	private int productImgNo;
 	private int productNo;
 	private String productOriFilename;
 	private String productSaveFilename;
 	private String productFiletype;
 	private String createdate;
 	private String updatedate;
+	
+	public int getProductImgNo() {
+		return productImgNo;
+	}
+	public void setProductImgNo(int productImgNo) {
+		this.productImgNo = productImgNo;
+	}
 	public int getProductNo() {
 		return productNo;
 	}

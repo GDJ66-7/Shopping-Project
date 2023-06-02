@@ -16,6 +16,15 @@
 </head>
 <body>
 	<h1>고객 회원가입</h1>
+	<h1>
+		 <%
+        	if(request.getParameter("msg") != null){
+         %>
+        		<%=request.getParameter("msg") %>
+         <% 
+        	}
+      	 %>		
+	</h1>
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="get">
 			<table>	
 				<tr>
@@ -70,7 +79,7 @@
 					<td>성별 :</td>
 					<td>
 						<input type="radio" name="cstmGender" value="남">
-						<label for="남">남자</label><br>
+						<label for="남">남자</label>
 						<input type="radio" name="cstmGender" value="여">
 						<label for="여">여자</label>
 					</td>
@@ -79,7 +88,7 @@
 					<td>개인정보 약관동의 :</td>
 					<td>
 						<input type="radio" name="cstmAgree" value="y">
-						<label for="동의">동의</label><br>
+						<label for="동의">동의</label>
 						<input type="radio" name="cstmAgree" value="n">
 						<label for="비동의">비동의</label>
 					</td>
