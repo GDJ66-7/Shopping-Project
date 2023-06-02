@@ -24,6 +24,7 @@ public class CartDao {
 			c.put("아이디",rs.getString("아이디"));
 			c.put("상품이름",rs.getString("상품이름"));
 			c.put("상품가격",rs.getInt("상품가격"));
+			c.put("수량", rs.getInt("수량"));
 			c.put("할인상품가격",rs.getInt("할인상품가격"));
 			c.put("전체가격",rs.getInt("전체가격"));
 			c.put("생성일",rs.getString("생성일"));

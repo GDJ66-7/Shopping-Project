@@ -1,32 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ page import="dao.*"%>
 <%@ page import="vo.*"%>
-<%@page import="java.util.*"%>
-
+<%@ page import="java.util.*"%>
 <%
 	String id = "customer1";
-
-
-	// dao 클래스 객체 생성
-	CartDao cartDao = new CartDao();
-	
-	// 장바구니 상품 리스트 selectCartList
-	ArrayList<HashMap<String, Object>> list = cartDao.selectCartList(id);
-
-
-
-
-
-
-
-
-
 
 %>
 
 
-
+<%
+	// dao 클래스 객체 생성
+	CartDao cartDao = new CartDao();	
+	// 장바구니 상품 리스트 selectCartList
+	ArrayList<HashMap<String, Object>> list = cartDao.selectCartList(id);
+%>
 
 <!DOCTYPE html>
 <html>
@@ -37,24 +24,24 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div class="container">
 <h1>장바구니</h1>
+	<form>
+
 	<table class="table">
 		<tr>
-		
-			<th>&nbsp;</th>
+			<th>상품이미지</th>
 			<th>상품정보</th>
-			<th>상품기격</th>
+			<th>상품가격</th>
+			<th>수량</th>
 			<th>할인된가격</th>
-			<th>배송비</th>
+			<th>삭제</th>
 		</tr>	
-		
-		
 		<%
-			for(HashMap<String, Object> c : list) {
-				
+			for(HashMap<String, Object> c : list) {		
 		%>
 			<tr>
-				<td rowspan="2">
+				<td>
 					<%=(String)(c.get("상품이미지"))%>
 				</td>
 				<td>
@@ -66,31 +53,44 @@
 					<%=(int)(c.get("상품가격"))%>원
 				</td>
 				<td>
+					<a href="<%=request.getContextPath()%>/cart/updateCartAction.jsp">
+						<select>
+							<option>
+								<%=(int)(c.get("수량"))%>
+							</option>
+						</select>
+					</a>
+				</td>
+				<td>
 					<%=(int)(c.get("할인상품가격"))%>원
 				</td>
 				<td>
-					무료
+					<a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
+					<button type="button">X</button>
+				</a>
 				</td>
 				
 			</tr>
-			
-			
 		<%
 			}
 		%>	
-
-
-
-
-
-
-
-
-
-
-
-	
-	</table>
+	</table>	
+	<table class="table">	
+		<tr>
+			<td>
+				<a href="<%=request.getContextPath()%>/home.jsp">
+					<button type="button">계속쇼핑하기</button>
+				</a>
+			</td>
+			<td>
+				<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+					<button type="button">구매하기</button>
+				</a>
+			</td>
+		</tr>
+	</table>	
+	</form>
+</div>
 
 </body>
 </html>
