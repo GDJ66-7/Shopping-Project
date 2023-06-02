@@ -16,6 +16,15 @@
 </head>
 <body>
 	<h1>로그인</h1>
+	<h1>
+		 <%
+        	if(request.getParameter("msg") != null){
+         %>
+        		<%=request.getParameter("msg") %>
+         <% 
+        	}
+      	 %>		
+	</h1>
 	<form action="<%=request.getContextPath()%>/login/loginAction.jsp" method="get">
 		<table>
 			<tr>
