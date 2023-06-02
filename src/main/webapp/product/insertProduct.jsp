@@ -25,17 +25,17 @@
 				<!-- 카테고리 선택 -->
 				<th>카테고리 분류</th>
 				<td>
-					<select name = "categoryName">
-					<%
-						for(HashMap<String, Object> cMap : cList) {
-							
-					%>
-						<option value="<%=cMap.get("categoryName")%>">
-								<%=cMap.get("categoryName")%>
+					<select name = "categoryName" required="required">
+						<%
+							for(HashMap<String, Object> cMap : cList) {
+								
+						%>
+							<option value="<%=cMap.get("categoryName")%>">
+									<%=cMap.get("categoryName")%>
 							</option>
-					<% 
-						}
-					%>
+						<% 
+							}
+						%>
 					</select>
 				</td>
 			</tr>
@@ -48,7 +48,7 @@
 			<tr>
 				<th>상품 가격</th>
 				<td>
-					<input type="text" name="productPrice" placeholder="숫자만 입력해주세요">
+					<input type="text" name="productPrice" required="required" placeholder="숫자만 입력해주세요">
 				</td>
 			</tr>
 			<tr>
@@ -65,7 +65,7 @@
 			<tr>
 				<th>상품 재고량</th>
 				<td>
-					<input type="text" name="productStock" placeholder="숫자로 입력해주세요">
+					<input type="text" name="productStock" required="required" placeholder="숫자로 입력해주세요">
 				</td>
 			</tr>
 			<tr>
@@ -75,7 +75,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>상품 설명</th>
+				<th>상품 사진</th>
 				<td>
 					<!-- 사진 파일 전송 -->
 					<input type="file" name="productFile" required="required">
