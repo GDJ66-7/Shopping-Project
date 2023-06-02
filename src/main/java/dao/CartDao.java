@@ -13,7 +13,14 @@ public class CartDao {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "SELECT c.cart_no 장바구니번호, i.product_save_filename 상품이미지, c.id 아이디, p.product_name 상품이름, p.product_price 상품가격, p.product_price*(1- d.discount_rate) 할인상품가격, p.product_price*(1- d.discount_rate)*c.cart_cnt 전체가격, c.cart_cnt 수량, c.createdate 생성일, c.updatedate 수정일 FROM cart c INNER JOIN product p ON c.product_no = p.product_no INNER JOIN discount d ON p.product_no = d.discount_no INNER JOIN product_img i ON p.product_no = i.product_no INNER JOIN customer m ON c.id = m.id WHERE m.id = ?";
+		String sql = "SELECT c.cart_no 장바구니번호, i.product_save_filename 상품이미지, c.id 아이디, p.product_name 상품이름, p.product_price 상품가격,"
+				+ " p.product_price*(1- d.discount_rate) 할인상품가격, p.product_price*(1- d.discount_rate)*c.cart_cnt 전체가격, c.cart_cnt 수량,"
+				+ " c.createdate 생성일, c.updatedate 수정일 "
+				+ "FROM cart c "
+				+ "INNER JOIN product p ON c.product_no = p.product_no "
+				+ "INNER JOIN discount d ON p.product_no = d.discount_no "
+				+ "INNER JOIN product_img i ON p.product_no = i.product_no "
+				+ "INNER JOIN customer m ON c.id = m.id WHERE m.id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		ResultSet rs = stmt.executeQuery();
@@ -116,4 +123,44 @@ public class CartDao {
 		row = stmt.executeUpdate();
 		return row;
 	}
+	// ----------------------------------------------------------------
+	
+	// 	
+	public ArrayList<HashMap<String, Object>> selectCartOrder(String id) throws Exception {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT m.cstm_name 이름, m.cstm_email 이메일, m.cstm_phone 휴대폰번호, m.cstm_address 배송주소, p.product_name 배송상품, "
+				+ "c.cart_cnt 상품수량, p.product_price * c.cart_cnt 총상품가격, p.product_price * d.discount_rate 할인금액,"
+				+ "m.cstm_point 보유포인트, p.product_price * (1 - d.discount_rate) * c.cart_cnt 총결제금액 "
+				+ "FROM cart c"
+				+ "INNER JOIN product p ON c.product_no = p.product_no"
+				+ "INNER JOIN customer m ON c.id = m.id "
+				+ "INNER JOIN discount d ON c.product_no = d.product_no"
+				+ "WHERE m.id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			HashMap<String, Object> co = new HashMap<>();
+			co.put("이름", rs.getString("이름"));
+			co.put("이메일", rs.getString("이메일"));
+			co.put("휴대폰번호", rs.getString("휴대폰번호"));
+			co.put("배송주소", rs.getString("배송주소"));
+			co.put("배송상품", rs.getString("배송상품"));
+			co.put("상품수량", rs.getInt("상품수량"));
+			co.put("총상품가격", rs.getInt("총상품가격"));
+			co.put("할인금액", rs.getInt("할인금액"));
+			co.put("보유포인트", rs.getInt("보유포인트"));
+			co.put("총결제금액", rs.getInt("총결제금액"));
+			list.add(co);
+		}
+		return list;
+	}
+	
+	
+	
+	
+	
+	
 }	

@@ -3,13 +3,16 @@
 <%@ page import="vo.*"%>
 <%@ page import="java.util.*"%>
 <%
+	// 회원 장바구니
+	
+
+	// 비회원 장바구니
+	
+
 	String id = "customer1";
+	
 
-%>
-
-
-<%
-	// dao 클래스 객체 생성
+	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
 	// 장바구니 상품 리스트 selectCartList
 	ArrayList<HashMap<String, Object>> list = cartDao.selectCartList(id);
@@ -27,7 +30,6 @@
 <div class="container">
 <h1>장바구니</h1>
 	<form>
-
 	<table class="table">
 		<tr>
 			<th>상품이미지</th>
@@ -67,9 +69,8 @@
 				<td>
 					<a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
 					<button type="button">X</button>
-				</a>
+					</a>
 				</td>
-				
 			</tr>
 		<%
 			}
