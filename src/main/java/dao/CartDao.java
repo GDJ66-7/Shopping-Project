@@ -125,23 +125,23 @@ public class CartDao {
 	}
 	// ----------------------------------------------------------------
 	
-	// 	
+	// 	장바구니에서 구매할 상품들 조회
 	public ArrayList<HashMap<String, Object>> selectCartOrder(String id) throws Exception {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "SELECT m.cstm_name 이름, m.cstm_email 이메일, m.cstm_phone 휴대폰번호, m.cstm_address 배송주소, p.product_name 배송상품, "
-				+ "c.cart_cnt 상품수량, p.product_price * c.cart_cnt 총상품가격, p.product_price * d.discount_rate 할인금액,"
+				+ "c.cart_cnt 상품수량, p.product_price * c.cart_cnt 총상품가격, p.product_price * d.discount_rate 할인금액, "
 				+ "m.cstm_point 보유포인트, p.product_price * (1 - d.discount_rate) * c.cart_cnt 총결제금액 "
-				+ "FROM cart c"
-				+ "INNER JOIN product p ON c.product_no = p.product_no"
+				+ "FROM cart c "
+				+ "INNER JOIN product p ON c.product_no = p.product_no "
 				+ "INNER JOIN customer m ON c.id = m.id "
-				+ "INNER JOIN discount d ON c.product_no = d.product_no"
-				+ "WHERE m.id = ?";
+				+ "INNER JOIN discount d ON p.product_no = d.product_no "
+				+ "WHERE m.id = ? ";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
+		if(rs.next()) {
 			HashMap<String, Object> co = new HashMap<>();
 			co.put("이름", rs.getString("이름"));
 			co.put("이메일", rs.getString("이메일"));
