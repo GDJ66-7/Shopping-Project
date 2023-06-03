@@ -157,7 +157,19 @@ public class CartDao {
 		return list;
 	}
 	
-	
+	// 주소값을 넘기면 해당 주소로 업데이트
+	public int addressCartOrder(String address, int orderNo) throws Exception {
+		int row = 0;
+		DBUtil DBUtil = new DBUtil();
+		Connection conn = DBUtil.getConnection();
+		
+		String sql = "UPDATE orders SET order_address = ? WHERE order_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, address);
+		stmt.setInt(2, orderNo);
+		row = stmt.executeUpdate();
+		return row;
+	}
 	
 	
 	
