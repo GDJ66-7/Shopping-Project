@@ -21,31 +21,32 @@ public class MemberDao {
 		
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		PreparedStatement stmt = conn.prepareStatement("SELECT id, active FROM id_list WHERE id = ? AND pw = PASSWORD(?)");
+		PreparedStatement stmt = conn.prepareStatement("SELECT count(*) FROM id_list WHERE id = ? AND pw = PASSWORD(?) AND active = 'y'");
 		stmt.setString(1, id.getId());
 		stmt.setString(2, id.getPw());
-		row = stmt.executeUpdate();
-		
-		//활성화가 y인지 n인지 확인하기
-		if(active.equals('y')) {
-			// 고객로그인시 마지막 로그인일자 업데이트
-			PreparedStatement csIdStmt = conn.prepareStatement("SELECT count(*) FROM customer WHERE id = ?");
-			csIdStmt.setString(1, id.getId());
-			ResultSet rs = csIdStmt.executeQuery();
-			int cnt = 0;
-			if(rs.next()) {
-				cnt = rs.getInt(1);
-			}
-			if(cnt>0) {
-				PreparedStatement csLoginStmt = conn.prepareStatement("UPDATE customer set cstm_last_login = now() WHERE id = ?");
-				stmt.setString(1, id.getId());
+		ResultSet loginRs = stmt.executeQuery();
+		if(loginRs.next()) {
+			row=loginRs.getInt(1);
+		}
+		if(row > 0) {
+			PreparedStatement csLoginStmt = conn.prepareStatement("UPDATE customer set cstm_last_login = now() WHERE id = ?");
+			csLoginStmt.setString(1, id.getId());
+			int upRow = csLoginStmt.executeUpdate();
+			if(upRow > 0) {
 				System.out.println("고객이므로 마지막로그인 일자 업데이트 완료");
+			}else if(upRow == 0) {
+				System.out.println("관리자이므로 마지막로그인 일자 업데이트 안함");
 			}
-		} else if(active.equals('n')) {
-			return row = 0;
+		} else if(row == 0) {
+			PreparedStatement falStmt = conn.prepareStatement("SELECT count(*) FROM id_list WHERE id = ? AND pw = PASSWORD(?) AND active = 'n'");
+			stmt.setString(1, id.getId());
+			stmt.setString(2, id.getPw());
+			ResultSet rs = falStmt.executeQuery();
+			if(rs.next()) {
+				row = 3;
+			}
 		}
 		return row;
-		
 	}
 	// 1-1 고객아이디 확인
 	public int loginCstmId(IdList idList) throws Exception {
@@ -78,14 +79,31 @@ public class MemberDao {
 	// 1-2 사원중에 관리자인지 확인
 	public String loginEmpLevel(IdList idList) throws Exception{
 		String level = "";
+		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "SELECT emp_level FROM employees WHERE id = ?";
+		String sql = "SELECT count(*) FROM employees WHERE id = ? AND emp_level = '2'";
 		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, idList.getId());
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
-			level = rs.getString(1);
+			row = rs.getInt(1);
 		}
+		if(row > 0) {
+			level = "2";
+		} else if(row == 0) {
+			String sql2 = "select count(*) FROM employees WHERE id = ? AND emp_level = '1'";
+			PreparedStatement stmt2 = conn.prepareStatement(sql2);
+			stmt2.setString(1, idList.getId());
+			ResultSet rs2 = stmt2.executeQuery();
+			if(rs2.next()) {
+				row = rs2.getInt(1);
+			}
+			if(row > 0) {
+				level = "1";
+			}
+		}
+		
 		return level;
 	}
 	

@@ -2,6 +2,12 @@
 <%@ page import = "dao.*" %>
 <%@ page import = "java.util.*" %>
 <%
+//새션 확인 관리자아이디러 로그인 되어있다면 못들어와야됩니다.
+	if(session.getAttribute("loginEmpId1") != null 
+		|| session.getAttribute("loginEmpId2") != null){
+		response.sendRedirect(request.getContextPath()+"/employee/employeeInfo.jsp");
+		return;
+	}
 	//세션아이디 변수에 저장
 	String id = (String)(session.getAttribute("loginCstmId"));
 	//세션아이디 디버깅

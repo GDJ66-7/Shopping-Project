@@ -3,18 +3,13 @@
 <%@ page import = "java.util.*" %>
 <%
 //세션 확인 관리자만 들어올 수 있도록
-if(session.getAttribute("loginEmpId1") == null 
-		|| session.getAttribute("loginEmpId2") == null
-		|| session.getAttribute("loginCstmId") == null
-		|| session.getAttribute("loginCstmId") != null
-		|| session.getAttribute("loginCstmId").equals("")
-		|| !session.getAttribute("loginCstmId").equals("")){
+if(session.getAttribute("loginCstmId") != null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
 String id = (String)(session.getAttribute("loginEmpId2"));
 if(session.getAttribute("loginEmpId1") != null)
- id = (String)(session.getAttribute("loginEmpId1"));
+id = (String)(session.getAttribute("loginEmpId1"));
 	//관리자 마이 페이지 메소드
 	AdminDao my = new AdminDao();
 	ArrayList<HashMap<String, Object>> list = my.selectEmpList(id);
