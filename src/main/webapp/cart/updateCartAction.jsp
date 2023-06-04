@@ -6,7 +6,7 @@
 	// 받아온 값 유효성 검사
 	if(request.getParameter("productNo")== null
 		|| request.getParameter("productNo").equals("")) {
-		response.sendRedirect(request.getContextPath()+"/home.jsp");
+		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
 	int cartCnt = 1;

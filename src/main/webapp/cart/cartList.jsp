@@ -15,7 +15,7 @@
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
 	// 장바구니 상품 리스트 selectCartList
-	ArrayList<HashMap<String, Object>> list = cartDao.selectCartList(id);
+	ArrayList<HashMap<String, Object>> list = cartDao.cartList(id);
 %>
 
 <!DOCTYPE html>
@@ -32,6 +32,7 @@
 	<form>
 	<table class="table">
 		<tr>
+			<th>선택</th>
 			<th>상품이미지</th>
 			<th>상품정보</th>
 			<th>상품가격</th>
@@ -41,8 +42,13 @@
 		</tr>	
 		<%
 			for(HashMap<String, Object> c : list) {		
+				//String checked = (String)(c.get("체크"));
 		%>
 			<tr>
+				<td>
+					<input type="hidden" name="cartNo" value="<%=(int)(c.get("장바구니번호"))%>">				
+					<input name="checked" value="Y" type="checkbox">
+				</td>
 				<td>
 					<%=(String)(c.get("상품이미지"))%>
 				</td>
@@ -56,7 +62,7 @@
 				</td>
 				<td>
 					<a href="<%=request.getContextPath()%>/cart/updateCartAction.jsp">
-						<select>
+						<select name=product>
 							<option>
 								<%=(int)(c.get("수량"))%>
 							</option>
@@ -68,7 +74,7 @@
 				</td>
 				<td>
 					<a href="<%=request.getContextPath()%>/cart/deleteCartAction.jsp">
-					<button type="button">X</button>
+						<button type="submit">X</button>
 					</a>
 				</td>
 			</tr>
@@ -79,7 +85,7 @@
 	<table class="table">	
 		<tr>
 			<td>
-				<a href="<%=request.getContextPath()%>/home.jsp">
+				<a href="<%=request.getContextPath()%>/main/home.jsp">
 					<button type="button">계속쇼핑하기</button>
 				</a>
 			</td>

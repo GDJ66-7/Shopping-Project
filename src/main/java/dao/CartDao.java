@@ -1,44 +1,60 @@
 package dao;
 
-import java.util.*;
 import util.*;
 import java.sql.*;
-
+import java.util.*;
 import vo.*;
 
 public class CartDao {
-	// 장바구니 상품 리스트 
-	public ArrayList<HashMap<String, Object>> selectCartList(String id) throws Exception {
+	
+	// 1. 고객ID에 해당하는 장바구니 상품 목록
+	public ArrayList<HashMap<String, Object>> cartList(String id) throws Exception {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "SELECT c.cart_no 장바구니번호, i.product_save_filename 상품이미지, c.id 아이디, p.product_name 상품이름, p.product_price 상품가격,"
-				+ " p.product_price*(1- d.discount_rate) 할인상품가격, p.product_price*(1- d.discount_rate)*c.cart_cnt 전체가격, c.cart_cnt 수량,"
-				+ " c.createdate 생성일, c.updatedate 수정일 "
-				+ "FROM cart c "
-				+ "INNER JOIN product p ON c.product_no = p.product_no "
-				+ "INNER JOIN discount d ON p.product_no = d.discount_no "
-				+ "INNER JOIN product_img i ON p.product_no = i.product_no "
-				+ "INNER JOIN customer m ON c.id = m.id WHERE m.id = ?";
+		String sql = "SELECT c.product_no 상품번호,"
+				+ " c.cart_no 장바구니번호,"
+				+ " i.product_save_filename 상품이미지,"
+				+ " c.id 아이디,"
+				+ " p.product_name 상품이름,"
+				+ " p.product_price 상품가격,"
+				+ " p.product_price*(1- d.discount_rate) 할인상품가격,"
+				+ " p.product_price*(1- d.discount_rate)*c.cart_cnt 전체가격,"
+				+ " c.cart_cnt 수량,"
+				+ " c.checked 체크,"
+				+ " c.createdate 생성일,"
+				+ " c.updatedate 수정일"
+				+ " FROM cart c"
+				+ " 	INNER JOIN product p ON c.product_no = p.product_no"
+				+ " 	INNER JOIN discount d ON p.product_no = d.discount_no"
+				+ " 	INNER JOIN product_img i ON p.product_no = i.product_no"
+				+ " 	INNER JOIN customer m ON c.id = m.id"
+				+ " WHERE m.id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			HashMap<String, Object> c = new HashMap<>();
+			c.put("상품번호", rs.getInt("상품번호"));
 			c.put("장바구니번호", rs.getInt("장바구니번호"));
 			c.put("상품이미지",rs.getString("상품이미지"));
 			c.put("아이디",rs.getString("아이디"));
 			c.put("상품이름",rs.getString("상품이름"));
 			c.put("상품가격",rs.getInt("상품가격"));
-			c.put("수량", rs.getInt("수량"));
 			c.put("할인상품가격",rs.getInt("할인상품가격"));
 			c.put("전체가격",rs.getInt("전체가격"));
+			c.put("수량", rs.getInt("수량"));
+			c.put("체크", rs.getString("체크"));
 			c.put("생성일",rs.getString("생성일"));
 			c.put("수정일",rs.getString("수정일"));
 			list.add(c);
 		}
 		return list;
 	}
+	
+	
+	/*
+	
 	
 	// 장바구니 상품 추가
 	public int insertCart(Cart cart) throws Exception {
@@ -172,6 +188,6 @@ public class CartDao {
 	}
 	
 	
-	
+	*/
 	
 }	
