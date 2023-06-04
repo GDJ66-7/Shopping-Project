@@ -178,7 +178,7 @@ public class MemberDao {
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
 		// 고객 테이블 데이터값 수정 쿼리
-		String customerSql = "UPDATE customer SET cstm_address = ?, cstm_email = ?, cstm_phone = ? updatedate = now() WHERE id = ? ";
+		String customerSql = "UPDATE customer SET cstm_address = ?, cstm_email = ?, cstm_phone = ?, updatedate = now() WHERE id = ? ";
 		PreparedStatement stmt = conn.prepareStatement(customerSql);
 		stmt.setString(1, customer.getCstmAddress());
 		stmt.setString(2, customer.getCstmEmail());
@@ -214,7 +214,7 @@ public class MemberDao {
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
 		// 비밀번호 id_list 테이블에 입력
-		String sql = "UPDATE id_list SET pw = PASSWORD(?), updatedate now() WHERE id = ?";
+		String sql = "UPDATE id_list SET pw = PASSWORD(?), updatedate = now() WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, idList.getPw());
 		stmt.setString(2, idList.getId());
@@ -257,6 +257,7 @@ public class MemberDao {
 		if(rs.next()) {
 			row = rs.getInt(1);
 		}	
+		System.out.println(row+"<--row");
 		return row;
 	}
 	//회원 탈퇴
@@ -264,7 +265,7 @@ public class MemberDao {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "UPDATE id_list SET active = 'n' updatedate = now() WHERE id = ?";
+		String sql = "UPDATE id_list SET active = 'n', updatedate = now() WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		row = stmt.executeUpdate();
@@ -277,7 +278,7 @@ public class MemberDao {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "SELECT cstm_name 고객이름, cstm_address 고객주소, cstm_email 고객이메일, cstm_birth 고객생일, cstm_rank 고객등급,cstm_point 고객포인트, createdate 가입일 FROM customer WHERE id = ?";
+		String sql = "SELECT cstm_name 고객이름, cstm_address 고객주소, cstm_email 고객이메일, cstm_birth 고객생일, cstm_phone 고객번호, cstm_rank 고객등급,cstm_point 고객포인트, createdate 가입일 FROM customer WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		ResultSet rs = stmt.executeQuery();
@@ -287,6 +288,7 @@ public class MemberDao {
 			m.put("고객주소", rs.getString("고객주소"));
 			m.put("고객이메일", rs.getString("고객이메일"));
 			m.put("고객생일", rs.getString("고객생일"));
+			m.put("고객번호", rs.getString("고객번호"));
 			m.put("고객등급", rs.getString("고객등급"));
 			m.put("고객포인트", rs.getInt("고객포인트"));
 			m.put("가입일", rs.getString("가입일"));

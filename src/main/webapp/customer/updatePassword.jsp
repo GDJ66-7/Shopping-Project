@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
-	if(session.getAttribute("loginEmpId1") == null 
-		|| session.getAttribute("loginEmpId2") == null
+	if(session.getAttribute("loginEmpId1") != null 
+		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;

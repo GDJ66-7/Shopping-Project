@@ -8,8 +8,8 @@
 //입력값 한글 깨지지 않기 위해 인코딩
 	request.setCharacterEncoding("utf-8");
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
-	if(session.getAttribute("loginEmpId1") == null 
-		|| session.getAttribute("loginEmpId2") == null
+	if(session.getAttribute("loginEmpId1") != null 
+		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
@@ -43,16 +43,17 @@
 	//요청값 변수에 저장
 	String id = request.getParameter("id");
 	String pw = request.getParameter("pw");
+	String modiPw = request.getParameter("onePw");
 	//비밀번호 확인에 필요한 클래스 선언
 	IdList onePw = new IdList();
 	onePw.setId(id);
-	onePw.setPw(pw);
+	onePw.setPw(modiPw);
 	
 	// 비밀번호가 맞는 확인하는 메소드 선언하고 실행
 			MemberDao checkPw = new MemberDao();
 			int checkRow = checkPw.checkPw(onePw);
 			// 실행값에 따라 분기 0이상이면 비밀번호 맞고 0이면 비밀번호가 틀립니다.
-			if(checkRow > 0){
+			if(checkRow == 0){
 				msg = URLEncoder.encode("비밀번호가 맞지 않으므로 다시 입력 바랍니다.","utf-8");
 				response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
 				return;

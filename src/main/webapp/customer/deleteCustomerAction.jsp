@@ -6,8 +6,8 @@
 <%@ page import = "java.util.*" %>
 <%
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
-	if(session.getAttribute("loginEmpId1") == null 
-		|| session.getAttribute("loginEmpId2") == null
+	if(session.getAttribute("loginEmpId1") != null 
+		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
@@ -29,7 +29,7 @@
 		response.sendRedirect(request.getContextPath()+"/customer/deleteCustomer.jsp?msg="+msg);
 		return;
 	}
-	if(request.getParameter("pw").equals(request.getParameter("checkPw"))){
+	if(!request.getParameter("pw").equals(request.getParameter("checkPw"))){
 		msg = URLEncoder.encode("두개의 비밀번호 서로 맞지 않으므로 다시 입력 바랍니다.","utf-8");
 		response.sendRedirect(request.getContextPath()+"/customer/deleteCustomer.jsp?msg="+msg);
 		return;
@@ -45,7 +45,7 @@
 	MemberDao ckPw = new MemberDao();
 	int ckRow = ckPw.checkPw(onePw);
 	// 실행값에 따라 분기 0이상이면 비밀번호 맞고 0이면 비밀번호가 틀립니다.
-	if(ckRow > 0){
+	if(ckRow == 0){
 		msg = URLEncoder.encode("비밀번호가 맞지 않으므로 다시 입력 바랍니다.","utf-8");
 		response.sendRedirect(request.getContextPath()+"/customer/deleteCustomer.jsp?msg="+msg);
 		return;
