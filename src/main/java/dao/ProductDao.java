@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest; 
@@ -171,4 +172,35 @@ public class ProductDao {
 	}
 	*/
 	
+	// 4) 상품리스트 product inner join product_img
+	public ArrayList<HashMap<String, Object>> productList(int beginRow, int rowPerPage) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		
+		/* 상품 리스트 쿼리
+		SELECT p.product_name, p.product_price, p.product_status, PI.product_save_filename
+		FROM product p INNER JOIN product_img PI ON p.product_no = PI.product_no
+		ORDER BY p.createdate DESC  LIMIT ? , ?;
+		 */
+		
+		String sql = "SELECT p.product_name, p.product_price, p.product_status, PI.product_save_filename\r\n"
+				+ "		FROM product p INNER JOIN product_img PI ON p.product_no = PI.product_no\r\n"
+				+ "		ORDER BY p.createdate DESC  LIMIT ? , ?";
+		ArrayList<HashMap<String, Object>> productList = new ArrayList<HashMap<String, Object>>();
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);
+		stmt.setInt(2, rowPerPage);
+		ResultSet rs = stmt.executeQuery();
+		
+		System.out.println(stmt + "<-- productDao productList stmt");
+		while(rs.next()) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("productName", rs.getString("product_name"));
+			map.put("productPrice", rs.getInt("product_price"));
+			map.put("productStatus", rs.getString("product_status"));
+			map.put("productSaveFilename", rs.getString("product_save_filename"));
+			productList.add(map);
+		}
+		return productList;
+	}
 }
