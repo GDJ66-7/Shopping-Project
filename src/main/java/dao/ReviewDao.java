@@ -11,7 +11,7 @@ import vo.Review;
 
 public class ReviewDao {
 	
-	// 리뷰 -----> 이미지 파일 inner join 예정
+	// 리뷰 -----> 이미지 파일 join 예정 + (product_no) + (c_id)
 	// 1) 리뷰 추가
 	public int insertReview(Review review) throws Exception { // 리뷰 이미지 추가예정
 		
@@ -60,19 +60,22 @@ public class ReviewDao {
 		return row;
 	}
 	
-	// 4) 제품페이지에서 보이는 리뷰 목록 + 페이징 (제목,내용,사진,작성일자(내림차순))
-	public ArrayList<HashMap<String, Object>> selectReviewListByPage(int beginRow, int rowPerPage) throws Exception{
+	// 4) 제품페이지에서 보이는 리뷰 목록 + 페이징 (제목,내용,사진,작성일자(내림차순)) -- order no / product no
+	public ArrayList<HashMap<String, Object>> selectReviewListByPage(int productNo,int beginRow, int rowPerPage) throws Exception{
 	ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 	DBUtil DButil = new DBUtil();
 	Connection conn = DButil.getConnection();
-	String sql = "SELECT p.productNo, r.order_no orderNo, r.review_title reviewTitle, r.review_content reviewContent, r.createdate createdate, r.updatedate updatedate"
-				+ ",img.review_ori_filename reviewOriFilename, img.review_save_filename reviewSaveFilename, img.review_filetype reviewFiletype "
-				+ "FROM review r INNER JOIN review_img img ON r.order_no = img.order_no "
-				+ "INNER JOIN product p ON p.product_no = r.order_no "
-				+ "ORDER BY r.createdate DESC LIMIT ?,?";
+	String sql = "SELECT p.product_no productNo, r.order_no orderNo, r.review_title reviewTitle, r.review_content reviewContent"
+			+ ",r.createdate createdate, r.updatedate updatedate"
+			+ ",img.review_ori_filename reviewOriFilename, img.review_save_filename reviewSaveFilename"
+			+ ",img.review_filetype reviewFiletype"
+			+ " FROM review r INNER JOIN review_img img ON r.order_no = img.order_no"
+			+ " INNER JOIN product p ON p.product_no = r.order_no"
+			+ " ORDER BY r.createdate DESC LIMIT ?,?";
 	PreparedStatement stmt = conn.prepareStatement(sql);
-	stmt.setInt(1, beginRow);
-	stmt.setInt(2, rowPerPage);
+	stmt.setInt(1, productNo);
+	stmt.setInt(2, beginRow);
+	stmt.setInt(3, rowPerPage);
 	ResultSet rs = stmt.executeQuery();
 	while(rs.next()) {
 		HashMap<String, Object> r = new HashMap<>();

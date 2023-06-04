@@ -11,15 +11,18 @@ import vo.Question;
 
 public class QuestionDao {
 	
-	// 상품 상세정보에서 보이는 문의 목록 -- 작성일자 내림차순
-	public ArrayList<HashMap<String, Object>> selectQuestionListByPage(int beginRow, int rowPerPage) throws Exception{
+	// 상품 상세정보에서 보이는 문의 목록 -- 문의번호&작성일자 내림차순
+	public ArrayList<HashMap<String, Object>> selectQuestionListByPage(int productNo, int beginRow, int rowPerPage) throws Exception{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELECT q_no qNo, product_no productNo, id, q_category category, q_title title, q_content content, createdate FROM question ORDER BY createdate DESC limit ?,?";
+		String sql = "SELECT q_no qNo, product_no productNo, id, q_category category, q_title title"
+				+ ",q_content content, createdate FROM question"
+				+ " WHERE product_no = ? ORDER BY q_no DESC, createdate DESC limit ?,?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, beginRow);
-		stmt.setInt(2, rowPerPage);
+		stmt.setInt(1, productNo);
+		stmt.setInt(2, beginRow);
+		stmt.setInt(3, rowPerPage);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			HashMap<String, Object> q = new HashMap<>();
@@ -30,6 +33,8 @@ public class QuestionDao {
 			q.put("title", rs.getString("title"));
 			q.put("content", rs.getString("content"));
 			q.put("createdate", rs.getString("createdate"));
+			//System.out.println(q);
+			list.add(q);
 		}
 			return list;
 		}
@@ -113,7 +118,7 @@ public class QuestionDao {
 		int totalrow = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELETE count(*) from question";
+		String sql = "SELECT count(*) from question";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		
