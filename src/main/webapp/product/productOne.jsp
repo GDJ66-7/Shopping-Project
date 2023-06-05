@@ -14,8 +14,7 @@
 	}*/
 
 	// 받아온 값 & 메서드 호출 test 1 product
-	//int productNo = 1;
-	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	int productNo = 1; //Integer.parseInt(request.getParameter("productNo"));
 	OneDao one = new OneDao();
 	
 	HashMap<String,Object> p = one.selectProductOne(productNo);
@@ -70,7 +69,7 @@
 			<td><%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
 		</tr>
 		<tr>
-			<td><img src="<%=p.get("productSavefilename")%>" alt="이미지"></td>
+			<td><img src="${pageContext.request.contextPath}/product/productImg/<%=p.get("productSaveFilename") %>" width="100" height="100"></td>
 		</tr>
 		<tr>
 			<td><%=p.get("productName")%></td><!-- 상품이름 -->

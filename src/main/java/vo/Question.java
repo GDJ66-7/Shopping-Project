@@ -9,6 +9,7 @@ public class Question {
 	private String qContent;
 	private String createdate;
 	private String updatedate;
+	
 	public int getqNo() {
 		return qNo;
 	}
