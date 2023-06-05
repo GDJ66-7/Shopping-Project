@@ -14,7 +14,7 @@ public class PointDao {
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "SELECT id 고객아이디,cstm_point 포인트 FROM customer LIMIT ?, ?";
+		String sql = "SELECT c.id 고객아이디,p.order_no 주문번호, p.point_pm 증감, p.point 포인트, p.createdate 적립일자 FROM customer c INNER JOIN orders o ON  c.id = o.id INNER JOIN point_history p ON o.order_no = p.order_no ORDER BY p.createdate DESC  LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
@@ -22,7 +22,10 @@ public class PointDao {
 		while(rs.next()) {
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("고객아이디", rs.getString("고객아이디"));
+			m.put("주문번호", rs.getInt("주문번호"));
+			m.put("증감", rs.getString("증감"));
 			m.put("포인트", rs.getInt("포인트"));
+			m.put("적립일자", rs.getString("적립일자"));
 			list.add(m);
 		}
 		return list;
