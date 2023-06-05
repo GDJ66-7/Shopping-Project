@@ -9,6 +9,7 @@
 	
 	//요청값 변수 저장
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
+	//System.out.println(qNo + "<----updateQuestionAction NO");
 	
 	//문의 사항 요청값 유효성 검사(+수정시에도 공백X)
 	if(request.getParameter("qNo") == null
@@ -19,13 +20,18 @@
 	||request.getParameter("qTitle").equals("")
 	||request.getParameter("qContent") == null
 	||request.getParameter("qContent").equals("")){
-		response.sendRedirect(request.getContextPath()+"/");
+		response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo=" +qNo);
 		return;
 	}
 	
+	// 받아온 값 저장
 	String qCategory = request.getParameter("qCategory");
 	String qTitle = request.getParameter("qTitle");
 	String qContent = request.getParameter("qContent");
+	
+	/*System.out.println(qCategory+"<---updateQ category");
+	System.out.println(qTitle+"<---updateQ title");
+	System.out.println(qContent+"<---updateQ content");*/
 	
 	// 객체 생성
 	QuestionDao qDao = new QuestionDao();
@@ -44,6 +50,6 @@
 		System.out.println("문의 수정 성공");
 	}
 	
-	response.sendRedirect(request.getContextPath()+"/");
+	response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo); // 수정 완료시 폼으로
 	
 %>

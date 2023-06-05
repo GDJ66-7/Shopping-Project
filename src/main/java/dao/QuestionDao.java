@@ -68,13 +68,14 @@ public class QuestionDao {
 		int row = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "INSERT into question(q_no, product_no, id, q_category category, q_title, q_content, createdate, updatedate) VALUES(?,?,?,?,?,?,now(),now())";
+		String sql = "INSERT into question(q_no, product_no, id, q_category, q_title, q_content, createdate, updatedate) VALUES(?,?,?,?,?,?,now(),now())";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, question.getqNo());
 		stmt.setInt(2, question.getProductNo());
-		stmt.setString(3, question.getqCategory());
-		stmt.setString(4, question.getqTitle());
-		stmt.setString(5, question.getqContent());
+		stmt.setString(3, question.getId());
+		stmt.setString(4, question.getqCategory());
+		stmt.setString(5, question.getqTitle());
+		stmt.setString(6, question.getqContent());
 		row = stmt.executeUpdate();
 		
 		return row;
@@ -126,5 +127,23 @@ public class QuestionDao {
 			totalrow = rs.getInt("count(*)");
 		}
 		return totalrow;
+	}
+	
+	// 6) 문의사항 카테고리 (insert&update) 선택 쿼리(수정해야함)
+	public ArrayList<HashMap<String, Object>> selectqCategory(String qCategory) throws Exception{
+		ArrayList<HashMap<String, Object>> categorylist = new ArrayList<>();
+		DBUtil DButil = new DBUtil();
+		Connection conn = DButil.getConnection();
+		String sql = "SELECT q_category qCategory from question";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			HashMap<String, Object> c = new HashMap<>();
+			c.put("qCategory", rs.getString("qCategory"));
+			categorylist.add(c);
+			System.out.println(c+"<----Qcategory");
+		}
+		return categorylist;
 	}
 }

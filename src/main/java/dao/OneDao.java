@@ -11,7 +11,7 @@ public class OneDao {
 		HashMap<String, Object> p = new HashMap<>(); //hashMap선언
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELECT p.product_no productNo, p.category_name categoryName, p.product_name productName, p.product_price productPrice, p.product_status productStatus, p.product_stock productStock, p.product_info productInfo, p.updatedate updatedate, img.product_save_filename productSavefilename, img.product_filetype productFiletype"
+		String sql = "SELECT p.product_no productNo, p.category_name categoryName, p.product_name productName, p.product_price productPrice, p.product_status productStatus, p.product_stock productStock, p.product_info productInfo, p.updatedate updatedate, img.product_save_filename productSaveFilename, img.product_filetype productFiletype"
 					+ " FROM product p INNER JOIN product_img img"
 					+ " ON p.product_no = img.product_no"
 					+ " WHERE p.product_no = ?";
@@ -26,10 +26,10 @@ public class OneDao {
 			p.put("productStatus", rs.getString("productStatus"));
 			p.put("productStock", rs.getInt("productStock"));
 			p.put("productInfo", rs.getString("productInfo"));
-			p.put("productSavefilename", rs.getString("productSavefilename"));
+			p.put("productSaveFilename", rs.getString("productSaveFilename"));
 			p.put("productFiletype", rs.getString("productFiletype"));
 			p.put("updatedate", rs.getString("updatedate"));
-			//System.out.println(p);
+			System.out.println(p);
 		}
 		return p; //값 반환 - 결과값 저장
 	}

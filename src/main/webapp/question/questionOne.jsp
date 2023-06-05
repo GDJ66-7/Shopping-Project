@@ -6,7 +6,7 @@
 	// 유효성 검사
 	if(request.getParameter("qNo") == null
 	||request.getParameter("qNo").equals("")){
-		response.sendRedirect(request.getContextPath()+"/home.jsp");
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 		return;	
 	}
 

@@ -20,5 +20,5 @@
 		System.out.println("삭제완료");
 	}
 	
-	response.sendRedirect(request.getContextPath()+"/");
+	response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 %>

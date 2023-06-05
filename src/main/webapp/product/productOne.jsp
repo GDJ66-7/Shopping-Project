@@ -1,11 +1,11 @@
-<!-- view 상품 상세정보 페이지 카테고리/상품이름/가격/상태/재고/정보 -->
+<!-- view 상품 상세정보 페이지 카테고리/상품이름/가격/상태/(재고)/정보 -->
 <!-- 상세정보/리뷰/상품문의 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*" %>
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	//출력 테스트중***********************************
+	//출력 테스트중*********************************** 12 product
 	/* 상품 상세페이지 productNo 유효성 검사 -------------------------------------------------------------
 	if(request.getParameter("productNo") == null
 	||request.getParameter("productNo").equals("")) {
@@ -13,8 +13,8 @@
 		return;
 	}*/
 
-	// 받아온 값 & 메서드 호출 test 1 product
-	int productNo = 1; //Integer.parseInt(request.getParameter("productNo"));
+	// 받아온 값 & 메서드 호출 test product:12 & id:customer1
+	int productNo = 12;/*Integer.parseInt(request.getParameter("productNo"));*/
 	OneDao one = new OneDao();
 	
 	HashMap<String,Object> p = one.selectProductOne(productNo);
@@ -54,6 +54,7 @@
 	}
 	
 	ArrayList<HashMap<String,Object>> list = questionDao.selectQuestionListByPage(productNo, beginRow, rowPerPage);
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +62,7 @@
 <meta charset="UTF-8">
 <title>상품페이지</title>
 </head>
-<body><!-- test  view 제품 1 카테고리/사진/이름/상품content출력 -->
+<body><!-- test  view 제품 12 카테고리/사진/이름/상품content출력 -->
 	<h3>상품상세</h3>
 	<table>
 		<tr>
@@ -69,7 +70,7 @@
 			<td><%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
 		</tr>
 		<tr>
-			<td><img src="${pageContext.request.contextPath}/product/productImg/<%=p.get("productSaveFilename") %>" width="100" height="100"></td>
+			<td><img src="${pageContext.request.contextPath}/product/productImg/<%=p.get("productSaveFilename")%>" width="100" height="100"></td>
 		</tr>
 		<tr>
 			<td><%=p.get("productName")%></td><!-- 상품이름 -->
@@ -84,6 +85,7 @@
 <!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
 <hr>
 	<h3>문의사항</h3>
+	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp">추가</a>
 	<table>
 		<tr>
 			<th>번호</th>
