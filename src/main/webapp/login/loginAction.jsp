@@ -79,13 +79,13 @@
 	String level = checkEmpId.loginEmpLevel(idList);
 	if(level.equals("2")){
 		session.setAttribute("loginEmpId2", id);
-		System.out.print("최고관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId2"));
+		System.out.println("최고관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId2"));
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
 	if(level.equals("1")){
 		session.setAttribute("loginEmpId1", id);
-		System.out.print("일반관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId1"));
+		System.out.println("일반관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId1"));
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 			}

@@ -22,7 +22,7 @@ public class OrderDao {
 			ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
 				HashMap<String, Object> m = new HashMap<String, Object>();
-				m.put("주문번호", rs.getString("주문번호"));
+				m.put("주문번호", rs.getInt("주문번호"));
 				m.put("상품이름", rs.getString("상품이름"));
 				m.put("결제상태", rs.getString("결제상태"));
 				m.put("배송상태", rs.getString("배송상태"));
@@ -59,7 +59,7 @@ public class OrderDao {
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				HashMap<String, Object> m = new HashMap<String, Object>();
-				m.put("주문번호", rs.getString("주문번호"));
+				m.put("주문번호", rs.getInt("주문번호"));
 				m.put("상품이름", rs.getString("상품이름"));
 				m.put("결제상태", rs.getString("결제상태"));
 				m.put("배송상태", rs.getString("배송상태"));
@@ -75,6 +75,7 @@ public class OrderDao {
 		// 상품 구매 취소
 		public int cancelOrder(int orderNo) throws Exception {
 			int row = 0;
+			System.out.println(orderNo + "<-- OrderDao cancelOrder orderNo");
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
 			String sql = "  UPDATE orders SET payment_status = '취소', delivery_status = '구매취소', updatedate = now() WHERE order_no = ?;";
@@ -82,5 +83,28 @@ public class OrderDao {
 			stmt.setInt(1, orderNo);
 			row = stmt.executeUpdate();
 			return row ;
+		}
+		// 상품 구매취소시 포인트 변경
+		public int  cnacelPoint(int  orderNo) throws Exception{
+			int row = 0;
+			int point = 0;
+			System.out.println(orderNo + "<-- OrderDao cancelpoint orderNo");
+			DBUtil dbUtil = new DBUtil(); 
+			Connection conn =  dbUtil.getConnection();
+			String sql = "SELECT point FROM point_history WHERE order_no = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, orderNo);
+			System.out.println(stmt + "< cancelPoint stmt");
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				point = rs.getInt(1);
+			}
+			System.out.println(point + "<-- point");
+			String sql2 = "INSERT INTO point_history(order_no, point_pm, point, createdate) values(?,'-',?,now())";
+			PreparedStatement stmt2 = conn.prepareStatement(sql2);
+			stmt2.setInt(1, orderNo);
+			stmt2.setInt(2, point);
+			row = stmt2.executeUpdate();
+			return row;
 		}
 }

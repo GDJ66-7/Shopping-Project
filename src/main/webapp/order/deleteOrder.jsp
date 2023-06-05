@@ -4,9 +4,9 @@
 <%@ page import = "java.net.*" %>
 <%
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
-	if(session.getAttribute("loginEmpId1") == null 
+	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
-		|| session.getAttribute("loginCstmId") != null){
+		|| session.getAttribute("loginCstmId") == null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
@@ -41,7 +41,7 @@
         	}
       	 %>		
 	</h1>
-	<form action="<%=request.getContextPath()%>/order/deleteOrder.jsp" method="post">
+	<form action="<%=request.getContextPath()%>/order/deleteOrderAction.jsp" method="post">
 	<%
 		for(HashMap<String, Object> s : list){
 	%>
@@ -71,7 +71,7 @@
 	<%
 		}
 	%>
-	<button type="submit"></button>
+	<button type="submit">취소하기</button>
 	</form>
 </body>
 </html>

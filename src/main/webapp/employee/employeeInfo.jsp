@@ -7,9 +7,13 @@ if(session.getAttribute("loginCstmId") != null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
+System.out.println("일반관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId1"));
 String id = (String)(session.getAttribute("loginEmpId2"));
-if(session.getAttribute("loginEmpId1") != null)
+if(session.getAttribute("loginEmpId1") != null){
 id = (String)(session.getAttribute("loginEmpId1"));
+}
+
+System.out.println(id+"<--id");
 	//관리자 마이 페이지 메소드
 	AdminDao my = new AdminDao();
 	ArrayList<HashMap<String, Object>> list = my.selectEmpList(id);
@@ -23,6 +27,7 @@ id = (String)(session.getAttribute("loginEmpId1"));
 </head>
 <body>
 <h1>관리자 마이페이지</h1>
+<a href="<%=request.getContextPath()%>/order/orderList.jsp">고객 주문내역</a>
 <%
 	for(HashMap<String,Object> s : list){
 %>

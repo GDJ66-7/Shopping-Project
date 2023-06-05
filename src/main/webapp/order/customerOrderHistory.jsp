@@ -3,9 +3,9 @@
 <%@ page import = "java.util.*" %>
 <%
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
-	if(session.getAttribute("loginEmpId1") == null 
+	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
-		|| session.getAttribute("loginCstmId") != null){
+		|| session.getAttribute("loginCstmId") == null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
@@ -54,6 +54,7 @@
 </head>
 <body>
 	<h1>구매내역</h1>
+	
 	<h1>
 		 <%
         	if(request.getParameter("msg") != null){
@@ -87,9 +88,12 @@
 				<td><%=(String)(s.get("주문배송지"))%></td>
 				<td><%=(String)(s.get("구매일"))%></td>
 				<%
-					if(s.get("결제상태").equals("결제대기") || s.get("배송상태").equals("배송중"))
+					if(s.get("결제상태").equals("결제대기") || s.get("배송상태").equals("배송중")){
 				%>
-				<td><a href="<%=request.getContentLength()%>/order/deleteOrder.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">주문취소하기</a></td>
+				<td><a href="<%=request.getContextPath()%>/order/deleteOrder.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">주문취소하기</a></td>
+				<%
+					}
+				%>
 			</tr>
 		</table>
 	<%

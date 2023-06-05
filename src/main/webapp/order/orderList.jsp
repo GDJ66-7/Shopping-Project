@@ -4,19 +4,14 @@
 <%@ page import = "java.net.*" %>
 <%
 //세션 확인 관리자만 들어올 수 있도록
-if(session.getAttribute("loginEmpId1") == null 
-		|| session.getAttribute("loginEmpId2") == null
-		|| session.getAttribute("loginCstmId") == null
-		|| session.getAttribute("loginCstmId") != null
-		|| session.getAttribute("loginCstmId").equals("")
-		|| !session.getAttribute("loginCstmId").equals("")){
+if(session.getAttribute("loginCstmId") != null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
 	//요청값 디버깅
-	System.out.println(request.getParameter("id")+"<--id");
-	System.out.println(request.getParameter("startDate")+"<--id");
-	System.out.println(request.getParameter("endDate")+"<--id");
+	
+	System.out.println(request.getParameter("startDate")+"<--startDate");
+	System.out.println(request.getParameter("endDate")+"<--endDate");
 	// 사용할 변수 선언
 	String id = "";
 	String startDate = "";
@@ -43,6 +38,10 @@ if(session.getAttribute("loginEmpId1") == null
 	if(request.getParameter("endDate") != null ){
 		endDate = request.getParameter("endDate");
 	}
+	System.out.println(id +"< --  id");
+	System.out.println(startDate + ">-- startDate");
+	System.out.println(endDate+ "<--  endDate");
+	//날짜 선택 하나만했을때 안되게하기
 	if(startDate != null && endDate == null && !startDate.equals("") && endDate.equals("")){
 		msg = URLEncoder.encode("날짜를 두개 다 선택해주시길 바랍니다.","utf-8");
 		response.sendRedirect(request.getContextPath()+"/order/orderList.jsp?msg="+msg);
@@ -55,33 +54,30 @@ if(session.getAttribute("loginEmpId1") == null
 	
 	//검색조건별 메서드 분기
 	//1- 검색도 안하고 날짜도 검색안했을때 리스트 전체를 보여줄 메서드
-	if(id == null && startDate == null && endDate == null
-	&& id.equals("") && startDate.equals("") && endDate.equals("")){
-			
+	if(id.equals("") && startDate.equals("") && endDate.equals("")){
 			AdminOrderDao all = new AdminOrderDao();
 			allList = all.orderAllList(beginRow, rowPerPage); 
 			totalRow = all.orderAllRow();
+		System.out.println("아무것도 검색안함");
 	//유저 이름만 검색했을때 리스트를 보여줄 메서드
-	}else if(id != null && startDate == null && endDate == null
-			&& !id.equals("") && startDate.equals("") && endDate.equals("")){
+	}else if(!id.equals("") && startDate.equals("") && endDate.equals("")){
 			
 			AdminOrderDao idList = new AdminOrderDao();
 			allList = idList.searchOrderList(id, beginRow, rowPerPage);
 			totalRow = idList.searchOrderRow(id);
+			System.out.println("이름만 검색");
 	//날짜만 검색했을때 리스트를 보여줄 메소드
-	} else if(startDate != null && endDate != null && id == null
-			&& !startDate.equals("") && !endDate.equals("") && id.equals("")){
-			
+	} else if(!startDate.equals("") && !endDate.equals("") && id.equals("")){
 			AdminOrderDao dateList = new AdminOrderDao();
 			allList = dateList.dateOrderList(startDate, endDate, beginRow, rowPerPage);
 			totalRow = dateList.dateOrderRow(startDate, endDate);
+			System.out.println("날짜만 검색");
 	//남짜와 유저 이름을 검색했을때 리스트를 보여주는 메서드
-	} else if(id != null && startDate != null && endDate != null
-			&& !id.equals("") && !startDate.equals("") &&  !endDate.equals("")){
-		
+	} else if(!id.equals("") && !startDate.equals("") && !endDate.equals("")){		
 		AdminOrderDao idDateList = new AdminOrderDao();
 		 allList = idDateList.searchDateOrder(id, startDate, endDate, beginRow, rowPerPage);
 		totalRow = idDateList.searchDateOrderRow(id, startDate, endDate);
+		System.out.println("날짜와 이름 검색");
 	}
 	System.out.println(totalRow+"<-- totalRow");
 	// 라스트 페이즐 구하기 위한 변수선언
@@ -121,6 +117,7 @@ if(session.getAttribute("loginEmpId1") == null
 	<form action="<%=request.getContextPath()%>/order/orderList.jsp" action="post">
 		<input type="text" name="id" placeholder="고객 이름"><br>
 		<input type="date" name="startDate">부터<input type="date" name="endDate">
+		<button type="submit">검색</button>
 	</form>
 	<%
 		for(HashMap<String, Object> s : allList){
