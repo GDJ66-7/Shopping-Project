@@ -94,7 +94,7 @@
 			<tr>
 				<td>boardFile(수정전 사진이름 : <%=pMap.get("productOriFilename")%></td>
 				<td>
-					<input type="file" name="productFile" required="required">
+					<input type="file" name="productFile">
 				</td>
 			</tr>
 		</table>

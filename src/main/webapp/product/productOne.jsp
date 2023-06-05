@@ -14,7 +14,8 @@
 	}*/
 
 	// 받아온 값 & 메서드 호출 test 1 product
-	int productNo = 1;/*Integer.parseInt(request.getParameter("productNo"));*/
+	//int productNo = 1;
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	OneDao one = new OneDao();
 	
 	HashMap<String,Object> p = one.selectProductOne(productNo);
