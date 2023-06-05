@@ -61,9 +61,17 @@
 	        <%
 	        	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
 	        %>
-		         <li class="nav-item">
-		            <a class="nav-link" href="<%=request.getContextPath()%>/employee/employeeInfo.jsp">관리자페이지</a>
-		        </li>
+			    <li class="nav-item dropdown">
+		            <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
+		                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                관리자페이지
+		            </a>
+		            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+		                <a class="dropdown-item" href="<%=request.getContextPath()%>/employee/employeeInfo.jsp"> 관리자정보</a>
+		                <a class="dropdown-item" href="<%=request.getContextPath()%>/category/categoryList.jsp">카테고리 관리</a>
+		                <a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp">상품관리</a>
+		            </div>
+	        	</li>
 	        <%
 	        	}
 	        %>

@@ -1,8 +1,9 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.ProductDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	
 	// dao를 사용하기 위한 productDao클래스 객체 생성
 	ProductDao pDao = new ProductDao();
 	int beginRow = 0;
@@ -10,6 +11,7 @@
 	
 	// 상품 리스트를 뽑기 위해 productList메서드 호출
 	ArrayList<HashMap<String, Object>> productList = pDao.productList(beginRow, rowPerPage);
+	
 	
 	
 %>
@@ -21,25 +23,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>pillloMart</title>
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
     <!-- flaticon CSS -->
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
     <!-- style CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 
 <body>
@@ -49,15 +50,15 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span class="menu_icon"><i class="fas fa-bars"></i></span>
                         </button>
-                        	<div>
-								<jsp:include page="/main/menuBar.jsp"></jsp:include>
-							</div>
+						<div>
+							<jsp:include page="/main/menuBar.jsp"></jsp:include>
+						</div>
                         <div class="hearer_icon d-flex align-items-center">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
                             <a href="cart.html">
@@ -130,42 +131,59 @@
                         </div>
                     </div>
                 </div>
+                <!-- -----------------------     상품리스트 출력   ------------------------- -->
                 <div class="col-md-8">
                     <div class="product_list">
                         <div class="row">
                             <div class="col-lg-6 col-sm-6">
-                                <div class="single_product_item">
-                                	<!--  상품리스트 출력 -->
-                                   	<%
-										for(HashMap<String, Object> proMap : productList) {
-											// 판매중인것만 상세보기로 이동할 수 있습니다.
-											if(proMap.get("productStatus").equals("판매중")){
-									%>
-													 <div class="col-lg-6 col-sm-6">
-													  <div class="single_product_item">
-                              						 	<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&product_save_filename=<%=proMap.get("productSaveFilename")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="200" height="200"></a> 
-													 	<a href="<%=request.getContextPath()%>/product/productOne.jsp"><%=proMap.get("productName") %></a><br>
-														<%=proMap.get("productPrice") %><br>
-                              						 	<%=proMap.get("productStatus") %>
-                              															<!-- ${pageContext.request.contextPath}는 현재 웹 애플리케이션의 루트 경로를 나타내는 변수이다   -->
-                              						 </div>
-													 </div>		
-									<% 
-											} else{
-									%>
-												<!-- 품절이거나 단종상품은 보기만 할 수 있고 상세보기 접근x -->
-												 <div class="col-lg-6 col-sm-6">
-                             						 <div class="single_product_item">
-                             						 	<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="200" height="200">
-                             						 	<%=proMap.get("productName") %><br>
-                             						 	<%=proMap.get("productPrice") %><br>
-                             						 	<%=proMap.get("productStatus") %>
-												 </div>
-												 </div>	
-									<% 		}
-										}
-									%>
-				</div>
+                                <%
+									for(HashMap<String, Object> proMap : productList) {
+										if(proMap.get("productStatus").equals("판매중")){
+								%>
+											<div class="col-lg-6 col-sm-6">
+											<div class="single_product_item">	
+												<!-- ${pageContext.request.contextPath}는 현재 웹 애플리케이션의 루트 경로를 나타내는 변수이다   -->
+												<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="200" height="200"></a>
+												<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>"><%=proMap.get("productName") %></a>
+												<br>
+												<%=proMap.get("productPrice") %>
+												<br>
+												<%=proMap.get("productStatus") %>
+												<%
+													if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+												%>
+														<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">수정</a>
+												<% 	
+													}
+												%>
+											</div>
+											</div>
+								<% 
+										} else{
+								%>
+											<div class="col-lg-6 col-sm-6">
+											<div class="single_product_item">
+												<!-- ${pageContext.request.contextPath}는 현재 웹 애플리케이션의 루트 경로를 나타내는 변수이다   -->
+												<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="200" height="200">
+												<%=proMap.get("productName") %>
+												<br>
+												<%=proMap.get("productPrice") %>
+												<br>
+												<%=proMap.get("productStatus") %>
+												<%
+													if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+												%>
+														<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">수정</a>
+												<% 	
+													}
+												%>
+											</div>
+											</div>
+								<% 		}
+									}
+								%>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>
@@ -181,21 +199,21 @@
                     <div class="client_review_slider owl-carousel">
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="img/client.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/client.png" alt="#">
                             </div>
                             <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="img/client_1.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/client_1.png" alt="#">
                             </div>
                             <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="img/client_2.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/client_2.png" alt="#">
                             </div>
                             <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
                             <h5>- Micky Mouse</h5>
@@ -227,25 +245,25 @@
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_1.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_1.svg" alt="#">
                         <h4>Credit Card Support</h4>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_2.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_2.svg" alt="#">
                         <h4>Online Order</h4>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_3.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_3.svg" alt="#">
                         <h4>Free Delivery</h4>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_4.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_4.svg" alt="#">
                         <h4>Product with Gift</h4>
                     </div>
                 </div>
@@ -281,7 +299,7 @@
                         <div class="col-lg-8">
                             <div class="footer_menu">
                                 <div class="footer_logo">
-                                    <a href="index.html"><img src="img/logo.png" alt="#"></a>
+                                    <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                                 </div>
                                 <div class="footer_menu_item">
                                     <a href="index.html">Home</a>
@@ -326,31 +344,31 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!--::footer_part end::-->
 
     <!-- jquery plugins here-->
-    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery-1.12.1.min.js"></script>
     <!-- popper js -->
-    <script src="js/popper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/popper.min.js"></script>
     <!-- bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/bootstrap.min.js"></script>
     <!-- easing js -->
-    <script src="js/jquery.magnific-popup.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.magnific-popup.js"></script>
     <!-- swiper js -->
-    <script src="js/swiper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/swiper.min.js"></script>
     <!-- swiper js -->
-    <script src="js/mixitup.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/mixitup.min.js"></script>
     <!-- particles js -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/owl.carousel.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.nice-select.min.js"></script>
     <!-- slick js -->
-    <script src="js/slick.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/slick.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.counterup.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/contact.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.ajaxchimp.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.form.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.validate.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/mail-script.js"></script>
     <!-- custom js -->
-    <script src="js/custom.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/custom.js"></script>
 </body>
 
 </html>

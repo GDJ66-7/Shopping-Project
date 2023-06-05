@@ -20,22 +20,22 @@
     <title>pillloMart</title>
     <link rel="icon" href="img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
     <!-- flaticon CSS -->
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
     <!-- style CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 
 <body>
@@ -45,7 +45,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -94,8 +94,8 @@
             </div>
         </div>
         <div class="banner_img">
-            <img src="img/banner.png" alt="#" class="img-fluid">
-            <img src="img/banner_pattern.png " alt="#" class="pattern_img img-fluid">
+            <img src="<%=request.getContextPath()%>/css/img/banner.png" alt="#" class="img-fluid">
+            <img src="<%=request.getContextPath()%>/css/img/banner_pattern.png " alt="#" class="pattern_img img-fluid">
         </div>
     </section>
     <!-- banner part start-->
@@ -109,8 +109,8 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_img">
-                                    <img src="img/single_product_1.png" class="img-fluid" alt="#">
-                                    <img src="img/product_overlay.png" alt="#" class="product_overlay img-fluid">
+                                    <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">
+                                    <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
                                 </div>
                             </div>
                             <div class="col-lg-5 col-sm-6">
@@ -128,8 +128,8 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_img">
-                                    <img src="img/single_product_2.png" class="img-fluid" alt="#">
-                                    <img src="img/product_overlay.png" alt="#" class="product_overlay img-fluid">
+                                    <img src="<%=request.getContextPath()%>/css/img/single_product_2.png" class="img-fluid" alt="#">
+                                    <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
                                 </div>
                             </div>
                             <div class="col-lg-5 col-sm-6">
@@ -147,8 +147,8 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_img">
-                                    <img src="img/single_product_3.png" class="img-fluid" alt="#">
-                                    <img src="img/product_overlay.png" alt="#" class="product_overlay img-fluid">
+                                    <img src="<%=request.getContextPath()%>/css/img/single_product_3.png" class="img-fluid" alt="#">
+                                    <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
                                 </div>
                             </div>
                             <div class="col-lg-5 col-sm-6">
@@ -183,7 +183,7 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
                         <div class="single_product_item_thumb">
-                            <img src="img/tranding_item/tranding_item_1.png" alt="#" class="img-fluid">
+                            <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_1.png" alt="#" class="img-fluid">
                         </div>
                         <h3> <a href="single-product.html">Cervical pillow for airplane
                         car office nap pillow</a> </h3>
@@ -192,21 +192,21 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
-                        <img src="img/tranding_item/tranding_item_2.png" alt="#" class="img-fluid">
+                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_2.png" alt="#" class="img-fluid">
                         <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
                         <p>From $5</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
-                        <img src="img/tranding_item/tranding_item_3.png" alt="#" class="img-fluid">
+                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_3.png" alt="#" class="img-fluid">
                         <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
                         <p>From $5</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
-                        <img src="img/tranding_item/tranding_item_4.png" alt="#" class="img-fluid">
+                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_4.png" alt="#" class="img-fluid">
                         <h3> <a href="single-product.html">Cervical pillow for airplane
                         car office nap pillow</a> </h3>
                         <p>From $5</p>
@@ -214,14 +214,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
-                        <img src="img/tranding_item/tranding_item_5.png" alt="#" class="img-fluid">
+                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_5.png" alt="#" class="img-fluid">
                         <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
                         <p>From $5</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <div class="single_product_item">
-                        <img src="img/tranding_item/tranding_item_6.png" alt="#" class="img-fluid">
+                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_6.png" alt="#" class="img-fluid">
                         <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
                         <p>From $5</p>
                     </div>
@@ -239,21 +239,21 @@
                     <div class="client_review_slider owl-carousel">
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="img/client.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/client.png" alt="#">
                             </div>
                             <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="img/client_1.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/client_1.png" alt="#">
                             </div>
                             <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="img/client_2.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/client_2.png" alt="#">
                             </div>
                             <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
                             <h5>- Micky Mouse</h5>
@@ -286,25 +286,25 @@
             <div class="row justify-content-center">
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_1.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_1.svg" alt="#">
                         <h4>Credit Card Support</h4>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_2.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_2.svg" alt="#">
                         <h4>Online Order</h4>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_3.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_3.svg" alt="#">
                         <h4>Free Delivery</h4>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_4.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_4.svg" alt="#">
                         <h4>Product with Gift</h4>
                     </div>
                 </div>
@@ -385,27 +385,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!--::footer_part end::-->
 
     <!-- jquery plugins here-->
-    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery-1.12.1.min.js"></script>
     <!-- popper js -->
-    <script src="js/popper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/popper.min.js"></script>
     <!-- bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/bootstrap.min.js"></script>
     <!-- magnific popup js -->
-    <script src="js/jquery.magnific-popup.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.magnific-popup.js"></script>
     <!-- carousel js -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/owl.carousel.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.nice-select.min.js"></script>
     <!-- slick js -->
-    <script src="js/slick.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/slick.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.counterup.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/contact.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.ajaxchimp.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.form.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.validate.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/mail-script.js"></script>
     <!-- custom js -->
-    <script src="js/custom.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/custom.js"></script>
 </body>
 
 </html>

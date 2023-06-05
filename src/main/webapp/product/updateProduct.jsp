@@ -6,26 +6,40 @@
 <%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	/*
-	// 관리자 로그인 요청값 검사
+	
+	// 관리자 로그인 요청값 검사 관리자2만이 상품수정 가능
 	if(session.getAttribute("loginEmpId2") == null) {
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
-	*/
+	
+	// 유효성 검사 및 변수선언
+	if(request.getParameter("productNo") == null
+		|| request.getParameter("productImgNo") == null) {
+		response.sendRedirect(request.getContextPath() + "/product/productList.jsp");
+		return;
+	}
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	int productImgNo = Integer.parseInt(request.getParameter("productImgNo"));
+	System.out.println(productNo + "<--- updateProduct productNo");
+	System.out.println(productImgNo + "<--- updateProduct productImgNo");
+	
+	// updateProductDAO를 사용하기 위한 객체생성
 	ProductDao pDao = new ProductDao();
 	
+	// 기존 상품의 정보를 보여주기 위해 해쉬맵으로 가져옴
 	HashMap<String, Object> pMap = new HashMap<>();
 	
-	int productNo = 12;
-	int productImgNo = 4;
-	
+	// 매개변수 값 두가지 를 넣어 보고싶은 상품의 정보를 가져옴
 	pMap = pDao.productOne(productNo, productImgNo);
 	
+	// 수정할 카테고리는 카테고리목록에 있는것만 가능하게 하기 위해 기존 카테고리 정보 호출
 	CategoryDao cDao = new CategoryDao();
 	ArrayList<HashMap<String, Object>> cList = cDao.categoryNameList();
-	System.out.println(pMap.get("productNo"));
-	System.out.println(pMap.get("productImgNo"));
+	
+	// 해쉬맵에 값 잘 들어가서 출력하나 디버깅
+	System.out.println(pMap.get("productNo") + "<-- updateProduct pMap.get(productNo)");
+	System.out.println(pMap.get("productImgNo")  + "<-- updateProduct pMap.get(productImgNo)");
 %>
 
 <!DOCTYPE html>
@@ -42,6 +56,7 @@
 			<tr>
 				<td>카테고리이름</td>
 				<td>
+					<!--  기존카테고리 보여주기 -->
 					<select name="categoryName">
 						<%
 							for(HashMap<String, Object> map : cList ) {

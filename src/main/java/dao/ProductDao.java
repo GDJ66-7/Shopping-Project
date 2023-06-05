@@ -183,8 +183,8 @@ public class ProductDao {
 		ORDER BY p.createdate DESC  LIMIT ? , ?;
 		 */
 		
-		String sql = "SELECT p.product_no, p.product_name, p.product_price, p.product_status, PI.product_save_filename\r\n"
-				+ "		FROM product p INNER JOIN product_img PI ON p.product_no = PI.product_no\r\n"
+		String sql = "SELECT p.product_no, p.product_name, p.product_price, p.product_status, pi.product_img_no, pi.product_save_filename\r\n"
+				+ "		FROM product p INNER JOIN product_img pi ON p.product_no = pi.product_no\r\n"
 				+ "		ORDER BY p.createdate DESC  LIMIT ? , ?";
 		ArrayList<HashMap<String, Object>> productList = new ArrayList<HashMap<String, Object>>();
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -199,6 +199,7 @@ public class ProductDao {
 			map.put("productName", rs.getString("product_name"));
 			map.put("productPrice", rs.getInt("product_price"));
 			map.put("productStatus", rs.getString("product_status"));
+			map.put("productImgNo", rs.getInt("product_img_no"));
 			map.put("productSaveFilename", rs.getString("product_save_filename"));
 			productList.add(map);
 		}

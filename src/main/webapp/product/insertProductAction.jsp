@@ -7,6 +7,7 @@
 <%@ page import="java.io.*" %>
 
 <%
+	request.setCharacterEncoding("utf-8");
 	// 요청값 디버깅
 	System.out.println(request.getParameter("categoryName") + "categoryName");
 	System.out.println(request.getParameter("productName") + "productName");
