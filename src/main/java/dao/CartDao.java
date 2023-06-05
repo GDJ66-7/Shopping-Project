@@ -9,7 +9,6 @@ public class CartDao {
 	
 	// 1. 고객ID에 해당하는 장바구니 상품 목록
 	public ArrayList<HashMap<String, Object>> cartList(String id) throws Exception {
-		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "SELECT c.product_no 상품번호,"
@@ -33,6 +32,8 @@ public class CartDao {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		ResultSet rs = stmt.executeQuery();
+		
+		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		while(rs.next()) {
 			HashMap<String, Object> c = new HashMap<>();
 			c.put("상품번호", rs.getInt("상품번호"));
@@ -52,10 +53,82 @@ public class CartDao {
 		return list;
 	}
 	
+	// 2. 장바구니에서 수량 수정 가능한 최대 값
+	public int maxCartCnt(int productNo) throws Exception {
+		int row = 0;
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();				
+		String sql = "SELECT product_stock"
+				+ " FROM product"
+				+ " WHERE product_no = ?";
+		//product_stock
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1,productNo);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			row = rs.getInt("product_stock");
+		}
+		return row;
+	}
+	
+	// 3. 장바구니 단일 상품 삭제
+	public int deleteSingleCart(Cart cart) throws Exception {
+		int row = 0;
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "DELETE FROM cart WHERE product_no = ? AND id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, cart.getProductNo());
+		stmt.setString(2, cart.getId());	
+		row = stmt.executeUpdate();
+		return row;
+	}
+	
+	// 4. 장바구니 단일 상품 수량 수정
+	public int updateSingleCart(Cart cart) throws Exception {
+		int row = 0;
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "UPDATE cart "
+				+ "SET cart_cnt = ? "
+				+ "WHERE cart_no = ? AND id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, cart.getCartCnt());
+		stmt.setInt(2, cart.getCartNo());
+		stmt.setString(3, cart.getId());
+		row = stmt.executeUpdate();
+		return row;
+	}
+	
+	// 5. 장바구니 체크 상태 수정
+	public int updateChecked(Cart cart) throws Exception {
+		int row = 0;
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "UPDATE cart "
+				+ "SET checked = '?' "
+				+ "WHERE cart_no = ? AND id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, cart.getChecked());
+		stmt.setInt(2, cart.getCartNo());
+		stmt.setString(3, cart.getId());
+		row = stmt.executeUpdate();
+		return row;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
-	
-	
 	// 장바구니 상품 추가
 	public int insertCart(Cart cart) throws Exception {
 		int row = 0;
@@ -100,32 +173,7 @@ public class CartDao {
 		return row;
 	}
 	
-	// 장바구니 상품 수량 수정
-	public int updateCartQuantity(Cart cart) throws Exception {
-		int row = 0;
-		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection();
-		String sql = "UPDATE cart SET cart_cnt = ? WHERE product_no = ? AND id = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, cart.getCartCnt());
-		stmt.setInt(2, cart.getProductNo());
-		stmt.setString(3, cart.getId());
-		row = stmt.executeUpdate();
-		return row;
-	}
 	
-	// 장바구니 상품 삭제 버튼
-	public int deleteCart(Cart cart) throws Exception {
-		int row = 0;
-		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection();
-		String sql = "DELETE FROM cart WHERE product_no = ? AND id = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, cart.getProductNo());
-		stmt.setString(2, cart.getId());	
-		row = stmt.executeUpdate();
-		return row;
-	}
 
 	// 구매완료(성공)시 장바구니 상품 삭제
 	public int deleteCartId(String id) throws Exception {
@@ -138,7 +186,9 @@ public class CartDao {
 		row = stmt.executeUpdate();
 		return row;
 	}
-	// ----------------------------------------------------------------
+	
+	 */
+	// --------------------- orderCart ---------------------------
 	
 	// 	장바구니에서 구매할 상품들 조회
 	public ArrayList<HashMap<String, Object>> selectCartOrder(String id) throws Exception {
@@ -188,6 +238,5 @@ public class CartDao {
 	}
 	
 	
-	*/
 	
 }	

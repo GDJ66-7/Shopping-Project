@@ -4,8 +4,9 @@ public class Cart {
 	private int cartNo;
 	private int productNo;
 	private String id;
-	private String createdate;
 	private int cartCnt;
+	private String checked;
+	private String createdate;
 	private String updatedate;
 	public int getCartNo() {
 		return cartNo;
@@ -25,17 +26,23 @@ public class Cart {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getCreatedate() {
-		return createdate;
-	}
-	public void setCreatedate(String createdate) {
-		this.createdate = createdate;
-	}
 	public int getCartCnt() {
 		return cartCnt;
 	}
 	public void setCartCnt(int cartCnt) {
 		this.cartCnt = cartCnt;
+	}
+	public String getChecked() {
+		return checked;
+	}
+	public void setChecked(String checked) {
+		this.checked = checked;
+	}
+	public String getCreatedate() {
+		return createdate;
+	}
+	public void setCreatedate(String createdate) {
+		this.createdate = createdate;
 	}
 	public String getUpdatedate() {
 		return updatedate;
@@ -43,6 +50,7 @@ public class Cart {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
+	
 
 	
 }

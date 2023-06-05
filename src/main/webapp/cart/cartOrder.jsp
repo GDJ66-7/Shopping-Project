@@ -45,8 +45,6 @@
 					<th>휴대폰 번호</th>
 					<td><%=(String)(co.get("휴대폰번호"))%></td>
 				</tr>
-			
-
 				<tr>
 					<th>이름</th>
 					<td><%=(String)(co.get("이름"))%></td>
