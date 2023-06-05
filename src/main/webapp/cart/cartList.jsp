@@ -8,10 +8,8 @@
 
 	// 비회원 장바구니
 	
-
 	String id = "customer1";
 	
-
 	// 1. 장바구니 상품 목록 메서드
 	CartDao cartDao = new CartDao();	
 	ArrayList<HashMap<String, Object>> list = cartDao.cartList(id);
@@ -59,7 +57,9 @@
 			<tr>			
 				<td>
 					<!-- 체크 상태를 수정 하기 위한 폼 -->
-					<form action="<%=request.getContextPath()%>/cart/updateCheckedAction.jsp">
+					<form action="<%=request.getContextPath()%>/cart/updateCheckedAction.jsp" method="post">
+					<input type="hidden" name=id value="<%=(String)(c.get("아이디"))%>">
+					<input type="hidden" name=cartNo value="<%=(int)(c.get("장바구니번호"))%>">
 					<label>	
 						<input type="radio" name="checked" value="y" <%=(checked.equals("y")) ? "checked" : ""%>> Y
 					</label>

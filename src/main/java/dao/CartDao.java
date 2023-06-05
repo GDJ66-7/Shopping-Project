@@ -6,7 +6,6 @@ import java.util.*;
 import vo.*;
 
 public class CartDao {
-	
 	// 1. 고객ID에 해당하는 장바구니 상품 목록
 	public ArrayList<HashMap<String, Object>> cartList(String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
@@ -24,9 +23,9 @@ public class CartDao {
 				+ " c.createdate 생성일,"
 				+ " c.updatedate 수정일"
 				+ " FROM cart c"
-				+ " 	INNER JOIN product p ON c.product_no = p.product_no"
-				+ " 	INNER JOIN discount d ON p.product_no = d.discount_no"
-				+ " 	INNER JOIN product_img i ON p.product_no = i.product_no"
+				+ " 	INNER JOIN product p ON c.product_no = p.product_no "
+				+ " 	INNER JOIN discount d ON p.product_no = d.product_no "
+				+ " 	INNER JOIN product_img i ON p.product_no = i.product_no "
 				+ " 	INNER JOIN customer m ON c.id = m.id"
 				+ " WHERE m.id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -55,7 +54,6 @@ public class CartDao {
 	
 	// 2. 장바구니에서 수량 수정 가능한 최대 값
 	public int maxCartCnt(int productNo) throws Exception {
-		int row = 0;
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();				
 		String sql = "SELECT product_stock"
@@ -65,6 +63,7 @@ public class CartDao {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1,productNo);
 		ResultSet rs = stmt.executeQuery();
+		int row = 0;
 		if(rs.next()) {
 			row = rs.getInt("product_stock");
 		}
@@ -73,20 +72,19 @@ public class CartDao {
 	
 	// 3. 장바구니 단일 상품 삭제
 	public int deleteSingleCart(Cart cart) throws Exception {
-		int row = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "DELETE FROM cart WHERE product_no = ? AND id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, cart.getProductNo());
 		stmt.setString(2, cart.getId());	
+		int row = 0;
 		row = stmt.executeUpdate();
 		return row;
 	}
 	
 	// 4. 장바구니 단일 상품 수량 수정
 	public int updateSingleCart(Cart cart) throws Exception {
-		int row = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "UPDATE cart "
@@ -96,39 +94,164 @@ public class CartDao {
 		stmt.setInt(1, cart.getCartCnt());
 		stmt.setInt(2, cart.getCartNo());
 		stmt.setString(3, cart.getId());
+		int row = 0;
 		row = stmt.executeUpdate();
 		return row;
 	}
 	
-	// 5. 장바구니 체크 상태 수정
+	// 5. 장바구니 체크 변경
 	public int updateChecked(Cart cart) throws Exception {
-		int row = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "UPDATE cart "
-				+ "SET checked = '?' "
+				+ "SET checked = ? "
 				+ "WHERE cart_no = ? AND id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, cart.getChecked());
 		stmt.setInt(2, cart.getCartNo());
 		stmt.setString(3, cart.getId());
+		int row = 0;
 		row = stmt.executeUpdate();
 		return row;
 	}
 	
+	// 6. 장바구니에서 선택한(checked = y) 상품 목록 조회
+	public ArrayList<HashMap<String, Object>> checkedList(String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT p.product_name 상품이름, c.cart_cnt 수량 "
+				+ "FROM cart c "
+				+ "		INNER JOIN product p ON c.product_no = p.product_no "
+				+ "		INNER JOIN customer m ON c.id = m.id "
+				+ "WHERE m.id = ? AND c.checked = 'y' ";
+	PreparedStatement stmt = conn.prepareStatement(sql);
+	stmt.setString(1, id);
+	ResultSet rs = stmt.executeQuery();
+	ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
+	while(rs.next()) {
+		HashMap<String, Object> c = new HashMap<>();
+		c.put("상품이름", rs.getString("상품이름"));
+		c.put("수량", rs.getInt("수량"));
+		list.add(c);
+	}
+	return list;
+	}
+	
+	// 7. 구매자정보, 받는사람정보, 결제정보 조회
+	public ArrayList<HashMap<String, Object>> cartOrderList(String id) throws Exception {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT m.cstm_name 이름, "
+				+ "m.cstm_email 이메일, "
+				+ "m.cstm_phone 휴대폰번호, "
+				+ "m.cstm_address 배송주소, "
+				+ "p.product_name 배송상품, "
+				+ "c.cart_cnt 상품수량, "
+				+ "p.product_price * c.cart_cnt 총상품가격, "
+				+ "p.product_price * d.discount_rate 할인금액, "
+				+ "m.cstm_point 보유포인트, "
+				+ "p.product_price * (1 - d.discount_rate) * c.cart_cnt 결제금액, "
+				+ "sum(p.product_price * (1 - d.discount_rate) * c.cart_cnt) 총결제금액 "	
+				+ "FROM cart c "
+				+ "		INNER JOIN product p ON c.product_no = p.product_no "
+				+ "		INNER JOIN customer m ON c.id = m.id "
+				+ "		INNER JOIN discount d ON p.product_no = d.product_no "
+				+ "WHERE m.id = ? AND c.checked = 'y' ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);	
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			HashMap<String, Object> c = new HashMap<>();
+			c.put("이름", rs.getString("이름"));
+			c.put("이메일", rs.getString("이메일"));
+			c.put("휴대폰번호", rs.getString("휴대폰번호"));
+			c.put("배송주소", rs.getString("배송주소"));
+			c.put("배송상품", rs.getString("배송상품"));
+			c.put("상품수량", rs.getInt("상품수량"));
+			c.put("총상품가격", rs.getInt("총상품가격"));
+			c.put("할인금액", rs.getInt("할인금액"));
+			c.put("보유포인트", rs.getInt("보유포인트"));
+			c.put("결제금액", rs.getInt("결제금액"));
+			c.put("총결제금액", rs.getInt("총결제금액"));
+			list.add(c);
+		}
+		return list;
+	}
 	
 	
+	// 8. 결제시 주문 정보를 orders 테이블에 추가
+	public int insertCartOrder(Orders orders) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "INSERT INTO orders(product_no, id, payment_status, delivery_state, order_cnt, order_price, createdate, updatedate) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, NOW(), NOW())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, orders.getProductNo());
+		stmt.setString(2, orders.getId());
+		stmt.setString(3, orders.getPaymentStatus());
+		stmt.setString(4, orders.getDeliveryState());
+		stmt.setInt(5, orders.getOrderCnt());
+		stmt.setInt(6, orders.getOrderPrice());
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+}	
+
+
 	/*
+	// 7. 고객ID에 해당하는 정보 조회
+	public ArrayList<HashMap<String, Object>> selectCheckedProduct(String id) throws Exception {
+		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT m.cstm_name 이름, m.cstm_email 이메일, m.cstm_phone 휴대폰번호, m.cstm_address 배송주소, p.product_name 배송상품, "
+				+ "c.cart_cnt 상품수량, p.product_price * c.cart_cnt 총상품가격, p.product_price * d.discount_rate 할인금액, "
+				+ "m.cstm_point 보유포인트, p.product_price * (1 - d.discount_rate) * c.cart_cnt 총결제금액 "
+				+ "FROM cart c "
+				+ "INNER JOIN product p ON c.product_no = p.product_no "
+				+ "INNER JOIN customer m ON c.id = m.id "
+				+ "INNER JOIN discount d ON p.product_no = d.product_no "
+				+ "WHERE m.id = ? AND c.checked = 'y' ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);	
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			HashMap<String, Object> c = new HashMap<>();
+			c.put("이름", rs.getString("이름"));
+			c.put("이메일", rs.getString("이메일"));
+			c.put("휴대폰번호", rs.getString("휴대폰번호"));
+			c.put("배송주소", rs.getString("배송주소"));
+			c.put("배송상품", rs.getString("배송상품"));
+			c.put("상품수량", rs.getInt("상품수량"));
+			c.put("총상품가격", rs.getInt("총상품가격"));
+			c.put("할인금액", rs.getInt("할인금액"));
+			c.put("보유포인트", rs.getInt("보유포인트"));
+			c.put("총결제금액", rs.getInt("총결제금액"));
+			list.add(c);
+		}
+		return list;
+	}
+	
+	 */
+
+/*
+	// 주소값을 넘기면 해당 주소로 업데이트
+	public int addressCartOrder(String address, int orderNo) throws Exception {
+		int row = 0;
+		DBUtil DBUtil = new DBUtil();
+		Connection conn = DBUtil.getConnection();
+		
+		String sql = "UPDATE orders SET order_address = ? WHERE order_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, address);
+		stmt.setInt(2, orderNo);
+		row = stmt.executeUpdate();
+		return row;
+}
 	// 장바구니 상품 추가
 	public int insertCart(Cart cart) throws Exception {
 		int row = 0;
@@ -187,56 +310,4 @@ public class CartDao {
 		return row;
 	}
 	
-	 */
-	// --------------------- orderCart ---------------------------
-	
-	// 	장바구니에서 구매할 상품들 조회
-	public ArrayList<HashMap<String, Object>> selectCartOrder(String id) throws Exception {
-		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
-		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection();
-		String sql = "SELECT m.cstm_name 이름, m.cstm_email 이메일, m.cstm_phone 휴대폰번호, m.cstm_address 배송주소, p.product_name 배송상품, "
-				+ "c.cart_cnt 상품수량, p.product_price * c.cart_cnt 총상품가격, p.product_price * d.discount_rate 할인금액, "
-				+ "m.cstm_point 보유포인트, p.product_price * (1 - d.discount_rate) * c.cart_cnt 총결제금액 "
-				+ "FROM cart c "
-				+ "INNER JOIN product p ON c.product_no = p.product_no "
-				+ "INNER JOIN customer m ON c.id = m.id "
-				+ "INNER JOIN discount d ON p.product_no = d.product_no "
-				+ "WHERE m.id = ? ";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, id);
-		ResultSet rs = stmt.executeQuery();
-		if(rs.next()) {
-			HashMap<String, Object> co = new HashMap<>();
-			co.put("이름", rs.getString("이름"));
-			co.put("이메일", rs.getString("이메일"));
-			co.put("휴대폰번호", rs.getString("휴대폰번호"));
-			co.put("배송주소", rs.getString("배송주소"));
-			co.put("배송상품", rs.getString("배송상품"));
-			co.put("상품수량", rs.getInt("상품수량"));
-			co.put("총상품가격", rs.getInt("총상품가격"));
-			co.put("할인금액", rs.getInt("할인금액"));
-			co.put("보유포인트", rs.getInt("보유포인트"));
-			co.put("총결제금액", rs.getInt("총결제금액"));
-			list.add(co);
-		}
-		return list;
-	}
-	
-	// 주소값을 넘기면 해당 주소로 업데이트
-	public int addressCartOrder(String address, int orderNo) throws Exception {
-		int row = 0;
-		DBUtil DBUtil = new DBUtil();
-		Connection conn = DBUtil.getConnection();
-		
-		String sql = "UPDATE orders SET order_address = ? WHERE order_no = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, address);
-		stmt.setInt(2, orderNo);
-		row = stmt.executeUpdate();
-		return row;
-	}
-	
-	
-	
-}	
+ */
