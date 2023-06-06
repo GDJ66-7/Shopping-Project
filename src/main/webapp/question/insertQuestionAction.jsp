@@ -24,6 +24,7 @@
 	System.out.println(qTitle+"<----title");
 	System.out.println(qContent+"<----cont");
 	
+	// vo 저장 생성
 	Question question = new Question();
 	
 	question.setProductNo(productNo);

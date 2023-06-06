@@ -66,7 +66,7 @@
 	<h3>상품상세</h3>
 	<table>
 		<tr>
-			<td colspan="2">카테고리</td>
+			<td>카테고리</td>
 			<td><%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
 		</tr>
 		<tr>
@@ -74,6 +74,9 @@
 		</tr>
 		<tr>
 			<td><%=p.get("productName")%></td><!-- 상품이름 -->
+		</tr>
+		<tr>
+			<td><%=p.get("productPrice")%>원</td><!-- 상품가격 -->
 		</tr>
 		<tr>
 			<td><%=p.get("productInfo")%></td><!-- 상품정보 -->

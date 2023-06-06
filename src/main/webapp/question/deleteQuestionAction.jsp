@@ -7,6 +7,13 @@
 
 	//작성자 유효성 검사 추가하기
 	
+	//
+	if(request.getParameter("qNo") == null
+	|| request.getParameter("qNo").equals("")){
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+		return;
+	}
+	
 	//요청값 변수 저장
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	
