@@ -4,9 +4,12 @@
 <%@ page import="java.util.*"%>
 
 <%
+	// 한글 깨짐 방지 인코딩
+	request.setCharacterEncoding("utf-8");
+
 	String id = "customer1";
 
-	//dao 객체 생성
+	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
 
 	// 6. 장바구니에서 체크한 상품 조회 메서드
@@ -17,7 +20,6 @@
 	
 	// 8. 결제시 주문 정보를 orders 테이블에 추가
 	
-
 %>
 
 
@@ -48,17 +50,11 @@
 				<tr>
 					<th>휴대폰 번호</th>
 					<td><%=(String)(c.get("휴대폰번호"))%></td>
-				</tr>
-		<%
-			}
-		%>
+				</tr>	
 	</table>
 	
 	<h4>받는사람정보</h4>
 	<table class="table">
-		<%
-			for(HashMap<String, Object> c : list1) { 				
-		%>
 				<tr>
 					<th>이름</th>
 					<td><%=(String)(c.get("이름"))%></td>
@@ -76,7 +72,6 @@
 		%>
 	
 	</table>
-	
 	
 	<h4>배송 상품</h4>
 	<table class="table">			
@@ -125,13 +120,8 @@
 				</tr>
 		<%	
 			}
-		%>	
-		
+		%>		
 	</table>
-	
-
-
-
-</div>
+</div>	
 </body>
 </html>

@@ -4,6 +4,9 @@
 
 
 <%
+	//한글 깨짐 방지 인코딩
+	request.setCharacterEncoding("utf-8");
+
 	// 받아온 값 유효성 검사
 	if(request.getParameter("cartCnt") == null
 		|| request.getParameter("cartNo")== null

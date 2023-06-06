@@ -3,8 +3,9 @@
 <%@ page import="vo.*"%>
 
 <%
-
-
+	
+	//한글 깨짐 방지 인코딩
+	request.setCharacterEncoding("utf-8");
 
 	
 
