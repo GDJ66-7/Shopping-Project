@@ -14,10 +14,11 @@
 	// 1. 장바구니 상품 목록 메서드
 	ArrayList<HashMap<String, Object>> list1 = cartDao.cartList(id);
 	
-	// 7. 결제정보 조회 메서드
-	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
+	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
+	int point = 0;	// 포인트 관련 메소드를 point에 저장할 예정
+	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(point ,id);
 	
-	 // 체크된 상품이 있는지 확인(구매하기 버튼관련)
+	// 체크된 상품이 있는지 확인(구매하기 버튼관련)
     boolean CheckedItem = false;
     for(HashMap<String, Object> c : list1) {
         String checkedList = (String) c.get("체크");

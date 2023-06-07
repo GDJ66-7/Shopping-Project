@@ -55,7 +55,7 @@ public class CartDao {
 				+ "c.id 아이디, "
 				+ "p.product_name 상품이름, "
 				+ "p.product_price 상품가격, "
-				+ "p.product_price*(1- IFNULL(d.discount_rate, 0)) 할인상품가격, "
+				+ "p.product_price*IFNULL(d.discount_rate, 0) 할인상품가격, "
 				+ "p.product_price*(1- IFNULL(d.discount_rate, 0))*c.cart_cnt 전체가격, "
 				+ "c.cart_cnt 수량, "
 				+ "c.checked 체크 "
@@ -171,7 +171,7 @@ public class CartDao {
 	}
 	
 	// 7. 구매자정보, 받는사람정보 조회
-	public ArrayList<HashMap<String, Object>> cartOrderList(String id) throws Exception {
+	public ArrayList<HashMap<String, Object>> cartOrderList(int point, String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "SELECT m.id 아이디, "
@@ -181,17 +181,18 @@ public class CartDao {
 				+ "m.cstm_address 배송주소, "
 				+ "m.cstm_point 보유포인트, "
 				+ "SUM(p.product_price * c.cart_cnt) 총상품가격, "
-				+ "SUM(p.product_price) * SUM((1- IFNULL(d.discount_rate, 0))) 할인적용금액, "
-				+ "SUM(p.product_price) - SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))) 할인금액, "
-				+ "SUM(p.product_price*(1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 전체금액, "
-				+ "SUM((p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt)) - m.cstm_point 총결제금액 "
+				+ "SUM(p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt) 할인적용금액, "
+				+ "SUM(p.product_price * c.cart_cnt) - SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 할인금액, "
+				+ "SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 전체금액, "
+				+ "SUM((p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt)) - ? 총결제금액 "
 				+ "FROM cart c "
 				+ "		LEFT OUTER JOIN product p ON c.product_no = p.product_no "
 				+ "     LEFT OUTER JOIN customer m ON c.id = m.id "
 				+ "     LEFT OUTER JOIN discount d ON p.product_no = d.product_no "
 				+ "WHERE m.id = ? AND c.checked = 'y'";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, id);	
+		stmt.setInt(1, point);
+		stmt.setString(2, id);	
 		ResultSet rs = stmt.executeQuery();
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		if(rs.next()) {
@@ -212,11 +213,26 @@ public class CartDao {
 		return list;
 	}
 
+	// 8. 구매자 포인트 조회 
+	/*
+	 * 
+	int row = 0;
+	if(rs.next()) {
+		row = rs.getInt(1);
+	}
+	
+	*/
 	
 	
+	// 포인트 사용(-)
 	
+	// 주문결제시
+	// - 포인트 적립(저장)	
+	// - 주소 주문내역 저장
+	// - 주문정보 orders테이블에 저장
 	
-	
+	// 주문 완료시
+	// 장바구니 모든 상품 삭제(y and id)
 	
 	// 9. 결제시 주문 정보를 orders 테이블에 추가
 	public int insertCartOrder(Orders orders) throws Exception {
@@ -237,7 +253,6 @@ public class CartDao {
 	}
 	
 
-}	
 
 
 /*
@@ -268,3 +283,5 @@ public class CartDao {
 	}
 	
  */
+	
+}	

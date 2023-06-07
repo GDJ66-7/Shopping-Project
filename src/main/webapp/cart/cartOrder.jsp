@@ -8,15 +8,16 @@
 	request.setCharacterEncoding("utf-8");
 
 	String id = "customer1";
-
+	
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
 
 	// 6. 장바구니에서 체크한 상품 조회 메서드
 	ArrayList<HashMap<String, Object>> list6 = cartDao.checkedList(id);
 	
-	// 7. 구매자정보, 받는사람정보, 결제정보 조회
-	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
+	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
+	int point = 0; // 포인트 관련 메소드를 point에 저장할 예정
+	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(point, id);
 	
 	
 	
