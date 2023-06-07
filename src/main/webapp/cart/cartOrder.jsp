@@ -16,7 +16,7 @@
 	ArrayList<HashMap<String, Object>> list = cartDao.checkedList(id);
 	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회
-	ArrayList<HashMap<String, Object>> list1 = cartDao.cartOrderList(id);
+	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
 	
 	// 8. 결제시 주문 정보를 orders 테이블에 추가
 	
@@ -37,7 +37,7 @@
 	<h4>구매자정보</h4>
 	<table class="table">
 		<%
-			for(HashMap<String, Object> c : list1) { 				
+			for(HashMap<String, Object> c : list7) { 				
 		%>
 				<tr>
 					<th>이름</th>
@@ -96,7 +96,7 @@
 	<h4>결제정보</h4>
 	<table class="table">
 		<%
-			for(HashMap<String, Object> c : list1) { 				
+			for(HashMap<String, Object> c : list7) { 				
 		%>
 				<tr>
 					<th>총상품가격</th>

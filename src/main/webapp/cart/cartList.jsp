@@ -12,14 +12,14 @@
 	CartDao cartDao = new CartDao();
 	
 	// 1. 장바구니 상품 목록 메서드
-	ArrayList<HashMap<String, Object>> list = cartDao.cartList(id);
+	ArrayList<HashMap<String, Object>> list1 = cartDao.cartList(id);
 	
 	// 7. 결제정보 조회 메서드
-	ArrayList<HashMap<String, Object>> list1 = cartDao.cartOrderList(id);
+	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
 	
 	 // 체크된 상품이 있는지 확인(구매하기 버튼관련)
     boolean CheckedItem = false;
-    for(HashMap<String, Object> c : list) {
+    for(HashMap<String, Object> c : list1) {
         String checkedList = (String) c.get("체크");
         if(checkedList.equals("y")) {
             CheckedItem = true;
@@ -55,7 +55,7 @@
 			<th>삭제</th>
 		</tr>	
 		<%
-			for(HashMap<String, Object> c : list) {	
+			for(HashMap<String, Object> c : list1) {	
 				// 1. 변수에 조회한 값을 저장
 				int productNo = (int)(c.get("상품번호"));
 				int cartCnt = (int)(c.get("수량"));
@@ -118,12 +118,11 @@
 				</td>
 				<td>
 					<%=(int)(c.get("전체가격"))%>원
-				</td>
-				
+				</td>	
 				<td>
 					<!-- 단일행 삭제를 위한 폼 -->
 					<form action="<%=request.getContextPath()%>/cart/deleteCartAction.jsp" method="post">
-						<input type="hidden" name="productNo" value="<%=(int)(c.get("상품번호"))%>">
+						<input type="hidden" name="cartNo" value="<%=(int)(c.get("장바구니번호"))%>">
 						<input type="hidden" name="id" value="<%=(String)(c.get("아이디"))%>">				
 						<input type="submit" value="X">
 					</form>
@@ -136,7 +135,7 @@
 	
 	<table class="table">
 		<%
-			for(HashMap<String, Object> c : list1) {			
+			for(HashMap<String, Object> c : list7) {			
 		%>
 			<tr>
 				<th>
