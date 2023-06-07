@@ -16,15 +16,17 @@
 	}
 	//요청값 디버깅
 	System.out.println(request.getParameter("id")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("pw")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("checkPw")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmName")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmAddress")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmEmail")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmBirth")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmPhone")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmGender")+"<-- insertCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmAgree")+"<-- insertCustomerAction.jsp id");
+	System.out.println(request.getParameter("pw")+"<-- insertCustomerAction.jsp pw");
+	System.out.println(request.getParameter("checkPw")+"<-- insertCustomerAction.jsp checkPw");
+	System.out.println(request.getParameter("cstmName")+"<-- insertCustomerAction.jsp cstmName");
+	System.out.println(request.getParameter("cstmAddress")+"<-- insertCustomerAction.jsp cstmAddress");
+	System.out.println(request.getParameter("cstmEmail")+"<-- insertCustomerAction.jsp cstmEmail");
+	System.out.println(request.getParameter("cstmBirth")+"<-- insertCustomerAction.jsp cstmBirth");
+	System.out.println(request.getParameter("cstmPhone")+"<-- insertCustomerAction.jsp cstmPhone");
+	System.out.println(request.getParameter("cstmQuestion")+"<-- insertCustomerAction.jsp cstmQuestion");
+	System.out.println(request.getParameter("cstmGender")+"<-- insertCustomerAction.jsp cstmGender");
+	System.out.println(request.getParameter("cstmAgree")+"<-- insertCustomerAction.jsp cstmAgree");
+
 	
 	//메세지 출력 변수 선언
 		String msg = "";
@@ -70,6 +72,7 @@
 		String cstmPhone = request.getParameter("cstmPhone");
 		String cstmGender = request.getParameter("cstmGender");
 		String cstmAgree = request.getParameter("cstmAgree");
+		String cstmQuestion = request.getParameter("cstmQuestion");
 		//IdList 클래스에 변수값저장
 		IdList idList = new IdList();
 		idList.setId(id);
@@ -98,6 +101,7 @@
 		customer.setCstmPhone(cstmPhone);
 		customer.setCstmGender(cstmGender);
 		customer.setCstmAgree(cstmAgree);
+		customer.setCstmQuestion(cstmQuestion);
 		
 		MemberDao insertCstm = new MemberDao();
 		int inRow = insertCstm.insertCustomer(customer);

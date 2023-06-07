@@ -16,9 +16,9 @@
 	}
 	//요청값 디버깅
 		System.out.println(request.getParameter("id")+"<-- updatePasswordAction.jsp id");
-		System.out.println(request.getParameter("onePw")+"<-- updatePasswordAction.jsp id");
-		System.out.println(request.getParameter("pw")+"<-- updatePasswordAction.jsp id");
-		System.out.println(request.getParameter("checkPw")+"<-- updatePasswordAction.jsp id");
+		System.out.println(request.getParameter("onePw")+"<-- updatePasswordAction.jsp onePw");
+		System.out.println(request.getParameter("pw")+"<-- updatePasswordAction.jsp pw");
+		System.out.println(request.getParameter("checkPw")+"<-- updatePasswordAction.jsp checkPw");
 	//메세지 출력 변수 선언
 		String msg = "";
 	//요청값 유효성 검사

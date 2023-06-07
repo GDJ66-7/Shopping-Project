@@ -104,26 +104,26 @@ String id = (String)(session.getAttribute("loginCstmId"));
         	}
       	 %>		
 	</h1>
-	<form action="<%=request.getContextPath()%>/customer/updatePasswordAction.jsp" method="get">
+	<form action="<%=request.getContextPath()%>/customer/updatePasswordAction.jsp" method="post">
 					<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
 		<table class="table table-bordered">
 			
 			<tr>
 				<td>원래 비밀번호 :</td>
 				<td>
-					<input type="password" name="onePw" placeholder="비밀번호">
+					<input type="password" name="onePw" placeholder="비밀번호" required="required">
 				</td>
 			</tr>
 			<tr>
 				<td>변경할 비밀번호 :</td>
 				<td>
-					<input type="password" name="pw" placeholder="비밀번호">
+					<input type="password" name="pw" placeholder="비밀번호" required="required">
 				</td>
 			</tr>
 			<tr>
 				<td>변경할 비밀번호 재확인 :</td>
 				<td>
-					<input type="password" name="checkPw" placeholder="비밀번호 재확인">
+					<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required">
 				</td>
 			</tr>
 		</table>

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.mariadb.jdbc.export.Prepare;
 
 import util.DBUtil;
@@ -159,7 +161,7 @@ public class MemberDao {
 		Connection conn =  dbUtil.getConnection();
 		
 		// 고객 테이블 데이터 값 입력 쿼리
-		String customerSql = "INSERT INTO customer(id, cstm_name, cstm_address, cstm_email, cstm_birth, cstm_phone, cstm_gender, cstm_rank, cstm_point,cstm_last_login, cstm_agree, createdate, updatedate) values(?,?,?,?,?,?,?,'BRONZE',0,now(),?,now(),now())";
+		String customerSql = "INSERT INTO customer(id, cstm_name, cstm_address, cstm_email, cstm_birth, cstm_phone, cstm_gender, cstm_rank, cstm_point,cstm_last_login, cstm_agree, cstm_question,createdate, updatedate) values(?,?,?,?,?,?,?,'BRONZE',0,now(),?,?,now(),now())";
 		
 		PreparedStatement customerStmt = conn.prepareStatement(customerSql);
 		customerStmt.setString(1, customer.getId());
@@ -170,6 +172,7 @@ public class MemberDao {
 		customerStmt.setString(6, customer.getCstmPhone());
 		customerStmt.setString(7, customer.getCstmGender());
 		customerStmt.setString(8, customer.getCstmAgree());
+		customerStmt.setString(9, customer.getCstmQuestion());
 		row = customerStmt.executeUpdate();
 		return row;
 	}
@@ -298,7 +301,40 @@ public class MemberDao {
 		}
 		return list;
 	}
-	
-	
+	// 고객 아이디 찾기
+	public String fineId(Customer customer) throws Exception {
+		String findId = "";
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn =  dbUtil.getConnection();
+		String sql = "SELECT id FROM customer WHERE cstm_name = ? AND cstm_birth = ? AND cstm_phone = ? AND cstm_question = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, customer.getCstmName());
+		stmt.setString(2, customer.getCstmBirth());
+		stmt.setString(3, customer.getCstmPhone());
+		stmt.setString(4, customer.getCstmQuestion());
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			findId = rs.getString("id");
+		}
+		return findId;
+	}
+	//비밀번호 변경 전 체크
+	public int findPwCheck(Customer customer) throws Exception {
+		int row = 0;
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn =  dbUtil.getConnection();
+		String sql = "SELECT count(*) FROM customer WHERE id = ? AND cstm_name = ? AND cstm_birth = ? AND cstm_phone = ? AND cstm_question = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, customer.getId());
+		stmt.setString(2, customer.getCstmName());
+		stmt.setString(3, customer.getCstmBirth());
+		stmt.setString(4, customer.getCstmPhone());
+		stmt.setString(5, customer.getCstmQuestion());
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			row = rs.getInt("count(*)");
+		}
+		return row;
+	}
 	
 }

@@ -104,7 +104,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
         	}
       	 %>		
 	</h1>
-	<form action="<%=request.getContextPath()%>/customer/updateCustomerAction.jsp" method="get">
+	<form action="<%=request.getContextPath()%>/customer/updateCustomerAction.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
 		<table class="table table-bordered">	
 			<tr>

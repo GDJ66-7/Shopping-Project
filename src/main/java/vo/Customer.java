@@ -12,6 +12,7 @@ public class Customer {
 	private int cstmPoint;
 	private String cstmLastLogin;
 	private String cstmAgree;
+	private String cstmQuestion;
 	private String createdate;
 	private String updatedate;
 	public String getId() {
@@ -80,6 +81,12 @@ public class Customer {
 	public void setCstmAgree(String cstmAgree) {
 		this.cstmAgree = cstmAgree;
 	}
+	public String getCstmQuestion() {
+		return cstmQuestion;
+	}
+	public void setCstmQuestion(String cstmQuestion) {
+		this.cstmQuestion = cstmQuestion;
+	}
 	public String getCreatedate() {
 		return createdate;
 	}
@@ -92,5 +99,6 @@ public class Customer {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
+	
 	
 }

@@ -16,10 +16,10 @@
 	}
 //요청값 디버깅
 	System.out.println(request.getParameter("id")+"<-- updateCustomerAction.jsp id");
-	System.out.println(request.getParameter("pw")+"<-- updateCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmAddress")+"<-- updateCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmEmail")+"<-- updateCustomerAction.jsp id");
-	System.out.println(request.getParameter("cstmPhone")+"<-- updateCustomerAction.jsp id");
+	System.out.println(request.getParameter("pw")+"<-- updateCustomerAction.jsp pw");
+	System.out.println(request.getParameter("cstmAddress")+"<-- updateCustomerAction.jsp cstmAddress");
+	System.out.println(request.getParameter("cstmEmail")+"<-- updateCustomerAction.jsp cstmEmail");
+	System.out.println(request.getParameter("cstmPhone")+"<-- updateCustomerAction.jsp cstmPhone");
 	
 	//메세지 출력 변수 선언
 			String msg = "";

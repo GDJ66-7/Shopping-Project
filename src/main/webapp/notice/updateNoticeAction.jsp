@@ -27,11 +27,11 @@
 	int row = no.modifyNotice(notice);
 	if(row > 0){
 		msg = URLEncoder.encode("수정이 완료되었습니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/notice/noticeOne.jsp?noticeNo="+noticeNo+"msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/notice/noticeOne.jsp?noticeNo="+noticeNo+"&msg="+msg);
 		return;
 	} else if(row == 0){
 		msg = URLEncoder.encode("수정 불가능합니다. 기술팀에 문의 바랍니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/notice/noticeOne.jsp?noticeNo="+noticeNo+"msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/notice/noticeOne.jsp?noticeNo="+noticeNo+"&msg="+msg);
 		return;
 	}
 %>

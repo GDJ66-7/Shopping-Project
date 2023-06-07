@@ -105,7 +105,7 @@
         	}
       	 %>		
 	</h1>
-		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="get">
+		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post">
 
 						아이디<input type="text" name="id" placeholder="아이디" required="required" class="single-input"><br>
 
@@ -119,39 +119,21 @@
 
 						이메일<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
 
-						생년월일<input type="date" name="cstmBirth" class="single-input"><br>
+						생년월일 : <br><input type="date" name="cstmBirth" ><br>
 
 						전화번호<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
-					<div class="single-element-widget mt-30">
-					<div class="switch-wrap d-flex justify-content-between">
-					<p>성별</p>
-						<div class="primary-radio">
-							<input type="checkbox" name="cstmGender" value="남"  >
-							<label for="남"></label>&nbsp;
-						</div>
-					</div>
-					<div class="switch-wrap d-flex justify-content-between">
-						<p>여자</p>
-						<div class="primary-radio">
-							<input type="checkbox" name="cstmGender" value="여" >
-							<label for="여"></label>
-						</div>
-					</div>
-					<div class="switch-wrap d-flex justify-content-between">
-					<p>동의</p>
-						<div class="primary-radio">
-							<input type="checkbox" name="cstmAgree" value="y"  >
-							<label for="동의"></label>
-						</div>
-					</div>
-					<div class="switch-wrap d-flex justify-content-between">
-						<p>비동의</p>
-						<div class="primary-radio">
-							<input type="checkbox" name="cstmAgree" value="n" >
-							<label for="비동의"></label>	
-						</div>
-					</div>
-				</div>
+						
+						태어난 동네<input type="text" name="cstmQuestion" required="required" class="single-input"><br>
+				<p>성별</p>	
+				<input type="radio" name="cstmGender" value="남"  >
+							<label for="남">남자</label>
+				<input type="radio" name="cstmGender" value="여" >
+							<label for="여">여자ㅣ</label><br><br>
+				<p>개인정보동의</p>
+				<input type="radio" name="cstmAgree" value="y"  >
+							<label for="동의">동의</label>
+				<input type="radio" name="cstmAgree" value="n" >
+							<label for="비동의">비동의</label>	<br><br><br>
 			<button type="submit" class="genric-btn primary-border circle">가입하기</button>
 		</form>
     </div><br>
