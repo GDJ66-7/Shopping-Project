@@ -170,45 +170,55 @@ public class CartDao {
 		return list;
 	}
 	
-	// 7. 구매자정보, 받는사람정보, 결제정보 조회
+	// 7. 구매자정보, 받는사람정보 조회
 	public ArrayList<HashMap<String, Object>> cartOrderList(String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "SELECT m.cstm_name 이름, "
+		String sql = "SELECT m.id 아이디, "
+				+ "m.cstm_name 이름, "
 				+ "m.cstm_email 이메일, "
 				+ "m.cstm_phone 휴대폰번호, "
 				+ "m.cstm_address 배송주소, "
-				+ "p.product_price * c.cart_cnt 총상품가격, "
-				+ "p.product_price * d.discount_rate 할인금액, "
 				+ "m.cstm_point 보유포인트, "
-				+ "p.product_price * (1 - d.discount_rate) * c.cart_cnt 결제금액, "
-				+ "sum(p.product_price * (1 - d.discount_rate) * c.cart_cnt) 총결제금액 "	
+				+ "SUM(p.product_price * c.cart_cnt) 총상품가격, "
+				+ "SUM(p.product_price) * SUM((1- IFNULL(d.discount_rate, 0))) 할인적용금액, "
+				+ "SUM(p.product_price) - SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))) 할인금액, "
+				+ "SUM(p.product_price*(1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 전체금액, "
+				+ "SUM((p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt)) - m.cstm_point 총결제금액 "
 				+ "FROM cart c "
-				+ "		INNER JOIN product p ON c.product_no = p.product_no "
-				+ "		INNER JOIN customer m ON c.id = m.id "
-				+ "		INNER JOIN discount d ON p.product_no = d.product_no "
-				+ "WHERE m.id = ? AND c.checked = 'y' ";
+				+ "		LEFT OUTER JOIN product p ON c.product_no = p.product_no "
+				+ "     LEFT OUTER JOIN customer m ON c.id = m.id "
+				+ "     LEFT OUTER JOIN discount d ON p.product_no = d.product_no "
+				+ "WHERE m.id = ? AND c.checked = 'y'";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);	
 		ResultSet rs = stmt.executeQuery();
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		if(rs.next()) {
-			HashMap<String, Object> c = new HashMap<>();
+			HashMap<String, Object> c = new HashMap<>();	
+			c.put("아이디", rs.getString("아이디"));
 			c.put("이름", rs.getString("이름"));
 			c.put("이메일", rs.getString("이메일"));
 			c.put("휴대폰번호", rs.getString("휴대폰번호"));
 			c.put("배송주소", rs.getString("배송주소"));	
-			c.put("총상품가격", rs.getInt("총상품가격"));
-			c.put("할인금액", rs.getInt("할인금액"));
 			c.put("보유포인트", rs.getInt("보유포인트"));
-			c.put("결제금액", rs.getInt("결제금액"));
+			c.put("총상품가격", rs.getInt("총상품가격"));
+			c.put("할인적용금액", rs.getInt("할인적용금액"));
+			c.put("할인금액", rs.getInt("할인금액"));
+			c.put("전체금액", rs.getInt("전체금액"));
 			c.put("총결제금액", rs.getInt("총결제금액"));
 			list.add(c);
 		}
 		return list;
 	}
+
 	
-	// 8. 결제시 주문 정보를 orders 테이블에 추가
+	
+	
+	
+	
+	
+	// 9. 결제시 주문 정보를 orders 테이블에 추가
 	public int insertCartOrder(Orders orders) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();

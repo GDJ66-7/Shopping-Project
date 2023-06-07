@@ -139,7 +139,7 @@
 		%>
 			<tr>
 				<th>
-					총 상품가격 <%=c.get("총결제금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("총결제금액")%></span>
+					총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span>
 				</th>
 			</tr>
 		<%

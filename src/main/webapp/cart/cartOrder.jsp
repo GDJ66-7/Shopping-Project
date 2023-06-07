@@ -13,12 +13,12 @@
 	CartDao cartDao = new CartDao();	
 
 	// 6. 장바구니에서 체크한 상품 조회 메서드
-	ArrayList<HashMap<String, Object>> list = cartDao.checkedList(id);
+	ArrayList<HashMap<String, Object>> list6 = cartDao.checkedList(id);
 	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
 	
-	// 8. 결제시 주문 정보를 orders 테이블에 추가
+	
 	
 %>
 
@@ -77,13 +77,9 @@
 	<table class="table">			
 				<!-- 배송 상품 목록 -->
 		<%
-			for(HashMap<String, Object> c : list) {
+			for(HashMap<String, Object> c : list6) {
 				
 		%>		
-				<tr>
-					<th>상품이름</th>
-					<th>수량</th>
-				</tr>
 				<tr>
 					<td><%=(String)(c.get("상품이름"))%></td>
 					<td><%=(Integer)(c.get("수량"))%></td>
@@ -109,10 +105,6 @@
 				<tr>
 					<th>보유포인트</th>
 					<td><%=(Integer)(c.get("보유포인트"))%></td>
-				</tr>
-				<tr>
-					<th>결제금액</th>
-					<td><%=(Integer)(c.get("결제금액"))%></td>
 				</tr>
 				<tr>
 					<th>총결제금액</th>
