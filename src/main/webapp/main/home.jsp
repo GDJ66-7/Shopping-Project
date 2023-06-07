@@ -1,3 +1,6 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 관리자로 로그인시 관리자메인화면으로 이동 
@@ -5,7 +8,13 @@
 		// 관리자 메인 화면으로 이동
 		response.sendRedirect("empMain.jsp");
 		return;
-	} else 
+	} 
+		
+	ProductDao pDao = new ProductDao();
+	
+	ArrayList<HashMap<String, Object>> productList = pDao.productListLimit3();
+	
+	
 %>
 
 <!doctype html>
@@ -43,7 +52,8 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
+                    							<!--  이부분 경로 수정해야 로고 눌러도 홈으로 옴 -->
+                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +63,7 @@
 							<jsp:include page="/main/menuBar.jsp"></jsp:include>
 						</div>
                         <div class="hearer_icon d-flex align-items-center">
+                        <!--  돋보기 기능아직 없음 -->
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
                             <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
                                 <i class="flaticon-shopping-cart-black-shape"></i>
@@ -107,7 +118,17 @@
                         <div class="row align-items-center justify-content-between">
                             <div class="col-lg-6 col-sm-6">
                                 <div class="single_product_img">
-                                    <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">
+                                    <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->
+                                    <%
+                                    	for(HashMap<String,Object> map : productList) {
+                                    %>
+                                    	
+                                        	<div><img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid"></div>
+                                    		<div><a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200"></a></div>	
+                                        	<br>	
+                                    <% 	}
+                                    %>
+                             <!--       
                                     <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
                                 </div>
                             </div>
@@ -156,6 +177,7 @@
                                             brief modern throw 
                                             pillow case</a> </h2>
                                     <a href="product_list.html" class="btn_3">Explore Now</a>
+                                    -->  
                                 </div>
                             </div>
                         </div>

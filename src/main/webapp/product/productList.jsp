@@ -50,7 +50,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp""> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -143,24 +143,44 @@
 											<div class="col-lg-6 col-sm-6">
 											<div class="single_product_item">	
 												<!-- ${pageContext.request.contextPath}는 현재 웹 애플리케이션의 루트 경로를 나타내는 변수이다   -->
-												<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="200" height="200"></a>
-												<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>"><%=proMap.get("productName") %></a>
+												<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>&productDiscountPrice=<%=proMap.get("productDiscountPrice") %>"><img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="200" height="200"></a>
+												<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>&productDiscountPrice=<%=proMap.get("productDiscountPrice") %>"><%=proMap.get("productName") %></a>
 												<br>
-												<%=proMap.get("productPrice") %>
+												가격 : <%=proMap.get("productPrice") %>
 												<br>
-												<%=proMap.get("productStatus") %>
+												<%	// 상품할인가가 null 이거나 0이 아니면 할인된 가격을 보여줌
+													if(proMap.get("productDiscountPrice") != null) {
+														if ((int)proMap.get("productDiscountPrice") != 0) {
+												%>
+														할인가 : <span style="color: red;"><%=proMap.get("productDiscountPrice") %></span>
+														<br>
 												<%
+														}
+													}
+												%>
+												
+												<%=proMap.get("productStatus") %>
+												<br>
+												<%
+													// 상품수정 및 상품할인은 관리자로그인시에만 볼 수 있음
 													if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
 												%>
 														<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">수정</a>
-												<% 	
+														<br>
+												<%		
+														// 상품할인가가 null 또는 0이면 상품할인추가 태그 보여짐
+														if(proMap.get("productDiscountPrice") == null || (int)proMap.get("productDiscountPrice") == 0) {
+												%>
+																<a href="<%=request.getContextPath()%>/discount/inserttDiscount.jsp?productNo=<%=proMap.get("productNo")%>">할인넣기</a>
+												<%
+														}
 													}
 												%>
 											</div>
 											</div>
 								<% 
-										} else{
-								%>
+										} else{ // 판매중이 아닌 품절이나 단종상품은 상세정보를 못들어감.
+								%>			
 											<div class="col-lg-6 col-sm-6">
 											<div class="single_product_item">
 												<!-- ${pageContext.request.contextPath}는 현재 웹 애플리케이션의 루트 경로를 나타내는 변수이다   -->
@@ -171,6 +191,7 @@
 												<br>
 												<%=proMap.get("productStatus") %>
 												<%
+													// 상품수정은 관리자로그인시에만 볼 수 있음
 													if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
 												%>
 														<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">수정</a>

@@ -15,49 +15,44 @@
 	    	<li class="nav-item">
 	            <a class="nav-link" href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
 	        </li>
+	        <!--  회사개요페이지 아직 미완성 -->
 	        <li class="nav-item">
-	            <a class="nav-link" href="about.html">about</a>
+	            <a class="nav-link" href="about.html">회사개요</a>
 	        </li>
-	        <li class="nav-item dropdown">
-	            <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
-	                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                product
+	        <li class="nav-item">
+	            <a class="nav-link" href="<%=request.getContextPath()%>/product/productList.jsp" id="navbarDropdown_1">
+	                상품
 	            </a>
+	            <!--  우선 사용안하니 주석처리
 	            <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
 	                <a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp"> 상품 목록</a>
-	                <a class="dropdown-item" href="single-product.html">product details</a>
-	                
 	            </div>
+	             -->
 	        </li>
-	        
-	        <li class="nav-item dropdown">
-	            <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
-	                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                pages
-	            </a>
-	            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-			        <a class="dropdown-item" href="<%=request.getContextPath()%>/login/login.jsp">login</a>
-	                <a class="dropdown-item" href="checkout.html">product checkout</a>
-	                <a class="dropdown-item" href="cart.html">shopping cart</a>
-	                <a class="dropdown-item" href="confirmation.html">confirmation</a>
-	                <a class="dropdown-item" href="elements.html">elements</a>
-	            </div>
-	        </li>
-	        
-	        <li class="nav-item dropdown">
-	            <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
-	                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                blog
-	            </a>
-	            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-	                <a class="dropdown-item" href="blog.html"> blog</a>
-	                <a class="dropdown-item" href="single-blog.html">Single blog</a>
-	            </div>
-	        </li>
-	        
-	        <li class="nav-item">
-	            <a class="nav-link" href="contact.html">Contact</a>
-	        </li>
+	        <!-- 공지사항 관리자는 공지사항추가 목록 나옴 -->
+	        <%
+	        	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+	        %>
+	        		<li class="nav-item dropdown">
+			            <a class="nav-link dropdown-toggle" href="<%=request.getContextPath()%>/notice/noticeList.jsp">
+			            	공지사항
+			            </a>
+			            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+			            	<a class="dropdown-item" href="<%=request.getContextPath()%>/notice/insertNotice.jsp">공지사항 추가</a>
+			            </div>
+		       		</li>
+            <%
+            	// 일반고객은 공지사항만 표시
+        		} else {
+        	%>
+        			<li class="nav-item">
+	    	            <a class="nav-link" href="<%=request.getContextPath()%>/notice/noticeList.jsp">
+	    	            	공지사항
+	    	            </a>
+    	        	</li>
+        	<% 	
+        		}
+       		%>
 	        <%
 	        	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
 	        %>
@@ -69,12 +64,41 @@
 		            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
 		                <a class="dropdown-item" href="<%=request.getContextPath()%>/employee/employeeInfo.jsp"> 관리자정보</a>
 		                <a class="dropdown-item" href="<%=request.getContextPath()%>/category/categoryList.jsp">카테고리 관리</a>
-		                <a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp">상품관리</a>
+		                <a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp">상품관리(리스트로)</a>
 		            </div>
 	        	</li>
 	        <%
 	        	}
 	        %>
+	        
+	        <!-- 이 리스트 사용안함 현재 
+	        <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
+	                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                login
+	            </a>
+	            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+			        <a class="dropdown-item" href="<%=request.getContextPath()%>/login/login.jsp">login</a>
+	                <a class="dropdown-item" href="checkout.html">product checkout</a>
+	                <a class="dropdown-item" href="cart.html">shopping cart</a>
+	                <a class="dropdown-item" href="confirmation.html">confirmation</a>
+	                <a class="dropdown-item" href="elements.html">elements</a>
+	                
+	            </div>
+	        </li>
+	        -->
+	        <%
+	        	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId2") == null && session.getAttribute("loginCstmId") == null) {
+		    %>
+			        <li class="nav-item">
+			        	<a class="nav-link" href="<%=request.getContextPath()%>/login/login.jsp">
+			            	login
+			            </a>
+		    	    </li>
+    	    <%
+	        	}
+	        %>
+	        
 	        <%
 	        	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null || session.getAttribute("loginCstmId") != null) {
 		    %>

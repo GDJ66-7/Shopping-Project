@@ -45,7 +45,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -55,8 +55,9 @@
 							<jsp:include page="/main/menuBar.jsp"></jsp:include>
 						</div>
                         <div class="hearer_icon d-flex align-items-center">
+                        	<!--  돋보기 기능아직 없음 -->
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="cart.html">
+                            <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
                                 <i class="flaticon-shopping-cart-black-shape"></i>
                             </a>
                         </div>
