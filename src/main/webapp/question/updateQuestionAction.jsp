@@ -28,10 +28,12 @@
 	String qCategory = request.getParameter("qCategory");
 	String qTitle = request.getParameter("qTitle");
 	String qContent = request.getParameter("qContent");
+	//String Id = (String)session.getAttribute("Id"); -- 세션 검사 해야함
+	//System.out.println(Id);
 	
-	/*System.out.println(qCategory+"<---updateQ category");
+	System.out.println(qCategory+"<---updateQ category");
 	System.out.println(qTitle+"<---updateQ title");
-	System.out.println(qContent+"<---updateQ content");*/
+	System.out.println(qContent+"<---updateQ content");
 	
 	// 객체 생성
 	QuestionDao qDao = new QuestionDao();

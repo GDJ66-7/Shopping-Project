@@ -40,6 +40,7 @@ a{text-decoration: none;}
 <h2 style="text-align: center;">상품문의</h2>
 <form action="<%=request.getContextPath()%>/question/updateQuestionAction.jsp?qNo=<%=qNo%>" method="post">
 	<input type="hidden" name="qNo" value="<%=one.getqNo()%>">
+	<input type="hidden" name="id" value="<%=one.getId()%>"><!-- 세션검사 -->
 		<table class="table table-bordered">
 			<tr>
 				<td>제목</td>

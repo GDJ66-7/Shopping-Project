@@ -12,14 +12,6 @@ import vo.ReviewImg;
 
 public class ReviewDao {
 	
-	/*"SELECT p.product_no productNo, p.id id, r.order_no orderNo, r.review_title reviewTitle, r.review_content reviewContent"
-	+ ",r.createdate createdate, r.updatedate updatedate"
-	+ ",img.review_ori_filename reviewOriFilename, img.review_save_filename reviewSaveFilename"
-	+ ",img.review_filetype reviewFiletype"
-	+ " FROM review r INNER JOIN review_img img ON r.order_no = img.order_no"
-	+ " INNER JOIN product p ON p.product_no = r.order_no"
-	+ " ORDER BY r.createdate DESC LIMIT ?,?"; -- 수정전 기록 - 쿼리문 다시 생각해보기 */ 
-	
 	// 제품페이지에서 보이는 리뷰 목록 + 페이징 -- DB: customer id / product no 외래키 추가 - 작성일 내림차순 정렬
 	//(문의 목록 페이징과 겹치지 않게 변수명 변경-rev~)
 		public ArrayList<HashMap<String, Object>> selectReviewListByPage(int productNo, int revbeginRow, int revrowPerPage) throws Exception{
@@ -140,7 +132,7 @@ public class ReviewDao {
 		return totalrow;
 	}
 	
-	// 이미지 추가 ----------------------------------------------------------------------------------------
+	// 이미지 쿼리 ----------------------------------------------------------------------------------------
 	
 	// 리뷰 이미지 view (화면 출력) -- ReviewImg (vo)
 	public ReviewImg reviewImg(int orderNo) throws Exception {

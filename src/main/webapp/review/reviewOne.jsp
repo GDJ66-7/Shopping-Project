@@ -69,7 +69,7 @@ a{text-decoration: none;}
 		<td><%=reviewText.getCreatedate().substring(0,10)%></td>
 	</tr>
 </table>
-<a href="<%=request.getContextPath()%>/review/updateReview.jsp?orderNo=<%=reviewText.getOrderNo()%>" class="btn btn-light">수정</a>
+<a href="<%=request.getContextPath()%>/review/updateReview.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
 <a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?orderNo=<%=reviewText.getOrderNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
 </div>
 </body>
