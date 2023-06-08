@@ -10,7 +10,7 @@
 		return;	
 	}
 
-	//로그인 세션 검사 추가해야함
+	//로그인 세션 검사 추가해야함(관리자)
 	
 	// 받아온 값 저장 - 수정할 aNo & 해당 qNo
 	int aNo = Integer.parseInt(request.getParameter("aNo"));

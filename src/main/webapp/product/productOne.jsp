@@ -6,17 +6,19 @@
 <%@ page import="java.util.*" %>
 <%
 	//cnt & 재고량(장바구니)
-	//출력 테스트중*********************************** 12 product
-	/* 상품 상세페이지 productNo 유효성 검사 -------------------------------------------------------------
-	if(request.getParameter("productNo") == null
+	//상품 상세페이지 productNo 유효성 검사
+	/*if(request.getParameter("productNo") == null
 	||request.getParameter("productNo").equals("")) {
 		response.sendRedirect(request.getContextPath()+"/product/productList.jsp");
 		return;
 	}*/
 
-	// 리스트에서 받아온 값 & 메서드 호출 test product:12 & id:customer1
-	int productNo = 12;/*Integer.parseInt(request.getParameter("productNo"));*/
+	// 리스트에서 받아온 값
+	int productNo = 21;/*Integer.parseInt(request.getParameter("productNo"));*/
 	OneDao one = new OneDao();
+	String id = "customer1";
+	
+	// DAO 사용
 	HashMap<String,Object> p = one.selectProductOne(productNo);
 	
 //-------------------------------------------------------------------------------------------------
@@ -90,14 +92,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <title>상품페이지</title>
 </head>
 <body><!-- test  view 제품 12 카테고리/사진/이름/상품content출력 -->
+<div class="container mt-3">
 	<h3>상품상세</h3>
-	<table>
+	<table class="table">
 		<tr>
-			<td>카테고리</td>
-			<td><%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
+			<td>카테고리 :<%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
 		</tr>
 		<tr>
 			<td><img src="${pageContext.request.contextPath}/product/productImg/<%=p.get("productSaveFilename")%>" width="100" height="100"></td>
@@ -115,9 +120,9 @@
 	
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
-	<h3>상품리뷰</h3><!-- 상품 상세보기에서 추가 될 것인지 -->
-	<a href="<%=request.getContextPath()%>/review/insertReview.jsp">추가</a>
-	<table>
+	<h3>상품리뷰</h3>
+	<a href="<%=request.getContextPath()%>/review/insertReview.jsp">추가</a><!-- 테스트 -->
+	<table class="table">
 		<tr>
 			<th>제목</th>
 			<th>작성자</th>
@@ -170,7 +175,7 @@
 <hr>
 	<h3>문의사항</h3>
 	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp">추가</a>
-	<table>
+	<table class="table">
 		<tr>
 			<th>번호</th>
 			<th>문의유형</th>
@@ -224,5 +229,6 @@
 		}
 	%>
 	</div>
+</div>
 </body>
 </html>

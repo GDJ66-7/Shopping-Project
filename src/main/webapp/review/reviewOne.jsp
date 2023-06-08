@@ -3,7 +3,7 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	// 리뷰one추가 & insertAnswer.jsp 제거 해야함
+	
 	if(request.getParameter("orderNo") == null
 	||request.getParameter("orderNo").equals("")){
 		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
@@ -24,7 +24,6 @@
 	// 이미지
 	ReviewImg reviewImg = new ReviewImg(); // ReviewDao(동일) vo
 	reviewImg = review.reviewImg(orderNo);
-
 %>
 <!DOCTYPE html>
 <html>
@@ -54,12 +53,18 @@ a{text-decoration: none;}
 		<td id="bar">ID</td>
 		<td><%=reviewText.getId()%></td>
 	</tr>
+<%
+	if(reviewImg != null){
+%>
 	<tr>
 		<td id="bar">사진</td>
 		<td> <!-- 파일이 없을땐 출력 되지 않게 해야함 -->
-		<img src="${pageContext.request.contextPath}/review/reviewImg/<%=reviewImg.getReviewSaveFilename()%>" width="100" height="100">
+		<img src="${pageContext.request.contextPath}/review/reviewImg/<%=reviewImg.getReviewSaveFilename()%>">
 		</td>
 	</tr>
+<%
+	}
+%>
 	<tr>
 		<td id="bar">내용</td>
 		<td><%=reviewText.getReviewContent()%></td>

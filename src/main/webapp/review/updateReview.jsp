@@ -16,12 +16,11 @@
 	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	System.out.println(productNo+"<---- review productNo");
-	ReviewDao review = new ReviewDao(); // dao
 	
+	ReviewDao review = new ReviewDao(); // dao	
 	// 텍스트
 	Review reviewText = new Review(); // vo
 	reviewText = review.selectReviewOne(orderNo);
-	
 	// 이미지
 	ReviewImg reviewImg = new ReviewImg();
 	reviewImg = review.reviewImg(orderNo);
@@ -46,7 +45,7 @@ a{text-decoration: none;}
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰 수정하기</h2>
 <form action="<%=request.getContextPath()%>/review/updateReviewAction.jsp?orderNo=<%=orderNo%>&productNo=<%=productNo%>" method="post" enctype="multipart/form-data">
-<input type="hidden" name="Id" value="<%=reviewText.getId()%>"><!-- 세션검사 -->
+<input type = "hidden" name="preSaveFilename" value="<%=reviewImg.getReviewSaveFilename()%>">
 		<table class="table table-bordered">
 			<tr>
 				<td>제목</td>
@@ -55,9 +54,9 @@ a{text-decoration: none;}
 				</td>
 			</tr>
 			<tr>
-				<td>사진</td><!-- null값 출력 수정해야함-->
+				<td>사진</td>
 				<td>
-				<%=reviewImg.getReviewSaveFilename()%>
+				<%=reviewImg.getReviewSaveFilename()!= null ? reviewImg.getReviewSaveFilename() : ""%>
 				<input type="file" name="reviewImg">
 				</td>
 			</tr>
@@ -66,7 +65,15 @@ a{text-decoration: none;}
 				<td>
 				<textarea name="reviewContent" cols="80" rows="10" style="resize: none;" required="required"><%=reviewText.getReviewContent()%></textarea>
 				</td>
-				</tr>
+			</tr>
+			<tr>
+				<td>작성일</td>
+				<td><%=reviewText.getCreatedate().substring(0,10)%></td>
+			</tr>
+			<tr>
+				<td>수정일</td>
+				<td><%=reviewText.getUpdatedate().substring(0,10)%></td>
+			</tr>
 			</table>
 			<div>
 				<button type=submit class="btn btn-light">수정</button>

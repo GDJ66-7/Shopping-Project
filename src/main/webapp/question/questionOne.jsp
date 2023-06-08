@@ -4,6 +4,7 @@
 <%@ page import="java.util.*" %>
 <!-- 작성된 문의 사항 게시글 안에 답변까지 같이 있음(댓글) -->
 <%
+	//일반관리자 세션이름 loginEmpId1  , 최고관리자 세션이름 loginEmpId2, 고객 세션이름 loginCstmId 입니다
 	// 유효성 검사
 	if(request.getParameter("qNo") == null
 	||request.getParameter("qNo").equals("")){
@@ -75,6 +76,7 @@ a{text-decoration: none;}
 	<br>
 	<hr>
 	<div class="container mt-3">
+	<h4>답변내역</h4>
 		<form action="<%=request.getContextPath()%>/answer/insertAnswerAction.jsp?qNo=<%=one.getqNo()%>" method="post">
 			<input type="hidden" name="id" value="admin"> <!-- 로그인 세션 추가해야함 admin 임시 test-->
 			<table class="table2">
@@ -93,7 +95,6 @@ a{text-decoration: none;}
 <% 
 	if (aone != null)	{ 
 %>
-	<h4>답변내역</h4>
 	<table class="table table-borderless">
 		<tr style="background-color: #F6F6F6;">
 			<th>작성자</th>
