@@ -11,11 +11,13 @@
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();
 	
+	// 8. 보유 포인트 조회 메서드(cartOrder로 값을 넘김)
+	int point = cartDao.totalPoint(id);
+
 	// 1. 장바구니 상품 목록 메서드
 	ArrayList<HashMap<String, Object>> list1 = cartDao.cartList(id);
 	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
-	int point = 0;	// 포인트 관련 메소드를 point에 저장할 예정
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(point ,id);
 	
 	// 체크된 상품이 있는지 확인(구매하기 버튼관련)
@@ -27,8 +29,6 @@
             break;
         }
     }
-	
-	
 	
 %>
 
@@ -50,6 +50,7 @@
 			<th>상품이미지</th>
 			<th>상품정보</th>
 			<th>상품가격</th>
+			<th>할인금액</th>
 			<th>할인적용가격</th>
 			<th>수량</th>
 			<th>전체가격</th>
@@ -96,6 +97,10 @@
 				<td>
 					<%=(int)(c.get("상품가격"))%>원
 				</td>
+				<td>
+					<%=(int)(c.get("할인금액"))%>원
+				</td>
+				
 				<td>
 					<%=(int)(c.get("할인상품가격"))%>원
 				</td>
@@ -159,7 +164,7 @@
 				if(CheckedItem) { // CheckedItem이 true이면 cartOrder로 (cartOrder.jsp)
 			%>
 					<td>
-						<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+						<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp?point=<%=point%>">
 							<button type="button">구매하기</button>
 						</a>
 					</td>

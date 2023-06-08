@@ -8,21 +8,32 @@
 	request.setCharacterEncoding("utf-8");
 
 	String id = "customer1";
+	int usePoint = 0;
+	
+	// 받아온 point 값을 변수에 저장
+	if(request.getParameter("point")== null
+		|| request.getParameter("point").equals("")) {
+		response.sendRedirect(request.getContextPath()+"/cart/cartList.jsp");
+	}
+	int point = Integer.parseInt(request.getParameter("point"));
+	System.out.println(point + " <-- cartOrder 보유포인트");
 	
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
-
+	
 	// 6. 장바구니에서 체크한 상품 조회 메서드
 	ArrayList<HashMap<String, Object>> list6 = cartDao.checkedList(id);
 	
+
+
+	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
-	int point = 0; // 포인트 관련 메소드를 point에 저장할 예정
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(point, id);
 	
-	
+	// 7. 포인트 사용 후 총결제금액
+	ArrayList<HashMap<String, Object>> totalPrice = cartDao.cartOrderList(usePoint, id);
 	
 %>
-
 
 <!DOCTYPE html>
 <html>
@@ -91,7 +102,30 @@
 	</table>
 	
 	<h4>결제정보</h4>
-	<table class="table">
+	<form action="<%=request.getContextPath()%>/cart/updatePoint.jsp">
+		<table class="table">
+			<tr>
+				<th>보유포인트</th>
+				<th>사용포인트</th>
+			</tr>
+			
+			<tr>
+				<td>
+					<input type="text" readonly="readonly" name="point" value="<%=point%>">
+				</td>
+				<td>
+					<input type="text" readonly="readonly" name="usePoint" value="<%=usePoint%>">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" value="포인트 사용하기">
+				</td>				
+			</tr>
+		</table>
+	</form>
+		
+	<table class="table">	
 		<%
 			for(HashMap<String, Object> c : list7) { 				
 		%>
@@ -103,17 +137,20 @@
 					<th>할인금액</th>
 					<td><%=(Integer)(c.get("할인금액"))%></td>
 				</tr>
-				<tr>
-					<th>보유포인트</th>
-					<td><%=(Integer)(c.get("보유포인트"))%></td>
-				</tr>
+		<%	
+			}
+		%>		
+	
+		<%
+			for(HashMap<String, Object> c : totalPrice) { 				
+		%>
 				<tr>
 					<th>총결제금액</th>
 					<td><%=(Integer)(c.get("총결제금액"))%></td>
 				</tr>
 		<%	
 			}
-		%>		
+		%>				
 	</table>
 </div>	
 </body>

@@ -45,7 +45,7 @@ public class CartDao {
 		return row;
 	}
 	
-	// 1. 고객ID에 해당하는 장바구니 상품 목록
+	// 1.장바구니 상품 목록
 	public ArrayList<HashMap<String, Object>> cartList(String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
@@ -55,7 +55,8 @@ public class CartDao {
 				+ "c.id 아이디, "
 				+ "p.product_name 상품이름, "
 				+ "p.product_price 상품가격, "
-				+ "p.product_price*IFNULL(d.discount_rate, 0) 할인상품가격, "
+				+ "p.product_price - (p.product_price * (1- IFNULL(d.discount_rate, 0))) 할인금액, "
+				+ "p.product_price*(1-IFNULL(d.discount_rate, 0)) 할인상품가격, "
 				+ "p.product_price*(1- IFNULL(d.discount_rate, 0))*c.cart_cnt 전체가격, "
 				+ "c.cart_cnt 수량, "
 				+ "c.checked 체크 "
@@ -76,8 +77,9 @@ public class CartDao {
 			c.put("상품이미지",rs.getString("상품이미지"));
 			c.put("아이디",rs.getString("아이디"));
 			c.put("상품이름",rs.getString("상품이름"));
-			c.put("상품가격",rs.getInt("상품가격"));
-			c.put("할인상품가격",rs.getInt("할인상품가격"));
+			c.put("상품가격",rs.getInt("상품가격"));		
+			c.put("할인금액",rs.getInt("할인금액"));
+			c.put("할인상품가격",rs.getInt("할인상품가격"));	
 			c.put("전체가격",rs.getInt("전체가격"));
 			c.put("수량", rs.getInt("수량"));
 			c.put("체크", rs.getString("체크"));
@@ -170,7 +172,7 @@ public class CartDao {
 		return list;
 	}
 	
-	// 7. 구매자정보, 받는사람정보 조회
+	// 7. 구매자정보, 받는사람정보, 결제정보 조회
 	public ArrayList<HashMap<String, Object>> cartOrderList(int point, String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
@@ -213,28 +215,45 @@ public class CartDao {
 		return list;
 	}
 
-	// 8. 구매자 포인트 조회 
-	/*
-	 * 
-	int row = 0;
-	if(rs.next()) {
-		row = rs.getInt(1);
+	// 8. 보유 포인트 조회
+	public int totalPoint(String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT cstm_point "
+				+ "FROM customer "
+				+ "WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);
+		ResultSet rs = stmt.executeQuery();
+		int point = 0;
+		if(rs.next()) {
+			point = rs.getInt("cstm_point");
+		}
+		return point;
 	}
 	
-	*/
+	// 9. 포인트 사용
 	
 	
-	// 포인트 사용(-)
+	
+	
+
+	
+	
+	// 10. 포인트 내역에 추가
+	
+	
 	
 	// 주문결제시
-	// - 포인트 적립(저장)	
+	// - 포인트 사용(-)하면 차감 포인트 히스토리에 추가
+	// - 결제하면 포인트 적립(+)하고 포인트히스토리에 추가	
 	// - 주소 주문내역 저장
 	// - 주문정보 orders테이블에 저장
 	
 	// 주문 완료시
 	// 장바구니 모든 상품 삭제(y and id)
 	
-	// 9. 결제시 주문 정보를 orders 테이블에 추가
+	// ?. 결제시 주문 정보를 orders 테이블에 추가
 	public int insertCartOrder(Orders orders) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
