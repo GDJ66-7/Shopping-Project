@@ -128,6 +128,8 @@
                                     <button type="submit" value="submit" class="btn_3">
                                         log in
                                     </button>
+                                      <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findId.jsp">아이디 찾기</a><br>
+                                        <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findPw.jsp">비밀번호 찾기</a>
                                 </div>
                             </form>
                         </div>

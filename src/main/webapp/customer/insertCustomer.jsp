@@ -126,12 +126,12 @@
 						태어난 동네<input type="text" name="cstmQuestion" required="required" class="single-input"><br>
 				<p>성별</p>	
 				<input type="radio" name="cstmGender" value="남"  >
-							<label for="남">남자</label>
+							<label for="남">남자</label> &nbsp;&nbsp;
 				<input type="radio" name="cstmGender" value="여" >
 							<label for="여">여자ㅣ</label><br><br>
 				<p>개인정보동의</p>
 				<input type="radio" name="cstmAgree" value="y"  >
-							<label for="동의">동의</label>
+							<label for="동의">동의</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="radio" name="cstmAgree" value="n" >
 							<label for="비동의">비동의</label>	<br><br><br>
 			<button type="submit" class="genric-btn primary-border circle">가입하기</button>
