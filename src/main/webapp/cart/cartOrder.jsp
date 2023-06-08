@@ -7,31 +7,33 @@
 	// 한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
 
-	String id = "customer1";
-	int usePoint = 0;
-	
-	// 받아온 point 값을 변수에 저장
-	if(request.getParameter("point")== null
-		|| request.getParameter("point").equals("")) {
-		response.sendRedirect(request.getContextPath()+"/cart/cartList.jsp");
+
+	// updatePoint.jsp에서 받아온값을 사용포인트에 추가
+	int inputPoint = 0;
+	if(request.getParameter("inputPoint")!= null) {
+		inputPoint = Integer.parseInt(request.getParameter("inputPoint"));
 	}
-	int point = Integer.parseInt(request.getParameter("point"));
-	System.out.println(point + " <-- cartOrder 보유포인트");
-	
+	int usePoint = 0;
+	usePoint = usePoint + inputPoint;
+
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
+	String id = "customer1";
+	
+	
+	// 8. 보유 포인트 조회 메서드
+	int point = cartDao.selectPoint(id);
+	
+	// 9. 총결제금액
+	int totalPay = cartDao.totalPayment(usePoint, id);
 	
 	// 6. 장바구니에서 체크한 상품 조회 메서드
 	ArrayList<HashMap<String, Object>> list6 = cartDao.checkedList(id);
 	
-
-
-	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
-	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(point, id);
-	
-	// 7. 포인트 사용 후 총결제금액
-	ArrayList<HashMap<String, Object>> totalPrice = cartDao.cartOrderList(usePoint, id);
+	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
+
+
 	
 %>
 
@@ -102,7 +104,8 @@
 	</table>
 	
 	<h4>결제정보</h4>
-	<form action="<%=request.getContextPath()%>/cart/updatePoint.jsp">
+	<form action="<%=request.getContextPath()%>/cart/updatePoint.jsp" method="post">
+		<input type="hidden" name="id" value="<%=id%>">
 		<table class="table">
 			<tr>
 				<th>보유포인트</th>
@@ -135,22 +138,15 @@
 				</tr>
 				<tr>
 					<th>할인금액</th>
-					<td><%=(Integer)(c.get("할인금액"))%></td>
+					<td><%=((Integer)(c.get("할인금액")))+inputPoint%></td>
 				</tr>
 		<%	
 			}
 		%>		
-	
-		<%
-			for(HashMap<String, Object> c : totalPrice) { 				
-		%>
 				<tr>
 					<th>총결제금액</th>
-					<td><%=(Integer)(c.get("총결제금액"))%></td>
-				</tr>
-		<%	
-			}
-		%>				
+					<td><%=totalPay%></td>
+				</tr>			
 	</table>
 </div>	
 </body>

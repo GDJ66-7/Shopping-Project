@@ -173,7 +173,7 @@ public class CartDao {
 	}
 	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회
-	public ArrayList<HashMap<String, Object>> cartOrderList(int point, String id) throws Exception {
+	public ArrayList<HashMap<String, Object>> cartOrderList(String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "SELECT m.id 아이디, "
@@ -185,16 +185,14 @@ public class CartDao {
 				+ "SUM(p.product_price * c.cart_cnt) 총상품가격, "
 				+ "SUM(p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt) 할인적용금액, "
 				+ "SUM(p.product_price * c.cart_cnt) - SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 할인금액, "
-				+ "SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 전체금액, "
-				+ "SUM((p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt)) - ? 총결제금액 "
+				+ "SUM(p.product_price * (1- IFNULL(d.discount_rate, 0))*c.cart_cnt) 전체금액 "
 				+ "FROM cart c "
 				+ "		LEFT OUTER JOIN product p ON c.product_no = p.product_no "
 				+ "     LEFT OUTER JOIN customer m ON c.id = m.id "
 				+ "     LEFT OUTER JOIN discount d ON p.product_no = d.product_no "
 				+ "WHERE m.id = ? AND c.checked = 'y'";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, point);
-		stmt.setString(2, id);	
+		stmt.setString(1, id);	
 		ResultSet rs = stmt.executeQuery();
 		ArrayList<HashMap<String, Object>> list = new ArrayList<>(); 
 		if(rs.next()) {
@@ -209,14 +207,13 @@ public class CartDao {
 			c.put("할인적용금액", rs.getInt("할인적용금액"));
 			c.put("할인금액", rs.getInt("할인금액"));
 			c.put("전체금액", rs.getInt("전체금액"));
-			c.put("총결제금액", rs.getInt("총결제금액"));
 			list.add(c);
 		}
 		return list;
 	}
-
+	
 	// 8. 보유 포인트 조회
-	public int totalPoint(String id) throws Exception {
+	public int selectPoint(String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "SELECT cstm_point "
@@ -231,9 +228,48 @@ public class CartDao {
 		}
 		return point;
 	}
+	// 9. 총결제금액
+	public int totalPayment(int usePoint, String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT SUM(p.product_price * (1 - IFNULL(d.discount_rate, 0)) * c.cart_cnt) - ? 총결제금액 "
+				+ "FROM cart c"
+				+ "    LEFT OUTER JOIN product p ON c.product_no = p.product_no "
+				+ "    LEFT OUTER JOIN customer m ON c.id = m.id "
+				+ "    LEFT OUTER JOIN discount d ON p.product_no = d.product_no "
+				+ "WHERE m.id = ? AND c.checked = 'y'";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, usePoint);
+		stmt.setString(2, id);
+		ResultSet rs = stmt.executeQuery();
+		int totalPay = 0;
+		if(rs.next()) {
+			totalPay = rs.getInt("총결제금액");
+		}
+		return totalPay;
+	}
+	// 10
 	
-	// 9. 포인트 사용
 	
+	
+	
+	
+	
+	
+	// 보유 포인트에서 포인트 사용 후 포인트 히스토리에 추가 
+	public int updateUsePoint(int usePoint, String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "UPDATE customer "
+				+ "SET cstm_point = cstm_point - ? "
+				+ "WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, usePoint);
+		stmt.setString(2, id);
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+	}
 	
 	
 	
