@@ -75,8 +75,9 @@
         </div>
         <div class="search_input" id="search_input_box">
             <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                <!--  메뉴바 오른쪽 돋보기 상품검색기능 -->
+                <form class="d-flex justify-content-between search-inner" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
+                    <input type="text" class="form-control" name="searchName"  placeholder="상품이름검색">
                     <button type="submit" class="btn"></button>
                     <span class="ti-close" id="close_search" title="Close Search"></span>
                 </form>
@@ -113,22 +114,24 @@
     <section class="single_product_list">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="single_product_iner">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="single_product_img">
-                                    <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->
-                                    <%
-                                    	for(HashMap<String,Object> map : productList) {
-                                    %>
-                                    	
-                                        	<div><img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid"></div>
-                                    		<div><a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200"></a></div>	
-                                        	<br>	
-                                    <% 	}
-                                    %>
-                             <!--       
+                <div class="col-lg-12"> 
+                	<div class="col-lg-12">
+                		<div class="row">
+	                        <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->                                  
+						    <%
+	                        	for(HashMap<String,Object> map : productList) {
+	                        %>
+		                        	<div class="col-lg-4">
+		                        		<a style="display: block; text-align: center;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200">
+		                        		</a>
+		                        		<span style="display: block; text-align: center;"><%=map.get("productPrice")%>원</span>	
+		                        		<br>	
+		                            	<a style="display: block; text-align: center;" href="product_list.html" class="btn_3">상품바로가기</a>
+		                            </div>
+	                        <% 	
+	                        	}
+	                        %>                                   
+							<!-- 기존 템플릿
                                     <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
                                 </div>
                             </div>
@@ -178,9 +181,7 @@
                                             pillow case</a> </h2>
                                     <a href="product_list.html" class="btn_3">Explore Now</a>
                                     -->  
-                                </div>
-                            </div>
-                        </div>
+                    	</div>
                     </div>
                 </div>
             </div>
