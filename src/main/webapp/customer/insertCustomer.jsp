@@ -128,7 +128,7 @@
 				<input type="radio" name="cstmGender" value="남"  >
 							<label for="남">남자</label> &nbsp;&nbsp;
 				<input type="radio" name="cstmGender" value="여" >
-							<label for="여">여자ㅣ</label><br><br>
+							<label for="여">여자</label><br><br>
 				<p>개인정보동의</p>
 				<input type="radio" name="cstmAgree" value="y"  >
 							<label for="동의">동의</label>&nbsp;&nbsp;&nbsp;&nbsp;
