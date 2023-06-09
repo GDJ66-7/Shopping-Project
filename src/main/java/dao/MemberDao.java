@@ -59,6 +59,7 @@ public class MemberDao {
 		String sql = "SELECT count(*) FROM customer WHERE id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, idList.getId());
+		System.out.println(stmt+"<-- 고객아이디 확인하는 STMT");
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			cnt = rs.getInt(1);
@@ -76,6 +77,7 @@ public class MemberDao {
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			empCnt = rs.getInt(1);
+			System.out.println(empCnt+"<-- 1이상이면 사원아이디");
 		}
 		return empCnt;
 	}
@@ -94,6 +96,7 @@ public class MemberDao {
 		}
 		if(row > 0) {
 			level = "2";
+			System.out.println("최고관리자로그인");
 		} else if(row == 0) {
 			String sql2 = "select count(*) FROM employees WHERE id = ? AND emp_level = '1'";
 			PreparedStatement stmt2 = conn.prepareStatement(sql2);
@@ -104,6 +107,7 @@ public class MemberDao {
 			}
 			if(row > 0) {
 				level = "1";
+				System.out.println("일반관리자로그인");
 			}
 		}
 		
@@ -130,6 +134,8 @@ public class MemberDao {
 			if(rs.next()) {
 				row3 = rs.getInt(1);
 			}
+			//id중복체크를 통해 row3값이 0이면 중복이 아니므로 테이블에 값넣기
+			// row3이 1이상이면 이미 있는 아이디이므로 row 값을 3을 저장하여 리턴하여 Action에서 분기시키도록 하기
 			if(row3 == 0) {
 		// id테이블 벨류값 넣기
 		PreparedStatement  idStmt = conn.prepareStatement(idSql);
