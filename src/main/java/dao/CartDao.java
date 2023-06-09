@@ -248,24 +248,31 @@ public class CartDao {
 		}
 		return totalPay;
 	}
-	// 10
-	
-	
-	
-	
-	
-	
-	
-	// 보유 포인트에서 포인트 사용 후 포인트 히스토리에 추가 
-	public int updateUsePoint(int usePoint, String id) throws Exception {
+	// 10. 주소 내역 리스트 불러오기
+	public ArrayList<String> addressList(String id) throws Exception {
+	    DBUtil dbutil = new DBUtil();
+	    Connection conn = dbutil.getConnection();
+	    String sql = "SELECT address FROM address WHERE id = ?";
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    stmt.setString(1, id);
+	    ResultSet rs = stmt.executeQuery();    
+	    ArrayList<String> list = new ArrayList<>(); 
+	    while(rs.next()) {
+	        String address = rs.getString("address");
+	        list.add(address);
+	    }
+	    return list;
+	}
+	// 11. 주소 내역 리스트에 주소 추가
+	public int insertAddress(Address address) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-		String sql = "UPDATE customer "
-				+ "SET cstm_point = cstm_point - ? "
-				+ "WHERE id = ?";
+		String sql = "INSERT INTO address(id, address_name, address, address_last_date, createdate, updatedate) "
+				+ "VALUES(?, ?, ?, NOW(), NOW(), NOW())";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, usePoint);
-		stmt.setString(2, id);
+		stmt.setString(1, address.getId());
+		stmt.setString(2, address.getAddressName());
+		stmt.setString(3, address.getAddress());
 		int row = 0;
 		row = stmt.executeUpdate();
 		return row;
@@ -273,10 +280,17 @@ public class CartDao {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	
-	// 10. 포인트 내역에 추가
+	// 포인트 내역에 추가
 	
 	
 	

@@ -1,6 +1,6 @@
 package vo;
 
-public class Adrees {
+public class Address {
 	private int addressNo;
 	private String id;
 	private String addressName;

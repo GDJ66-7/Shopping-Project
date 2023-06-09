@@ -7,19 +7,27 @@
 	// 한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
 
+	String id = "customer1";
 
-	// updatePoint.jsp에서 받아온값을 사용포인트에 추가
+	// updatePoint.jsp에서 받아 온 값이 있으면 inputPoint 변수에 값을 저장한다.
 	int inputPoint = 0;
 	if(request.getParameter("inputPoint")!= null) {
 		inputPoint = Integer.parseInt(request.getParameter("inputPoint"));
 	}
+	
+	// 받아 온 값이 있으면 selectAddress 변수에 값을 저장한다.
+	String selectAddress = null;
+	if(request.getParameter("selectAddress")!= null) {
+		selectAddress = request.getParameter("selectAddress");
+	}
+	System.out.println(selectAddress);
+	
+	// 사용 할 포인트 초기값(사용자가 포인트를 입력하지않으면 기본값은 0이다.)
 	int usePoint = 0;
-	usePoint = usePoint + inputPoint;
+	usePoint = usePoint + inputPoint; // // 사용 할 포인트(사용자가 포인트 입력한 값)
 
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();	
-	String id = "customer1";
-	
 	
 	// 8. 보유 포인트 조회 메서드
 	int point = cartDao.selectPoint(id);
@@ -33,7 +41,9 @@
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
 
-
+	// 10. 주소 내역 리스트 불러오기
+	ArrayList<String> list10 = cartDao.addressList(id);
+	
 	
 %>
 
@@ -65,28 +75,41 @@
 					<th>휴대폰 번호</th>
 					<td><%=(String)(c.get("휴대폰번호"))%></td>
 				</tr>	
-	</table>
-	
-	<h4>받는사람정보</h4>
-	<table class="table">
-				<tr>
-					<th>이름</th>
-					<td><%=(String)(c.get("이름"))%></td>
-				</tr>
-				<tr>
-					<th>배송주소</th>
-					<td><%=(String)(c.get("배송주소"))%></td>
-				</tr>
-				<tr>
-					<th>연락처</th>
-					<td><%=(String)(c.get("휴대폰번호"))%></td>
-				</tr>
 		<%
 			}
 		%>
-	
 	</table>
 	
+	<h4> 받는사람정보 </h4>
+	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+		<input type="hidden" name="id" value="<%=id%>">
+		<table class="table">
+				<tr>
+					<th>최근 배송 주소</th>
+				</tr>	
+					<%
+						for (String address : list10) {
+					%>
+							<tr>	
+								<td>
+									<input type="radio" name="selectAddress" value="<%=address%>" <%if (address.equals(selectAddress)) { %>checked<% } %>>
+									<%=address%>
+								</td>
+							</tr>
+					<%
+						}
+					%>	
+				<tr>
+					<td>
+						<a href="<%=request.getContextPath()%>/cart/insertAddress.jsp?id=<%=id%>">주소추가</a>
+					</td>
+					<td>
+						<input type="submit" value="주소 선택">
+					</td>
+				</tr>	
+		</table>
+	</form>
+
 	<h4>배송 상품</h4>
 	<table class="table">			
 				<!-- 배송 상품 목록 -->
@@ -104,14 +127,14 @@
 	</table>
 	
 	<h4>결제정보</h4>
-	<form action="<%=request.getContextPath()%>/cart/updatePoint.jsp" method="post">
+	<form action="<%=request.getContextPath()%>/cart/updatePoint.jsp" method="post">	
 		<input type="hidden" name="id" value="<%=id%>">
+		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
 		<table class="table">
 			<tr>
 				<th>보유포인트</th>
 				<th>사용포인트</th>
 			</tr>
-			
 			<tr>
 				<td>
 					<input type="text" readonly="readonly" name="point" value="<%=point%>">
@@ -127,7 +150,7 @@
 			</tr>
 		</table>
 	</form>
-		
+	
 	<table class="table">	
 		<%
 			for(HashMap<String, Object> c : list7) { 				
@@ -140,14 +163,26 @@
 					<th>할인금액</th>
 					<td><%=((Integer)(c.get("할인금액")))+inputPoint%></td>
 				</tr>
+			<tr>
+				<th>총결제금액</th>
+				<td><%=totalPay%></td>
+			</tr>		
+			<tr>
+				<td>
+					<form action="<%=request.getContextPath()%>/cart/cartOrderAction.jsp">		
+						<input type="hidden" name="" value="">	
+						<input type="hidden" name="" value="">	
+						<input type="hidden" name="" value="">	
+						<input type="hidden" name="usePoint" value="<%=usePoint%>">	
+										
+						<input type="submit" value="결제">	
+					</form>
+				</td>	
+			</tr>	
 		<%	
 			}
 		%>		
-				<tr>
-					<th>총결제금액</th>
-					<td><%=totalPay%></td>
-				</tr>			
-	</table>
+	</table>					
 </div>	
 </body>
 </html>
