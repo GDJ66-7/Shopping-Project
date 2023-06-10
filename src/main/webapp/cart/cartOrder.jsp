@@ -20,7 +20,7 @@
 	if(request.getParameter("selectAddress")!= null) {
 		selectAddress = request.getParameter("selectAddress");
 	}
-	System.out.println(selectAddress);
+	
 	
 	// 사용 할 포인트 초기값(사용자가 포인트를 입력하지않으면 기본값은 0이다.)
 	int usePoint = 0;
@@ -52,8 +52,13 @@
 <head>
 <meta charset="UTF-8">
 <title> 주문/결제 </title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+	function addressOpenPopup(url) {
+	    window.open(url, 'addressPopupWindow', 'width=600, height=400');
+	}
+</script>	
 </head>
 <body>
 <div class="container">
@@ -83,6 +88,7 @@
 	<h4> 받는사람정보 </h4>
 	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp">
 		<input type="hidden" name="id" value="<%=id%>">
+		<input type="hidden" name="inputPoint" value="<%=inputPoint%>">
 		<table class="table">
 				<tr>
 					<th>최근 배송 주소</th>
@@ -101,10 +107,10 @@
 					%>	
 				<tr>
 					<td>
-						<a href="<%=request.getContextPath()%>/cart/insertAddress.jsp?id=<%=id%>">주소추가</a>
-					</td>
-					<td>
 						<input type="submit" value="주소 선택">
+					</td>
+					<td>		
+						<a href="#" onclick="addressOpenPopup('<%=request.getContextPath()%>/cart/insertAddress.jsp?id=<%=id%>')">주소추가</a>
 					</td>
 				</tr>	
 		</table>
@@ -173,7 +179,7 @@
 						<input type="hidden" name="" value="">	
 						<input type="hidden" name="" value="">	
 						<input type="hidden" name="" value="">	
-						<input type="hidden" name="usePoint" value="<%=usePoint%>">	
+						<input type="hidden" name="inputPoint" value="<%=inputPoint%>">	
 										
 						<input type="submit" value="결제">	
 					</form>

@@ -228,6 +228,7 @@ public class CartDao {
 		}
 		return point;
 	}
+	
 	// 9. 총결제금액
 	public int totalPayment(int usePoint, String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
@@ -248,11 +249,15 @@ public class CartDao {
 		}
 		return totalPay;
 	}
-	// 10. 주소 내역 리스트 불러오기
+	
+	// 10. 주소 내역 리스트 불러오기(최근 주소 3개만)
 	public ArrayList<String> addressList(String id) throws Exception {
 	    DBUtil dbutil = new DBUtil();
 	    Connection conn = dbutil.getConnection();
-	    String sql = "SELECT address FROM address WHERE id = ?";
+	    String sql = "SELECT address "
+	    		+ "FROM address "
+	    		+ "WHERE id = ? "
+	    		+ "ORDER BY address_no DESC LIMIT 3";
 	    PreparedStatement stmt = conn.prepareStatement(sql);
 	    stmt.setString(1, id);
 	    ResultSet rs = stmt.executeQuery();    
@@ -263,6 +268,7 @@ public class CartDao {
 	    }
 	    return list;
 	}
+	
 	// 11. 주소 내역 리스트에 주소 추가
 	public int insertAddress(Address address) throws Exception {
 		DBUtil dbutil = new DBUtil();
