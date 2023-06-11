@@ -173,7 +173,7 @@ public class ProductDao {
 	*/
 	
 	// 4) 상품리스트 product inner join product_img
-	public ArrayList<HashMap<String, Object>> productList(int beginRow, int rowPerPage) throws Exception {
+	public ArrayList<HashMap<String, Object>> productList(int beginRow, int rowPerPage, String ascDesc) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		
@@ -225,6 +225,25 @@ public class ProductDao {
 		return productList;
 	}
 	
+	// 4-1) 상품전체(row)
+		public int productListCnt1() throws Exception {
+			int row = 0;
+			DBUtil dbutil = new DBUtil();
+			Connection conn = dbutil.getConnection();
+			/*
+			  SELECT COUNT(*) FROM product
+			*/
+			String sql = "SELECT COUNT(*) FROM product";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				row = rs.getInt(1);
+			}
+			return row;
+			
+		}
+	
 	// 5) 상품리스트 최신순 3개 product inner join product_img
 		public ArrayList<HashMap<String, Object>> productListLimit3() throws Exception {
 			DBUtil dbutil = new DBUtil();
@@ -263,8 +282,8 @@ public class ProductDao {
 			}
 			return productList;
 		}
-		// 6) 상품검색기능
-		public ArrayList<HashMap<String, Object>> searchProductName(String name, int beginRow, int rowPerPage) throws Exception {
+	// 6) 상품검색기능
+		public ArrayList<HashMap<String, Object>> searchProductName(String productName, String ascDesc, int beginRow, int rowPerPage) throws Exception {
 			DBUtil dbutil = new DBUtil();
 			Connection conn = dbutil.getConnection();
 			
@@ -282,7 +301,7 @@ public class ProductDao {
 						+ "ORDER BY p.createdate DESC LIMIT ?, ?";
 			ArrayList<HashMap<String, Object>> productSearchList = new ArrayList<HashMap<String, Object>>();
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "%" + name + "%");
+			stmt.setString(1, "%" + productName + "%");
 		    stmt.setInt(2, beginRow);
 		    stmt.setInt(3, rowPerPage);
 			ResultSet rs = stmt.executeQuery();
@@ -305,27 +324,56 @@ public class ProductDao {
 			return productSearchList;
 		}
 		
-		// 6.2) 카테고리별 검색기능
-		public ArrayList<HashMap<String, Object>> searchCategoryName(String categoryName, int beginRow, int rowPerPage) throws Exception {
+		// 6-1) 상품전체(row)
+		public int productListCnt2(String productName) throws Exception {
+			int row = 0;
+			DBUtil dbutil = new DBUtil();
+			Connection conn = dbutil.getConnection();
+			/*
+			 	SELECT * FROM product
+				WHERE product_name LIKE ?;
+			*/
+			String sql = "SELECT COUNT(*) FROM product WHERE product_name LIKE ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + productName + "%");
+			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				row = rs.getInt(1);
+			}
+			return row;
+			
+		}
+		
+		// 7) 카테고리별 검색기능
+		public ArrayList<HashMap<String, Object>> searchCategoryName(String categoryName, String ascDesc, int beginRow, int rowPerPage) throws Exception {
 			DBUtil dbutil = new DBUtil();
 			Connection conn = dbutil.getConnection();
 			/*
 			 	SELECT p.product_no, p.product_name, p.product_price, p.product_price*(1- d.discount_rate) AS 상품할인가, p.product_status, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
 				FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
 								LEFT OUTER JOIN discount d ON p.product_no = d.product_no
-				WHERE p.product_name LIKE ?
-				ORDER BY p.createdate DESC LIMIT ?, ?
-			 */
+				WHERE p.product_name ?
 				
+			 */
 				String sql="SELECT p.product_no, p.product_name, p.product_price, p.product_price*(1- d.discount_rate) AS 상품할인가, p.product_status, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\r\n"
 							+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no "
 											+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no "
-							+ "WHERE p.category_name LIKE ? "
-							+ "ORDER BY p.createdate DESC LIMIT ?, ?";
+							+ "WHERE p.category_name LIKE ? ";
+							
+				
+				// ascDesc매개변수가 공백이 아닐시 정렬기능 추가
+				if (!ascDesc.equals("")) {
+					sql += "ORDER BY p.createdate" + ascDesc; 
+				} 
+				
+				// 페이징처리를 위한 limit 추가
+				sql += "LIMIT ?, ?";
+				
 				ArrayList<HashMap<String, Object>> productSearchList = new ArrayList<HashMap<String, Object>>();
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "%" + categoryName + "%");
+			stmt.setString(1, categoryName);
 		    stmt.setInt(2, beginRow);
 		    stmt.setInt(3, rowPerPage);
 			ResultSet rs = stmt.executeQuery();
@@ -347,23 +395,131 @@ public class ProductDao {
 			
 			return productSearchList;
 		}
+		
 
-		// 7) 상품전체(row)
-		public int productListCnt() throws Exception {
+		// 7-1) category별상품전체(row)
+		public int productListCnt(String categoryName) throws Exception {
 			int row = 0;
 			DBUtil dbutil = new DBUtil();
 			Connection conn = dbutil.getConnection();
 			/*
-			  SELECT COUNT(*) FROM product
+			  SELECT COUNT(*) FROM product WHERE category_name = ?
 			*/
 			String sql = "SELECT COUNT(*) FROM product";
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, categoryName);
 			ResultSet rs = stmt.executeQuery();
 			rs = stmt.executeQuery();
 			if(rs.next()) {
 				row = rs.getInt(1);
 			}
 			return row;
+			
+		}
+		
+		
+		
+		// 8) 상품리스트(전체,검색시리스트,카테고리별리스트,(최신순 오래된순),카테고리별 검색시
+		public ArrayList<HashMap<String,Object>> productList1(String productName, String categoryName, String ascDesc, int beginRow, int rowPerPage) throws Exception {
+			DBUtil dbutil = new DBUtil();
+			Connection conn = dbutil.getConnection();
+			/*
+			  SELECT p.product_no, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
+			FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
+							LEFT OUTER JOIN discount d ON p.product_no = d.product_no
+			*/	
+			
+			String sql = " SELECT p.product_no, p.product_name, p.product_price, IFNULL(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\r\n"
+					+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \r\n"
+					+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
+			
+			// 검색어와 카테고리 둘다 있을때
+			if(!productName.equals("") && !categoryName.equals("")) {
+				sql += " WHERE p.product_name LIKE '%" + productName + "%'" + "AND p.category_name = '" + categoryName + "'";
+			}
+			// 검색어만있을때
+			else if (!productName.equals("")) {
+				sql += " WHERE p.product_name LIKE '%" + productName + "%'";
+			} 
+			// 카테고리만 있을때
+			else if(!categoryName.equals("")) {
+				sql += " WHERE p.category_name = '" + categoryName + "'";
+			}
+			
+			// 정렬기준
+			if(!ascDesc.equals("")) {
+				sql += " ORDER BY p.createdate " + ascDesc;
+			}
+			
+			// 페이징을 위한 변수
+			sql += " LIMIT ?, ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+			ResultSet rs = stmt.executeQuery();
+			
+			ArrayList<HashMap<String, Object>> productList = new ArrayList<HashMap<String, Object>>();
+			
+			while(rs.next()) {
+				HashMap<String, Object> map = new HashMap<>();
+				map.put("productNo", rs.getInt("product_no"));
+				map.put("productName", rs.getString("product_name"));
+				map.put("productPrice", rs.getInt("product_price"));
+				map.put("productDiscountPrice", rs.getInt("상품할인가"));
+				map.put("productStatus", rs.getString("product_status"));
+				map.put("productImgNo", rs.getInt("product_img_no"));
+				map.put("productSaveFilename", rs.getString("product_save_filename"));
+				map.put("discountNo", rs.getInt("discount_no"));
+				map.put("discountStart", rs.getString("discount_start"));
+				map.put("discountEnd", rs.getString("discount_end"));
+				productList.add(map);
+			}
+			
+			return productList;
+		}
+	// 8-1) 상품리스트 전체행 개수
+		public int productListCnt1(String categoryName, String productName, String ascDesc) throws Exception {
+			int totalRow = 0;
+			DBUtil dbutil = new DBUtil();
+			Connection conn = dbutil.getConnection();
+			/*
+			  	SELECT COUNT(*) 
+				FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
+								LEFT OUTER JOIN discount d ON p.product_no = d.product_no
+			*/
+			
+			String sql = "SELECT COUNT(*) \r\n"
+					+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \r\n"
+					+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
+			
+			// 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql += " WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		    	sql += " WHERE p.product_name LIKE '%" + productName + "%'";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql += " WHERE p.category_name = '" + categoryName + "'";
+		    }
+		    
+			// 정렬기준
+ 			if(!ascDesc.equals("")) {
+ 				sql += " ORDER BY p.createdate " + ascDesc;
+ 			}
+ 			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				totalRow = rs.getInt(1);
+			}
+			
+			System.out.println(totalRow + "<-- ProductDao 상품리스트 전체 행 개수 totalRow");
+			return totalRow;
 			
 		}
 }
