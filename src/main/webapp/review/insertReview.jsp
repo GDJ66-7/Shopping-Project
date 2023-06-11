@@ -11,12 +11,10 @@
 	|| request.getParameter("productNo").equals("")){
 	response.sendRedirect(request.getContextPath() + "/product/productOne.jsp");
 	return;
-	}
-	
-	/*Integer.parseInt(request.getParameter("productNo"))*/
-	String id = "customer1";
-	int productNo = 21;
-	int orderNo = 1;
+	}*/
+	String id = "customer2";
+	int productNo = 21; /*Integer.parseInt(request.getParameter("productNo"));*/
+	int orderNo = 2; /*Integer.parseInt(request.getParameter("orderNo"));*/
 
 %>
 <!DOCTYPE html>

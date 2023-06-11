@@ -16,7 +16,7 @@
 	// 리스트에서 받아온 값
 	int productNo = 21;/*Integer.parseInt(request.getParameter("productNo"));*/
 	OneDao one = new OneDao();
-	String id = "customer1";
+	String id = "customer2";
 	
 	// DAO 사용
 	HashMap<String,Object> p = one.selectProductOne(productNo);
@@ -133,7 +133,7 @@
 %>
 		<tr>
 			<td>
-			<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=r.get("orderNo")%>">
+			<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=r.get("orderNo")%>&productNo=<%=r.get("productNo")%>">
 			<%=r.get("reviewTitle")%></a>
 			</td>
 			<td><%=r.get("id")%></td>

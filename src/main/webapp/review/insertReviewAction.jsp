@@ -1,7 +1,8 @@
 <%@page import="java.io.File"%>
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@ page import = "com.oreilly.servlet.*" %><!-- cos.jar... -->
+<%@ page import = "com.oreilly.servlet.multipart.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "java.io.*"%>
 <%@ page import="vo.*" %>
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
@@ -10,8 +11,11 @@
 	request.setCharacterEncoding("utf-8");
 
 	// 로그인 세션 추가 test
-	String id = "customer1";
+	String id = "customer2";
 	System.out.println(id);
+	
+	// 객체 생성 (text+img = DAO 하나)
+	ReviewDao reviewdao = new ReviewDao();
 	
 	// 이미지 파일 추가 처리 ---------------------------------------------------------------------------------
 	String dir = request.getServletContext().getRealPath("/review/reviewImg"); // 프로젝트 내 reviewImg 파일 호출
@@ -25,11 +29,23 @@
 	String reviewTitle = mRequest.getParameter("reviewTitle");
 	String reviewContent = mRequest.getParameter("reviewContent");
 	int productNo = Integer.parseInt(mRequest.getParameter("productNo"));
-	int orderNo = 1;/*test !!!! Integer.parseInt(mRequest.getParameter("orderNo"));*/
+	int orderNo = 2;
+	
 	System.out.println(mRequest.getParameter("reviewTitle")+ "<---insert Review reviewTitle");
 	System.out.println(mRequest.getParameter("reviewContent")+ "<---insert Review reviewContent");
 	System.out.println(orderNo+ "<---insert Review orderNo");
 	
+	// 객체 저장 (text) - vo
+	Review reviewtext = new Review();
+	reviewtext.setOrderNo(orderNo);
+	reviewtext.setProductNo(productNo);
+	reviewtext.setId(id);
+	reviewtext.setReviewTitle(reviewTitle);
+	reviewtext.setReviewContent(reviewContent);
+	
+	int row = reviewdao.insertReview(reviewtext); //text
+
+	// --- 이미지
 	// 파일은 jpg만 업로드 가능
 	if(mRequest.getContentType("reviewImg").equals("image/jpeg") == false) { // 타입이 유효하지 않은 저장된 파일 삭제
 		System.out.println("jpg파일이 아닙니다");
@@ -54,24 +70,15 @@
 	System.out.println(originFilename + "<--- insert review originFilename");
 	System.out.println(saveFilename + "<--- insert review saveFilename");
 	
-	// 객체 생성 (text+img = DAO 하나)
-	ReviewDao reviewdao = new ReviewDao();
-	
-	// 객체 저장 (text) - vo
-	Review reviewtext = new Review();
-	reviewtext.setOrderNo(orderNo);
-	reviewtext.setProductNo(productNo);
-	reviewtext.setId(id);
-	reviewtext.setReviewTitle(reviewTitle);
-	reviewtext.setReviewContent(reviewContent);
-	
 	// 이미지 객체 저장 - vo
 	ReviewImg reviewImg = new ReviewImg();
+	reviewImg.setOrderNo(orderNo);
 	reviewImg.setReviewOriFilename(originFilename);
 	reviewImg.setReviewSaveFilename(saveFilename);
 	reviewImg.setReviewFiletype(filetype);
 	
-	// 동일 dao 메서드 호출 (text 추가 & img 추가)
-	reviewdao.insertReview(reviewtext, reviewImg);
+	int imgrow = reviewdao.insertReviewImg(reviewImg);
 	
+	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp");
+
 %>

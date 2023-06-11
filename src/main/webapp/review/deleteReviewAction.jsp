@@ -16,15 +16,16 @@
 	
 	//요청값 변수 저장
 	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
 	//객체 생성
 	ReviewDao review = new ReviewDao();
 	
-	//문의 삭제 메서드
+	//리뷰 삭제 메서드
 	int row = review.deleteReview(orderNo);
 	
-	if(row ==1 ){
-		System.out.println("삭제완료");
+	if(row == 1 ){
+		System.out.println("리뷰 삭제 완료되었습니다.");
 	}
 	
 	response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");

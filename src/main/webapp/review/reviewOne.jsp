@@ -13,17 +13,14 @@
 	// 로그인 세션 검사 -- 조회/수정/삭제 test
 	
 	// 리스트에서 받아온 값 저장 & 메서드 호출 & 객체 생성
-	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	int orderNo = 2;/*Integer.parseInt(request.getParameter("orderNo"));*/
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	//System.out.println(orderNo+"<----");
 	
-	// 리뷰 이미지와 글 모두 불러와야 함
-	ReviewDao review = new ReviewDao(); // dao
-	Review reviewText = new Review(); // vo
-	reviewText = review.selectReviewOne(orderNo); // 텍스트
-	
-	// 이미지
-	ReviewImg reviewImg = new ReviewImg(); // ReviewDao(동일) vo
-	reviewImg = review.reviewImg(orderNo);
+	// 리뷰 이미지와 글 출력 메서드
+	ReviewDao review = new ReviewDao(); // DAO (동일)
+	Review reviewText = review.selectReviewOne(orderNo); //vo
+	ReviewImg reviewImg = review.selectReviewImg(orderNo); //vo
 %>
 <!DOCTYPE html>
 <html>
@@ -58,7 +55,7 @@ a{text-decoration: none;}
 %>
 	<tr>
 		<td id="bar">사진</td>
-		<td> <!-- 파일이 없을땐 출력 되지 않게 해야함 -->
+		<td> <!-- 파일이 없을땐 출력 되지 않게 해야함 일단 리뷰폼은 required로 설정해둠-->
 		<img src="${pageContext.request.contextPath}/review/reviewImg/<%=reviewImg.getReviewSaveFilename()%>">
 		</td>
 	</tr>
@@ -75,7 +72,7 @@ a{text-decoration: none;}
 	</tr>
 </table>
 <a href="<%=request.getContextPath()%>/review/updateReview.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
-<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?orderNo=<%=reviewText.getOrderNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
+<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
 </div>
 </body>
 </html>

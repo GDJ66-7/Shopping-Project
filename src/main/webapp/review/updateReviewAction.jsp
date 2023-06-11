@@ -28,6 +28,8 @@
 	String reviewTitle = mRequest.getParameter("reviewTitle");
 	String reviewContent = mRequest.getParameter("reviewContent");
 	
+	System.out.println(productNo + "<---update r.a no");
+	System.out.println(orderNo + "<---update r.a no");
 	System.out.println(reviewTitle + "<---update r.a title");
 	System.out.println(reviewContent + "<---update r.a content");
 
@@ -69,6 +71,6 @@
     	}
     }
 	
-	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?orderNo=" + orderNo);}
+	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?orderNo="+orderNo+"&productNo="+productNo);}
 
 %>

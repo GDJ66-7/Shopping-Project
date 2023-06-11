@@ -16,14 +16,12 @@
 	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	System.out.println(productNo+"<---- review productNo");
+	System.out.println(orderNo+"<---- review orderNo");
 	
-	ReviewDao review = new ReviewDao(); // dao	
-	// 텍스트
-	Review reviewText = new Review(); // vo
-	reviewText = review.selectReviewOne(orderNo);
-	// 이미지
-	ReviewImg reviewImg = new ReviewImg();
-	reviewImg = review.reviewImg(orderNo);
+	// 리뷰 이미지와 글 출력 메서드
+	ReviewDao review = new ReviewDao(); // DAO (동일)
+	Review reviewText = review.selectReviewOne(orderNo); //vo
+	ReviewImg reviewImg = review.selectReviewImg(orderNo); //vo
 
 %>
 <!DOCTYPE html>
@@ -56,7 +54,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>사진</td>
 				<td>
-				<%=reviewImg.getReviewSaveFilename()!= null ? reviewImg.getReviewSaveFilename() : ""%>
+				수정전 파일 : <%=reviewImg.getReviewSaveFilename()%>
 				<input type="file" name="reviewImg">
 				</td>
 			</tr>
@@ -77,7 +75,7 @@ a{text-decoration: none;}
 			</table>
 			<div>
 				<button type=submit class="btn btn-light">수정</button>
-				<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=reviewText.getOrderNo()%>" class="btn btn-light">취소</a>
+				<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">취소</a>
 			</div>
 		</form>
 	</div>

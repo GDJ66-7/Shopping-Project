@@ -66,7 +66,7 @@ public class ReviewDao {
 	}
 		
 		
-	// 리뷰 추가
+	// 리뷰 추가 (텍스트)
 	public int insertReview(Review review) throws Exception { // 리뷰 이미지 추가예정
 		
 		int row = 0;
@@ -135,7 +135,7 @@ public class ReviewDao {
 	// 이미지 쿼리 ----------------------------------------------------------------------------------------
 	
 	// 리뷰 이미지 view (화면 출력) -- ReviewImg (vo)
-	public ReviewImg reviewImg(int orderNo) throws Exception {
+	public ReviewImg selectReviewImg(int orderNo) throws Exception {
 		
 		ReviewImg review = new ReviewImg();
 		DBUtil DButil = new DBUtil();
@@ -162,7 +162,7 @@ public class ReviewDao {
 		int row = 0;
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
-        String sql = "INSERT into review_img(order_no, review_ori_filename, review_save_filename, review_filetype, createdate, updatedate values(?,?,?,?,now(),now())";
+        String sql = "INSERT into review_img(order_no, review_ori_filename, review_save_filename, review_filetype, createdate, updatedate) values(?,?,?,?,now(),now())";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, reviewImg.getOrderNo());
         stmt.setString(2, reviewImg.getReviewOriFilename());
@@ -175,29 +175,27 @@ public class ReviewDao {
 	
 	
 	// 리뷰 이미지 삭제 -- dir (파일의 실제 경로) -> savefile 최종 삭제 (select - delete)
-	public int deleteReviewImg (int orderNo, String dir) throws Exception {
-		
-        DBUtil dbUtil = new DBUtil();
-        Connection conn = dbUtil.getConnection();
-        String sql = "SELECT review_save_filename FROM review_img WHERE order_no = ?";
+	public int deleteReviewImg (int orderNo, String dir ) throws Exception {
+
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT review_save_filename FROM review_img WHERE order_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, orderNo);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) { // preSaveFilename : 이전에 존재하던 파일
-			String preSaveFilename = rs.getString("review_save_filename");
-			File f = new File(dir,preSaveFilename);
-			if(f.exists()) { // 파일이 존재하는지 확인, 존재하면 delete 정상 실행
+		String preSaveFilename = rs.getString("review_save_filename");
+		File f = new File(dir,preSaveFilename);
+		if(f.exists()) { // 파일이 존재하는지 확인, 존재하면 delete 정상 실행
 				f.delete();
 			}
 		}
-		int row = stmt.executeUpdate();
-		return row;
+			return 1; //실행 완료 되면 1이 반환됨 (완료1 / 실패0)
 	}
 	
 	// 리뷰 이미지 수정
 	public int updateReviewImg (ReviewImg reviewImg) throws Exception {
 		
-		int row = 0;
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
         String sql = "UPDATE review_img SET review_ori_filename = ?, review_save_filename = ?, review_filetype = ? WHERE order_no =? ";
@@ -207,7 +205,7 @@ public class ReviewDao {
 		stmt.setString(3, reviewImg.getReviewFiletype());
 		stmt.setInt(4, reviewImg.getOrderNo());
 		
-		row = stmt.executeUpdate();
+		int row = stmt.executeUpdate();
 		return row;
 	}
 	
