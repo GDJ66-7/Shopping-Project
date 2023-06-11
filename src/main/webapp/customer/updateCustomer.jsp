@@ -106,33 +106,15 @@ String id = (String)(session.getAttribute("loginCstmId"));
 	</h1>
 	<form action="<%=request.getContextPath()%>/customer/updateCustomerAction.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-		<table class="table table-bordered">	
-			<tr>
-				<td>주소 :</td>
-					<td>
-						<textarea name ="cstmAddress" cols ="33" rows="5" placeholder="주소입력"></textarea>
-					</td>
-				</tr>	
-				<tr>
-					<td>이메일 :</td>
-					<td>
-						<input type="email" id="email" name="cstmEmail" placeholder="email@naver.com">
-					</td>
-				</tr>
-				<tr>
-					<td>전화번호 :</td>
-					<td>
-						<input type="tel"  name="cstmPhone" placeholder="010-0000-0000">
-					</td>
-				</tr>
-				<tr>
-					<td>비밀번호 확인:</td>
-				<td>
-					<input type="password" name="pw" placeholder="비밀번호">
-				</td>
-			</tr>
-		</table>
-			<button type="submit" class="genric-btn primary-border circle">수정완료</button>
+						주소 <textarea name ="cstmAddress" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+
+						이메일<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
+
+						전화번호<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
+						
+						비밀번호<input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+
+			<button type="submit" class="genric-btn primary-border circle">수정</button>
 		</form>
 		<br><a href="<%=request.getContextPath()%>/customer/customerInfo.jsp" class="genric-btn primary-border circle">마이페이지</a>
     </div><br>

@@ -55,8 +55,9 @@
 	int row = deleteCstm.deleteCustomer(id);
 	
 	if(row > 0){
-		msg = URLEncoder.encode("회원탈퇴가 완료되었습니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		
+		session.invalidate(); // 기존 갖고있던 모든 세션을 지우고 갱신!
+		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}else if(row == 0){
 		msg = URLEncoder.encode("회원탈퇴에 문제가 생겼으므로 고객센터에 문의 바랍니다","utf-8");

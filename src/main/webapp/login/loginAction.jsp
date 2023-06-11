@@ -35,7 +35,16 @@
 	IdList idList = new IdList();
 	idList.setId(id);
 	idList.setPw(pw);
-
+	
+	//비밀번호가 맞는지 확인
+	MemberDao checkPw = new MemberDao();
+	int cRow = checkPw.checkPw(idList);
+	if(cRow == 0){
+		msg = URLEncoder.encode(" 아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.","utf-8");
+		response.sendRedirect(request.getContextPath()+"/login/login.jsp?msg="+msg);
+		return;
+	}
+	
 	MemberDao lg = new MemberDao();
 	int row = lg.login(idList);
 	

@@ -105,7 +105,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="login_part_form">
                         <div class="login_part_form_iner">
-                        <h1>
+                        <p>
 							 <%
 					        	if(request.getParameter("msg") != null){
 					         %>
@@ -113,7 +113,7 @@
 					         <% 
 					        	}
 					      	 %>		
-						</h1>
+						</p>
                             <h3>로그인</h3>
                             <form class="row contact_form" action="<%=request.getContextPath()%>/login/loginAction.jsp" method="post" novalidate="novalidate">
                                 <div class="col-md-12 form-group p_star">

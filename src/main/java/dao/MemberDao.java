@@ -42,8 +42,8 @@ public class MemberDao {
 			}
 		} else if(row == 0) {
 			PreparedStatement falStmt = conn.prepareStatement("SELECT count(*) FROM id_list WHERE id = ? AND pw = PASSWORD(?) AND active = 'n'");
-			stmt.setString(1, id.getId());
-			stmt.setString(2, id.getPw());
+			falStmt.setString(1, id.getId());
+			falStmt.setString(2, id.getPw());
 			ResultSet rs = falStmt.executeQuery();
 			if(rs.next()) {
 				row = 3;

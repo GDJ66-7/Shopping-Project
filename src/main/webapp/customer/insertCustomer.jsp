@@ -111,7 +111,7 @@
 
 						비밀번호<input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
 
-						비밀번호<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required" class="single-input"><br>
+						비밀번호 확인<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required" class="single-input"><br>
 
 						이름<input type="text" name="cstmName" required="required" class="single-input"><br>
 

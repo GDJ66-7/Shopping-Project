@@ -108,20 +108,10 @@ String id = (String)(session.getAttribute("loginCstmId"));
 	</h1>
 	<form action="<%=request.getContextPath()%>/customer/deleteCustomerAction.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-		<table class="table table-bordered">
-			<tr>
-				<td>비밀번호 :</td>
-				<td>
-					<input type="password" name="pw" placeholder="비밀번호">
-				</td>
-			</tr>
-			<tr>
-				<td>비밀번호 확인 :</td>
-				<td>
-					<input type="password" name="checkPw" placeholder="비밀번호 재확인">
-				</td>
-			</tr>
-		</table>
+					비밀번호 <input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+
+					비밀번호 확인<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required" class="single-input"><br>
+		
 		<button type="submit"class="genric-btn primary-border circle">탈퇴</button>
 	</form>
 	<br><a href="<%=request.getContextPath()%>/customer/customerInfo.jsp" class="genric-btn primary-border circle">마이페이지</a>
