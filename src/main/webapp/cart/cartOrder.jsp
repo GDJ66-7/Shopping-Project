@@ -58,7 +58,7 @@
 	function addressOpenPopup(url) {
 	    window.open(url, 'addressPopupWindow', 'width=600, height=400');
 	}
-</script>	
+</script>
 </head>
 <body>
 <div class="container">
