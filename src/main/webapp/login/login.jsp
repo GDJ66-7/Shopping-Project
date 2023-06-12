@@ -12,6 +12,12 @@
 <html lang="zxx">
 
 <head>
+<script type="text/javascript">
+        function openPopup() {
+            // 윈도우 팝업 창을 띄우는 함수
+            var popup = window.open("kakao_Login.jsp", "popupWindow", "width=500,height=300");
+        }
+    </script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -128,6 +134,8 @@
                                     <button type="submit" value="submit" class="btn_3">
                                         log in
                                     </button>
+                                    <br>
+                                    <button onclick="openPopup()" class="genric-btn link circle">카카오톡 로그인</button><br>
                                       <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findId.jsp">아이디 찾기</a><br>
                                         <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findPw.jsp">비밀번호 찾기</a>
                                 </div>
