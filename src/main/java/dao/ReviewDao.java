@@ -102,13 +102,16 @@ public class ReviewDao {
 		
 	}
 	
-	// 리뷰 삭제
+	// 리뷰 삭제 (텍스트+이미지 전체 삭제 테이블 join)
 	public int deleteReview(int orderNo) throws Exception {
 		
 		int row = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "DELETE from review WHERE order_no = ?";
+		String sql = "DELETE r,ri from review r "
+					+"INNER JOIN review_img ri ON r.order_no = ri.order_no "
+					+ "WHERE r.order_no = ?";
+		// String sql = "DELETE from review WHERE order_no = ?"; 수정전코드
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, orderNo);
 		row = stmt.executeUpdate();

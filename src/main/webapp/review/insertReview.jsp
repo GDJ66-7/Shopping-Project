@@ -30,6 +30,7 @@
 <h2 style="text-align: center;">상품 리뷰 작성</h2>
 <div class="container mt-3">
 <form action="<%=request.getContextPath()%>/review/insertReviewAction.jsp" method="post" enctype="multipart/form-data">
+<input type="hidden" name="orderNo" value="<%=orderNo%>">
 <input type="hidden" name="productNo" value="<%=productNo%>">
 <input type="hidden" name="id" value="<%=id%>">
 <!-- hidden으로 orderNo까지 보낼 것 / 위에서 orderNo도 따로 받아야함 * 마이페이지 리뷰 작성-->

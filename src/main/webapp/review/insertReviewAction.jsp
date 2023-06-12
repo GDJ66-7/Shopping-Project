@@ -1,5 +1,5 @@
 <%@page import="java.io.File"%>
-<%@ page import = "com.oreilly.servlet.*" %><!-- cos.jar... -->
+<%@ page import = "com.oreilly.servlet.*" %><!-- cos.jar-->
 <%@ page import = "com.oreilly.servlet.multipart.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.io.*"%>
@@ -25,11 +25,11 @@
 	MultipartRequest mRequest = new MultipartRequest(request, dir, max, "utf-8", new DefaultFileRenamePolicy());
 	
 	// 1) 요청값 저장
-	// review 테이블에 저장 - text값
+	// review 테이블에 저장 - text값(input으로 받아온 것 다 저장하기)
 	String reviewTitle = mRequest.getParameter("reviewTitle");
 	String reviewContent = mRequest.getParameter("reviewContent");
 	int productNo = Integer.parseInt(mRequest.getParameter("productNo"));
-	int orderNo = 2;
+	int orderNo = Integer.parseInt(mRequest.getParameter("orderNo"));
 	
 	System.out.println(mRequest.getParameter("reviewTitle")+ "<---insert Review reviewTitle");
 	System.out.println(mRequest.getParameter("reviewContent")+ "<---insert Review reviewContent");
