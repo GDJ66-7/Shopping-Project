@@ -64,9 +64,21 @@
 		            <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
 		                <a class="dropdown-item" href="<%=request.getContextPath()%>/employee/employeeInfo.jsp"> 관리자정보</a>
 		                <a class="dropdown-item" href="<%=request.getContextPath()%>/category/categoryList.jsp">카테고리 관리</a>
-		                <a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp">상품관리(리스트로)</a>
+		    <%	// 관리자2만 상품관리가 가능
+		        	if(session.getAttribute("loginEmpId2") != null) {
+		    %>	
+           				<a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp">상품관리(리스트로)</a>
 		            </div>
 	        	</li>
+		    <%
+		            } 
+		        } else { 
+		    %>
+		    		<li class="nav-item">
+			    		<a class="nav-link" href="<%=request.getContextPath()%>/customer/customerInfo.jsp" id="navbarDropdown_1">
+							마이페이지
+						</a>
+					</li>
 	        <%
 	        	}
 	        %>

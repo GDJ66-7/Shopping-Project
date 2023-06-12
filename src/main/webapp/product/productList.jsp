@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="dao.CategoryDao"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.HashMap"%>
@@ -13,11 +14,22 @@
 	
 	// 요청값 변수 저장 및 디버깅
 	
-	String productName = request.getParameter("productName");
+	/*
+		String productName = null;
+	
+	*/
+	
+	String productName = request.getParameter("productName"); // null
 	String categoryName = request.getParameter("categoryName");
 	String ascDesc = request.getParameter("ascDesc");
 	
-	// 요청값이 null이 나와서 실행오류 나와서 null일경우 ""(공백)처리
+	// 요청값이 null이 나와서 실행오류가 발생 null일경우 ""(공백)처리
+	/*
+		if (productName != null) {
+	 		puductName = request.getParameter("productName");
+	 	}
+	*/
+	
 	if (productName == null) {
 	    productName = "";
 	}
@@ -80,6 +92,8 @@
 	
 	// 카테고리이름리스트 dao호출
 	ArrayList<HashMap<String, Object>> categoryNameList = cDao.categoryNameList();
+	
+	int cnt = 0;
 %>
 <!doctype html>
 <html lang="zxx">
@@ -171,39 +185,46 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                <form action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
-                    <table>
-                    	<tr>
-                    		<td>
-                    			<input type="text" name="productName" placeholder="상품이름검색">
-                    		</td>
-                    	</tr>
-                    	<tr>
-                    		<%
-                    			for(HashMap<String, Object> categoryNameMap : categoryNameList) {
-                    		%>
-                        			<td>
-                        				<select name="categoryName">
-                        					<option value="<%=categoryNameMap.get("categoryName")%>">
-                        						<%=categoryNameMap.get("categoryName")%>
-                        					</option>
-                        				</select>
-                        			</td>
-                        	<% 	
-                    			}
-                    		%>
-                    	</tr>
-                    	<tr>	
-                    		<td>
-								<select name="categoryName">
-									<option value='' selected>-- 선택 --</option>
-									<option value="asc">asc</option>
-									<option value="desc">desc</option>
-								</select>
-			     			</td>
-                    	</tr>
-                    </table>
-                </form>
+                <div class="product_sidebar">
+                    	<!--  상품리스트 왼쪽 검색기능 -->
+	                    <form action="<%=request.getContextPath()%>/product/productList.jsp" method="get">
+	                       <a href="<%=request.getContextPath()%>/product/productList.jsp">전체상품보기</a> 
+	                       <table>
+	                       	<tr>
+	                       		<td>
+	                       													<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
+	                       			<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+	                       		</td>
+	                       	</tr>
+	                       	<tr>
+	                       		<td>
+		                       		<ul class="navbar-nav">
+	                       				<li class="nav-item">
+	                       				</li>
+	                       				<%
+                                			for(HashMap<String, Object> categoryNameMap : categoryNameList) {
+                                		%>
+                                				<li class="nav-item">																					<!-- categoryName이 널이 아니고 요청값이 value의 값과 같다면 check한다 -->
+                                					<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" <% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+	                                				<%=categoryNameMap.get("categoryName")%>
+	                                			</li>
+                                		<% 	
+                                			
+                                			}
+                                		%>
+                                	</ul>
+	                       		</td>
+	                       	</tr>
+	                       	<tr>
+	                       		<td>
+	                       			<input type="checkbox" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
+	                       			<input type="checkbox" name="ascDesc"value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
+	                       		</td>
+	                       	</tr>
+	                       </table>
+	                       <button type="submit" class="genric-btn primary-border circle"> 검색</button>
+	                    </form>
+                    </div>
                 </div>
                 <!-- -----------------------     상품리스트 출력   ------------------------- -->
                 <div class="col-md-8">
@@ -221,21 +242,23 @@
 											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><%=productMap.get("productName") %></a>
 											<br>	
 											가격 : <%=productMap.get("productPrice") %>
+											<br>
 							<% 
 											// 할인가가 있는 상품만 할인가격이 나오게 설정
 											if(productMap.get("productDiscountPrice") != null) {
-												if ((int)productMap.get("productDiscountPrice") != 0) {
+												if ((int)productMap.get("productDiscountPrice") != ((int)productMap.get("productPrice"))) {
 							%>
 													할인가 : <span style="color: red;"><%=productMap.get("productDiscountPrice") %></span>
 													<br>
 							<% 
 												}
 											}
-							%>				
-											<%=productMap.get("productStatus") %>
+							%>
+													<!-- 상품상태 -->
+													<%=productMap.get("productStatus") %>
 							<%
-												// 상품수정 및 상품할인은 관리자로그인시에만 볼 수 있음
-												if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+												// 상품수정 및 상품할인은 관리자로그인시에만 볼 수 있음 관리자2만 상품수정및 할인가능
+												if(session.getAttribute("loginEmpId2") != null) {
 							%>
 													<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 													<br>
@@ -254,12 +277,12 @@
 											<img src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="350" height="350">
 											<%=productMap.get("productName") %>
 											<br>
-											<%=productMap.get("productPrice") %>
+											가격 : <%=productMap.get("productPrice") %>
 											<br>
-											<%=productMap.get("productStatus") %>
+											<span style="color: red;"><%=productMap.get("productStatus") %></span>
 							<% 		
-										// 상품수정은 관리자로그인시에만 볼 수 있음
-										if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+										// 상품수정은 관리자로그인시에만 볼 수 있음 관리자2만가능
+										if(session.getAttribute("loginEmpId2") != null) {
 							%>
 											<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 							<% 

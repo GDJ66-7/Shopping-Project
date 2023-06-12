@@ -31,6 +31,6 @@
 		return;
 	}
 		System.out.println("카테고리 추가실패");
-		response.sendRedirect(request.getContextPath()+"/category/home.jsp");
+		response.sendRedirect(request.getContextPath()+"/category/insertCategory.jsp");
 	
 %>

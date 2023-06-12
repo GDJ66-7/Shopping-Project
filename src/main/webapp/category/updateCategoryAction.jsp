@@ -29,6 +29,6 @@
 		response.sendRedirect(request.getContextPath() + "/main/empMain.jsp");
 	} else {
 		System.out.println("카테고리 변경 실패");
-		response.sendRedirect(request.getContextPath() + "/category/updateCategory.jsp");
+		response.sendRedirect(request.getContextPath() + "/category/categoryList.jsp");
 	}
 %>

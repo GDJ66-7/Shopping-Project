@@ -113,6 +113,15 @@
 	insertP.setProductStatus(productStatus);
 	insertP.setProductStock(productStock);
 	insertP.setProductInfo(productInfo);
+	
+	
+	System.out.println(insertP.getCategoryName() + "<-- insertProductAction insertP.getCategoryName()");
+	if(insertP.getCategoryName() == null) {
+		response.sendRedirect(request.getContextPath() +"/product/insertProduct.jsp");
+		return;
+	}
+	
+	
 	// 상품 이미지 객체
 	ProductImg insertImgP = new ProductImg();
 	insertImgP.setProductOriFilename(proOriginFilename);

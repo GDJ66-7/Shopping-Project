@@ -116,6 +116,7 @@
             <div class="row">
                 <div class="col-lg-12"> 
                 	<div class="col-lg-12">
+                		<h2 style="text-align: center;">최신상품</h2>
                 		<div class="row">
 	                        <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->                                  
 						    <%

@@ -17,25 +17,7 @@
 	System.out.println(categoryNo + "<--- updateCategory categoryNo");
 	System.out.println(categoryName + "<--- updateCategory categoryName");
 	
-	
 %>
-
-	<!-- 
-	<form class="form-contact contact_form" action="<%=request.getContextPath()%>/category/updateCategoryAction.jsp" method = "post">
-	     <div class="row">
-	<table>
-		<tr>
-			<td>수정할이름</td>
-			<td>
-				<input type="hidden" value="<%=categoryNo %>" name="categoryNo">
-				<input type="text" name="categoryName" placeholder="<%=categoryName%>">
-				</td>
-			</tr>
-		</table>
-		<button type="submit"> 카테고리 이름 변경</button>
-	</div>
-	</form>
-	 -->
 <!doctype html>
 <html lang="zxx">
 
@@ -44,24 +26,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>pillloMart</title>
-    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
+    <link rel="icon" href="/Shopping/css/img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Shopping/css/css/bootstrap.min.css">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
+    <link rel="stylesheet" href="/Shopping/css/css/animate.css">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Shopping/css/css/owl.carousel.min.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
+    <link rel="stylesheet" href="/Shopping/css/css/all.css">
     <!-- flaticon CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
+    <link rel="stylesheet" href="/Shopping/css/css/flaticon.css">
+    <link rel="stylesheet" href="/Shopping/css/css/themify-icons.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
+    <link rel="stylesheet" href="/Shopping/css/css/magnific-popup.css">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
+    <link rel="stylesheet" href="/Shopping/css/css/slick.css">
     <!-- style CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
+    <link rel="stylesheet" href="/Shopping/css/css/style.css">
 </head>
 
 <body>
@@ -71,81 +53,21 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="/Shopping/main/home.jsp"> <img src="/Shopping/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span class="menu_icon"><i class="fas fa-bars"></i></span>
                         </button>
-
-                        <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="index.html">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="about.html">about</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        product
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                        <a class="dropdown-item" href="product_list.html"> product list</a>
-                                        <a class="dropdown-item" href="single-product.html">product details</a>
-                                        
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        pages
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="login.html"> 
-                                            login
-                                            
-                                        </a>
-                                        <a class="dropdown-item" href="checkout.html">product checkout</a>
-                                        <a class="dropdown-item" href="cart.html">shopping cart</a>
-                                        <a class="dropdown-item" href="confirmation.html">confirmation</a>
-                                        <a class="dropdown-item" href="elements.html">elements</a>
-                                    </div>
-                                </li>
-                                
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        blog
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="blog.html"> blog</a>
-                                        <a class="dropdown-item" href="single-blog.html">Single blog</a>
-                                    </div>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
+						<!-- 메인메뉴 바 -->
+                        <div>
+							<jsp:include page="/main/menuBar.jsp"></jsp:include>
+						</div>
                         <div class="hearer_icon d-flex align-items-center">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="cart.html">
+                              <a href="/Shopping/cart/cartList.jsp">
                                 <i class="flaticon-shopping-cart-black-shape"></i>
                             </a>
-                            <!-- <div class="dropdown cart">
-                                <a class="dropdown-toggle" href="cart" id="navbarDropdown3" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="flaticon-shopping-cart-black-shape"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <div class="single_product">
-    
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </nav>
                 </div>
@@ -169,7 +91,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
-                        <h2>contact</h2>
+                        <h2>카테고리 관리페이지(수정창)</h2> 
                     </div>
                 </div>
             </div>
@@ -178,117 +100,25 @@
     <!-- breadcrumb part end-->
 
   <!-- ================ contact section start ================= -->
-  <section class="contact-section section_padding">
     <div class="container">
-      <div class="d-none d-sm-block mb-5 pb-4">
-        <div id="map" style="height: 480px;"></div>
-        <script>
-          function initMap() {
-            var uluru = {
-              lat: -25.363,
-              lng: 131.044
-            };
-            var grayStyles = [{
-                featureType: "all",
-                stylers: [{
-                    saturation: -90
-                  },
-                  {
-                    lightness: 50
-                  }
-                ]
-              },
-              {
-                elementType: 'labels.text.fill',
-                stylers: [{
-                  color: '#ccdee9'
-                }]
-              }
-            ];
-            var map = new google.maps.Map(document.getElementById('map'), {
-              center: {
-                lat: -31.197,
-                lng: 150.744
-              },
-              zoom: 9,
-              styles: grayStyles,
-              scrollwheel: false
-            });
-          }
-        </script>
-        <script
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I&callback=initMap">
-        </script>
-
-      </div>
-
-
-      <div class="row">
-        <div class="col-12">
-          <h2 class="contact-title">Get in Touch</h2>
-        </div>
-        <div class="col-lg-8">
-          <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm"
-            novalidate="novalidate">
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group">
-
-                  <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'"
-                    placeholder='Enter Message'></textarea>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <input class="form-control" name="name" id="name" type="text" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Enter your name'" placeholder='Enter your name'>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <input class="form-control" name="email" id="email" type="email" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Enter email address'" placeholder='Enter email address'>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-group">
-                  <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Enter Subject'" placeholder='Enter Subject'>
-                </div>
-              </div>
-            </div>
-            <div class="form-group mt-3">
-              <a href="#" class="btn_3 button-contactForm">Send Message</a>
-            </div>
-          </form>
-        </div>
-        <div class="col-lg-4">
-          <div class="media contact-info">
-            <span class="contact-info__icon"><i class="ti-home"></i></span>
-            <div class="media-body">
-              <h3>Buttonwood, California.</h3>
-              <p>Rosemead, CA 91770</p>
-            </div>
-          </div>
-          <div class="media contact-info">
-            <span class="contact-info__icon"><i class="ti-tablet"></i></span>
-            <div class="media-body">
-              <h3>00 (440) 9865 562</h3>
-              <p>Mon to Fri 9am to 6pm</p>
-            </div>
-          </div>
-          <div class="media contact-info">
-            <span class="contact-info__icon"><i class="ti-email"></i></span>
-            <div class="media-body">
-              <h3>support@colorlib.com</h3>
-              <p>Send us your query anytime!</p>
-            </div>
-          </div>
-        </div>
-      </div>
+	<div class="col-12">
     </div>
-  </section>
+   	<br>
+	<form class="form-contact contact_form" action="<%=request.getContextPath()%>/category/updateCategoryAction.jsp" method = "post">
+    <div class="row">
+		<table class="table table-bordered">
+			<tr>
+				<td>수정할이름</td>
+				<td>
+					<input type="hidden" value="<%=categoryNo %>" name="categoryNo">
+					<input type="text" name="categoryName" placeholder="수정전 : <%=categoryName%>">
+				</td>
+			</tr>
+		</table>
+		<button class="genric-btn primary-border circle"  type="submit"> 카테고리 이름 변경</button>
+	</div>
+	</form>
+    </div>
   <!-- ================ contact section end ================= -->
 
   <!--::footer_part start::-->
@@ -299,15 +129,10 @@
                     <div class="col-lg-8">
                         <div class="footer_menu">
                             <div class="footer_logo">
-                                <a href="index.html"><img src="img/logo.png" alt="#"></a>
+                                <a href="index.html"><img src="/Shopping/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
                                 <a href="index.html">Home</a>
-                                <a href="about.html">About</a>
-                                <a href="product_list.html">Products</a>
-                                <a href="#">Pages</a>
-                                <a href="blog.html">Blog</a>
-                                <a href="contact.html">Contact</a>
                             </div>
                         </div>
                     </div>
@@ -329,7 +154,7 @@
                     <div class="col-lg-12">
                         <div class="copyright_text">
                             <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
                             <div class="copyright_link">
                                 <a href="#">Turms & Conditions</a>
@@ -344,31 +169,31 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!--::footer_part end::-->
 
     <!-- jquery plugins here-->
-    <script src="<%=request.getContextPath()%>/css/js/jquery-1.12.1.min.js"></script>
+    <script src="/Shopping/css/js/jquery-1.12.1.min.js"></script>
     <!-- popper js -->
-    <script src="<%=request.getContextPath()%>/css/js/popper.min.js"></script>
+    <script src="/Shopping/css/js/popper.min.js"></script>
     <!-- bootstrap js -->
-    <script src="<%=request.getContextPath()%>/css/js/bootstrap.min.js"></script>
+    <script src="/Shopping/css/js/bootstrap.min.js"></script>
     <!-- easing js -->
-    <script src="<%=request.getContextPath()%>/css/js/jquery.magnific-popup.js"></script>
+    <script src="/Shopping/css/js/jquery.magnific-popup.js"></script>
     <!-- swiper js -->
-    <script src="<%=request.getContextPath()%>/css/js/swiper.min.js"></script>
+    <script src="/Shopping/css/js/swiper.min.js"></script>
     <!-- swiper js -->
-    <script src="<%=request.getContextPath()%>/css/js/mixitup.min.js"></script>
+    <script src="/Shopping/css/js/mixitup.min.js"></script>
     <!-- particles js -->
-    <script src="<%=request.getContextPath()%>/css/js/owl.carousel.min.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/jquery.nice-select.min.js"></script>
+    <script src="/Shopping/css/js/owl.carousel.min.js"></script>
+    <script src="/Shopping/css/js/jquery.nice-select.min.js"></script>
     <!-- slick js -->
-    <script src="<%=request.getContextPath()%>/css/js/slick.min.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/jquery.counterup.min.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/waypoints.min.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/contact.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/jquery.ajaxchimp.min.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/jquery.form.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/jquery.validate.min.js"></script>
-    <script src="<%=request.getContextPath()%>/css/js/mail-script.js"></script>
+    <script src="/Shopping/css/js/slick.min.js"></script>
+    <script src="/Shopping/css/js/jquery.counterup.min.js"></script>
+    <script src="/Shopping/css/js/waypoints.min.js"></script>
+    <script src="/Shopping/css/js/contact.js"></script>
+    <script src="/Shopping/css/js/jquery.ajaxchimp.min.js"></script>
+    <script src="/Shopping/css/js/jquery.form.js"></script>
+    <script src="/Shopping/css/js/jquery.validate.min.js"></script>
+    <script src="/Shopping/css/js/mail-script.js"></script>
     <!-- custom js -->
-    <script src="<%=request.getContextPath()%>/css/js/custom.js"></script>
+    <script src="/Shopping/css/js/custom.js"></script>
 </body>
 
 </html>

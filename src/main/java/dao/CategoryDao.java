@@ -16,7 +16,23 @@ public class CategoryDao {
 		int row = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
-			
+		
+		// 카테고리 중복 체크 쿼리
+	    String checkCategorySql = "SELECT COUNT(*) FROM category WHERE category_name = ?";
+	    PreparedStatement checkCategoryStmt = conn.prepareStatement(checkCategorySql);
+	    checkCategoryStmt.setString(1, category.getCategoryName());
+	    ResultSet checkCategoryRs = checkCategoryStmt.executeQuery();
+
+	    int cnt = 0;
+	    if (checkCategoryRs.next()) {
+	    	cnt = checkCategoryRs.getInt(1);
+	    }
+	    if (cnt > 0) {
+	    	System.out.println("이미 같은 이름의 카테고리가 존재합니다.");
+	    	return row;
+	    }
+	    
+		
 		/* category추가 쿼리
 		 	INSERT INTO category(category_name, createdate, updatedate) VALUES(?,now(),now())
 		 */
@@ -79,13 +95,29 @@ public class CategoryDao {
 		int row = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
+		
+		// 카테고리 중복 체크 쿼리
+	    String checkCategorySql = "SELECT COUNT(*) FROM category WHERE category_name = ?";
+	    PreparedStatement checkCategoryStmt = conn.prepareStatement(checkCategorySql);
+	    checkCategoryStmt.setString(1, category.getCategoryName());
+	    ResultSet checkCategoryRs = checkCategoryStmt.executeQuery();
+
+	    int cnt = 0;
+	    if (checkCategoryRs.next()) {
+	    	cnt = checkCategoryRs.getInt(1);
+	    }
+	    if (cnt > 0) {
+	    	System.out.println("이미 같은 이름의 카테고리가 존재합니다.");
+	    	return row;
+	    }
+		
 		/*
 		 	UPDATE category SET category_name = ? WHERE category_name = ?
 		 */
 		String sql="UPDATE category SET category_name = ? WHERE category_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, category.getCategoryName());
-		stmt.setInt(1, category.getCategoryNo());
+		stmt.setInt(2, category.getCategoryNo());
 		row = stmt.executeUpdate();
 		System.out.println(stmt + "<--- category updateStmt");
 		return row;
