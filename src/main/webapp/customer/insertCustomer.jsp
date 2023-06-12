@@ -7,11 +7,35 @@
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
+	String useId = "";
+	if(request.getParameter("useId") != null){
+		useId = request.getParameter("useId");
+	};
 %>
 <!doctype html>
 <html lang="zxx">
 
 <head>
+	<script type="text/javascript">
+        function openPopup() {
+            // 윈도우 팝업 창을 띄우는 함수
+            var popup = window.open("checkId.jsp", "popupWindow", "width=500,height=300");
+        }
+    </script>
+    <!-- 카카오API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	window.onload = function(){
+	    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+	        //카카오 지도 발생
+	        new daum.Postcode({
+	            oncomplete: function(data) { //선택시 입력값 세팅
+	                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+	            }
+	        }).open();
+	    });
+	}
+	</script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -106,8 +130,9 @@
       	 %>		
 	</h1>
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post">
-
-						아이디<input type="text" name="id" placeholder="아이디" required="required" class="single-input"><br>
+						
+						<button onclick="openPopup()" class="genric-btn link circle">아이디입력</button><br>
+						아이디<input type="text" name="id" placeholder="아이디" readonly="readonly" value="<%=useId%>" required="required" class="single-input"><br>
 
 						비밀번호<input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
 
@@ -115,7 +140,7 @@
 
 						이름<input type="text" name="cstmName" required="required" class="single-input"><br>
 
-						주소 <textarea name ="cstmAddress" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+						주소 <textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
 
 						이메일<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
 

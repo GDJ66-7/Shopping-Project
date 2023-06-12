@@ -342,5 +342,18 @@ public class MemberDao {
 		}
 		return row;
 	}
+	public int checkId(String id) throws Exception {
+		int row = 0;
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn =  dbUtil.getConnection();
+		String sql = "SELECT count(*) FROM id_list WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			row = rs.getInt("count(*)");
+		}
+		return row;
+	}
 	
 }

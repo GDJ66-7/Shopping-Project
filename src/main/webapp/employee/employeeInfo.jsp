@@ -3,7 +3,7 @@
 <%@ page import = "java.util.*" %>
 <%
 //세션 확인 관리자만 들어올 수 있도록
-if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId") == null){
+if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId2") == null){
 		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
