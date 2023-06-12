@@ -18,7 +18,6 @@
 	int point = Integer.parseInt(request.getParameter("point"));
 	String selectAddress = request.getParameter("selectAddress");
 	
-	
 	System.out.println(id + " <-- updatePoint id");
 	System.out.println(selectAddress + " <-- updatePoint selectAddress");
 	System.out.println(point + " <-- updatePoint point");
@@ -31,10 +30,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function submitForm() {
+    	// Form 데이터를 가져와서 새 창에 전송
+		var form = document.getElementById('pointForm');
+    	form.target = 'newWindow'; // 새 창의 이름
+    	form.submit();
+    
+		// 원래 창으로 돌아가고 새로고침
+		window.opener.location.reload();
+		window.close();
+	}
+
+</script>
 </head>
 <body>
 	<h1>포인트 사용</h1>
-	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+	<form id="pointForm" action="<%=request.getContextPath()%>/cart/cartOrder.jsp">
 		<input type="hidden" name="id" value="<%=id%>">
 		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
 		
@@ -47,11 +59,10 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="submit" value="포인트 사용하기">
+					<input type="submit" value="포인트 사용하기" onclick="submitForm()">
 				</td>
 			</tr>
-		</table>
-		
+		</table>		
 	</form>
 </body>
 </html>
