@@ -21,7 +21,6 @@
 		selectAddress = request.getParameter("selectAddress");
 	}
 	
-	
 	// 사용 할 포인트 초기값(사용자가 포인트를 입력하지않으면 기본값은 0이다.)
 	int usePoint = 0;
 	usePoint = usePoint + inputPoint; // // 사용 할 포인트(사용자가 포인트 입력한 값)
@@ -40,9 +39,16 @@
 	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
-
+	
+	// 총 상품 개수
+	int totalCartCnt = 0;
+	for(HashMap<String, Object> c : list7) {
+		totalCartCnt = (Integer)(c.get("총상품개수"));
+	}
+	
 	// 10. 주소 내역 리스트 불러오기
 	ArrayList<String> list10 = cartDao.addressList(id);
+	
 	
 	
 %>
@@ -135,11 +141,10 @@
 	</form>
 
 	<h4>배송 상품</h4>
+	<!-- 배송 상품 목록 -->
 	<table class="table">			
-				<!-- 배송 상품 목록 -->
 		<%
-			for(HashMap<String, Object> c : list6) {
-				
+			for(HashMap<String, Object> c : list6) {		
 		%>		
 				<tr>
 					<td><%=(String)(c.get("상품이름"))%></td>
@@ -177,35 +182,37 @@
 	
 	<table class="table">	
 		<%
-			for(HashMap<String, Object> c : list7) { 				
+			for(HashMap<String, Object> c : list7) { 
+				int discountAmount = (Integer)(c.get("할인금액"));
+				int totalDiscntAmount = discountAmount + inputPoint;
 		%>
 				<tr>
-					<th>총상품가격</th>
+					<th>총 상품가격</th>
 					<td><%=(Integer)(c.get("총상품가격"))%></td>
 				</tr>
 				<tr>
-					<th>할인금액</th>
-					<td><%=((Integer)(c.get("할인금액")))+inputPoint%></td>
+					<th>총 할인금액</th>
+					<td><%=totalDiscntAmount%></td>
 				</tr>
+		<%	
+			}
+		%>		
 			<tr>
-				<th>총결제금액</th>
+				<th>총 결제금액</th>
 				<td><%=totalPay%></td>
 			</tr>		
 			<tr>
 				<td>
-					<form action="<%=request.getContextPath()%>/cart/cartOrderAction.jsp" >		
-						<input type="hidden" name="" value="">	
-						<input type="hidden" name="" value="">	
-						<input type="hidden" name="" value="">	
-						<input type="hidden" name="inputPoint" value="<%=inputPoint%>">	
-										
+					<form action="<%=request.getContextPath()%>/cart/cartOrderAction.jsp">		
+						<input type="hidden" name="id" value="<%=id%>">	
+						<input type="hidden" name="totalCartCnt" value="<%=totalCartCnt%>">	
+						<input type="hidden" name="totalPay" value="<%=totalPay%>">	
+						<input type="hidden" name="selectAddress" value="<%=selectAddress%>">	
+						<input type="hidden" name="inputPoint" value="<%=inputPoint%>">						
 						<input type="submit" value="결제">	
 					</form>
 				</td>	
 			</tr>	
-		<%	
-			}
-		%>		
 	</table>					
 </div>	
 </body>

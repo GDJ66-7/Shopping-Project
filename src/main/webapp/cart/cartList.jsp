@@ -14,12 +14,11 @@
 	// 7번 메소드 사용을 위해서 선언
 	int point = 0;
 
-	// 1. 장바구니 상품 목록 메서드
-	ArrayList<HashMap<String, Object>> list1 = cartDao.cartList(id);
-	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
 	
+	// 1. 장바구니 상품 목록 메서드
+	ArrayList<HashMap<String, Object>> list1 = cartDao.cartList(id);
 	// 체크된 상품이 있는지 확인(구매하기 버튼관련)
     boolean CheckedItem = false;
     for(HashMap<String, Object> c : list1) {
