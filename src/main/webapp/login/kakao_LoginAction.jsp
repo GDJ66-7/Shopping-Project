@@ -29,22 +29,18 @@
 		//메서드 DAO선언
 		MemberDao kaka = new MemberDao();
 		int row = kaka.checkId(id);
-		if(row > 0){
+		if(row == 1){
 			session.setAttribute("loginCstmId", id);
 			System.out.print("고객로그인 성공 새션정보 : " + session.getAttribute("loginCstmId"));
-			%>
-		      <script>
-		         // 팝업 창 닫기
-		         window.close();
-		         
-		         // 부모 창으로 이동
-		         window.opener.location.href = '<%= request.getContextPath() %>/main/home.jsp';
-		      </script>
-		<%   
+			response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 			return;
 		} else if(row==0){
 			msg = URLEncoder.encode("회원가입이 안된아이디 입니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/login/kakao_login.jsp?msg="+msg);
+			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			return;
+		} else if(row == 3){
+			msg = URLEncoder.encode("회원탈퇴한 아이디 이므로 로그인 할 수 없습니다.","utf-8");
+			response.sendRedirect(request.getContextPath()+"/login/login.jsp?msg="+msg);
 			return;
 		}
 		

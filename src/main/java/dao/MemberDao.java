@@ -353,6 +353,42 @@ public class MemberDao {
 		if(rs.next()) {
 			row = rs.getInt("count(*)");
 		}
+			return row;
+		
+		
+	}
+	public int checkIdkakao(String id) throws Exception {
+		int row = 0;
+		String idAct = "";
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn =  dbUtil.getConnection();
+		String sql = "SELECT count(*) FROM id_list WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			row = rs.getInt("count(*)");
+		}
+		if(row == 0) {
+			return row;
+		} else {
+			PreparedStatement checkStmt = conn.prepareStatement("SELECT active FROM id_list WHERE id = ?");
+			checkStmt.setString(1, id);
+			ResultSet checkRs = checkStmt.executeQuery();
+			if(checkRs.next()) {
+				idAct = checkRs.getString("active");
+			}
+			if(idAct.equals("y")) {
+				//로그인일자 업데이트
+				PreparedStatement csLoginStmt = conn.prepareStatement("UPDATE customer set cstm_last_login = now() WHERE id = ?");
+				csLoginStmt.setString(1, id);
+				row = csLoginStmt.executeUpdate();
+				
+			} else if(idAct.equals("n")) {
+				row = 3;
+			}
+		}
+		System.out.println(row +"카카오톡 로그인row");
 		return row;
 	}
 	

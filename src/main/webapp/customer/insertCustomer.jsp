@@ -14,8 +14,9 @@
 %>
 <!doctype html>
 <html lang="zxx">
-
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	
 	<script type="text/javascript">
         function openPopup() {
             // 윈도우 팝업 창을 띄우는 함수
@@ -35,6 +36,145 @@
 	        }).open();
 	    });
 	}
+	</script>
+	<!-- form입력 자바스크립트로 유효성 검사 -->
+	<script>
+	$(document).ready(function() {
+		 let allCheck = false; 
+		// id유효성 체크
+	      $('#id').blur(function() {
+	         if ($('#id').val().length < 4) {
+	            $('#idMsg').text('ID는 4자이상이어야 합니다');
+	            
+	         } else {
+	            console.log($('#id').val()); 
+	            // console.log($(this).val()); // this뒤에 jquery메서드를 참조하려면 $(this)후...
+	            $('#idMsg').text('');
+	            
+	         }
+	      });
+	   // pw유효성 체크
+	      $('#pw').blur(function(){
+	         if ($('#pw').val().length < 4) {
+	            $('#pwMsg').text('PW는 4자이상이어야 합니다');
+	            
+	         } else {
+	            $('#pwMsg').text('');
+	            
+	         }
+	      });
+	   // pwck유효성 체크
+	      $('#pwck').blur(function(){
+	         if ($('#pwck').val() != $('#pw').val()) {
+	            $('#pwMsg').text('PW를 확인하세요');
+	            
+	         } else {
+	            $('#pwMsg').text('');
+	            
+	         }
+	      });
+	   // name유효성 체크
+	      $('#name').blur(function(){
+	         if ($('#name').val().length < 1) { // $('#pw').val() == ''
+	            $('#nameMsg').text('name을 입력하세요');
+	            
+	         } else {
+	            $('#nameMsg').text('');
+	            
+	         }
+	      });
+	      
+	      // birth유효성 체크
+	      $('#birth').blur(function(){
+	         if ($('#birth').val().length < 1) { // $('#pw').val() == ''
+	            $('#birthMsg').text('birth을 입력하세요');
+	            
+	         } else {
+	            $('#birthMsg').text('');
+
+	            let today = new Date();
+	            let todayYear = today.getFullYear();
+	            let birthYear = $(this).val().substring(0,4); //$('#birth').val().substring(0,4);
+	            let age = todayYear - Number(birthYear);             
+	            $('#age').val(age);
+	            
+	         }
+	      });
+	      // 전화번호유효성 체크
+	      $('#tel').blur(function(){
+	         if ($('#tel').val().length < 1) { 
+	            $('#telMsg').text('전화번호를 입력하세요');
+	            
+	         } else {
+	            $('#telMsg').text('');
+	            
+	         }
+	      });
+	      // 전화번호유효성 체크
+	      $('#quest').blur(function(){
+	         if ($('#quest').val().length < 1) {
+	            $('#questMsg').text('전화번호를 입력하세요');
+	            
+	         } else {
+	            $('#questMsg').text('');
+	            
+	         }
+	      });
+	      // 주소유효성 체크
+	      $('#address_kakao').blur(function(){
+	         if ($('#address_kakao').val().length < 1) {
+	            $('#addressMsg').text('주소를 입력하세요');
+	            
+	         } else {
+	            $('#addressMsg').text('');
+	            
+	         }
+	      });
+	   // email유효성 체크
+	      $('#email').blur(function(){
+	         if ($('#email').val() == '') {
+	            $('#emailMsg').text('email를 입력하세요');
+	            
+	         } else {
+	            $('#emailMsg').text('');
+	            
+	         }
+	      });
+	      $('#emailUrl').blur(function(){
+	         if ($('#emailUrl').val() == '') {
+	            $('#emailMsg').text('emailURl를 입력하세요');
+	            
+	         } else {
+	            $('#emailMsg').text('');
+	            
+	            allCheck = true;
+	         }
+	      });
+	   // signinBtn click + gender선택 유무 + hobby선택 유무 체크
+	      $('#signinBtn').click(function() {
+	         // 페이지에 바로 버턴 누름을 방지하기 위해
+	         if(allCheck == false) { // if(!allCheck) {
+	            
+	            return;
+	         }
+	         
+	         if($('.gender:checked').length == 0) {
+	            $('#genderMsg').text('성별을 선택하세요');
+	            return;
+	         } else {
+	            $('#genderMsg').text('');
+	         }
+	         
+	         if($('.agree:checked').length == 0) {
+	            $('#agreeMsg').text('개인정보 동의를 해주세요');
+	            return;
+	         } else {
+	            $('#agreeMsg').text('');
+	         }
+	         
+	         $('#signinForm').submit();
+	      });
+	});
 	</script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -131,35 +271,49 @@
 	</h1>
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post">
 						
-						<button onclick="openPopup()" class="genric-btn link circle">아이디입력</button><br>
-						아이디<input type="text" name="id" placeholder="아이디" readonly="readonly" value="<%=useId%>" required="required" class="single-input"><br>
+				
+						<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>&nbsp;<button onclick="openPopup()" class="genric-btn primary-border circle">아이디입력하기</button>
+						<input type="text" name="id" id="id" placeholder="아이디" readonly="readonly" value="<%=useId%>" class="single-input"><br>
+						<span id="idMsg" class="msg"></span>
+						<p>비밀번호</p>
+						<input type="password" id="pw" name="pw" placeholder="비밀번호"  class="single-input"><br>
+						<span id="pwMsg" class="msg"></span>
+						<p>비밀번호 확인</p>
+						<input type="password" id="pwck" name="checkPw" placeholder="비밀번호 재확인" class="single-input"><br>
 
-						비밀번호<input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
-
-						비밀번호 확인<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required" class="single-input"><br>
-
-						이름<input type="text" name="cstmName" required="required" class="single-input"><br>
-
-						주소 <textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
-
-						이메일<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
-
-						생년월일 : <br><input type="date" name="cstmBirth" ><br>
-
-						전화번호<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
-						
-						태어난 동네<input type="text" name="cstmQuestion" required="required" class="single-input"><br>
-				<p>성별</p>	
-				<input type="radio" name="cstmGender" value="남"  >
-							<label for="남">남자</label> &nbsp;&nbsp;
-				<input type="radio" name="cstmGender" value="여" >
-							<label for="여">여자</label><br><br>
-				<p>개인정보동의</p>
-				<input type="radio" name="cstmAgree" value="y"  >
-							<label for="동의">동의</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="cstmAgree" value="n" >
-							<label for="비동의">비동의</label>	<br><br><br>
-			<button type="submit" class="genric-btn primary-border circle">가입하기</button>
+						<p>이름</p>
+						<input type="text" id="name" name="cstmName"  class="single-input"><br>
+						<span id="nameMsg" class="msg"></span>
+						<p>생년월일</p>
+						<input type="date" name="cstmBirth" id="birth" ><br>
+						<span id="birthMsg" class="msg"></span>
+						<p>나이</p>
+						<input type="text" id="age" readonly="readonly" class="single-input"><br>
+						<br>
+						<p>전화번호</p>
+						<input type="tel" id="tel" name="cstmPhone"  class="single-input"><br>
+						<span id="telMsg" class="msg"></span>
+						<p>태어난 동네</p>
+						<input type="text" id="quest" name="cstmQuestion" class="single-input"><br>
+						<span id="questMsg" class="msg"></span>
+						<p>주소</p>
+						<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+						<span id="addressMsg" class="msg"></span>
+						<p>이메일</p>
+						<input type="email" id="email" name="cstmEmail" class="single-input"><br>
+						<span id="emailMsg" class="msg"></span>
+						<p>성별</p>	
+								<input type="radio" name="cstmGender" class="gender" value="남">남 &nbsp;
+               					<input type="radio" name="cstmGender" class="gender" value="여">여
+            				    <span id="genderMsg" class="msg"></span>
+						<p>개인정보동의</p>
+								<input type="radio" name="cstmAgree" class="agree" value="y">동의 &nbsp;
+		               			<input type="radio" name="cstmAgree" class="agree" value="n">비동의
+		           			    <span id="agreeMsg" class="msg"></span>
+		           			    <br><br>
+			<button type="submit" class="genric-btn primary-border circle">가입하기</button>&nbsp;
+			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;
+      		<button type="reset" class="genric-btn primary-border circle">초기화</button>
 		</form>
     </div><br>
  

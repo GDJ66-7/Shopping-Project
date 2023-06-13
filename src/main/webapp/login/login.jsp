@@ -12,12 +12,81 @@
 <html lang="zxx">
 
 <head>
-<script type="text/javascript">
-        function openPopup() {
-            // 윈도우 팝업 창을 띄우는 함수
-            var popup = window.open("kakao_Login.jsp", "popupWindow", "width=500,height=300");
-        }
-    </script>
+<!-- 카카오 로그인 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+    window.Kakao.init("a320da1aa352f85bd85f13b3b4e82212");
+
+    function kakaoLogin() {
+        window.Kakao.Auth.login({
+            scope: 'account_email, gender, age_range, birthday',
+            success: function(authObj) {
+                console.log(authObj)
+                window.Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(res) {
+                        const kakao_account = res.kakao_account;
+                        console.log(kakao_account);
+                        const userEmail = kakao_account.email;
+                        createHiddenFormAndSubmit(userEmail);
+                    }
+                });
+            }
+        });
+    }
+
+    function createHiddenFormAndSubmit(userEmail) {
+        const form = $('<form>', {
+            action: '<%=request.getContextPath()%>/login/kakao_LoginAction.jsp',
+            method: 'post'
+        });
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'id',
+            value: userEmail
+        }).appendTo(form);
+
+        form.appendTo('body').submit();
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id').focus();
+
+        $('#id').blur(function() {
+            if ($('#id').val().length <= 0) {
+                $('#idMsg').text('카카오톡 로그인을 해야 합니다');
+                $('#id').focus();
+            }
+        });
+    });
+</script>
+<style>
+  
+    /* Button styling */
+    .kakao-login-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #FFEB00;
+      color: #000;
+      font-family: 'Arial', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+      transition: background-color 0.3s ease-in-out;
+      cursor: pointer;
+    }
+    
+    /* Button hover effect */
+    .kakao-login-button:hover {
+      background-color: #FFD300;
+    }
+  </style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -134,17 +203,17 @@
                                     <button type="submit" value="submit" class="btn_3">
                                         log in
                                     </button>
-                                    <br>
-                                    <button onclick="openPopup()" class="genric-btn link circle">카카오톡 로그인</button><br>
-                                      <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findId.jsp">아이디 찾기</a><br>
-                                        <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findPw.jsp">비밀번호 찾기</a>
-                                </div>
+                                 </div>
                             </form>
+                                      <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findId.jsp">아이디 찾기</a><br>
+                                      <a class="lost_pass" href="<%=request.getContextPath()%>/customer/findPw.jsp">비밀번호 찾기</a><br>
+                              		<button onclick="kakaoLogin()" class="kakao-login-button">카카오톡 로그인</button>
+                                      
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <!--================login_part end =================-->
 

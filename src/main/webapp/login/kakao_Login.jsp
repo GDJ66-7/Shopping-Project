@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
     window.Kakao.init("a320da1aa352f85bd85f13b3b4e82212");
@@ -21,7 +22,7 @@
                         console.log(kakao_account);
                         let id = kakao_account.email;
                         console.log(id);
-                        document.getElementById("userId").value = id; // Assign the value to the element
+                        $('#userId').val(kakao_account.email)
                     }
                 });
             }

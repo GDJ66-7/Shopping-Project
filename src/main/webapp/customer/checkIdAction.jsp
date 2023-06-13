@@ -5,6 +5,7 @@
 <%@ page import = "dao.*" %>
 <%@ page import = "java.util.*" %>
 <%
+	System.out.println(request.getParameter("id")+"<--- 아이디중복확인");
 	String id = request.getParameter("id");
 	String msg = "";
 	MemberDao ii = new MemberDao();
