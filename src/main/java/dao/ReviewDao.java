@@ -152,8 +152,8 @@ public class ReviewDao {
 		if(rs.next()) {
 			review = new ReviewImg();
 			review.setReviewOriFilename(rs.getString("reviewOrifilename"));
-			review.setReviewOriFilename(rs.getString("reviewSavefilename"));
-			review.setReviewOriFilename(rs.getString("reviewFiletype"));
+			review.setReviewSaveFilename(rs.getString("reviewSavefilename"));
+			review.setReviewFiletype(rs.getString("reviewFiletype"));
 		}
 		return review;
 	}
@@ -176,9 +176,8 @@ public class ReviewDao {
         return row;
 	}
 	
-	
-	// 리뷰 이미지 삭제 -- dir (파일의 실제 경로) -> savefile 최종 삭제 (select - delete)
-	public int deleteReviewImg (int orderNo, String dir ) throws Exception {
+	// 리뷰 이미지 삭제
+	public int deleteReviewImg (int orderNo, String dir) throws Exception {
 
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -186,15 +185,16 @@ public class ReviewDao {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, orderNo);
 		ResultSet rs = stmt.executeQuery();
+		String preSaveFilename = "";
 		if(rs.next()) { // preSaveFilename : 이전에 존재하던 파일
-		String preSaveFilename = rs.getString("review_save_filename");
-		File f = new File(dir,preSaveFilename);
-		if(f.exists()) { // 파일이 존재하는지 확인, 존재하면 delete 정상 실행
-				f.delete();
-			}
+			preSaveFilename = rs.getString("review_save_filename");
 		}
+		File f = new File(dir+"/"+preSaveFilename);
+		if(f.exists()) { // 파일이 존재하는지 확인, 존재하면 delete 정상 실행
+			f.delete();
+			}
 			return 1; //실행 완료 되면 1이 반환됨 (완료1 / 실패0)
-	}
+		}
 	
 	// 리뷰 이미지 수정
 	public int updateReviewImg (ReviewImg reviewImg) throws Exception {
@@ -211,5 +211,4 @@ public class ReviewDao {
 		int row = stmt.executeUpdate();
 		return row;
 	}
-	
 }

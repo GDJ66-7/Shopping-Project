@@ -5,16 +5,16 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	//cnt & 재고량(장바구니)
+	//cnt & 재고량(장바구니) & 할인값 받아오기
 	//상품 상세페이지 productNo 유효성 검사
-	/*if(request.getParameter("productNo") == null
+	if(request.getParameter("productNo") == null
 	||request.getParameter("productNo").equals("")) {
 		response.sendRedirect(request.getContextPath()+"/product/productList.jsp");
 		return;
-	}*/
+	}
 
 	// 리스트에서 받아온 값
-	int productNo = 21;/*Integer.parseInt(request.getParameter("productNo"));*/
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	OneDao one = new OneDao();
 	String id = "customer2";
 	
@@ -98,9 +98,14 @@
 <title>상품페이지</title>
 </head>
 <body><!-- test  view 제품 12 카테고리/사진/이름/상품content출력 -->
+<!-- <ul class="tab-tit">
+<li><a href="#productOne" role="button">상품 상세정보</a></li>
+<li><a href="#productReview" role="button">고객리뷰</a></li>
+<li><a href="#productQnA" role="button">상품 Q&amp;A</a></li>
+</ul> -->
 <div class="container mt-3">
 	<h3>상품상세</h3>
-	<table class="table">
+	<table class="table" id="productOne">
 		<tr>
 			<td>카테고리 :<%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
 		</tr>
@@ -117,12 +122,14 @@
 			<td><%=p.get("productInfo")%></td><!-- 상품정보 -->
 		</tr>
 	</table>
-	
+	<form action="<%=request.getContextPath()%>/cart/cartList.jsp?productNo=<%=p.get("productNo")%>" method="post">
+	<input type="submit" value="장바구니">
+	</form>	
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
 	<h3>상품리뷰</h3>
 	<a href="<%=request.getContextPath()%>/review/insertReview.jsp">추가</a><!-- 테스트 -->
-	<table class="table">
+	<table class="table" id="productReview">
 		<tr>
 			<th>제목</th>
 			<th>작성자</th>
@@ -174,8 +181,8 @@
 <!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
 <hr>
 	<h3>문의사항</h3>
-	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp">추가</a>
-	<table class="table">
+	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>">추가</a>
+	<table class="table" id="productQnA">
 		<tr>
 			<th>번호</th>
 			<th>문의유형</th>

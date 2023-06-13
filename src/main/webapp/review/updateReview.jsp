@@ -14,6 +14,7 @@
 	// 리뷰one에서 받은 값 저장 & 메서드 호출 --- 수정 전 데이터 불러오기라 reviewOne과 동일
 	//int productNo = Integer.parseInt(request.getParameter("productNo"));
 	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	System.out.println(orderNo+"<-----updateReview orderNo");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	System.out.println(productNo+"<---- review productNo");
 	System.out.println(orderNo+"<---- review orderNo");
@@ -22,6 +23,7 @@
 	ReviewDao review = new ReviewDao(); // DAO (동일)
 	Review reviewText = review.selectReviewOne(orderNo); //vo
 	ReviewImg reviewImg = review.selectReviewImg(orderNo); //vo
+	System.out.println(reviewImg+"<---- review updateImg");
 
 %>
 <!DOCTYPE html>
@@ -43,7 +45,13 @@ a{text-decoration: none;}
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰 수정하기</h2>
 <form action="<%=request.getContextPath()%>/review/updateReviewAction.jsp?orderNo=<%=orderNo%>&productNo=<%=productNo%>" method="post" enctype="multipart/form-data">
-<input type = "hidden" name="preSaveFilename" value="<%=reviewImg.getReviewSaveFilename()%>">
+	<%
+		if(request.getParameter("msg") != null){
+	%>
+	<div class="alert alert-warning alert-dismissible fade show" style="font-size: 10pt;"><%=request.getParameter("msg")%></div>
+	<%
+		}
+	%>
 		<table class="table table-bordered">
 			<tr>
 				<td>제목</td>
@@ -54,7 +62,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>사진</td>
 				<td>
-				수정전 파일 : <%=reviewImg.getReviewSaveFilename()%>
+				수정전 파일 :<%=(String)reviewImg.getReviewOriFilename()%>
 				<input type="file" name="reviewImg">
 				</td>
 			</tr>
@@ -74,7 +82,7 @@ a{text-decoration: none;}
 			</tr>
 			</table>
 			<div>
-				<button type=submit class="btn btn-light">수정</button>
+				<button type=submit id="button" class="btn btn-light">수정</button>
 				<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">취소</a>
 			</div>
 		</form>

@@ -4,14 +4,14 @@
 <%@ page import="java.util.*" %>
 <%
 
-	/*if(request.getParameter("productNo") == null  
+	if(request.getParameter("productNo") == null  
 	|| request.getParameter("productNo").equals("")) {
 	response.sendRedirect(request.getContextPath() + "/product/productOne.jsp");
 	return;
-	}*/
+	}
 	
 	//test 21
-	int productNo = 21; /*Integer.parseInt(request.getParameter("productNo"))*/
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	String id = "customer1";
 	//로그인 세션(로그인 한 고객만(loginCstmId 작성 가능)
 	//일반관리자 세션이름 loginEmpId1  , 최고관리자 세션이름 loginEmpId2, 고객 세션이름 loginCstmId

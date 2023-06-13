@@ -13,7 +13,7 @@
 	return;
 	}*/
 	String id = "customer2";
-	int productNo = 21; /*Integer.parseInt(request.getParameter("productNo"));*/
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	int orderNo = 2; /*Integer.parseInt(request.getParameter("orderNo"));*/
 
 %>
@@ -34,6 +34,13 @@
 <input type="hidden" name="productNo" value="<%=productNo%>">
 <input type="hidden" name="id" value="<%=id%>">
 <!-- hidden으로 orderNo까지 보낼 것 / 위에서 orderNo도 따로 받아야함 * 마이페이지 리뷰 작성-->
+	<%
+		if(request.getParameter("msg") != null){
+	%>
+		<div class="alert alert-warning alert-dismissible fade show" style="font-size: 10pt;"><%=request.getParameter("msg")%></div>
+	<%
+		}
+	%>
 	<table class="table table-bordered">
 		<tr>
 			<td>제목</td>
@@ -45,7 +52,7 @@
 		</tr>
 		<tr>
 			<td>사진 업로드</td>
-			<td><input type="file" name="reviewImg" required="required">
+			<td><input type="file" name="reviewImg" required="required"></td>
 		</tr>
 	</table>
 	<div>

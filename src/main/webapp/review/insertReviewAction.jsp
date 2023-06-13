@@ -1,14 +1,13 @@
-<%@page import="java.io.File"%>
-<%@ page import = "com.oreilly.servlet.*" %><!-- cos.jar-->
-<%@ page import = "com.oreilly.servlet.multipart.*" %>
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import = "java.io.*"%>
+<%@page import="java.nio.file.Path"%>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
 <%@ page import="vo.*" %>
+<%@ page import="java.io.*" %>
 <%@ page import="dao.*" %>
-<%@ page import="java.util.*" %>
 <%
 	// sendRedirect 경로 수정 필요
-	request.setCharacterEncoding("utf-8");
 
 	// 로그인 세션 추가 test
 	String id = "customer2";
@@ -21,8 +20,10 @@
 	String dir = request.getServletContext().getRealPath("/review/reviewImg"); // 프로젝트 내 reviewImg 파일 호출
 	System.out.println(dir+"<---dir"); // 실제 경로 <---dir 
 	
-	int max = 10 * 1024 * 1024; // 업로드 파일 크기 제한 : 10MB
+	int max = 100 * 1024 * 1024; // 업로드 파일 크기 제한 
 	MultipartRequest mRequest = new MultipartRequest(request, dir, max, "utf-8", new DefaultFileRenamePolicy());
+	
+	String msg = "";
 	
 	// 1) 요청값 저장
 	// review 테이블에 저장 - text값(input으로 받아온 것 다 저장하기)
@@ -42,24 +43,23 @@
 	reviewtext.setId(id);
 	reviewtext.setReviewTitle(reviewTitle);
 	reviewtext.setReviewContent(reviewContent);
-	
-	int row = reviewdao.insertReview(reviewtext); //text
 
 	// --- 이미지
 	// 파일은 jpg만 업로드 가능
 	if(mRequest.getContentType("reviewImg").equals("image/jpeg") == false) { // 타입이 유효하지 않은 저장된 파일 삭제
 		System.out.println("jpg파일이 아닙니다");
 		String saveFilename = mRequest.getFilesystemName("reviewImg");
-		File f = new File(dir+"/"+saveFilename);
+			System.out.println(saveFilename+"<----savefilename");
+			File f = new File(dir+"/"+saveFilename);
 	
 		if(f.exists()){ // jpg가 아닌게 존재한다면 delete()
 			f.delete();
 			System.out.println(saveFilename +"파일삭제");
 		}
-		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp"); //jsp?orderNo=..(추가)
+		msg =URLEncoder.encode("JPG파일만 업로드 가능합니다.","utf-8");
+		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp?=orderNo"+orderNo+"&productNo="+productNo+"&msg="+msg); //jsp?orderNo=..(추가)
 		return;
 			}
-	
 	
  	// 2) input type = "file" 값(파일 메타 정보)반환 API(원본 파일 이름, 저장된 파일 이름, 컨텐츠 타입) 받아옴
 	String filetype = mRequest.getContentType("reviewImg"); // Img 받아온다. api 받는 타입 다름
@@ -73,11 +73,16 @@
 	// 이미지 객체 저장 - vo
 	ReviewImg reviewImg = new ReviewImg();
 	reviewImg.setOrderNo(orderNo);
+	
 	reviewImg.setReviewOriFilename(originFilename);
 	reviewImg.setReviewSaveFilename(saveFilename);
 	reviewImg.setReviewFiletype(filetype);
 	
-	int imgrow = reviewdao.insertReviewImg(reviewImg);
+	// text -- img파일이 유효할시에만 작성 가능 메서드 호출
+	if (filetype != null || filetype.equals("image/jpeg")) {
+	    int row = reviewdao.insertReview(reviewtext);
+	    int imgrow = reviewdao.insertReviewImg(reviewImg);
+	}
 	
 	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp");
 

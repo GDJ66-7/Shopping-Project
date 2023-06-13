@@ -44,11 +44,7 @@ a{text-decoration: none;}
 <table class="table table-bordered">
 	<tr>
 		<td id="bar">제목</td>
-		<td><%=reviewText.getReviewTitle()%>
-	</tr>
-	<tr>
-		<td id="bar">ID</td>
-		<td><%=reviewText.getId()%></td>
+		<td colspan="2"><%=reviewText.getReviewTitle()%></td>
 	</tr>
 <%
 	if(reviewImg != null){
@@ -56,7 +52,7 @@ a{text-decoration: none;}
 	<tr>
 		<td id="bar">사진</td>
 		<td> <!-- 파일이 없을땐 출력 되지 않게 해야함 일단 리뷰폼은 required로 설정해둠-->
-		<img src="${pageContext.request.contextPath}/review/reviewImg/<%=reviewImg.getReviewSaveFilename()%>">
+		<img src="${pageContext.request.contextPath}/review/reviewImg/<%=(String)reviewImg.getReviewSaveFilename()%>" width="200" height="200">
 		</td>
 	</tr>
 <%
@@ -67,11 +63,16 @@ a{text-decoration: none;}
 		<td><%=reviewText.getReviewContent()%></td>
 	</tr>
 	<tr>
+		<td id="bar">작성자</td>
+		<td><%=reviewText.getId()%></td>
+	</tr>
+	<tr>
 		<td id="bar">작성일자</td>
 		<td><%=reviewText.getCreatedate().substring(0,10)%></td>
 	</tr>
 </table>
 <a href="<%=request.getContextPath()%>/review/updateReview.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
+<a href="<%=request.getContextPath()%>/product/productOne.jsp" class="btn btn-light">목록</a>
 <a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
 </div>
 </body>
