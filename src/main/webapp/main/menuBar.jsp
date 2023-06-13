@@ -65,9 +65,9 @@
 		                <a class="dropdown-item" href="<%=request.getContextPath()%>/employee/employeeInfo.jsp"> 관리자정보</a>
 		                <a class="dropdown-item" href="<%=request.getContextPath()%>/category/categoryList.jsp">카테고리 관리</a>
 		    <%	// 관리자2만 상품관리가 가능
-		        	if(session.getAttribute("loginEmpId2") != null) {
+		        	if(session.getAttribute("loginEmpId2") != null || session.getAttribute("loginEmpId1") != null) {
 		    %>	
-           				<a class="dropdown-item" href="<%=request.getContextPath()%>/product/productList.jsp">상품관리(리스트로)</a>
+           				<a class="dropdown-item" href="<%=request.getContextPath()%>/product/empProductList.jsp">상품관리(리스트로)</a>
 		            </div>
 	        	</li>
 		    <%

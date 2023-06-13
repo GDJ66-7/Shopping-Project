@@ -217,32 +217,51 @@ public class ProductDao {
 			
 		
 	// 4) 상품리스트(전체,검색시리스트,카테고리별리스트,(최신순 오래된순),카테고리별 검색시
-	public ArrayList<HashMap<String,Object>> productList1(String productName, String categoryName, String ascDesc, int beginRow, int rowPerPage) throws Exception {
+	public ArrayList<HashMap<String,Object>> productList1(String productName, String categoryName, String ascDesc, String discountProduct, int beginRow, int rowPerPage) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		/*
-		  SELECT p.product_no, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
+		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
 		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
 						LEFT OUTER JOIN discount d ON p.product_no = d.product_no
 		*/	
 		
-		String sql = " SELECT p.product_no, p.product_name, p.product_price, IFNULL(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\r\n"
+		String sql = " SELECT p.product_no, p.category_name, p.product_name, p.product_price, IFNULL(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\r\n"
 				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \r\n"
 				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
 		
-		// 검색어와 카테고리 둘다 있을때
-		if(!productName.equals("") && !categoryName.equals("")) {
-			sql += " WHERE p.product_name LIKE '%" + productName + "%'" + "AND p.category_name = '" + categoryName + "'";
+		if (discountProduct.equals("할인상품")) {
+		    // 할인 상품만 보는 경우
+		    sql += " WHERE d.discount_no IS NOT NULL";
+
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql += " AND p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql += " AND p.product_name LIKE '%" + productName + "%'";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql += " AND p.category_name = '" + categoryName + "'";
+		    }
+		} else {
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql += " WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql += " WHERE p.product_name LIKE '%" + productName + "%'";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql += " WHERE p.category_name = '" + categoryName + "'";
+		    }
 		}
-		// 검색어만있을때
-		else if (!productName.equals("")) {
-			sql += " WHERE p.product_name LIKE '%" + productName + "%'";
-		} 
-		// 카테고리만 있을때
-		else if(!categoryName.equals("")) {
-			sql += " WHERE p.category_name = '" + categoryName + "'";
-		}
-		
+			
+			
 		// 정렬기준
 		if(!ascDesc.equals("")) {
 			sql += " ORDER BY p.createdate " + ascDesc;
@@ -261,10 +280,14 @@ public class ProductDao {
 		while(rs.next()) {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("productNo", rs.getInt("product_no"));
+			map.put("categoryName", rs.getString("category_name"));
 			map.put("productName", rs.getString("product_name"));
 			map.put("productPrice", rs.getInt("product_price"));
 			map.put("productDiscountPrice", rs.getInt("상품할인가"));
 			map.put("productStatus", rs.getString("product_status"));
+			map.put("productStock", rs.getString("product_stock"));
+			map.put("createdate", rs.getString("createdate"));
+			map.put("updatedate", rs.getString("updatedate"));
 			map.put("productImgNo", rs.getInt("product_img_no"));
 			map.put("productSaveFilename", rs.getString("product_save_filename"));
 			map.put("discountNo", rs.getInt("discount_no"));
@@ -276,7 +299,7 @@ public class ProductDao {
 		return productList;
 	}
 	// 4-1) 상품리스트 전체행 개수
-	public int productListCnt1(String categoryName, String productName, String ascDesc) throws Exception {
+	public int productListCnt1(String categoryName, String productName, String ascDesc, String discountProduct) throws Exception {
 		int totalRow = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
@@ -290,18 +313,36 @@ public class ProductDao {
 				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \r\n"
 				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
 		
-		// 검색어와 카테고리 둘 다 있을 때
-	    if (!productName.equals("") && !categoryName.equals("")) {
-	        sql += " WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
-	    }
-	    // 검색어만 있을 때
-	    else if (!productName.equals("")) {
-	    	sql += " WHERE p.product_name LIKE '%" + productName + "%'";
-	    }
-	    // 카테고리만 있을 때
-	    else if (!categoryName.equals("")) {
-	        sql += " WHERE p.category_name = '" + categoryName + "'";
-	    }
+		if (discountProduct.equals("할인상품")) {
+		    // 할인 상품만 보는 경우
+		    sql += " WHERE d.discount_no IS NOT NULL";
+
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql += " AND p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql += " AND p.product_name LIKE '%" + productName + "%'";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql += " AND p.category_name = '" + categoryName + "'";
+		    }
+		} else {
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql += " WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql += " WHERE p.product_name LIKE '%" + productName + "%'";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql += " WHERE p.category_name = '" + categoryName + "'";
+		    }
+		}
 	    
 		// 정렬기준
 		if(!ascDesc.equals("")) {

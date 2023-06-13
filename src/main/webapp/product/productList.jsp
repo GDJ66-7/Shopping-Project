@@ -22,6 +22,7 @@
 	String productName = request.getParameter("productName"); // null
 	String categoryName = request.getParameter("categoryName");
 	String ascDesc = request.getParameter("ascDesc");
+	String discountProduct = request.getParameter("discountProduct");
 	
 	// 요청값이 null이 나와서 실행오류가 발생 null일경우 ""(공백)처리
 	/*
@@ -30,6 +31,9 @@
 	 	}
 	*/
 	
+	if(discountProduct == null) {
+		discountProduct ="";
+	}
 	if (productName == null) {
 	    productName = "";
 	}
@@ -41,6 +45,7 @@
 	}
 	System.out.println(productName + "<-- productList productName");
 	System.out.println(categoryName + "<-- productList categoryName");
+	System.out.println(discountProduct + "<-- productList discountProduct");
 	System.out.println(ascDesc + "<-- productList ascDesc");
 	
 	//현재페이지 변수
@@ -54,7 +59,7 @@
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	int totalRow = pDao.productListCnt1(categoryName, productName, ascDesc);
+	int totalRow = pDao.productListCnt1(categoryName, productName, ascDesc, discountProduct);
 	System.out.println(totalRow + "<-- productList totalRow");
 	
 	int lastPage = totalRow / rowPerPage;
@@ -88,7 +93,7 @@
 	}
 
 	// 상품 리스트 dao호출
-	ArrayList<HashMap<String, Object>> productList = pDao.productList1(productName, categoryName, ascDesc, beginRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> productList = pDao.productList1(productName, categoryName, ascDesc, discountProduct, beginRow, rowPerPage);
 	
 	// 카테고리이름리스트 dao호출
 	ArrayList<HashMap<String, Object>> categoryNameList = cDao.categoryNameList();
@@ -97,6 +102,7 @@
 %>
 <!doctype html>
 <html lang="zxx">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style>
     .center-align {
         text-align: center;
@@ -187,13 +193,30 @@
                 <div class="col-md-4">
                 <div class="product_sidebar">
                     	<!--  상품리스트 왼쪽 검색기능 -->
-	                    <form action="<%=request.getContextPath()%>/product/productList.jsp" method="get">
-	                       <a href="<%=request.getContextPath()%>/product/productList.jsp">전체상품보기</a> 
+	                    <form id="productSearchForm" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
 	                       <table>
-	                       	<tr>
+	                        <tr>
 	                       		<td>
 	                       													<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
 	                       			<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+	                       		</td>
+	                       	</tr>
+	                       	<tr>
+	                       		<td>
+									<input type="radio" class="productList" name="discountProduct" value="" 
+									<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("")) {%> checked <%} %>> 전체상품보기
+								</td>
+	                       	</tr>
+	                       	<tr>
+	                       		<td>
+									<input type="radio" class="productList" name="discountProduct" value="할인상품"
+									<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) {%> checked <%} %>> 할인상품보기
+								</td>
+	                       	</tr>
+	                       	<tr>
+	                       		<td>
+	                       			<input type="radio" class="ascDesc" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
+        							<input type="radio" class="ascDesc" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
 	                       		</td>
 	                       	</tr>
 	                       	<tr>
@@ -205,7 +228,8 @@
                                 			for(HashMap<String, Object> categoryNameMap : categoryNameList) {
                                 		%>
                                 				<li class="nav-item">																					<!-- categoryName이 널이 아니고 요청값이 value의 값과 같다면 check한다 -->
-                                					<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" <% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+                                					<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
+                                					<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
 	                                				<%=categoryNameMap.get("categoryName")%>
 	                                			</li>
                                 		<% 	
@@ -215,15 +239,20 @@
                                 	</ul>
 	                       		</td>
 	                       	</tr>
-	                       	<tr>
-	                       		<td>
-	                       			<input type="checkbox" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
-	                       			<input type="checkbox" name="ascDesc"value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
-	                       		</td>
-	                       	</tr>
 	                       </table>
-	                       <button type="submit" class="genric-btn primary-border circle"> 검색</button>
+	                       <button type="submit" id="productBtn">검색</button>
 	                    </form>
+	                    
+	                   	<!---------------------- js부분 -------------------------->
+	                   	
+	                    <script>
+	                   		// radio는 누르기만 해도 값이 넘어간다.
+		                    let radio = $('input[type="radio"]');
+		                	
+		                    radio.on('change', function() {
+		                      $('#productSearchForm').submit();
+		                    }); 
+	                    </script>
                     </div>
                 </div>
                 <!-- -----------------------     상품리스트 출력   ------------------------- -->
@@ -237,32 +266,36 @@
 							%>
 										<div class="col-lg-6 col-sm-6">
 										<div class="single_product_item">
+											<!-- 상품사진 -->
 											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><img src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="350" height="350"></a>
 											<br>
-											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><%=productMap.get("productName") %></a>
+											<!-- 상품 이름 -->
+											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><em><%=productMap.get("productName") %></em></a>
 											<br>	
+											<!-- 상품 가격 -->
 											가격 : <%=productMap.get("productPrice") %>
 											<br>
 							<% 
 											// 할인가가 있는 상품만 할인가격이 나오게 설정
-											if(productMap.get("productDiscountPrice") != null) {
-												if ((int)productMap.get("productDiscountPrice") != ((int)productMap.get("productPrice"))) {
+											
+											if ((int)productMap.get("productDiscountPrice") != ((int)productMap.get("productPrice"))) {
 							%>
-													할인가 : <span style="color: red;"><%=productMap.get("productDiscountPrice") %></span>
-													<br>
+												할인가 : <span style="color: red;"><%=productMap.get("productDiscountPrice") %></span>
+												<br>
 							<% 
-												}
 											}
+											
 							%>
 													<!-- 상품상태 -->
 													<%=productMap.get("productStatus") %>
+													<br>
 							<%
 												// 상품수정 및 상품할인은 관리자로그인시에만 볼 수 있음 관리자2만 상품수정및 할인가능
 												if(session.getAttribute("loginEmpId2") != null) {
 							%>
 													<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 													<br>
-													<a href="<%=request.getContextPath()%>/discount/inserttDiscount.jsp?productNo=<%=productMap.get("productNo")%>">할인수정</a>
+													<a href="<%=request.getContextPath()%>/discount/inserttDiscount.jsp?productNo=<%=productMap.get("productNo")%>">할인</a>
 							<% 						
 												}
 							%>
@@ -280,6 +313,7 @@
 											가격 : <%=productMap.get("productPrice") %>
 											<br>
 											<span style="color: red;"><%=productMap.get("productStatus") %></span>
+											<br>
 							<% 		
 										// 상품수정은 관리자로그인시에만 볼 수 있음 관리자2만가능
 										if(session.getAttribute("loginEmpId2") != null) {
@@ -308,7 +342,7 @@
 				if(minPage>1) {
 			%>
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>">이전</a>
+						<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">이전</a>
 					</li>
 			<%			
 				}
@@ -325,7 +359,7 @@
 					}else {					
 			%>		
 						<li class="list-group-item">
-							<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>"><%=i%></a>
+							<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>"><%=i%></a>
 						</li>
 			<%				
 					}
@@ -336,7 +370,7 @@
 				if(maxPage != lastPage) {
 			%>
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>">다음</a>
+						<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">다음</a>
 					</li>
 			<%	
 				}
