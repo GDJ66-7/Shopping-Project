@@ -31,22 +31,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-	function submitForm() {
-    	// Form 데이터를 가져와서 새 창에 전송
-		var form = document.getElementById('pointForm');
-    	form.target = 'newWindow'; // 새 창의 이름
-    	form.submit();
-    
-		// 원래 창으로 돌아가고 새로고침
-		window.opener.location.reload();
-		window.close();
-	}
+	
 
 </script>
 </head>
 <body>
 	<h1>포인트 사용</h1>
-	<form id="pointForm" action="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>">
 		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
 		
@@ -59,7 +50,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="submit" value="포인트 사용하기" onclick="submitForm()">
+					<input type="submit" value="포인트 사용하기">
 				</td>
 			</tr>
 		</table>		

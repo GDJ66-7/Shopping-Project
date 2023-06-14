@@ -48,9 +48,7 @@
 	
 	// 10. 주소 내역 리스트 불러오기
 	ArrayList<String> list10 = cartDao.addressList(id);
-	
-	
-	
+
 %>
 
 <!DOCTYPE html>
@@ -63,23 +61,6 @@
 <script>
 	function addressOpenPopup(url) {
 	    window.open(url, 'addressPopupWindow', 'width=600, height=400');
-	}
-	
-	function pointOpenPopup() {
-		var form = document.getElementById("pointForm");
-		var popup = window.open("", "pointOpenPopup", "width=400,height=400");
-		if (popup) {
-			form.target = "pointOpenPopup";
-		    form.submit();
-		    popup.focus();
-		} else {
-			alert("팝업 창이 차단되었습니다. 팝업 차단을 해제해주세요.");
-		}
-	}
-	
-	function showMessage(message) {
-		// 실패 메시지를 표시하는 로직 작성
-		alert(message);
 	}
 	
 </script>
@@ -110,7 +91,7 @@
 	</table>
 	
 	<h4> 받는사람정보 </h4>
-	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>">
 		<input type="hidden" name="inputPoint" value="<%=inputPoint%>">
 		<table class="table">
@@ -156,7 +137,7 @@
 	</table>
 	
 	<h4>결제정보</h4>
-	<form id="pointForm" action="<%=request.getContextPath()%>/cart/updatePoint.jsp" method="post">	
+	<form action="<%=request.getContextPath()%>/cart/updatePoint.jsp" method="post">	
 		<input type="hidden" name="id" value="<%=id%>">
 		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
 		<table class="table">
@@ -174,7 +155,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="submit" value="포인트 사용하기" onclick="pointOpenPopup()">
+					<input type="submit" value="포인트 사용하기">
 				</td>				
 			</tr>
 		</table>

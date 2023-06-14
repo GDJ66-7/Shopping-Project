@@ -37,7 +37,7 @@ window.onload = function(){
 </head>
 <body>
 <h1>주소 추가</h1>
-	<form action="<%=request.getContextPath()%>/cart/insertAddressAction.jsp">
+	<form action="<%=request.getContextPath()%>/cart/insertAddressAction.jsp" method="post">
 	 	<input type="hidden" name="id" value="<%=id%>">
 	 	<table>
 	        <tr>

@@ -31,17 +31,38 @@
 	// Dao 객체 선언
 	CartDao cartDao = new CartDao();
 	
-
- 
 	// 12. 장바구니 정보를 오더테이블에 저장
 	int row1 = cartDao.insertOrder(id, totalCartCnt, totalPay, selectAddress);
-	if(row1 == 0) {
-		System.out.println("오더 테이블 추가 실패");
-	}
+	System.out.println(row1 + " <-- cartOrderAction row1");
 	
-
-
-	response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+	// 13. 장바구니에서 아이디가 ?이고 체크가 Y인 여러개의 상품번호와 상품 수량 가져오기(14를 사용하기 위해서)
+	ArrayList<Cart> list1 = new ArrayList<>();		
+	list1 = cartDao.selectCart(id);
+	System.out.println(list1 + " <-- cartOrderAction list1");
+	
+	// 14. orders_history에 저장하기
+	ArrayList<Integer> list2 = new ArrayList<>();
+	list2 = cartDao.insertOrdersHistory();
+	System.out.println(list2 + " <-- cartOrderAction list2");
+	
+	// 15. 포인트 사용한 만큼 보유포인트에서 차감(-)
+	int row2 = cartDao.customerPointMinus(inputPoint, id);
+	System.out.println(row2 + " <-- cartOrderAction row2");
+	
+	// 16. 총 결제금액의 1%만큼 포인트 적립(+)
+	int row3 = cartDao.customerPointPlus(totalPay, id);
+	System.out.println(row3 + " <-- cartOrderAction row3");
+	
+	
+	// 17. 포인트 이력에 사용한 포인트(-) 저장
+	int row4 = cartDao.pointHistoryMinus(inputPoint);
+	System.out.println(row4 + " <-- cartOrderAction row4");
+	
+	// 18. 포인트 이력에 결제 후 적립된 포인트(+) 저장
+	int row5 = cartDao.pointHistoryPlus(totalPay, id);
+	System.out.println(row5 + " <-- cartOrderAction row5");
+	
+	// response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 
 
 %>

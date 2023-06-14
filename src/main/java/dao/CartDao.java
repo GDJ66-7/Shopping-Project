@@ -316,19 +316,188 @@ public class CartDao {
 		return row;
 	}
 	
-	// 13. 
+	// 13. 장바구니에서 아이디가 ?이고 체크가 Y인 여러개의 상품번호와 상품 수량 가져오기
+	public ArrayList<Cart> selectCart(String id) throws Exception{
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "SELECT product_no, cart_cnt, id "
+				+ "FROM cart "
+				+ "WHERE id= ? AND checked = 'y' ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);
+		ResultSet rs = stmt.executeQuery();
+		ArrayList<Cart> list = new ArrayList<>();
+		while(rs.next()) {
+			Cart c = new Cart();
+			c.setProductNo(rs.getInt("product_no"));
+			c.setCartCnt(rs.getInt("cart_cnt"));
+			list.add(c);
+		}
+		return list;
+	}
+	
+	// 14. orders_history에 저장하기 + 13번 사용(productNo, cartCnt)
+	public ArrayList<Integer> insertOrdersHistory() throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String selectSql = "SELECT order_no, id "
+				+ "FROM orders "
+				+ "ORDER BY createdate DESC "
+				+ "LIMIT 1 ";
+		PreparedStatement selectStmt = conn.prepareStatement(selectSql);
+		ResultSet selectRs = selectStmt.executeQuery();
+		int selectOrderNo = 0;
+		String selectOrderId = null;
+		if(selectRs.next()) {
+			// order_no와 id값 변수에 저장
+			selectOrderNo = selectRs.getInt("order_no");
+			selectOrderId = selectRs.getString("id");
+		}
+		// 13번 사용하여 productNo, cartCnt 값들 받아오기
+		ArrayList<Cart> cartList = new ArrayList<>();
+		cartList = selectCart(selectOrderId);
+		ArrayList<Integer> InsertList = new ArrayList<>();
+		String insertOrdersHistorySql ="INSERT INTO orders_history(id, order_no, product_no, order_cnt, createdate) "
+							+ "VALUES(?, ?, ?, ?, NOW())";
+		for (Cart c : cartList) {
+			PreparedStatement insertOrdersHistoryStmt = conn.prepareStatement(insertOrdersHistorySql);
+			insertOrdersHistoryStmt.setString(1, selectOrderId);
+			insertOrdersHistoryStmt.setInt(2, selectOrderNo);
+			insertOrdersHistoryStmt.setInt(3, c.getProductNo());
+			insertOrdersHistoryStmt.setInt(4, c.getCartCnt());
+			int row = insertOrdersHistoryStmt.executeUpdate();
+			InsertList.add(row);
+		}
+		return InsertList;
+	}
+	
+	// 15. 포인트 사용한 만큼 보유포인트에서 차감(-)
+	public int customerPointMinus(int inputPoint, String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "UPDATE customer "
+				+ "SET cstm_point = cstm_point - ?, updatedate = NOW() "
+				+ "WHERE id = ? ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, inputPoint);
+		stmt.setString(2, id);
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+	}
+	
+	// 16. 총 결제금액의 1%만큼 포인트 적립(+)
+	public int customerPointPlus(int totalPay, String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		
+		String selectRankSql = "SELECT cstm_rank "
+				+ "FROM customer "
+				+ "WHERE id = ? ";
+		PreparedStatement selectRankStmt = conn.prepareStatement(selectRankSql);
+		selectRankStmt.setString(1, id);
+		ResultSet selectRankRs = selectRankStmt.executeQuery();
+		String rank = ""; // 회원 등급 저장을 위한 변수선언
+		if(selectRankRs.next()) {
+			rank = selectRankRs.getString("cstm_rank"); // 회원 등급을 변수에 저장
+		}
+		double rankPlusPoint = 0; // 등급별 적립 금액 차이를 위한 변수선언
+		if(rank.equals("GOLD")) {
+			rankPlusPoint = 0.001;
+		}else if(rank.equals("SILVER")) {
+			rankPlusPoint = 0.0001;
+		}else {
+			rankPlusPoint = 0.00001;
+		}
+		
+		String sql = "UPDATE customer "
+				+ "SET cstm_point = cstm_point + ?*(0.01 + ?), updatedate = NOW() "
+				+ "WHERE id = ? ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, totalPay);
+		stmt.setDouble(2, rankPlusPoint);
+		stmt.setString(3, id);
+		
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+		}
+	
+	// 17. 포인트 이력에 사용한 포인트(-) 저장
+	public int pointHistoryMinus(int inputPoint)throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String selectSql = "SELECT order_no "
+				+ "FROM orders "
+				+ "ORDER BY createdate DESC "
+				+ "LIMIT 1 ";
+		PreparedStatement selectStmt = conn.prepareStatement(selectSql);
+		ResultSet selectRs = selectStmt.executeQuery();
+		int selectOrderNo = 0;
+		if(selectRs.next()) {
+			// order_no 변수에 저장
+			selectOrderNo = selectRs.getInt("order_no");
+		}
+		String sql="INSERT INTO "
+				+ "point_history(order_no, point_pm, POINT, createdate) "
+				+ "VALUES( ?, '-', ? , NOW()) ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, selectOrderNo);
+		stmt.setInt(2, inputPoint);
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+	}
+	
+	// 18. 포인트 이력에 결제 후 적립된 포인트(+) 저장
+	public int pointHistoryPlus(int totalPay, String id)throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String selectRankSql = "SELECT cstm_rank "
+				+ "FROM customer "
+				+ "WHERE id = ? ";
+		PreparedStatement selectRankStmt = conn.prepareStatement(selectRankSql);
+		selectRankStmt.setString(1, id);
+		ResultSet selectRankRs = selectRankStmt.executeQuery();
+		String rank = ""; // 회원 등급 저장을 위한 변수선언
+		if(selectRankRs.next()) {
+			rank = selectRankRs.getString("cstm_rank"); // 회원 등급을 변수에 저장
+		}
+		double rankPlusPoint = 0; // 등급별 적립 금액 차이를 위한 변수선언
+		if(rank.equals("GOLD")) {
+			rankPlusPoint = 0.001;
+		}else if(rank.equals("SILVER")) {
+			rankPlusPoint = 0.0001;
+		}else {
+			rankPlusPoint = 0.00001;
+		}
+		String selectOrderSql = "SELECT order_no "
+				+ "FROM orders "
+				+ "ORDER BY createdate DESC "
+				+ "LIMIT 1 ";
+		PreparedStatement selectOrderStmt = conn.prepareStatement(selectOrderSql);
+		ResultSet selectRs = selectOrderStmt.executeQuery();
+		int selectOrderNo = 0;
+		if(selectRs.next()) {
+			// order_no 변수에 저장
+			selectOrderNo = selectRs.getInt("order_no");
+		}
+		String sql="INSERT INTO "
+				+ "point_history(order_no, point_pm, POINT, createdate) "
+				+ "VALUES( ?, '+', ?*(0.01+?) , NOW()) ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, selectOrderNo);
+		stmt.setInt(2, totalPay);
+		stmt.setDouble(3, rankPlusPoint);
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+		
+	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	// 포인트
 	
 	// 아이디가 ?이고 장바구니에서 Y인 상품 전체 삭제
 	// DELETE FROM cart WHERE checked = 'y' AND id = 'customer1'
