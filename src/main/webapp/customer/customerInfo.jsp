@@ -22,6 +22,29 @@
 <html lang="zxx">
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	 <script>
+	 $(function(){
+	    	//시작하자마자 숨기기
+			 $('#myElement').toggle();
+	 });
+	    $(document).ready(function() {
+	      // 숨기기/보이기 버튼 클릭 시 실행할 코드
+	      $('#toggleButton').click(function() {
+	        // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	        $('#byElement').toggle();
+	        $('#myElement').toggle();
+	        $('#toggleButton').toggle();
+	        
+	      });
+	      $('#toggle2Button').click(function() {
+	          // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	          $('#myElement').toggle();
+	          $('#byElement').toggle();
+	          $('#toggleButton').toggle();
+	        });
+	    });
+	</script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -109,7 +132,7 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">회원정보</h2>
         </div>
-   	<h1>
+   	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -117,7 +140,7 @@
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 	<%
 		if(id == null){
 	%>
@@ -129,34 +152,63 @@
 		if(id != null){
 			for(HashMap<String, Object> s : list){
 	%>
-		<table class="table table-bordered">
+		<table class="table">
 			<tr>
 				<td>이름</td>
 				<td><%=(String)(s.get("고객이름"))%></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><div id="byElement">*******</div>
+					<div id="myElement">
+						<form action="<%=request.getContextPath()%>/customer/updatePasswordAction.jsp" method="post">
+						<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+			
+						현재 비밀번호<input type="password" name="onePw" placeholder="비밀번호" required="required" class="single-input"><br>
+	
+						변경할 비밀번호<input type="password" name="pw" placeholder="비밀번호"  class="single-input" required="required"><br>
+	
+						변경할 비밀번호 확인<input type="password" name="checkPw" placeholder="비밀번호 재확인" class="single-input" required="required"><br>
+			
+						<button type="button" id="toggle2Button" class="genric-btn primary-border circle">취소</button>
+						<button type="submit" class="genric-btn primary-border circle">완료</button>
+						</form>
+					</div></td>
+				<td>
+					<button id="toggleButton" class="genric-btn primary-border circle">비밀번호 변경</button>
+				</td>
+
 			</tr>
 			<tr>
 				<td>주소</td>
 				<td><%=(String)(s.get("고객주소"))%></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>이메일</td>
 				<td><%=(String)(s.get("고객이메일"))%></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>생일</td>
 				<td><%=(String)(s.get("고객생일"))%></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>등급</td>
 				<td><%=(String)(s.get("고객등급"))%></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>포인트</td>
 				<td><%=(Integer)(s.get("고객포인트"))%></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>가입일</td>
 				<td><%=(String)(s.get("가입일"))%></td>
+				<td></td>
 			</tr>
 		</table>
 	<% 			
@@ -168,7 +220,6 @@
         </div>
 	<br><a href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" class="genric-btn primary-border circle">주문내역</a>&nbsp;&nbsp;
 	<a href="<%=request.getContextPath()%>/customer/updateCustomer.jsp" class="genric-btn primary-border circle">개인정보수정</a>&nbsp;&nbsp;
-	<a href="<%=request.getContextPath()%>/customer/updatePassword.jsp" class="genric-btn primary-border circle">비밀번호 변경</a>&nbsp;&nbsp;
 	<a href="<%=request.getContextPath()%>/customer/customerPointList.jsp" class="genric-btn primary-border circle">포인트내역조회</a>&nbsp;&nbsp;
 	<a href="<%=request.getContextPath()%>/customer/deleteCustomer.jsp" class="genric-btn primary-border circle">회원탈퇴</a>
     </div><br>

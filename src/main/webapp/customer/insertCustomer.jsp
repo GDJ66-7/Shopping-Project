@@ -57,7 +57,7 @@
 	      $('#pw').blur(function(){
 	         if ($('#pw').val().length < 4) {
 	            $('#pwMsg').text('PW는 4자이상이어야 합니다');
-	            
+	            $('#pw').val('');
 	         } else {
 	            $('#pwMsg').text('');
 	            
@@ -137,24 +137,16 @@
 	            
 	         } else {
 	            $('#emailMsg').text('');
-	            
-	         }
-	      });
-	      $('#emailUrl').blur(function(){
-	         if ($('#emailUrl').val() == '') {
-	            $('#emailMsg').text('emailURl를 입력하세요');
-	            
-	         } else {
-	            $('#emailMsg').text('');
-	            
 	            allCheck = true;
 	         }
 	      });
+	   
+	      
 	   // signinBtn click + gender선택 유무 + hobby선택 유무 체크
 	      $('#signinBtn').click(function() {
 	         // 페이지에 바로 버턴 누름을 방지하기 위해
 	         if(allCheck == false) { // if(!allCheck) {
-	            
+	        	 $('#clickMsg').text('회원정보를 모두 입력해주세요');
 	            return;
 	         }
 	         
@@ -172,7 +164,7 @@
 	            $('#agreeMsg').text('');
 	         }
 	         
-	         $('#signinForm').submit();
+	         $('#singinForm').submit();
 	      });
 	});
 	</script>
@@ -269,7 +261,7 @@
         	}
       	 %>		
 	</h1>
-		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post">
+		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post" id="singinForm">
 						
 				
 						<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>&nbsp;<button onclick="openPopup()" class="genric-btn primary-border circle">아이디입력하기</button>
@@ -289,7 +281,6 @@
 						<span id="birthMsg" class="msg"></span>
 						<p>나이</p>
 						<input type="text" id="age" readonly="readonly" class="single-input"><br>
-						<br>
 						<p>전화번호</p>
 						<input type="tel" id="tel" name="cstmPhone"  class="single-input"><br>
 						<span id="telMsg" class="msg"></span>
@@ -311,9 +302,9 @@
 		               			<input type="radio" name="cstmAgree" class="agree" value="n">비동의
 		           			    <span id="agreeMsg" class="msg"></span>
 		           			    <br><br>
-			<button type="submit" class="genric-btn primary-border circle">가입하기</button>&nbsp;
-			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;
+			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;&nbsp;
       		<button type="reset" class="genric-btn primary-border circle">초기화</button>
+      		<br><span id="clickMsg" class="msg"></span>
 		</form>
     </div><br>
  
