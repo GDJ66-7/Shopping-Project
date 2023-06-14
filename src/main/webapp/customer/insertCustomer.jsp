@@ -11,18 +11,12 @@
 	if(request.getParameter("useId") != null){
 		useId = request.getParameter("useId");
 	};
+	
 %>
 <!doctype html>
 <html lang="zxx">
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-	
-	<script type="text/javascript">
-        function openPopup() {
-            // 윈도우 팝업 창을 띄우는 함수
-            var popup = window.open("checkId.jsp", "popupWindow", "width=500,height=300");
-        }
-    </script>
     <!-- 카카오API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
@@ -168,6 +162,35 @@
 	      });
 	});
 	</script>
+	<script>
+  $(document).ready(function() {
+    $('#ckId').click(function() {
+      var value = $('#id').val();
+      createHiddenFormAndSubmit(value);
+    });
+
+    function createHiddenFormAndSubmit(value) {
+      var form = $('<form>', {
+        action: '<%=request.getContextPath()%>/customer/checkIdAction.jsp',
+        method: 'post'
+      });
+
+      $('<input>').attr({
+        type: 'hidden',
+        name: 'id',
+        value: value
+      }).appendTo(form);
+
+      form.appendTo('body').submit();
+    }
+  });
+</script>
+<style>
+  #ckId {
+    padding: 0px 20px; /* 원하는 패딩 값을 지정하세요 */
+    font-size: 10px; /* 원하는 폰트 크기를 지정하세요 */
+  }
+</style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -252,7 +275,7 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">회원정보 입력</h2>
         </div>
-   	<h1>
+   	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -260,39 +283,49 @@
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post" id="singinForm">
 						
 				
-						<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>&nbsp;<button onclick="openPopup()" class="genric-btn primary-border circle">아이디입력하기</button>
-						<input type="text" name="id" id="id" placeholder="아이디" readonly="readonly" value="<%=useId%>" class="single-input"><br>
+
+						<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>	<button type="button" id="ckId" class="genric-btn primary-border circle">중복체크</button><br>
+						<input type="text" name="id" id="id" value="<%=useId%>" placeholder="아이디" class="single-input"><br>
 						<span id="idMsg" class="msg"></span>
+						
 						<p>비밀번호</p>
 						<input type="password" id="pw" name="pw" placeholder="비밀번호"  class="single-input"><br>
 						<span id="pwMsg" class="msg"></span>
+						
 						<p>비밀번호 확인</p>
 						<input type="password" id="pwck" name="checkPw" placeholder="비밀번호 재확인" class="single-input"><br>
 
 						<p>이름</p>
 						<input type="text" id="name" name="cstmName"  class="single-input"><br>
 						<span id="nameMsg" class="msg"></span>
+						
 						<p>생년월일</p>
 						<input type="date" name="cstmBirth" id="birth" ><br>
 						<span id="birthMsg" class="msg"></span>
+						
 						<p>나이</p>
 						<input type="text" id="age" readonly="readonly" class="single-input"><br>
+						
 						<p>전화번호</p>
 						<input type="tel" id="tel" name="cstmPhone"  class="single-input"><br>
 						<span id="telMsg" class="msg"></span>
+						
 						<p>태어난 동네</p>
 						<input type="text" id="quest" name="cstmQuestion" class="single-input"><br>
 						<span id="questMsg" class="msg"></span>
+						
 						<p>주소</p>
 						<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
 						<span id="addressMsg" class="msg"></span>
+						
 						<p>이메일</p>
 						<input type="email" id="email" name="cstmEmail" class="single-input"><br>
 						<span id="emailMsg" class="msg"></span>
+						
 						<p>성별</p>	
 								<input type="radio" name="cstmGender" class="gender" value="남">남 &nbsp;
                					<input type="radio" name="cstmGender" class="gender" value="여">여

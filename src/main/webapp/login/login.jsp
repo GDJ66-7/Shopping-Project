@@ -51,18 +51,7 @@
         form.appendTo('body').submit();
     }
 </script>
-<script>
-    $(document).ready(function() {
-        $('#id').focus();
 
-        $('#id').blur(function() {
-            if ($('#id').val().length <= 0) {
-                $('#idMsg').text('카카오톡 로그인을 해야 합니다');
-                $('#id').focus();
-            }
-        });
-    });
-</script>
 <style>
   
     /* Button styling */
