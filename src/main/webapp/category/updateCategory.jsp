@@ -20,7 +20,19 @@
 %>
 <!doctype html>
 <html lang="zxx">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#updateCategoryBtn').click(function(){
+			if($('#upCategoryId').val().length == 0 || $('#upCategoryId').val() == null) {
+				$('#upCategoryIdMsg').text('수정할 카테고리이름을 입력해주세요')
+				$('#upCategoryId').focus();
+				return;
+			} 
+			$('#updateCategoryForm').submit();
+		})
+	})
+</script>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -104,18 +116,19 @@
 	<div class="col-12">
     </div>
    	<br>
-	<form class="form-contact contact_form" action="<%=request.getContextPath()%>/category/updateCategoryAction.jsp" method = "post">
+	<form id="updateCategoryForm" class="form-contact contact_form" action="<%=request.getContextPath()%>/category/updateCategoryAction.jsp" method = "post">
     <div class="row">
 		<table class="table table-bordered">
 			<tr>
 				<td>수정할이름</td>
 				<td>
-					<input type="hidden" value="<%=categoryNo %>" name="categoryNo">
-					<input type="text" name="categoryName" placeholder="수정전 : <%=categoryName%>">
+					<input type="hidden" id="upCategoryNoId" value="<%=categoryNo %>" name="categoryNo">
+					<input type="text" id="upCategoryId" name="categoryName" placeholder="수정전 : <%=categoryName%>">
+					<span id="upCategoryIdMsg"></span>
 				</td>
 			</tr>
 		</table>
-		<button class="genric-btn primary-border circle"  type="submit"> 카테고리 이름 변경</button>
+		<button id="updateCategoryBtn" class="genric-btn primary-border circle"  type="button"> 카테고리 이름 변경</button>
 	</div>
 	</form>
     </div>

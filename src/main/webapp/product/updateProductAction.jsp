@@ -8,6 +8,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	/*
+	
 	// 요청값 분석
 	if(request.getParameter("categoryName")== null
 		|| request.getParameter("productName")== null

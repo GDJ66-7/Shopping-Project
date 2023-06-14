@@ -143,7 +143,7 @@
 			if(minPage>1) {
 		%>
 				<li class="list-group-item">
-					<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>?productName=<%=productName%>">이전</a>
+					<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>">이전</a>
 				</li>
 		<%			
 			}
@@ -160,7 +160,7 @@
 				}else {					
 		%>		
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>?productName=<%=productName%>"><%=i%></a>
+						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>&productName=<%=productName%>"><%=i%></a>
 					</li>
 		<%				
 				}
@@ -171,7 +171,7 @@
 			if(maxPage != lastPage) {
 		%>
 				<li class="list-group-item">
-					<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>?productName=<%=productName%>">다음</a>
+					<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>">다음</a>
 				</li>
 		<%	
 			}

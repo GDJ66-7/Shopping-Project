@@ -4,9 +4,13 @@
 <%
 	request.setCharacterEncoding("utf-8");
 
+	System.out.println(request.getParameter("categoryName") + "<-- updateCategoryAction 요청값 유효성 categoryName");
+	System.out.println(request.getParameter("categoryNo") + "<-- updateCategoryAction 요청값 유효성 categoryNo");
+	
 	if(request.getParameter("categoryName") == null
+		|| request.getParameter("categoryName").equals("")
 		|| request.getParameter("categoryNo") == null) {
-		response.sendRedirect(request.getContextPath() + "/category/updateCategory.jsp");
+		response.sendRedirect(request.getContextPath() + "/category/categoryList.jsp");
 		return;
 	}
 

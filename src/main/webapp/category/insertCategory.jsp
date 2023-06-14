@@ -2,7 +2,21 @@
 
 <!doctype html>
 <html lang="zxx">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+	// 유효성 검사
+	$(document).ready(function(){
+		
+		$('#insertCategoryBtn').click(function(){
+			if($('#categoryId').val().length == 0) {
+				$('#categoryNameIdMsg').text('카테고리 이름을 입력하세요');
+				$('#categoryId').focus();
+				return;
+			}
+			$('#insertCategoryForm').submit();
+		})
+	})
+</script>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -86,15 +100,18 @@
 	<div class="col-12">
     </div>
    	<br>
-	<form class="form-contact contact_form" action="<%=request.getContextPath()%>/category/insertCategoryAction.jsp" method = "post">
+	<form id="insertCategoryForm" class="form-contact contact_form" action="<%=request.getContextPath()%>/category/insertCategoryAction.jsp" method = "post">
 	<div class="row">	
 		<table class="table table-bordered">
 			<tr>
 				<td>추가할 카테고리 이름</td>
-				<td><input type="text" name="categoryName" placeholder="입력하세요"></td>
+				<td>
+					<input type="text" id="categoryId" name="categoryName" placeholder="입력하세요">
+					<span id="categoryNameIdMsg" class="msg"></span>
+				</td>
 			</tr>
 		</table>
-		<button class="genric-btn primary-border circle" type="submit">카테고리 추가</button>
+		<button class="genric-btn primary-border circle" id="insertCategoryBtn" type="button">카테고리 추가</button>
 	</div>
 	</form>
     </div>

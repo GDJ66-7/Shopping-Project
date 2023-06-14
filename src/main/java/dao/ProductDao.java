@@ -106,6 +106,7 @@ public class ProductDao {
 		File f = new File(dir + "/" + preSaveFilename);
 		if(f.exists()) {
 			f.delete();
+			System.out.println(preSaveFilename + "<-- (productDao)updateProductImg 기존파일 삭제완료");
 		}
 		
 		// 수정모델
