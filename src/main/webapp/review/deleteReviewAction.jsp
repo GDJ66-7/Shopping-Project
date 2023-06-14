@@ -27,6 +27,6 @@
 	if(row == 1 ){
 		System.out.println("리뷰 삭제 완료되었습니다.");
 	}
-	
-	response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+	//리뷰 삭제 완료시 해당 상품 상세페이지로
+	response.sendRedirect(request.getContextPath()+"/product/productOne.jsp?productNo="+productNo);
 %>

@@ -72,8 +72,8 @@ a{text-decoration: none;}
 	</tr>
 </table>
 <a href="<%=request.getContextPath()%>/review/updateReview.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
-<a href="<%=request.getContextPath()%>/product/productOne.jsp" class="btn btn-light">목록</a>
-<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
+<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">목록</a>
+<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&orderNo=<%=reviewText.getOrderNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
 </div>
 </body>
 </html>

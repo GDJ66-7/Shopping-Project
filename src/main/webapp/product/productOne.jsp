@@ -128,7 +128,8 @@
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
 	<h3>상품리뷰</h3>
-	<a href="<%=request.getContextPath()%>/review/insertReview.jsp">추가</a><!-- 테스트 -->
+	<!-- 수량,no,id -->
+	<!-- <a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>">추가</a>-->
 	<table class="table" id="productReview">
 		<tr>
 			<th>제목</th>
@@ -192,12 +193,13 @@
 		</tr>
 <%
 	for(HashMap<String,Object> q : list){
+		
 %>
 		<tr>
 			<td><%=q.get("qNo")%></td>
 			<td><%=q.get("category")%></td>
 			<td>
-			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=q.get("qNo")%>">
+			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=q.get("qNo")%>&productNo=<%=q.get("productNo")%>">
 			<%=q.get("title")%>
 			</a>
 			</td>

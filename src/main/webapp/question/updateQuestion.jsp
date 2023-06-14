@@ -39,6 +39,7 @@ a{text-decoration: none;}
 <br><br><br>
 <h2 style="text-align: center;">상품문의</h2>
 <form action="<%=request.getContextPath()%>/question/updateQuestionAction.jsp?qNo=<%=qNo%>" method="post">
+	<input type="hidden" name="productNo" value="<%=one.getProductNo()%>">
 	<input type="hidden" name="qNo" value="<%=one.getqNo()%>">
 	<input type="hidden" name="id" value="<%=one.getId()%>"><!-- 세션검사 -->
 		<table class="table table-bordered">
@@ -69,7 +70,7 @@ a{text-decoration: none;}
 		</table>
 		<div>
 			<button type=submit class="btn btn-light">수정</button>
-			<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=one.getProductNo()%>" class="btn btn-light">취소</a>
+			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=one.getqNo()%>&productNo=<%=one.getProductNo()%>" class="btn btn-light">취소</a>
 		</div>
 </form>
 </div>

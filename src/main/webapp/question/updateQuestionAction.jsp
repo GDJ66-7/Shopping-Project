@@ -25,6 +25,7 @@
 	}
 	
 	// 받아온 값 저장
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	String qCategory = request.getParameter("qCategory");
 	String qTitle = request.getParameter("qTitle");
 	String qContent = request.getParameter("qContent");
@@ -52,6 +53,6 @@
 		System.out.println("문의 수정 성공");
 	}
 	
-	response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo); // 수정 완료시 폼으로
+	response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo+"&productNo="+productNo); // 수정 완료시 폼으로
 	
 %>

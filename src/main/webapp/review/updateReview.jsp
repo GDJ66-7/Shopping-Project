@@ -34,6 +34,27 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		const MAX_COUNT = 500; //const 상수선언 사용하는 키워드(자바의 final과 유사함:변경될 수 없는 값)
+		const $reviewContent = $('#reviewContent'); //내용 id
+		const $count = $('#count em'); //글자수 id
+		
+		function preContentCheck() { // 현재 입력되어 있는 글자수 확인을 위한 함수 선언(변수와 달리 함수명은 사용자가 정한다)
+			let len = $reviewContent.val().length; // 현재 입력되어있는 글자 수 확인
+			if(len > MAX_COUNT) {
+				let str = $reviewContent.val().substring(0, MAX_COUNT);
+				$reviewContent.val(str);
+				alert(MAX_COUNT + '자까지만 입력 가능합니다');
+				len = MAX_COUNT;
+			}
+			$count.text(len); //현재 입력된 글자수 출력
+		}
+		$reviewContent.on('input', preContentCheck); // reviewContent내에 있는(이벤트종류:input,업데이트 콜백 함수)호출
+		preContentCheck(); // 수정 페이지가 로드될 때 원래 입력되어있던 글자 수 체크
+	});
+</script>
 <title>리뷰 수정</title>
 <style>
 a{text-decoration: none;}
@@ -48,7 +69,7 @@ a{text-decoration: none;}
 	<%
 		if(request.getParameter("msg") != null){
 	%>
-	<div class="alert alert-warning alert-dismissible fade show" style="font-size: 10pt;"><%=request.getParameter("msg")%></div>
+	<div style="font-size: 10pt;"><%=request.getParameter("msg")%></div>
 	<%
 		}
 	%>
@@ -56,7 +77,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>제목</td>
 				<td>
-				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" required="required">
+				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" required="required" size=60;>
 				</td>
 			</tr>
 			<tr>
@@ -69,7 +90,8 @@ a{text-decoration: none;}
 			<tr>
 				<td>내용</td>
 				<td>
-				<textarea name="reviewContent" cols="80" rows="10" style="resize: none;" required="required"><%=reviewText.getReviewContent()%></textarea>
+				<textarea name="reviewContent" id="reviewContent" cols="80" rows="10" style="resize: none;" required="required"><%=reviewText.getReviewContent()%></textarea>
+				<span id="count"><em>0</em></span><em>/500</em>
 				</td>
 			</tr>
 			<tr>

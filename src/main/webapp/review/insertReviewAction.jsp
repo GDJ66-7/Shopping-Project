@@ -57,7 +57,7 @@
 			System.out.println(saveFilename +"파일삭제");
 		}
 		msg =URLEncoder.encode("JPG파일만 업로드 가능합니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp?=orderNo"+orderNo+"&productNo="+productNo+"&msg="+msg); //jsp?orderNo=..(추가)
+		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp?orderNo="+orderNo+"&productNo="+productNo+"&msg="+msg); //jsp?orderNo=..(추가)
 		return;
 			}
 	
@@ -84,6 +84,7 @@
 	    int imgrow = reviewdao.insertReviewImg(reviewImg);
 	}
 	
-	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp");
+	// 입력 완료시 자신이 쓴 리뷰 상세보기 창으로 redirect
+	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?productNo="+productNo+"&orderNo="+orderNo);
 
 %>

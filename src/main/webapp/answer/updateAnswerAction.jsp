@@ -15,6 +15,7 @@
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	String id = "admin";/*request.getParameter("id");*/
 	String aContent = request.getParameter("aContent");
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
 	System.out.println(aNo+"<---update answer aNo");
 	System.out.println(qNo+"<---update answer qNo");
@@ -37,6 +38,6 @@
 	if(row == 1 ){
 		System.out.println("답변 수정 성공");
 	}
-	response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo);
+	response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo+"&productNo="+productNo);
 	
 %>

@@ -16,6 +16,7 @@
 	// 요청값 변수 저장
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	int aNo = Integer.parseInt(request.getParameter("aNo"));
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
 	// 객체 생성
 	AnswerDao answerDao = new AnswerDao();
@@ -25,6 +26,6 @@
 	if(row ==1 ){
 		System.out.println("삭제완료");
 	}
-	response.sendRedirect(request.getContextPath() + "/question/questionOne.jsp?qNo="+qNo);
+	response.sendRedirect(request.getContextPath() + "/question/questionOne.jsp?qNo="+qNo+"&productNo="+productNo);
 
 %>

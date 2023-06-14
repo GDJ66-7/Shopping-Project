@@ -11,6 +11,7 @@
 	AnswerDao answerDao = new AnswerDao();
 	
 	// 받은 값 저장 test admin
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	String id = "admin"; /*request.getParameter("id");*/
 	String aContent = request.getParameter("aContent");
@@ -30,7 +31,7 @@
 	if(row == 1 ){
 		System.out.println("답변 추가 성공");
 		//답변 추가 성공시 해당 문의 게시글로 이동
-		response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo);
+		response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo+"&productNo="+productNo);
 	}
 	
 	

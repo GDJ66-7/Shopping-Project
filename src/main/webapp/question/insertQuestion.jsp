@@ -64,7 +64,7 @@
 </table>
 	<div>
 		<button type=submit>추가</button>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp">취소</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>">취소</a>
 	</div>
 </form>
 </div>

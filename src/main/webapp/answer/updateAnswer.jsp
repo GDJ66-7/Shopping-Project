@@ -13,6 +13,8 @@
 	//로그인 세션 검사 추가해야함(관리자)
 	
 	// 받아온 값 저장 - 수정할 aNo & 해당 qNo
+	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	System.out.println(productNo+"<---u.a productNo---");
 	int aNo = Integer.parseInt(request.getParameter("aNo"));
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	String aContent = request.getParameter("aContent");
@@ -31,7 +33,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath()%>/answer/updateAnswerAction.jsp?qNo=<%=one.getqNo()%>&aNo=<%=one.getaNo()%>&id=<%=one.getId()%>" method="post">
+	<form action="<%=request.getContextPath()%>/answer/updateAnswerAction.jsp?qNo=<%=one.getqNo()%>&aNo=<%=one.getaNo()%>&id=<%=one.getId()%>&productNo=<%=productNo%>" method="post"> 
 		<table class="table">
 		<tr>
 			<td>문의 답변 수정</td>
@@ -42,7 +44,7 @@
 		</table>
 		<div>
 			<button type=submit class="btn btn-light">수정</button>
-			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=one.getqNo()%>" class="btn btn-light">취소</a>
+			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=one.getqNo()%>&productNo=<%=productNo%>" class="btn btn-light">취소</a>
 		</div>
 	</form>
 </body>
