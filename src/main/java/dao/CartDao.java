@@ -353,7 +353,6 @@ public class CartDao {
 			selectOrderNo = selectRs.getInt("order_no");
 			selectOrderId = selectRs.getString("id");
 		}
-		System.out.println(selectOrderNo+"<---------------------");
 		// 13번 사용하여 productNo, cartCnt 값들 받아오기
 		ArrayList<Cart> cartList = new ArrayList<>();
 		cartList = selectCart(selectOrderId);
@@ -429,7 +428,7 @@ public class CartDao {
 		Connection conn = dbutil.getConnection();
 		String selectSql = "SELECT order_no "
 				+ "FROM orders "
-				+ "ORDER BY createdate DESC "
+				+ "ORDER BY order_no DESC "
 				+ "LIMIT 1 ";
 		PreparedStatement selectStmt = conn.prepareStatement(selectSql);
 		ResultSet selectRs = selectStmt.executeQuery();
@@ -473,7 +472,7 @@ public class CartDao {
 		}
 		String selectOrderSql = "SELECT order_no "
 				+ "FROM orders "
-				+ "ORDER BY createdate DESC "
+				+ "ORDER BY order_no DESC "
 				+ "LIMIT 1 ";
 		PreparedStatement selectOrderStmt = conn.prepareStatement(selectOrderSql);
 		ResultSet selectRs = selectOrderStmt.executeQuery();
