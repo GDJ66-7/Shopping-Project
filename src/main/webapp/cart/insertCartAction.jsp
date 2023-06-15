@@ -36,7 +36,7 @@
 	CartDao cartDao = new CartDao();
 	int row = cartDao.totalInsertCart(cart);
 	
-	if(row>1){
+	if(row>0){
 		System.out.println("성공");
 		response.sendRedirect(request.getContextPath()+"/product/productList.jsp");
 		return;
