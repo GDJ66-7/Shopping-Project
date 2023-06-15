@@ -117,7 +117,7 @@
 				for(HashMap<String, Object> s : noticeList){
 			%>
 			<tr>
-				<td>번호</td>
+				<td>공지번호</td>
 				<td><%=(Integer)(s.get("번호"))%></td>
 			</tr>
 			<tr>

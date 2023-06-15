@@ -23,7 +23,7 @@
 	//비밀번호 확인 같은지 체크
 	if(!request.getParameter("pw").equals(request.getParameter("checkPw"))){
 		msg = URLEncoder.encode("비밀번호가 서로 다릅니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/customer/findPw.jsp?msg="+msg+"&row=1");
 		return;
 	}
 	//요청값 변수에 저장
@@ -40,7 +40,7 @@
 		//chRow 가 0이상이면 이전 비밀번호이므로 if문으로 멈춘다
 		if(ckRow > 0){
 			msg = URLEncoder.encode("이전에 사용한 비밀번호이므로 다른 비밀번호를 사용하시길 바랍니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
+			response.sendRedirect(request.getContextPath()+"/customer/findPw.jsp?msg="+msg+"&row=1");
 			return;
 		}
 		//회원 비밀번호 를 변경하기 위해 메소드 사용

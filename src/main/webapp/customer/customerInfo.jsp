@@ -26,24 +26,183 @@
 	 <script>
 	 $(function(){
 	    	//시작하자마자 숨기기
-			 $('#myElement').toggle();
+			$('#myElement').toggle();
+	    	$('#adBy').toggle();
+	    	$('#emailBy').toggle();
+	    	$('#phoneBy').toggle();
 	 });
-	    $(document).ready(function() {
+	$(document).ready(function() {
 	      // 숨기기/보이기 버튼 클릭 시 실행할 코드
-	      $('#toggleButton').click(function() {
+	    $('#toggleButton').click(function() {
 	        // #myElement 요소의 숨김/보임 상태를 토글합니다.
 	        $('#byElement').toggle();
 	        $('#myElement').toggle();
 	        $('#toggleButton').toggle();
 	        
 	      });
-	      $('#toggle2Button').click(function() {
+	    $('#toggle2Button').click(function() {
 	          // #myElement 요소의 숨김/보임 상태를 토글합니다.
 	          $('#myElement').toggle();
 	          $('#byElement').toggle();
 	          $('#toggleButton').toggle();
 	        });
+	      
+	      //address 변경하기 버튼 기능
+	    $('#addressBtn').click(function() {
+		        // #myElement 요소의 숨김/보임 상태를 토글합니다.
+		        $('#adEl').toggle();
+		        $('#adBy').toggle();
+		        $('#addressBtn').toggle();
+		        
+		      });
+	   	$('#adrCansel').click(function() {
+	          // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	          $('#adBy').toggle();
+	          $('#adEl').toggle();
+	          $('#addressBtn').toggle();
+	        });
+	   	
+	   	  //email 변경하기 버튼 기능
+		$('#emailBtn').click(function() {  
+	        // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	        $('#emilEl').toggle();
+	        $('#emailBy').toggle();
+	        $('#emailBtn').toggle();
+	        
+	      });
+	    $('#emailCansel').click(function() {
+	          // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	          $('#emailBy').toggle();
+	          $('#emilEl').toggle();
+	          $('#emailBtn').toggle();
+	        });
+	    
+	    // 전화번호 변경하기 버튼 기능
+	    $('#phoneBtn').click(function() {
+	        // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	        $('#phoneEl').toggle();
+	        $('#phoneBy').toggle();
+	        $('#phoneBtn').toggle();
+	        
+	      });
+	    $('#phoneCansel').click(function() {
+	          // #myElement 요소의 숨김/보임 상태를 토글합니다.
+	          $('#phoneBy').toggle();
+	          $('#phoneEl').toggle();
+	          $('#phoneBtn').toggle();
+	        });
 	    });
+	</script>
+	<script>
+	$(document).ready(function() {
+		let adCheck = false;
+	 // 주소유효성 체크
+      $('#address_kakao').blur(function(){
+         if ($('#address_kakao').val().length < 1) {
+            $('#addressMsg').text('주소를 입력하세요');
+            
+         } else {
+            $('#addressMsg').text('');
+         }
+      });
+	   // pw유효성 체크
+	      $('#adPw').blur(function(){
+	         if ($('#adPw').val().length < 4) {
+	            $('#adPwMsg').text('PW는 4자이상이어야 합니다');
+	            $('#adPw').val('');
+	         } else {
+	            $('#adPwMsg').text('');
+	            adCheck = true;
+	         }
+	      });
+	      $('#adBtn').click(function() {
+	    	  if(adCheck == false) { // if(!allCheck) {
+	    		  alert('수정할 정보를 모두 입력하시길 바랍니다')
+		            return;
+		         }else{
+		        	 $('#adForm').submit();
+	        	}
+	      });
+	}); 
+	</script>
+	<script>
+	$(document).ready(function() {
+		let emCheck = false;
+		// email유효성 체크
+	      $('#email').blur(function(){
+	         if ($('#email').val() == '') {
+	            $('#emailMsg').text('email를 입력하세요');
+	            
+	         } else {
+	            $('#emailMsg').text('');
+	         }
+	      });
+	   // pw유효성 체크
+	      $('#emPw').blur(function(){
+	         if ($('#emPw').val().length < 4) {
+	            $('#emPwMsg').text('PW는 4자이상이어야 합니다');
+	            $('#emPw').val('');
+	         } else {
+	            $('#emPwMsg').text('');
+	            emCheck = true;
+	         }
+	      });
+	      $('#emBtn').click(function() {
+	    	  if(emCheck == false) { // if(!allCheck) {
+	    		  alert('수정할 정보를 모두 입력하시길 바랍니다')
+		            return;
+		         }else{
+		        	 $('#emForm').submit();
+	        	}
+	      });
+	}); 
+	</script>
+	<script>
+	$(document).ready(function() {
+		let phCheck = false;
+		// 전화번호유효성 체크
+	      $('#tel').blur(function(){
+	         if ($('#tel').val().length < 1) { 
+	            $('#telMsg').text('전화번호를 입력하세요');
+	            
+	         } else {
+	            $('#telMsg').text('');
+	            
+	         }
+	      });
+	   // pw유효성 체크
+	      $('#phPw').blur(function(){
+	         if ($('#phPw').val().length < 4) {
+	            $('#phPwMsg').text('PW는 4자이상이어야 합니다');
+	            $('#phPw').val('');
+	         } else {
+	            $('#phPwMsg').text('');
+	            phCheck = true;
+	         }
+	      });
+	      $('#phBtn').click(function() {
+	    	  if(phCheck == false) { // if(!allCheck) {
+	    		  alert('수정할 정보를 모두 입력하시길 바랍니다')
+		            return;
+		         }else{
+		        	 $('#phForm').submit();
+	        	}
+	      });
+	}); 
+	</script>			 
+	<!-- 카카오API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	window.onload = function(){
+	  $("#address_kakao").click(function(){ //주소입력칸을 클릭하면
+	        //카카오 지도 발생
+	        new daum.Postcode({
+	            oncomplete: function(data) { //선택시 입력값 세팅
+	                $('#address_kakao').val(data.address) // 주소 넣기
+	            }
+	        }).open();
+	    });
+	}
 	</script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -154,59 +313,119 @@
 	%>
 		<table class="table">
 			<tr>
-				<td>이름</td>
+				<td><p>이름</p></td>
 				<td><%=(String)(s.get("고객이름"))%></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
-				<td><div id="byElement">*******</div>
+				<td><p>비밀번호</p></td>
+				<td>
+					<div id="byElement">*******</div>
 					<div id="myElement">
 						<form action="<%=request.getContextPath()%>/customer/updatePasswordAction.jsp" method="post">
 						<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
 			
-						현재 비밀번호<input type="password" name="onePw" placeholder="비밀번호" required="required" class="single-input"><br>
+						<p>현재 비밀번호</p>
+						<input type="password" name="onePw" placeholder="비밀번호" required="required" class="single-input"><br>
 	
-						변경할 비밀번호<input type="password" name="pw" placeholder="비밀번호"  class="single-input" required="required"><br>
+						<p>변경할 비밀번호</p>
+						<input type="password" name="pw" placeholder="비밀번호"  class="single-input" required="required"><br>
 	
-						변경할 비밀번호 확인<input type="password" name="checkPw" placeholder="비밀번호 재확인" class="single-input" required="required"><br>
+						<p>변경할 비밀번호 확인</p>
+						<input type="password" name="checkPw" placeholder="비밀번호 재확인" class="single-input" required="required"><br>
 			
 						<button type="button" id="toggle2Button" class="genric-btn primary-border circle">취소</button>
 						<button type="submit" class="genric-btn primary-border circle">완료</button>
 						</form>
 					</div></td>
 				<td>
-					<button id="toggleButton" class="genric-btn primary-border circle">비밀번호 변경</button>
+					<button id="toggleButton" type="button" class="genric-btn primary-border circle">비밀번호 변경</button>
 				</td>
 
 			</tr>
 			<tr>
-				<td>주소</td>
-				<td><%=(String)(s.get("고객주소"))%></td>
-				<td></td>
+				<td><p>주소</p></td>
+				<td>
+					<div id="adEl"><%=(String)(s.get("고객주소"))%></div>
+					<div id="adBy">
+						<form action="<%=request.getContextPath()%>/customer/updateAddressAction.jsp" method="get" id="adForm">
+							<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+							<p>주소</p>
+							<p><span id="addressMsg" class="msg"></span></p> 
+							<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+							<p>비밀번호</p>
+							<p><span id="adPwMsg" class="msg"></span></p>
+							<input type="password" id="adPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>					
+							<button type="button" id="adrCansel" class="genric-btn primary-border circle">취소</button>
+							<button type="button" id="adBtn" class="genric-btn primary-border circle">완료</button>
+						</form>
+					</div>
+				</td>
+				<td>
+					<button id="addressBtn" type="button" class="genric-btn primary-border circle">주소 변경</button>
+				</td>
 			</tr>
 			<tr>
-				<td>이메일</td>
-				<td><%=(String)(s.get("고객이메일"))%></td>
-				<td></td>
+				<td><p>이메일</p></td>
+				<td>
+					<div id="emilEl"><%=(String)(s.get("고객이메일"))%></div>
+					<div id="emailBy">
+						<form action="<%=request.getContextPath()%>/customer/updateEmailAction.jsp" method="get" id="emForm">
+							<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+							<p>이메일</p>
+							<p><span id="emailMsg" class="msg"></span></p>
+							<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
+							<p>비밀번호</p>
+							<p><span id="emPwMsg" class="msg"></span></p>
+							<input type="password" id="emPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+							<button type="button" id="emailCansel" class="genric-btn primary-border circle">취소</button>
+							<button type="button" id="emBtn" class="genric-btn primary-border circle">완료</button>
+						</form>
+					</div>
+				</td>
+				<td>
+					<button id="emailBtn" type="button" class="genric-btn primary-border circle">이메일 변경</button>
+				</td>
 			</tr>
 			<tr>
-				<td>생일</td>
+				<td><p>생일</p></td>
 				<td><%=(String)(s.get("고객생일"))%></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>등급</td>
+				<td><p>휴대전화</p></td>
+				<td>
+					<div id="phoneEl"><%=(String)(s.get("고객번호"))%></div>
+					<div id="phoneBy">
+						<form action="<%=request.getContextPath()%>/customer/updatePhoneAction.jsp" method="get" id="phForm">
+							<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+							<p>전화번호</p>
+							<p><span id="telMsg" class="msg"></span></p>
+							<input type="tel" id="tel" name="cstmPhone" required="required" class="single-input"><br>
+							<p>비밀번호</p>
+							<p><span id="phPwMsg" class="msg"></span></p>
+							<input type="password" id="phPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+							<button type="button" id="phoneCansel" class="genric-btn primary-border circle">취소</button>
+							<button type="submit" id="phBtn" class="genric-btn primary-border circle">완료</button>
+						</form>
+					</div>
+				</td>
+				<td>
+					<button id="phoneBtn" type="button" class="genric-btn primary-border circle">전화번호 변경</button>
+				</td>
+			</tr>
+			<tr>
+				<td><p>등급</p></td>
 				<td><%=(String)(s.get("고객등급"))%></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>포인트</td>
+				<td><p>포인트</p></td>
 				<td><%=(Integer)(s.get("고객포인트"))%></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td>가입일</td>
+				<td><p>가입일</p></td>
 				<td><%=(String)(s.get("가입일"))%></td>
 				<td></td>
 			</tr>

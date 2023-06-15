@@ -31,13 +31,13 @@
 		|| request.getParameter("pw").equals("")
 		|| request.getParameter("checkPw").equals("")){
 			msg = URLEncoder.encode("모두입력해주시길 바랍니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
+			response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
 			return;
 		}
 	//비밀번호 확인 같은지 체크
 			if(!request.getParameter("pw").equals(request.getParameter("checkPw"))){
 				msg = URLEncoder.encode("비밀번호가 서로 다릅니다.","utf-8");
-				response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
+				response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
 				return;
 			}
 	//요청값 변수에 저장
@@ -55,7 +55,7 @@
 			// 실행값에 따라 분기 0이상이면 비밀번호 맞고 0이면 비밀번호가 틀립니다.
 			if(checkRow == 0){
 				msg = URLEncoder.encode("비밀번호가 맞지 않으므로 다시 입력 바랍니다.","utf-8");
-				response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
+				response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
 				return;
 			}
 	//클래스 선언하고 변수 저장
@@ -69,7 +69,7 @@
 	//chRow 가 0이상이면 이전 비밀번호이므로 if문으로 멈춘다
 	if(ckRow > 0){
 		msg = URLEncoder.encode("이전에 사용한 비밀번호이므로 다른 비밀번호를 사용하시길 바랍니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/updatePassword.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
 		return;
 	}
 	//회원 비밀번호 를 변경하기 위해 메소드 사용

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 //새션 확인 로그인 되어있다면 못들어와야됩니다.
@@ -21,15 +22,15 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	window.onload = function(){
-	    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
-	        //카카오 지도 발생
-	        new daum.Postcode({
-	            oncomplete: function(data) { //선택시 입력값 세팅
-	                document.getElementById("address_kakao").value = data.address; // 주소 넣기
-	            }
-	        }).open();
-	    });
-	}
+		  $("#address_kakao").click(function(){ //주소입력칸을 클릭하면
+		        //카카오 지도 발생
+		        new daum.Postcode({
+		            oncomplete: function(data) { //선택시 입력값 세팅
+		                $('#address_kakao').val(data.address) // 주소 넣기
+		            }
+		        }).open();
+		    });
+		}
 	</script>
 	<!-- form입력 자바스크립트로 유효성 검사 -->
 	<script>
@@ -104,16 +105,6 @@
 	            
 	         }
 	      });
-	      // 전화번호유효성 체크
-	      $('#quest').blur(function(){
-	         if ($('#quest').val().length < 1) {
-	            $('#questMsg').text('전화번호를 입력하세요');
-	            
-	         } else {
-	            $('#questMsg').text('');
-	            
-	         }
-	      });
 	      // 주소유효성 체크
 	      $('#address_kakao').blur(function(){
 	         if ($('#address_kakao').val().length < 1) {
@@ -140,7 +131,7 @@
 	      $('#signinBtn').click(function() {
 	         // 페이지에 바로 버턴 누름을 방지하기 위해
 	         if(allCheck == false) { // if(!allCheck) {
-	        	 $('#clickMsg').text('회원정보를 모두 입력해주세요');
+	        	 alert('회원정보를 모두 입력하시길 바랍니다')
 	            return;
 	         }
 	         
@@ -190,7 +181,54 @@
     padding: 0px 20px; /* 원하는 패딩 값을 지정하세요 */
     font-size: 10px; /* 원하는 폰트 크기를 지정하세요 */
   }
+  /* 컨테이너 스타일 */
+.date-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* 가짜 input 스타일 */
+.custom-date {
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 가짜 input 아이콘 스타일 */
+.custom-date::after {
+  content: "\f073";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* 실제 input 요소 스타일 */
+.custom-date input[type="date"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* 가짜 input에 포커스 스타일 */
+.custom-date:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 2px lightblue; /* 포커스 시에 원하는 스타일을 적용하세요. */
+}
+  
 </style>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -285,56 +323,55 @@
       	 %>		
 	</p>
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post" id="singinForm">
-						
-				
+			<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>	<button type="button" id="ckId" class="genric-btn primary-border circle">중복체크</button><br>
+			<p><span id="idMsg" class="msg"></span></p>
+			<input type="text" name="id" id="id" value="<%=useId%>" placeholder="아이디" class="single-input"><br>
+			
+			<p>비밀번호</p>
+			<p><span id="pwMsg" class="msg"></span></p>
+			<input type="password" id="pw" name="pw" placeholder="비밀번호"  class="single-input"><br>
+			
+			<p>비밀번호 확인</p>
+			<input type="password" id="pwck" name="checkPw" placeholder="비밀번호 재확인" class="single-input"><br>
 
-						<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>	<button type="button" id="ckId" class="genric-btn primary-border circle">중복체크</button><br>
-						<input type="text" name="id" id="id" value="<%=useId%>" placeholder="아이디" class="single-input"><br>
-						<span id="idMsg" class="msg"></span>
-						
-						<p>비밀번호</p>
-						<input type="password" id="pw" name="pw" placeholder="비밀번호"  class="single-input"><br>
-						<span id="pwMsg" class="msg"></span>
-						
-						<p>비밀번호 확인</p>
-						<input type="password" id="pwck" name="checkPw" placeholder="비밀번호 재확인" class="single-input"><br>
-
-						<p>이름</p>
-						<input type="text" id="name" name="cstmName"  class="single-input"><br>
-						<span id="nameMsg" class="msg"></span>
-						
-						<p>생년월일</p>
-						<input type="date" name="cstmBirth" id="birth" ><br>
-						<span id="birthMsg" class="msg"></span>
-						
-						<p>나이</p>
-						<input type="text" id="age" readonly="readonly" class="single-input"><br>
-						
-						<p>전화번호</p>
-						<input type="tel" id="tel" name="cstmPhone"  class="single-input"><br>
-						<span id="telMsg" class="msg"></span>
-						
-						<p>태어난 동네</p>
-						<input type="text" id="quest" name="cstmQuestion" class="single-input"><br>
-						<span id="questMsg" class="msg"></span>
-						
-						<p>주소</p>
-						<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
-						<span id="addressMsg" class="msg"></span>
-						
-						<p>이메일</p>
-						<input type="email" id="email" name="cstmEmail" class="single-input"><br>
-						<span id="emailMsg" class="msg"></span>
-						
-						<p>성별</p>	
-								<input type="radio" name="cstmGender" class="gender" value="남">남 &nbsp;
-               					<input type="radio" name="cstmGender" class="gender" value="여">여
-            				    <span id="genderMsg" class="msg"></span>
-						<p>개인정보동의</p>
-								<input type="radio" name="cstmAgree" class="agree" value="y">동의 &nbsp;
-		               			<input type="radio" name="cstmAgree" class="agree" value="n">비동의
-		           			    <span id="agreeMsg" class="msg"></span>
-		           			    <br><br>
+			<p>이름</p>
+			<p><span id="nameMsg" class="msg"></span></p>
+			<input type="text" id="name" name="cstmName"  class="single-input"><br>
+			
+			<p>생년월일</p>
+			<p><span id="birthMsg" class="msg"></span></p>
+			<div class="date-container">
+ 				<input type="date" name="cstmBirth" id="birth" class="custom-date">
+			</div>
+			
+			<p>나이</p>
+			<input type="text" id="age" readonly="readonly" class="single-input"><br>
+			
+			<p>전화번호</p>
+			<p><span id="telMsg" class="msg"></span></p>
+			<input type="tel" id="tel" name="cstmPhone"  class="single-input"><br>
+			
+			<p>태어난 동네</p>
+			<p><span id="questMsg" class="msg"></span></p>
+			<input type="text" id="quest" name="cstmQuestion" class="single-input"><br>
+			
+			<p>주소</p>
+			<p><span id="addressMsg" class="msg"></span></p>
+			<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+			
+			<p>이메일</p>
+			<p><span id="emailMsg" class="msg"></span></p>
+			<input type="email" id="email" name="cstmEmail" class="single-input"><br>
+			
+			<p>성별</p>	
+				    <p><span id="genderMsg" class="msg"></span></p>
+					<input type="radio" name="cstmGender" class="gender" value="남">남 &nbsp;
+   					<input type="radio" name="cstmGender" class="gender" value="여">여
+			<p>개인정보동의</p>
+       			    <p><span id="agreeMsg" class="msg"></span></p>
+					<input type="radio" name="cstmAgree" class="agree" value="y">동의 &nbsp;
+           			<input type="radio" name="cstmAgree" class="agree" value="n">비동의
+       			    <br><br>
 			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;&nbsp;
       		<button type="reset" class="genric-btn primary-border circle">초기화</button>
       		<br><span id="clickMsg" class="msg"></span>

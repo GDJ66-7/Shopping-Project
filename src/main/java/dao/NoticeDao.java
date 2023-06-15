@@ -87,7 +87,7 @@ public class NoticeDao {
 			int row = 0;
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql = "INSERT INTO notice(notice_title, notice_content, createdate, updatedate) VALUES(?,?,now(),now()";
+			String sql = "INSERT INTO notice(notice_title, notice_content, createdate, updatedate) VALUES(?,?,now(),now())";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, notice.getNoticeTitle());
 			stmt.setString(2, notice.getNoticeContent());

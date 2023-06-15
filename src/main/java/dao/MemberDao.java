@@ -198,6 +198,42 @@ public class MemberDao {
 		
 		return row;
 	}
+	// 4-1) 회원 주소 수정
+	public int modifyAddress(String address, String id) throws Exception {
+		int row = 0;
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn =  dbUtil.getConnection();
+		String sql = "UPDATE customer SET cstm_address = ?, updatadate = now() WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, address);
+		stmt.setString(2, id);
+		row = stmt.executeUpdate();
+		return row;
+	}
+	// 4-2) 회원 메일 수정
+		public int modifyEmail(String email, String id) throws Exception {
+			int row = 0;
+			DBUtil dbUtil = new DBUtil(); 
+			Connection conn =  dbUtil.getConnection();
+			String sql = "UPDATE customer SET cstm_email = ?, updatadate = now() WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, email);
+			stmt.setString(2, id);
+			row = stmt.executeUpdate();
+			return row;
+		}
+	// 4-3) 회원 주소 수정
+			public int modifyPhone(String phone, String id) throws Exception {
+				int row = 0;
+				DBUtil dbUtil = new DBUtil(); 
+				Connection conn =  dbUtil.getConnection();
+				String sql = "UPDATE customer SET cstm_phone = ?, updatadate = now() WHERE id = ?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, phone);
+				stmt.setString(2, id);
+				row = stmt.executeUpdate();
+				return row;
+			}
 	// 5 회원 비밀번호 변경시 이전 사용한 비밀번호인지 체크하기
 	public int checkPwList(IdList idList) throws Exception {
 		int pwCheckRow = 0;
@@ -245,7 +281,7 @@ public class MemberDao {
 		}
 		if(cnt > 3) {
 		// 비밀번호 이력 3개 이상이면 삭제
-		String historyDelSql = "DELETE FROM pw_history WHERE id = ? AND createdate =  SELECT MIN(createdate) FROM pw_history WHERE id = ?)";
+		String historyDelSql = "DELETE FROM pw_history WHERE id = ? AND createdate = (SELECT MIN(createdate) FROM pw_history WHERE id = ?)";
 		PreparedStatement historyDelStmt = conn.prepareStatement(historyDelSql);
 		historyDelStmt.setString(1, idList.getId());
 		historyDelStmt.setString(2, idList.getId());
@@ -342,6 +378,7 @@ public class MemberDao {
 		}
 		return row;
 	}
+	//아이디 중복체크
 	public int checkId(String id) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
@@ -357,6 +394,7 @@ public class MemberDao {
 		
 		
 	}
+	//카카오톡 로그인시체크
 	public int checkIdkakao(String id) throws Exception {
 		int row = 0;
 		String idAct = "";

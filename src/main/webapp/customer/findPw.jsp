@@ -110,15 +110,20 @@
 	if(request.getParameter("row") == null){
 %>
 	<form action="<%=request.getContextPath()%>/customer/findPwAction.jsp" method="post">
-		아이디<input type="text" name="id" placeholder="아이디" required="required" class="single-input"><br>
+		<p>아이디</p>
+		<input type="text" name="id" placeholder="아이디" required="required" class="single-input"><br>
 	
-		이름<input type="text" name="cstmName" required="required" class="single-input"><br>
+		<p>이름</p>
+		<input type="text" name="cstmName" required="required" class="single-input"><br>
 		
-		생년월일 : <br><input type="date" name="cstmBirth" ><br>
+		<p>생년월일</p>
+		<input type="date" name="cstmBirth" ><br>
 
-		전화번호<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
+		<p>전화번호</p>
+		<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
 						
-		태어난 동네<input type="text" name="cstmQuestion" required="required" class="single-input"><br>
+		<p>태어난 동네</p>
+		<input type="text" name="cstmQuestion" required="required" class="single-input"><br>
 		
 		<button type="submit" class="genric-btn primary-border circle">비밀번호 찾기</button>
 	</form>
@@ -126,10 +131,14 @@
 	} else if(request.getParameter("row") != null){
 %>	
 	<form action="<%=request.getContextPath()%>/customer/setPasswordAction.jsp" method="post">
-	<input type="hidden" name = "id" value="<%=id%>">
-		새로운 비밀번호 입력 <input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+		<p>아이디</p>
+		<input type="text" name = "id" class="single-input">
+		<p>새로운 비밀번호 입력</p> 
+		<input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
 
-		비밀번호 재확인<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required" class="single-input"><br>
+		<p>비밀번호 재확인</p>
+		<input type="password" name="checkPw" placeholder="비밀번호 재확인" required="required" class="single-input"><br>
+		
 	<button type="submit" class="genric-btn primary-border circle">비밀번호 변경하기</button>
 	</form>
 <%

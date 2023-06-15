@@ -13,15 +13,68 @@ String id = (String)(session.getAttribute("loginCstmId"));
 <html lang="zxx">
 
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<!-- 카카오API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
+	$(document).ready(function() {
+		let allCheck = false; 
+		 // 주소유효성 체크
+	      $('#address_kakao').blur(function(){
+	         if ($('#address_kakao').val().length < 1) {
+	            $('#addressMsg').text('주소를 입력하세요');
+	            
+	         } else {
+	            $('#addressMsg').text('');
+	            
+	         }
+	      });
+	      // email유효성 체크
+	      $('#email').blur(function(){
+	         if ($('#email').val() == '') {
+	            $('#emailMsg').text('email를 입력하세요');
+	            
+	         } else {
+	            $('#emailMsg').text('');
+	         }
+	      });
+	   // 전화번호유효성 체크
+	      $('#tel').blur(function(){
+	         if ($('#tel').val().length < 1) { 
+	            $('#telMsg').text('전화번호를 입력하세요');
+	            
+	         } else {
+	            $('#telMsg').text('');
+	            
+	         }
+	      });
+	   // pw유효성 체크
+	      $('#pw').blur(function(){
+	         if ($('#pw').val().length < 4) {
+	            $('#pwMsg').text('PW는 4자이상이어야 합니다');
+	            $('#pw').val('');
+	         } else {
+	            $('#pwMsg').text('');
+	            allCheck = true;
+	         }
+	      });
+	      $('#signinBtn').click(function() {
+	    	  if(allCheck == false) { // if(!allCheck) {
+		        	 $('#clickMsg').text('변경할 회원정보를 모두 입력해주세요');
+		            return;
+		         }else{
+		        	 $('#singinForm').submit();
+		        	 }
+	      });
+	});
+	</script>
+	<script>
 	window.onload = function(){
-	    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+	  $("#address_kakao").click(function(){ //주소입력칸을 클릭하면
 	        //카카오 지도 발생
 	        new daum.Postcode({
 	            oncomplete: function(data) { //선택시 입력값 세팅
-	                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+	                $('#address_kakao').val(data.address) // 주소 넣기
 	            }
 	        }).open();
 	    });
@@ -109,7 +162,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
     <br><div class="col-12">
          	 <h2 class="contact-title">수정할 정보입력</h2>
         </div>
-   <h1>
+   <p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -117,18 +170,24 @@ String id = (String)(session.getAttribute("loginCstmId"));
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 	<form action="<%=request.getContextPath()%>/customer/updateCustomerAction.jsp" method="post">
-		<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-						주소 <textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+			<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+			<p>주소</p>
+			<span id="addressMsg" class="msg"></span> 
+			<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+			<p>이메일</p>
+			<span id="emailMsg" class="msg"></span>
+			<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
+			<p>전화번호</p>
+			<span id="telMsg" class="msg"></span>
+			<input type="tel" id="tel" name="cstmPhone" required="required" class="single-input"><br>
+			<p>비밀번호</p>
+			<span id="pwMsg" class="msg"></span>
+			<input type="password" id="pw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
 
-						이메일<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
-
-						전화번호<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
-						
-						비밀번호<input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
-
-			<button type="submit" class="genric-btn primary-border circle">수정</button>
+			<button type="button" id="signinBtn" class="genric-btn primary-border circle">수정</button>
+			<br><span id="clickMsg" class="msg"></span>
 		</form>
 		<br><a href="<%=request.getContextPath()%>/customer/customerInfo.jsp" class="genric-btn primary-border circle">마이페이지</a>
     </div><br>

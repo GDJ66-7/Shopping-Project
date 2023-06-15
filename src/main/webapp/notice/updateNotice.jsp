@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "dao.*" %>
+<%@ page import = "java.util.*" %>
 <%
 	//세션관리자만 들어올수있게
 	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId") == null){
@@ -12,11 +14,31 @@
 		return;
 	}
 	int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+	
+	// 보여줄 상세보기 메서드 선언
+		NoticeDao no = new NoticeDao();
+		ArrayList<HashMap<String, Object>> noticeList = no.noticeOne(noticeNo);
 %>
 <!doctype html>
 <html lang="zxx">
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		const MAX_COUNT = 50; // const 상수선언 사용하는 키워드 (자바의 final과 유사함)
+		$('#comment').keyup(function(){
+			let len = $('#comment').val().length;
+			if(len > MAX_COUNT){
+				let str = $('#comment').val().substring(0, MAX_COUNT);
+				$('#comment').val(str);
+				alert(MAX_COUNT+'자까지만 입력가능');
+			}else{
+				$('#count').text(len+"/"+(MAX_COUNT-len));	
+			}
+		});
+	});
+</script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -100,9 +122,20 @@
          	 <h2 class="contact-title"><%=noticeNo%> 공지 수정하기</h2>
         </div>
   		<form action="<%=request.getContextPath()%>/notice/updateNoticeAction.jsp" method="get">
-  		제목 : <input type="text" name="noticeTitle" required="required" class="single-input"><br>
-			<input type="hidden" name="noticeNo" value="<%=noticeNo%>">
-					공지사항 내용<textarea rows="5" cols="40" name="noticeContent" required="required" class="single-textarea"></textarea><br>
+			<%
+				for(HashMap<String, Object> s : noticeList){
+			%>
+  	      제목 : <input type="text" name="noticeTitle" required="required" class="single-input" value="<%=(String)(s.get("제목"))%>"><br>
+				<input type="hidden" name="noticeNo" value="<%=noticeNo%>">
+			<div>
+				<p>댓글(50자 이하) 현재:<span id="count">0</span>자</p>
+				<div>
+			공지사항 내용<textarea id="comment" rows="5" cols="60" name="noticeContent" required="required" class="single-textarea" placeholder="<%=(String)(s.get("내용"))%>"></textarea><br>
+				</div>
+			</div>
+			<%
+				}
+			%>
 			<button type="submit" class="genric-btn primary-border circle">수정하기</button>
 		</form>
     </div><br>
