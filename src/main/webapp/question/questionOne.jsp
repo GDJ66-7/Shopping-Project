@@ -81,7 +81,9 @@ a{text-decoration: none;}
 	<div class="container mt-3">
 	<h4>답변내역</h4>
 	<% if(!completeAnswer){ // 문의글 하나당 답변 하나만 가능하게 하기 위한 if문: 답변이 있는 상태면 폼을 숨긴다 %>
-		<form action="<%=request.getContextPath()%>/answer/insertAnswerAction.jsp?qNo=<%=one.getqNo()%>&productNo=<%=one.getProductNo()%>" method="post">
+		<form action="<%=request.getContextPath()%>/answer/insertAnswerAction.jsp" method="post">
+			<input type="hidden" name="productNo" value="<%=one.getProductNo()%>"> <!-- 로그인 세션 추가해야함 admin 임시 test-->
+			<input type="hidden" name="qNo" value="<%=one.getqNo()%>"> <!-- 로그인 세션 추가해야함 admin 임시 test-->
 			<input type="hidden" name="id" value="admin"> <!-- 로그인 세션 추가해야함 admin 임시 test-->
 			<table class="table2">
 				<tr>

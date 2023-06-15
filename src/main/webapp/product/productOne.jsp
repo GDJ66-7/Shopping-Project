@@ -16,8 +16,8 @@
 	// 리스트에서 받아온 값
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	OneDao one = new OneDao();
-	String id = "customer2";
-	
+	String id = "customer1";
+
 	// DAO 사용
 	HashMap<String,Object> p = one.selectProductOne(productNo);
 	
@@ -95,16 +95,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <title>상품페이지</title>
 </head>
 <body><!-- test  view 제품 12 카테고리/사진/이름/상품content출력 -->
+<script>
+	// 장바구니 버튼 ----------------------------------------------------------
+		$(document).ready(function() {
+		    $("#addToCart").click(function(event) {
+		        let stock = parseInt($("#stock").val());  // 상품 잔여 수량
+		        let quantity = parseInt($("#selectCnt").val());  // 선택한 수량
+		        if (quantity > stock) { // 상품의 수량을 초과할 시
+		            alert("최대 주문개수를 초과하였습니다.");
+		            event.preventDefault();  // = 기본 동작을 취소하고 폼 제출을 막는 메서드
+		        } else if (confirm("장바구니에 추가하시겠습니까?")) {
+		            $("#addCart").submit();  // confirm(boolean타입) 확인 true = 폼 제출
+		        } else {
+		            event.preventDefault();  // 취소 false
+		            $("#addCart")[0].reset();  // addCart 폼 초기화
+		        }
+		    });
+
+        // 수량 증가 버튼
+        $("#upQuantity").click(function() {
+            let cartCnt = $("#selectCnt");
+            let quantity = parseInt(cartCnt.val());
+            let stock = parseInt($("#stock").val());
+            if (quantity < stock) {  // 선택한 수량이 잔여 수량보다 작은 경우 계속 추가 가능 (+)
+                cartCnt.val(quantity + 1);
+            } else {
+                alert("최대 주문개수를 초과하였습니다.");
+            }
+        });
+
+        // 수량 감소 버튼 (value=1 (기본선택값))
+        $("#deQuantity").click(function() {
+            let cartCnt = $("#selectCnt");
+            let quantity = parseInt(cartCnt.val());
+            if (quantity > 1) {
+                cartCnt.val(quantity - 1);
+            }
+        });
+    });
+</script>
 <!-- <ul class="tab-tit">
 <li><a href="#productOne" role="button">상품 상세정보</a></li>
+
 <li><a href="#productReview" role="button">고객리뷰</a></li>
 <li><a href="#productQnA" role="button">상품 Q&amp;A</a></li>
 </ul> -->
 <div class="container mt-3">
 	<h3>상품상세</h3>
+	<input type="hidden" name="productStock" id="stock" value="<%=p.get("productStock")%>">
 	<table class="table" id="productOne">
 		<tr>
 			<td>카테고리 :<%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
@@ -122,14 +164,19 @@
 			<td><%=p.get("productInfo")%></td><!-- 상품정보 -->
 		</tr>
 	</table>
-	<form action="<%=request.getContextPath()%>/cart/cartList.jsp?productNo=<%=p.get("productNo")%>" method="post">
-	<input type="submit" value="장바구니">
-	</form>	
+	<!-- 장바구니 담기 버튼 -->
+	<form id="addCart" action="<%=request.getContextPath()%>/cart/insertCartAction.jsp" method="post">
+	<input type="hidden" name="productNo" value="<%=p.get("productNo")%>">
+	<input type="hidden" name="id" value="customer1"><!-- 테스트용 아이디 -->
+	<input type="button" name="minus" id="deQuantity" value="-"><!-- 수량(-) -->
+	<input type="text" name="cartCnt" id="selectCnt" value="1" readonly="readonly"><!-- 수량count -->
+	<input type="button" name="plus" id="upQuantity" value="+" ><!-- 수량(+) -->
+	<button id="addToCart">장바구니에 담기</button><!-- 장바구니 버튼 클릭 시 addToCart 함수 호출 -->
+	</form>
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
 	<h3>상품리뷰</h3>
-	<!-- 수량,no,id -->
-	<!-- <a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>">추가</a>-->
+	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>">추가</a>
 	<table class="table" id="productReview">
 		<tr>
 			<th>제목</th>
@@ -141,7 +188,7 @@
 %>
 		<tr>
 			<td>
-			<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=r.get("orderNo")%>&productNo=<%=r.get("productNo")%>">
+			<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?historyNo=<%=r.get("historyNo")%>&productNo=<%=r.get("productNo")%>">
 			<%=r.get("reviewTitle")%></a>
 			</td>
 			<td><%=r.get("id")%></td>
@@ -159,7 +206,7 @@
 		<a href="<%=request.getContextPath()%>/product/productOne.jsp?revcurrentPage=<%=revminPage-revpagePerPage%>">이전</a>
 	<%
 			}
-		for(int r = revminPage; r <= revmaxPage; r=r+1) { //5개뿐인데 뒷페이지가 뜸 --> 수정사항
+		for(int r = revminPage; r <= revmaxPage; r=r+1) {
 			if(r == revcurrentPage){
 	%>
 			<span><%=r%></span>		

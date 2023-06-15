@@ -1,17 +1,18 @@
 package vo;
 
 public class ReviewImg {
-	private int orderNo;
+	private int historyNo;
 	private String reviewOriFilename;
 	private String reviewSaveFilename;
 	private String reviewFiletype;
 	private String createdate;
 	private String updatedate;
-	public int getOrderNo() {
-		return orderNo;
+	
+	public int getHistoryNo() {
+		return historyNo;
 	}
-	public void setOrderNo(int orderNo) {
-		this.orderNo = orderNo;
+	public void setHistoryNo(int historyNo) {
+		this.historyNo = historyNo;
 	}
 	public String getReviewOriFilename() {
 		return reviewOriFilename;

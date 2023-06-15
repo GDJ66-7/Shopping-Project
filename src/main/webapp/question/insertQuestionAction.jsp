@@ -37,7 +37,7 @@
 	if(row ==1 ){
 		System.out.println("문의 추가 성공");
 	}
-	response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp");
+	response.sendRedirect(request.getContextPath()+"/product/productOne.jsp?productNo="+productNo);
 	
 	
 %>

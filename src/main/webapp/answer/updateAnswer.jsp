@@ -33,7 +33,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath()%>/answer/updateAnswerAction.jsp?qNo=<%=one.getqNo()%>&aNo=<%=one.getaNo()%>&id=<%=one.getId()%>&productNo=<%=productNo%>" method="post"> 
+	<form action="<%=request.getContextPath()%>/answer/updateAnswerAction.jsp" method="post"> 
+	<input type="hidden" name="aNo" value="<%=one.getaNo()%>">
+	<input type="hidden" name="qNo" value="<%=one.getqNo()%>">
+	<input type="hidden" name="id" value="<%=one.getId()%>">
+	<input type="hidden" name="productNo" value="<%=productNo%>">
 		<table class="table">
 		<tr>
 			<td>문의 답변 수정</td>

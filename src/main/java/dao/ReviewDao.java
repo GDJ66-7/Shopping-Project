@@ -14,11 +14,12 @@ public class ReviewDao {
 	
 	// 제품페이지에서 보이는 리뷰 목록 + 페이징 -- DB: customer id / product no 외래키 추가 - 작성일 내림차순 정렬
 	//(문의 목록 페이징과 겹치지 않게 변수명 변경-rev~)
+	// orderNo ---> historyNo (vo수정)
 		public ArrayList<HashMap<String, Object>> selectReviewListByPage(int productNo, int revbeginRow, int revrowPerPage) throws Exception{
 		ArrayList<HashMap<String, Object>> rlist = new ArrayList<>();
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELECT order_no orderNo, product_no productNo, id, review_title reviewTitle"
+		String sql = "SELECT history_no historyNo, product_no productNo, id, review_title reviewTitle"
 					+ ", review_content reviewContent, createdate, updatedate FROM review"
 					+ " WHERE product_no = ? ORDER BY createdate DESC LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -29,7 +30,7 @@ public class ReviewDao {
 		
 		while(rs.next()) {
 			HashMap<String, Object> r = new HashMap<>();
-			r.put("orderNo", rs.getString("orderNo"));
+			r.put("historyNo", rs.getString("historyNo"));
 			r.put("productNo", rs.getInt("productNo"));
 			r.put("id", rs.getString("id"));
 			r.put("reviewTitle", rs.getString("reviewTitle"));
@@ -43,17 +44,17 @@ public class ReviewDao {
 		}
 		
 	// 리뷰 상세정보 (텍스트)
-	public Review selectReviewOne(int orderNo) throws Exception {
+	public Review selectReviewOne(int historyNo) throws Exception {
 		Review review = null;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELECT order_no orderNo, product_no productNo, id, review_title reviewTitle, review_content reviewContent, createdate, updatedate FROM review WHERE order_no = ?";
+		String sql = "SELECT history_no historyNo, product_no productNo, id, review_title reviewTitle, review_content reviewContent, createdate, updatedate FROM review WHERE history_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, orderNo);
+		stmt.setInt(1,historyNo);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			review = new Review();
-			review.setOrderNo(rs.getInt("orderNo"));
+			review.setHistoryNo(rs.getInt("historyNo"));
 			review.setProductNo(rs.getInt("productNo"));
 			review.setId(rs.getString("id"));
 			review.setReviewTitle(rs.getString("reviewTitle"));
@@ -72,9 +73,9 @@ public class ReviewDao {
 		int row = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "INSERT into review(order_no, product_no, id, review_title, review_content, createdate, updatedate) values(?,?,?,?,?,now(),now())";
+		String sql = "INSERT into review(history_no, product_no, id, review_title, review_content, createdate, updatedate) values(?,?,?,?,?,now(),now())";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, review.getOrderNo());
+		stmt.setInt(1, review.getHistoryNo());
 		stmt.setInt(2, review.getProductNo());
 		stmt.setString(3, review.getId());
 		stmt.setString(4, review.getReviewTitle());
@@ -91,11 +92,11 @@ public class ReviewDao {
 		int row = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "UPDATE review SET review_title = ?, review_content = ? WHERE order_no = ? ";
+		String sql = "UPDATE review SET review_title = ?, review_content = ? WHERE history_no = ? ";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1,review.getReviewTitle());
 		stmt.setString(2,review.getReviewContent());
-		stmt.setInt(3, review.getOrderNo());
+		stmt.setInt(3, review.getHistoryNo());
 		row = stmt.executeUpdate();
 		
 		return row;
@@ -103,17 +104,16 @@ public class ReviewDao {
 	}
 	
 	// 리뷰 삭제 (텍스트+이미지 전체 삭제 테이블 join)
-	public int deleteReview(int orderNo) throws Exception {
+	public int deleteReview(int historyNo) throws Exception {
 		
 		int row = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
 		String sql = "DELETE r,ri from review r "
-					+"INNER JOIN review_img ri ON r.order_no = ri.order_no "
-					+ "WHERE r.order_no = ?";
-		// String sql = "DELETE from review WHERE order_no = ?"; 수정전코드
+					+"INNER JOIN review_img ri ON r.history_no = ri.history_no "
+					+ "WHERE r.history_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, orderNo);
+		stmt.setInt(1, historyNo);
 		row = stmt.executeUpdate();
 		
 		return row;
@@ -138,15 +138,15 @@ public class ReviewDao {
 	// 이미지 쿼리 ----------------------------------------------------------------------------------------
 	
 	// 리뷰 이미지 view (화면 출력) -- ReviewImg (vo)
-	public ReviewImg selectReviewImg(int orderNo) throws Exception {
+	public ReviewImg selectReviewImg(int historyNo) throws Exception {
 		
 		ReviewImg review = new ReviewImg();
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
 		String sql = "SELECT review_ori_fileName reviewOrifilename, review_save_filename reviewSavefilename"
-					+ ",review_filetype reviewFiletype FROM review_img WHERE order_no = ?";
+					+ ",review_filetype reviewFiletype FROM review_img WHERE history_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, orderNo);
+		stmt.setInt(1, historyNo);
 		ResultSet rs = stmt.executeQuery();
 		
 		if(rs.next()) {
@@ -165,9 +165,9 @@ public class ReviewDao {
 		int row = 0;
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
-        String sql = "INSERT into review_img(order_no, review_ori_filename, review_save_filename, review_filetype, createdate, updatedate) values(?,?,?,?,now(),now())";
+        String sql = "INSERT into review_img(history_no, review_ori_filename, review_save_filename, review_filetype, createdate, updatedate) values(?,?,?,?,now(),now())";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, reviewImg.getOrderNo());
+        stmt.setInt(1, reviewImg.getHistoryNo());
         stmt.setString(2, reviewImg.getReviewOriFilename());
         stmt.setString(3, reviewImg.getReviewSaveFilename());
         stmt.setString(4, reviewImg.getReviewFiletype());
@@ -177,13 +177,13 @@ public class ReviewDao {
 	}
 	
 	// 리뷰 이미지 삭제
-	public int deleteReviewImg (int orderNo, String dir) throws Exception {
+	public int deleteReviewImg (int historyNo, String dir) throws Exception {
 
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = "SELECT review_save_filename FROM review_img WHERE order_no = ?";
+		String sql = "SELECT review_save_filename FROM review_img WHERE history_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, orderNo);
+		stmt.setInt(1, historyNo);
 		ResultSet rs = stmt.executeQuery();
 		String preSaveFilename = "";
 		if(rs.next()) { // preSaveFilename : 이전에 존재하던 파일
@@ -201,12 +201,12 @@ public class ReviewDao {
 		
         DBUtil dbUtil = new DBUtil();
         Connection conn = dbUtil.getConnection();
-        String sql = "UPDATE review_img SET review_ori_filename = ?, review_save_filename = ?, review_filetype = ? WHERE order_no =? ";
+        String sql = "UPDATE review_img SET review_ori_filename = ?, review_save_filename = ?, review_filetype = ? WHERE history_no =? ";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, reviewImg.getReviewOriFilename());
 		stmt.setString(2, reviewImg.getReviewSaveFilename());
 		stmt.setString(3, reviewImg.getReviewFiletype());
-		stmt.setInt(4, reviewImg.getOrderNo());
+		stmt.setInt(4, reviewImg.getHistoryNo());
 		
 		int row = stmt.executeUpdate();
 		return row;

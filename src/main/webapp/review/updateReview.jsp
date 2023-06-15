@@ -65,7 +65,9 @@ a{text-decoration: none;}
 <div class="container mt-3">
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰 수정하기</h2>
-<form action="<%=request.getContextPath()%>/review/updateReviewAction.jsp?orderNo=<%=orderNo%>&productNo=<%=productNo%>" method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath()%>/review/updateReviewAction.jsp" method="post" enctype="multipart/form-data">
+<input type="hidden" name="orderNo" value="<%=orderNo%>">
+<input type="hidden" name="productNo" value="<%=productNo%>">
 	<%
 		if(request.getParameter("msg") != null){
 	%>

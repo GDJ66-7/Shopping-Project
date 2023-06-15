@@ -38,7 +38,7 @@ a{text-decoration: none;}
 <div class="container mt-3">
 <br><br><br>
 <h2 style="text-align: center;">상품문의</h2>
-<form action="<%=request.getContextPath()%>/question/updateQuestionAction.jsp?qNo=<%=qNo%>" method="post">
+<form action="<%=request.getContextPath()%>/question/updateQuestionAction.jsp" method="post">
 	<input type="hidden" name="productNo" value="<%=one.getProductNo()%>">
 	<input type="hidden" name="qNo" value="<%=one.getqNo()%>">
 	<input type="hidden" name="id" value="<%=one.getId()%>"><!-- 세션검사 -->

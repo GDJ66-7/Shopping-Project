@@ -1,18 +1,19 @@
 package vo;
 
 public class Review {
-	private int orderNo;
+	private int historyNo;
 	private int productNo;
 	private String id;
 	private String reviewTitle;
 	private String reviewContent;
 	private String createdate;
 	private String updatedate;
-	public int getOrderNo() {
-		return orderNo;
+	
+	public int getHistoryNo() {
+		return historyNo;
 	}
-	public void setOrderNo(int orderNo) {
-		this.orderNo = orderNo;
+	public void setHistoryNo(int historyNo) {
+		this.historyNo = historyNo;
 	}
 	public int getProductNo() {
 		return productNo;
@@ -50,4 +51,5 @@ public class Review {
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
+
 }
