@@ -1,13 +1,11 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	/*
-
-	if(session.getAttribute("loginEmpId1") == null || session.getAttribute("loginEmpId2") == null) {
-		// 관리자 메인 화면으로 이동
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
-		return;
-	} 
-	*/
+	ProductDao pDao = new ProductDao();
+	
+	ArrayList<HashMap<String, Object>> productList = pDao.productListLimit3();
 %>
 
 <!doctype html>
@@ -101,75 +99,40 @@
     </section>
     <!-- banner part start-->
 
-    <!-- product list start-->
-    <section class="single_product_list">
+   <!-- product list start-->
+   	<br>
+   	<br>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="single_product_iner">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="single_product_img">
-                                    <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">
-                                    <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-6">
-                                <div class="single_product_content">
-                                    <h5>Started from $10</h5>
-                                    <h2> <a href="single-product.html">Printed memory foam 
-                                        brief modern throw 
-                                        pillow case</a> </h2>
-                                    <a href="product_list.html" class="btn_3">Explore Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single_product_iner">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="single_product_img">
-                                    <img src="<%=request.getContextPath()%>/css/img/single_product_2.png" class="img-fluid" alt="#">
-                                    <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-6">
-                                <div class="single_product_content">
-                                    <h5>Started from $10</h5>
-                                    <h2> <a href="single-product.html">Printed memory foam 
-                                        brief modern throw 
-                                        pillow case</a> </h2>
-                                    <a href="product_list.html" class="btn_3">Explore Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single_product_iner">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="single_product_img">
-                                    <img src="<%=request.getContextPath()%>/css/img/single_product_3.png" class="img-fluid" alt="#">
-                                    <img src="<%=request.getContextPath()%>/css/img/product_overlay.png" alt="#" class="product_overlay img-fluid">
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-6">
-                                <div class="single_product_content">
-                                    <h5>Started from $10</h5>
-                                    <h2> <a href="single-product.html">Printed memory foam 
-                                            brief modern throw 
-                                            pillow case</a> </h2>
-                                    <a href="product_list.html" class="btn_3">Explore Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-lg-12"> 
+               		<h2 style="text-align: center;">최신상품</h2>
+               		<div class="row">
+                        <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->                                  
+					    <%
+                        	for(HashMap<String,Object> map : productList) {
+                        %>
+	                        	<div class="col-lg-4">
+	                        		<a style="display: block; text-align: center;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>">
+	                        			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200">
+	                        		</a>
+	                        		<br>
+	                        		<span style="text-align: center; font-weight: bold;">
+	                        			<%=map.get("productName") %>
+	                        		</span>
+	                        		<span style="display: block; text-align: center; font-weight: bold;">
+	                        			<%=map.get("productPrice")%>원
+	                        		</span>	
+	                        		<br>	
+	                            	<a style="display: block; text-align: center;" href="product_list.html" class="btn_3">상품바로가기</a>
+	                            </div>
+                        <% 	
+                        	}
+                        %>                                   
+                   	</div>
                 </div>
             </div>
         </div>
-    </section>
     <!-- product list end-->
-
-
     <!-- trending item start-->
     <section class="trending_items">
         <div class="container">

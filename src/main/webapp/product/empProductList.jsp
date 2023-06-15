@@ -192,14 +192,16 @@
     <div class="container">
     <br>
     	<div class="col-12">
+    		<div style="text-align:center;">
+		    <a href="<%=request.getContextPath()%>/product/insertProduct.jsp">상품추가</a>
+		    </div>
 	     	<form style="text-align:center;" action="<%=request.getContextPath()%>/product/empProductList.jsp" method="get">
-		      																								<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
 		      	<div class="styled-input">
+		      																								<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
 		      		<input style="text-align: center;" type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
 		      	</div>
 		      	<button class="genric-btn primary-border circle" type="submit">검색</button>
 			</form>
-		      	
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
 					<th>번호</th>
@@ -256,7 +258,7 @@
 								<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 							</td>
 							<td>
-								<a style="text-align:center;" href="<%=request.getContextPath()%>/discount/inserttDiscount.jsp?productNo=<%=productMap.get("productNo")%>"><img width="30" height="30" src="<%=request.getContextPath()%>/product/icon/할인.png"></a>
+								<a style="text-align:center;" href="<%=request.getContextPath()%>/discount/insertDiscount.jsp?productNo=<%=productMap.get("productNo")%>&productName=<%=productMap.get("productName")%>"><img width="30" height="30" src="<%=request.getContextPath()%>/product/icon/할인.png"></a>
 							</td>
 						</tr>
 				<% 

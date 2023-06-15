@@ -35,7 +35,7 @@ public class Discount {
 	public double getDiscountRate() {
 		return discountRate;
 	}
-	public void setDiscountRate(int discountRate) {
+	public void setDiscountRate(Double discountRate) {
 		this.discountRate = discountRate;
 	}
 	public String getCreatedate() {

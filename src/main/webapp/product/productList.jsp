@@ -106,7 +106,7 @@
 <!-- google font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Poor+Story&family=Sunflower:wght@300&display=swap" rel="stylesheet">
 <style>
     .center-align {
         text-align: center;

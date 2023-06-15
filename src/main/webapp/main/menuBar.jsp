@@ -52,8 +52,6 @@
     	        	</li>
         	<% 	
         		}
-       		%>
-	        <%
 	        	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
 	        %>
 			    <li class="nav-item dropdown">
@@ -67,7 +65,8 @@
 		    <%	// 관리자2만 상품관리가 가능
 		        	if(session.getAttribute("loginEmpId2") != null || session.getAttribute("loginEmpId1") != null) {
 		    %>	
-           				<a class="dropdown-item" href="<%=request.getContextPath()%>/product/empProductList.jsp">상품관리(리스트로)</a>
+           				<a class="dropdown-item" href="<%=request.getContextPath()%>/product/empProductList.jsp">상품관리(추가,수정)</a>
+           				<a class="dropdown-item" href="<%=request.getContextPath()%>/discount/discountList.jsp">상품할인관리(추가,수정)</a>
 		            </div>
 	        	</li>
 		    <%
