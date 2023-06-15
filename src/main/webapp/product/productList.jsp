@@ -54,7 +54,7 @@
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
 	// 페이지당 출력할 행의 수
-	int rowPerPage = 3;
+	int rowPerPage = 8;
 	
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
@@ -103,10 +103,98 @@
 <!doctype html>
 <html lang="zxx">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!-- google font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
 <style>
     .center-align {
         text-align: center;
     }
+    .navbar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex; /* 가로로 아이템 나열 */
+        align-items: center;
+    }
+
+    .navbar-nav li {
+        margin-right: 15px;
+    }
+
+    .navbar-nav input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .navbar-nav input[type="radio"],
+    .navbar-nav input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    .navbar-nav label {
+        font-weight: bold;
+    }
+
+    .fontBlackBold {
+        color: black; /* a 태그의 텍스트 색상을 검정색으로 변경 */
+        font-weight: bold; /* 텍스트를 강조하기 위해 글꼴을 굵게 설정 */
+        
+        
+        /* 다른 스타일 속성을 필요에 따라 추가할 수 있습니다. */
+    }
+    
+    .larger-text {
+        font-size: 1.2em; /* 원하는 글자 크기로 조정해주세요 */
+    }
+    
+    .google-font {
+   		font-family: 'Sunflower', sans-serif;
+    }
+    
+    .product-image {
+	    width: 250px;
+	    height: 250px;
+	    object-fit: cover;
+  	}
+  	
+  	.search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .search-form input[type="text"] {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+  .search-form input[type="text"]:focus {
+    border-color: purple;
+    outline: none;
+  }
+  .search-form label {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  .search-form ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .search-form li {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #333;
+  }
 </style>
 <head>
     <!-- Required meta tags -->
@@ -173,7 +261,7 @@
     <!-- Header part end-->
 
     <!-- breadcrumb part start-->
-    <section class="breadcrumb_part">
+    <section class="breadcrumb_part" style = "height :200px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -189,60 +277,50 @@
     <!-- product list part start-->
     <section class="product_list section_padding">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                <div class="product_sidebar">
+    	<!--<div class="row">
+        		<div class="col-md-2">-->
+                	<div class="product_sidebar">
                     	<!--  상품리스트 왼쪽 검색기능 -->
-	                    <form id="productSearchForm" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
-	                       <table>
-	                        <tr>
-	                       		<td>
-	                       													<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
-	                       			<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
-	                       		</td>
-	                       	</tr>
-	                       	<tr>
-	                       		<td>
-									<input type="radio" class="productList" name="discountProduct" value="" 
-									<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("")) {%> checked <%} %>> 전체상품보기
-								</td>
-	                       	</tr>
-	                       	<tr>
-	                       		<td>
-									<input type="radio" class="productList" name="discountProduct" value="할인상품"
-									<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) {%> checked <%} %>> 할인상품보기
-								</td>
-	                       	</tr>
-	                       	<tr>
-	                       		<td>
-	                       			<input type="radio" class="ascDesc" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
-        							<input type="radio" class="ascDesc" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
-	                       		</td>
-	                       	</tr>
-	                       	<tr>
-	                       		<td>
-		                       		<ul class="navbar-nav">
-	                       				<li class="nav-item">
-	                       				</li>
+	                    <form class="search-form" id="productSearchForm" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
+	                    	<ul class="navbar-nav">
+	                       		<li>					<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
+	                       			<div class="center-align">
+	                       				<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+	                       			</div>
+	                       			<br>
+        							<label>
+										<input type="radio" class="productList" name="discountProduct" value="" 
+										<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("")) {%> checked <%} %>> 전체상품보기
+									</label>
+    							
+							
+        							<label>
+										<input type="radio" class="productList" name="discountProduct" value="할인상품"
+										<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) {%> checked <%} %>> 할인상품보기
+									</label>
+    						
+        							<label>
+		                       			<input type="radio" class="ascDesc" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
+	        							<input type="radio" class="ascDesc" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
+	                      			</label>
+	                      			<br>
+	                      			<li>
 	                       				<%
-                                			for(HashMap<String, Object> categoryNameMap : categoryNameList) {
-                                		%>
-                                				<li class="nav-item">																					<!-- categoryName이 널이 아니고 요청값이 value의 값과 같다면 check한다 -->
-                                					<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
-                                					<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
-	                                				<%=categoryNameMap.get("categoryName")%>
-	                                			</li>
-                                		<% 	
-                                			
-                                			}
-                                		%>
-                                	</ul>
-	                       		</td>
-	                       	</tr>
-	                       </table>
-	                       <button type="submit" id="productBtn">검색</button>
+	                               			for(HashMap<String, Object> categoryNameMap : categoryNameList) {
+	                               		%>	
+                               					<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
+                               					<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+                                				<%=categoryNameMap.get("categoryName")%>
+	                               		<% 	
+	                               			
+	                               			}
+	                               		%>
+	                               	</li>
+		                      	<li>
+		                       		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
+		                      	</li>
+	                      	</ul>
 	                    </form>
-	                    
 	                   	<!---------------------- js부분 -------------------------->
 	                   	
 	                    <script>
@@ -253,10 +331,11 @@
 		                      $('#productSearchForm').submit();
 		                    }); 
 	                    </script>
-                    </div>
-                </div>
+	                    </div>
+                  <!-- </div>
+            </div>-->
                 <!-- -----------------------     상품리스트 출력   ------------------------- -->
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="product_list">
                         <div class="row">
 				            <%
@@ -264,38 +343,40 @@
 									// 판매중인 상품만 상품 상세정보에 들어갈 수 있게 설정
 									if(productMap.get("productStatus").equals("판매중")){
 							%>
-										<div class="col-lg-6 col-sm-6">
+										<div class="col-lg-3 col-sm-3">
 										<div class="single_product_item">
 											<!-- 상품사진 -->
-											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><img src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="350" height="350"></a>
+											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>">
+												<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>">
+											</a>
 											<br>
 											<!-- 상품 이름 -->
-											<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><em><%=productMap.get("productName") %></em></a>
+											<a class="fontBlack center-align larger-text google-font" style="color: black; text-decoration: none;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><em><%=productMap.get("productName") %></em></a>
 											<br>	
 											<!-- 상품 가격 -->
-											가격 : <%=productMap.get("productPrice") %>
+											<span class="fontBlackBold center-align larger-text">가격 : <%=productMap.get("productPrice") %></span>
 											<br>
 							<% 
 											// 할인가가 있는 상품만 할인가격이 나오게 설정
 											
 											if ((int)productMap.get("productDiscountPrice") != ((int)productMap.get("productPrice"))) {
 							%>
-												할인가 : <span style="color: red;"><%=productMap.get("productDiscountPrice") %></span>
+												<span class="fontBlackBold larger-text">할인가</span> : <span class="center-align larger-text" style="color: red; font-weight: bold;"><%=productMap.get("productDiscountPrice") %></span>
 												<br>
 							<% 
 											}
 											
 							%>
 													<!-- 상품상태 -->
-													<%=productMap.get("productStatus") %>
+													<span class="center-align larger-text"><%=productMap.get("productStatus") %></span>
 													<br>
 							<%
 												// 상품수정 및 상품할인은 관리자로그인시에만 볼 수 있음 관리자2만 상품수정및 할인가능
 												if(session.getAttribute("loginEmpId2") != null) {
 							%>
-													<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
+													<a class="center-align" href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 													<br>
-													<a href="<%=request.getContextPath()%>/discount/inserttDiscount.jsp?productNo=<%=productMap.get("productNo")%>">할인</a>
+													<a class="center-align" href="<%=request.getContextPath()%>/discount/inserttDiscount.jsp?productNo=<%=productMap.get("productNo")%>">할인</a>
 							<% 						
 												}
 							%>
@@ -304,15 +385,15 @@
 							<%			
 									} else { // 판매중이 아닌 품절이나 단종상품은 상세정보를 못들어감
 							%>
-										<div class="col-lg-6 col-sm-6">
+										<div class="col-lg-3 col-sm-3">
 										<div class="single_product_item">
 											<!-- ${pageContext.request.contextPath}는 현재 웹 애플리케이션의 루트 경로를 나타내는 변수이다   -->
-											<img src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="350" height="350">
-											<%=productMap.get("productName") %>
+											<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>">
+											<span class="fontBlack center-align larger-text google-font" style="color : black;"><%=productMap.get("productName") %></span>
 											<br>
-											가격 : <%=productMap.get("productPrice") %>
+											<span class="fontBlackBold center-align larger-text">가격 : <%=productMap.get("productPrice") %></span>
 											<br>
-											<span style="color: red;"><%=productMap.get("productStatus") %></span>
+											<span style="color: red;" class="larger-text"><%=productMap.get("productStatus") %></span>
 											<br>
 							<% 		
 										// 상품수정은 관리자로그인시에만 볼 수 있음 관리자2만가능
@@ -331,7 +412,6 @@
 						</div>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
    

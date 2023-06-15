@@ -82,20 +82,19 @@
     <!-- Header part end-->
 
     <!-- breadcrumb part start-->
-    <section class="breadcrumb_part">
+    <section class="breadcrumb_part" style = "height :200px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
-                        <h2>카테고리 관리페이지(추가창)</h2> 
+                        <h2>카테고리 관리페이지</h2> 
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- breadcrumb part end-->
-
-  <!-- ================ 카테고리추가 폼 ================= -->
+     <!-- ================ 카테고리추가 폼 ================= -->
 	<div class="container">
 	<div class="col-12">
     </div>

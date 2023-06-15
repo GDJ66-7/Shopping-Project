@@ -98,7 +98,7 @@
     <!-- Header part end-->
 
     <!-- breadcrumb part start-->
-    <section class="breadcrumb_part">
+    <section class="breadcrumb_part" style="height:200px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -145,7 +145,7 @@
                                 <a href="index.html"><img src="/Shopping/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath() %>/main/empMain.jsp">Home</a>
                             </div>
                         </div>
                     </div>
