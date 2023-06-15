@@ -342,7 +342,7 @@ public class CartDao {
 		Connection conn = dbutil.getConnection();
 		String selectSql = "SELECT order_no, id "
 				+ "FROM orders "
-				+ "ORDER BY createdate DESC "
+				+ "ORDER BY order_no DESC "
 				+ "LIMIT 1 ";
 		PreparedStatement selectStmt = conn.prepareStatement(selectSql);
 		ResultSet selectRs = selectStmt.executeQuery();
@@ -353,6 +353,7 @@ public class CartDao {
 			selectOrderNo = selectRs.getInt("order_no");
 			selectOrderId = selectRs.getString("id");
 		}
+		System.out.println(selectOrderNo+"<---------------------");
 		// 13번 사용하여 productNo, cartCnt 값들 받아오기
 		ArrayList<Cart> cartList = new ArrayList<>();
 		cartList = selectCart(selectOrderId);
@@ -417,14 +418,13 @@ public class CartDao {
 		stmt.setInt(1, totalPay);
 		stmt.setDouble(2, rankPlusPoint);
 		stmt.setString(3, id);
-		
 		int row = 0;
 		row = stmt.executeUpdate();
 		return row;
 		}
 	
 	// 17. 포인트 이력에 사용한 포인트(-) 저장
-	public int pointHistoryMinus(int inputPoint)throws Exception {
+	public int pointHistoryMinus(int inputPoint) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String selectSql = "SELECT order_no "
@@ -450,7 +450,7 @@ public class CartDao {
 	}
 	
 	// 18. 포인트 이력에 결제 후 적립된 포인트(+) 저장
-	public int pointHistoryPlus(int totalPay, String id)throws Exception {
+	public int pointHistoryPlus(int totalPay, String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String selectRankSql = "SELECT cstm_rank "
@@ -495,16 +495,20 @@ public class CartDao {
 		
 	}
 	
+	// 19. 장바구니에서 체크 된 상품 전체 삭제
+	public int deleteCheckedCart(String id)throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String deleteSql = "DELETE FROM cart "
+				+ " WHERE checked = 'y' AND id = ? ";
+		PreparedStatement deleteStmt = conn.prepareStatement(deleteSql);
+		deleteStmt.setString(1, id);
+		int row = 0;
+		row = deleteStmt.executeUpdate();
+		return row;
+	}
 	
 	
 	
-	
-	// 아이디가 ?이고 장바구니에서 Y인 상품 전체 삭제
-	// DELETE FROM cart WHERE checked = 'y' AND id = 'customer1'
-	
-	// 오더테이블에서 결제완료로 변경
-	//UPDATE SET orders payment_status = '결제완료'WHERE id = ? AND product_no=?
-
-
 	
 }	

@@ -62,7 +62,20 @@
 	int row5 = cartDao.pointHistoryPlus(totalPay, id);
 	System.out.println(row5 + " <-- cartOrderAction row5");
 	
-	// response.sendRedirect(request.getContextPath()+"/main/home.jsp");
-
+	// 19. 결제 후 장바구니에서 체크 된 상품 전체 삭제
+	int row6 = cartDao.deleteCheckedCart(id);
+	System.out.println(row6 + " <-- cartOrderAction row6");
+	
+	
+	if(row1>0 && row2>0 && row3>0 && row4>0 && row5>0 && row6>0) {
+		System.out.println("결제 성공");
+		return;
+	} else {
+		System.out.println("결제 실패");
+		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		return;
+	}
+	
+	
 
 %>
