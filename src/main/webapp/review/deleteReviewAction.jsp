@@ -8,21 +8,21 @@
 	//작성자 유효성 검사 추가하기
 	
 	//
-	if(request.getParameter("orderNo") == null
-	|| request.getParameter("orderNo").equals("")){
+	if(request.getParameter("historyNo") == null
+	|| request.getParameter("historyNo").equals("")){
 		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 		return;
 	}
 	
 	//요청값 변수 저장
-	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	
 	//객체 생성
 	ReviewDao review = new ReviewDao();
 	
 	//리뷰 삭제 메서드
-	int row = review.deleteReview(orderNo);
+	int row = review.deleteReview(historyNo);
 	
 	if(row == 1 ){
 		System.out.println("리뷰 삭제 완료되었습니다.");

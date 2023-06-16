@@ -176,7 +176,7 @@
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
 	<h3>상품리뷰</h3>
-	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>">추가</a>
+	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>">추가</a><!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
 	<table class="table" id="productReview">
 		<tr>
 			<th>제목</th>
@@ -203,17 +203,17 @@
 	<%
 		if(revminPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?revcurrentPage=<%=revminPage-revpagePerPage%>">이전</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage-revpagePerPage%>">이전</a>
 	<%
 			}
-		for(int r = revminPage; r <= revmaxPage; r=r+1) {
+		for(int r = revminPage; r<=revmaxPage; r=r+1) {
 			if(r == revcurrentPage){
 	%>
 			<span><%=r%></span>		
 	<%			
 			}else{	
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?revcurrentPage=<%=r%>">
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=r%>">
 		<%=r%>
 		</a>
 	<%
@@ -221,7 +221,7 @@
 		}	
 		if(revmaxPage != revlastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?revcurrentPage=<%=revminPage+revpagePerPage%>">다음</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage+revpagePerPage%>">다음</a>
 	<%
 		}
 	%>
@@ -262,17 +262,17 @@
 	<%
 		if(minPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?currentPage=<%=minPage-pagePerPage%>">이전</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage-pagePerPage%>">이전</a>
 	<%
 			}
-		for(int i = minPage; i <= maxPage; i=i+1) {
+		for(int i = minPage; i<=maxPage; i=i+1) {
 			if(i == currentPage){
 	%>
 			<span><%=i%></span>		
 	<%			
 			}else{	
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?currentPage=<%=i%>">
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=i%>">
 		<%=i%>
 		</a>
 	<%
@@ -280,7 +280,7 @@
 		}	
 		if(maxPage != lastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?currentPage=<%=minPage+pagePerPage%>">다음</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage+pagePerPage%>">다음</a>
 	<%
 		}
 	%>

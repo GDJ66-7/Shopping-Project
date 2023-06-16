@@ -30,15 +30,15 @@
 	String reviewTitle = mRequest.getParameter("reviewTitle");
 	String reviewContent = mRequest.getParameter("reviewContent");
 	int productNo = Integer.parseInt(mRequest.getParameter("productNo"));
-	int orderNo = Integer.parseInt(mRequest.getParameter("orderNo"));
+	int historyNo = Integer.parseInt(mRequest.getParameter("historyNo"));
 	
 	System.out.println(mRequest.getParameter("reviewTitle")+ "<---insert Review reviewTitle");
 	System.out.println(mRequest.getParameter("reviewContent")+ "<---insert Review reviewContent");
-	System.out.println(orderNo+ "<---insert Review orderNo");
+	System.out.println(historyNo+ "<---insert Review historyNo");
 	
 	// 객체 저장 (text) - vo
 	Review reviewtext = new Review();
-	reviewtext.setOrderNo(orderNo);
+	reviewtext.setHistoryNo(historyNo);
 	reviewtext.setProductNo(productNo);
 	reviewtext.setId(id);
 	reviewtext.setReviewTitle(reviewTitle);
@@ -57,7 +57,7 @@
 			System.out.println(saveFilename +"파일삭제");
 		}
 		msg =URLEncoder.encode("JPG파일만 업로드 가능합니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp?orderNo="+orderNo+"&productNo="+productNo+"&msg="+msg); //jsp?orderNo=..(추가)
+		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp?historyNo="+historyNo+"&productNo="+productNo+"&msg="+msg); //jsp?historyNo=..(추가)
 		return;
 			}
 	
@@ -72,8 +72,7 @@
 	
 	// 이미지 객체 저장 - vo
 	ReviewImg reviewImg = new ReviewImg();
-	reviewImg.setOrderNo(orderNo);
-	
+	reviewImg.setHistoryNo(historyNo);
 	reviewImg.setReviewOriFilename(originFilename);
 	reviewImg.setReviewSaveFilename(saveFilename);
 	reviewImg.setReviewFiletype(filetype);
@@ -85,6 +84,6 @@
 	}
 	
 	// 입력 완료시 자신이 쓴 리뷰 상세보기 창으로 redirect
-	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?productNo="+productNo+"&orderNo="+orderNo);
+	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?productNo="+productNo+"&historyNo="+historyNo);
 
 %>

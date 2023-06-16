@@ -14,7 +14,7 @@
 	}*/
 	String id = "customer2";
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
-	int historyNo = 2;/*Integer.parseInt(request.getParameter("historyNo"));*/
+	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
 
 %>
 <!DOCTYPE html>

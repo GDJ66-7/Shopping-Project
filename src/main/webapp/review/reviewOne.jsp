@@ -4,8 +4,8 @@
 <%@ page import="java.util.*" %>
 <%
 	
-	if(request.getParameter("orderNo") == null
-	||request.getParameter("orderNo").equals("")){
+	if(request.getParameter("historyNo") == null
+	||request.getParameter("historyNo").equals("")){
 		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 		return;	
 	}
@@ -13,14 +13,14 @@
 	// 로그인 세션 검사 -- 조회/수정/삭제 test
 	
 	// 리스트에서 받아온 값 저장 & 메서드 호출 & 객체 생성
-	int orderNo = 2;/*Integer.parseInt(request.getParameter("orderNo"));*/
+	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
-	//System.out.println(orderNo+"<----");
+	//System.out.println(historyNo+"<----");
 	
 	// 리뷰 이미지와 글 출력 메서드
 	ReviewDao review = new ReviewDao(); // DAO (동일)
-	Review reviewText = review.selectReviewOne(orderNo); //vo
-	ReviewImg reviewImg = review.selectReviewImg(orderNo); //vo
+	Review reviewText = review.selectReviewOne(historyNo); //vo
+	ReviewImg reviewImg = review.selectReviewImg(historyNo); //vo
 %>
 <!DOCTYPE html>
 <html>
@@ -71,9 +71,9 @@ a{text-decoration: none;}
 		<td><%=reviewText.getCreatedate().substring(0,10)%></td>
 	</tr>
 </table>
-<a href="<%=request.getContextPath()%>/review/updateReview.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
+<a href="<%=request.getContextPath()%>/review/updateReview.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
 <a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">목록</a>
-<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&orderNo=<%=reviewText.getOrderNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
+<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&historyNo=<%=reviewText.getHistoryNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
 </div>
 </body>
 </html>

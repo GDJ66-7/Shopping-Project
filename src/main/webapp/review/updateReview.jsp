@@ -3,8 +3,8 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	if(request.getParameter("orderNo") == null
-	||request.getParameter("orderNo").equals("")){
+	if(request.getParameter("historyNo") == null
+	||request.getParameter("historyNo").equals("")){
 		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 		return;	
 	}
@@ -13,16 +13,15 @@
 	
 	// 리뷰one에서 받은 값 저장 & 메서드 호출 --- 수정 전 데이터 불러오기라 reviewOne과 동일
 	//int productNo = Integer.parseInt(request.getParameter("productNo"));
-	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
-	System.out.println(orderNo+"<-----updateReview orderNo");
+	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
-	System.out.println(productNo+"<---- review productNo");
-	System.out.println(orderNo+"<---- review orderNo");
+	System.out.println(historyNo+"<-----updateReview historyNo");
+	System.out.println(productNo+"<-----updateReview productNo");
 	
 	// 리뷰 이미지와 글 출력 메서드
 	ReviewDao review = new ReviewDao(); // DAO (동일)
-	Review reviewText = review.selectReviewOne(orderNo); //vo
-	ReviewImg reviewImg = review.selectReviewImg(orderNo); //vo
+	Review reviewText = review.selectReviewOne(historyNo); //vo
+	ReviewImg reviewImg = review.selectReviewImg(historyNo); //vo
 	System.out.println(reviewImg+"<---- review updateImg");
 
 %>
@@ -66,8 +65,8 @@ a{text-decoration: none;}
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰 수정하기</h2>
 <form action="<%=request.getContextPath()%>/review/updateReviewAction.jsp" method="post" enctype="multipart/form-data">
-<input type="hidden" name="orderNo" value="<%=orderNo%>">
 <input type="hidden" name="productNo" value="<%=productNo%>">
+<input type="hidden" name="historyNo" value="<%=historyNo%>">	
 	<%
 		if(request.getParameter("msg") != null){
 	%>
@@ -75,7 +74,7 @@ a{text-decoration: none;}
 	<%
 		}
 	%>
-		<table class="table table-bordered">
+		<table class="table table-bhistoryed">
 			<tr>
 				<td>제목</td>
 				<td>
@@ -107,7 +106,7 @@ a{text-decoration: none;}
 			</table>
 			<div>
 				<button type=submit id="button" class="btn btn-light">수정</button>
-				<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?orderNo=<%=reviewText.getOrderNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">취소</a>
+				<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">취소</a>
 			</div>
 		</form>
 	</div>

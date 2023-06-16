@@ -9,19 +9,7 @@
 
 <%
 	request.setCharacterEncoding("utf-8");
-	
-	/*리뷰 요청값 유효성 검사(+수정시에도 공백X)
-	if(request.getParameter("orderNo") == null
-	||request.getParameter("orderNo").equals("")
-	||request.getParameter("productNo") == null
-	||request.getParameter("productNo").equals("")
-	||request.getParameter("reviewContent") == null
-	||request.getParameter("reviewContent").equals("")
-	||request.getParameter("reviewTitle") == null
-	||request.getParameter("reviewTitle").equals("")){
-		response.sendRedirect(request.getContextPath()+"/review/reviewOne.jsp");
-		return;
-	}*/
+		
 
 	String dir = request.getServletContext().getRealPath("/review/reviewImg");
 	System.out.println(dir+"<----");
@@ -29,25 +17,34 @@
 	
 	// DefaultFileRenamePolicy 중복제거 메서드
 	MultipartRequest mRequest = new MultipartRequest(request, dir, max, "utf-8", new DefaultFileRenamePolicy());
-	//mRequest.getOriginalFileName("boardFile") 값이 null이면 리뷰테이블 text만 수정
+	//mRequest.getOriginalFileName("reviewImg") 값이 null이면 리뷰테이블 text만 수정
 	
-	// 받아온 값 저장 (text)
+	// 받아온 값 저장 (text) 전부 mRequest로 받고 저장해야 한다
 	String msg="";
-	int orderNo = Integer.parseInt(request.getParameter("orderNo"));
-	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	int historyNo = Integer.parseInt(mRequest.getParameter("historyNo"));
+	int productNo = Integer.parseInt(mRequest.getParameter("productNo"));
 	String reviewTitle = mRequest.getParameter("reviewTitle");
 	String reviewContent = mRequest.getParameter("reviewContent");
 	
-	System.out.println(orderNo+"<---update review action orderno");
+	System.out.println(historyNo+"<---update review action historyno");
 	System.out.println(productNo+"<---update review action pno");
 	System.out.println(reviewContent+"<---update review action content");
 	System.out.println(reviewTitle+"<---update review action title");
+	
+	//리뷰 요청값 유효성 검사 (+수정시에도 공백X)
+	if(("historyNo") == null||("historyNo").equals("")
+	||("productNo") == null ||("productNo").equals("")
+	||("reviewContent") == null ||("reviewContent").equals("")
+	||("reviewTitle") == null ||("reviewTitle").equals("")){
+		response.sendRedirect(request.getContextPath()+"/review/reviewOne.jsp");
+		return;
+	}
 	
 	//review text만 수정 (이미지 새로 업로드 안 할 시)---------------------------------------------------------
 	
 	ReviewDao reviewdao = new ReviewDao(); // dao 호출
 	Review reviewtext = new Review(); // 객체 저장
-	reviewtext.setOrderNo(orderNo);
+	reviewtext.setHistoryNo(historyNo);
 	reviewtext.setProductNo(productNo);
 	reviewtext.setReviewTitle(reviewTitle);
 	reviewtext.setReviewContent(reviewContent);
@@ -67,7 +64,7 @@
 			f.delete();
 			System.out.println(saveFilename+"파일삭제");
 			msg = URLEncoder.encode("JPG파일만 업로드 가능합니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/review/updateReview.jsp?orderNo="+orderNo+"&productNo="+productNo+"&msg="+msg);
+			response.sendRedirect(request.getContextPath()+"/review/updateReview.jsp?historyNo="+historyNo+"&productNo="+productNo+"&msg="+msg);
 		return;}
     } else {
     	// 수정 파일이 유효할 시
@@ -78,15 +75,15 @@
     	String saveFilename = mRequest.getFilesystemName("reviewImg");
 		
     	ReviewImg reviewImg = new ReviewImg(); //vo
-    	reviewImg.setOrderNo(orderNo); //객체 저장
+    	reviewImg.setHistoryNo(historyNo); //객체 저장
     	reviewImg.setReviewOriFilename(originFilename);
     	reviewImg.setReviewSaveFilename(saveFilename);
     	reviewImg.setReviewFiletype(type);
     	
-    	reviewdao.deleteReviewImg(orderNo, dir);  // 1) 이전 파일 삭제 메서드 호출
+    	reviewdao.deleteReviewImg(historyNo, dir);  // 1) 이전 파일 삭제 메서드 호출
 		reviewdao.updateReviewImg(reviewImg); // 2) 이미지 db수정 메서드 호출
 		}
     }
-	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?orderNo="+orderNo+"&productNo="+productNo);
+	response.sendRedirect(request.getContextPath() + "/review/reviewOne.jsp?historyNo="+historyNo+"&productNo="+productNo);
 
 %>
