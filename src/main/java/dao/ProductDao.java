@@ -218,22 +218,228 @@ public class ProductDao {
 			
 		
 	// 4) 상품리스트(전체,검색시리스트,카테고리별리스트,(최신순 오래된순),카테고리별 검색시
-	public ArrayList<HashMap<String,Object>> productList1(String productName, String categoryName, String ascDesc, String discountProduct, int beginRow, int rowPerPage) throws Exception {
+	public ArrayList<HashMap<String,Object>> productList(String productName, String categoryName, String ascDesc, String discountProduct, int beginRow, int rowPerPage) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		/*
 		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
 		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
 						LEFT OUTER JOIN discount d ON p.product_no = d.product_no
+		WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end OR d.discount_start IS NULL;
 		*/	
 		
-		String sql = " SELECT p.product_no, p.category_name, p.product_name, p.product_price, IFNULL(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\r\n"
-				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \r\n"
-				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
+		// 초기화면은 전체상품을 보여준다 특이사항(할인기간안에 있는 상품만 보여줌) 할인이 끝난 상품은 삭제시 나타남
+		String sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+				+ "		WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end OR d.discount_start IS NULL";
 		
 		if (discountProduct.equals("할인상품")) {
 		    // 할인 상품만 보는 경우
-		    sql += " WHERE d.discount_no IS NOT NULL";
+		    sql = "  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		    		+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		    		+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		    		+ "		WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end";
+
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end  AND p.product_name LIKE '%" + productName + "%' AND category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end  AND p.product_name LIKE '%" + productName + "%' ";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end AND category_name = '" + categoryName + "'";
+		    }
+		} else {
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, IFNULL(p.product_price * (1 - d.discount_rate), p.product_price) AS 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p\n"
+		        		+ "LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\n"
+		        		+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'\n"
+		        		+ "AND (d.discount_start IS NULL OR (SYSDATE() BETWEEN d.discount_start AND d.discount_end))";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, IFNULL(p.product_price * (1 - d.discount_rate), p.product_price) AS 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p\n"
+		        		+ "LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\n"
+		        		+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE p.product_name LIKE '%" + productName + "%'\n"
+		        		+ "AND (d.discount_start IS NULL OR (SYSDATE() BETWEEN d.discount_start AND d.discount_end))";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, IFNULL(p.product_price * (1 - d.discount_rate), p.product_price) AS 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p\n"
+		        		+ "LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\n"
+		        		+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE p.category_name = '" + categoryName + "'\n"
+		        		+ "AND (d.discount_start IS NULL OR (SYSDATE() BETWEEN d.discount_start AND d.discount_end))";
+		    }
+		}
+			
+			
+		// 정렬기준
+		if(!ascDesc.equals("")) {
+			sql += " ORDER BY p.createdate " + ascDesc;
+		}
+		
+		// 페이징을 위한 변수
+		sql += " LIMIT ?, ?";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);
+		stmt.setInt(2, rowPerPage);
+		ResultSet rs = stmt.executeQuery();
+		
+		ArrayList<HashMap<String, Object>> productList = new ArrayList<HashMap<String, Object>>();
+		
+		while(rs.next()) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("productNo", rs.getInt("product_no"));
+			map.put("categoryName", rs.getString("category_name"));
+			map.put("productName", rs.getString("product_name"));
+			map.put("productPrice", rs.getInt("product_price"));
+			map.put("productDiscountPrice", rs.getInt("상품할인가"));
+			map.put("productStatus", rs.getString("product_status"));
+			map.put("productStock", rs.getString("product_stock"));
+			map.put("createdate", rs.getString("createdate"));
+			map.put("updatedate", rs.getString("updatedate"));
+			map.put("productImgNo", rs.getInt("product_img_no"));
+			map.put("productSaveFilename", rs.getString("product_save_filename"));
+			map.put("discountNo", rs.getInt("discount_no"));
+			map.put("discountStart", rs.getString("discount_start"));
+			map.put("discountEnd", rs.getString("discount_end"));
+			productList.add(map);
+		}
+		
+		return productList;
+	}
+	
+	// 4-1) 상품리스트 전체행 개수
+	public int productListCnt(String categoryName, String productName, String ascDesc, String discountProduct) throws Exception {
+		int totalRow = 0;
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		/*
+		  	SELECT COUNT(*) 
+			FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
+							LEFT OUTER JOIN discount d ON p.product_no = d.product_no
+			WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end OR d.discount_start IS NULL
+		*/
+		
+		// 초기화면은 전체상품을 보여준다 특이사항(할인기간안에 있는 상품만 보여줌) 할인이 끝난 상품은 삭제시 나타남
+		String sql = "SELECT COUNT(*) \n"
+				+ "	FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+				+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+				+ "	WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end OR d.discount_start IS NULL";
+		
+		if (discountProduct.equals("할인상품")) {
+		    // 할인 상품만 보는 경우
+		    sql = " SELECT COUNT(*) \n"
+		    		+ "	FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		    		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		    		+ "	WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end";
+
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql = "SELECT COUNT(*)\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end  AND p.product_name LIKE '%" + productName + "%' AND category_name = '" + categoryName + "'";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql = "SELECT COUNT(*)\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end  AND p.product_name LIKE '%" + productName + "%'";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql ="SELECT COUNT(*)\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end AND category_name = '" + categoryName + "'";
+		    }
+		} else {
+		    // 검색어와 카테고리 둘 다 있을 때
+		    if (!productName.equals("") && !categoryName.equals("")) {
+		        sql = "SELECT COUNT(*)\n"
+		        		+ "FROM product p\n"
+		        		+ "LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\n"
+		        		+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'\n"
+		        		+ "AND (d.discount_start IS NULL OR (SYSDATE() BETWEEN d.discount_start AND d.discount_end))";
+		    }
+		    // 검색어만 있을 때
+		    else if (!productName.equals("")) {
+		        sql = "SELECT COUNT(*)\n"
+		        		+ "FROM product p\n"
+		        		+ "LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\n"
+		        		+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE p.product_name LIKE '%" + productName + "%'\n"
+		        		+ "AND (d.discount_start IS NULL OR (SYSDATE() BETWEEN d.discount_start AND d.discount_end))";
+		    }
+		    // 카테고리만 있을 때
+		    else if (!categoryName.equals("")) {
+		        sql = "SELECT COUNT(*)\n"
+		        		+ "FROM product p\n"
+		        		+ "LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\n"
+		        		+ "LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
+		        		+ "WHERE p.category_name = '" + categoryName + "'\n"
+		        		+ "AND (d.discount_start IS NULL OR (SYSDATE() BETWEEN d.discount_start AND d.discount_end))";
+		    }
+		}
+	    
+		// 정렬기준
+		if(!ascDesc.equals("")) {
+			sql += " ORDER BY p.createdate " + ascDesc;
+		}
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			totalRow = rs.getInt(1);
+		}
+		
+		System.out.println(totalRow + "<-- ProductDao 상품리스트 전체 행 개수 totalRow");
+			return totalRow;
+	}
+	
+	// 5) 관리자상품리스트(전체,검색시리스트,카테고리별리스트,(최신순 오래된순),카테고리별 검색시
+	public ArrayList<HashMap<String,Object>> empProductList(String productName, String categoryName, String ascDesc, String discountProduct, int beginRow, int rowPerPage) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		/*
+		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
+		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
+						LEFT OUTER JOIN discount d ON p.product_no = d.product_no;
+		*/	
+		
+		String sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
+
+		
+		if (discountProduct.equals("할인상품")) {
+		    // 할인 상품만 보는 경우
+			sql += " WHERE d.discount_no IS NOT NULL";
 
 		    // 검색어와 카테고리 둘 다 있을 때
 		    if (!productName.equals("") && !categoryName.equals("")) {
@@ -299,8 +505,9 @@ public class ProductDao {
 		
 		return productList;
 	}
-	// 4-1) 상품리스트 전체행 개수
-	public int productListCnt1(String categoryName, String productName, String ascDesc, String discountProduct) throws Exception {
+		
+	// 5-1) 관리자상품리스트 전체행 개수
+	public int empProductListCnt(String categoryName, String productName, String ascDesc, String discountProduct) throws Exception {
 		int totalRow = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
@@ -310,13 +517,13 @@ public class ProductDao {
 							LEFT OUTER JOIN discount d ON p.product_no = d.product_no
 		*/
 		
-		String sql = "SELECT COUNT(*) \r\n"
-				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \r\n"
-				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
+		String sql = "SELECT COUNT(*) \n"
+				+ "	FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+				+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
 		
 		if (discountProduct.equals("할인상품")) {
 		    // 할인 상품만 보는 경우
-		    sql += " WHERE d.discount_no IS NOT NULL";
+			sql +=" WHERE d.discount_no IS NOT NULL";
 
 		    // 검색어와 카테고리 둘 다 있을 때
 		    if (!productName.equals("") && !categoryName.equals("")) {
@@ -359,6 +566,5 @@ public class ProductDao {
 		
 		System.out.println(totalRow + "<-- ProductDao 상품리스트 전체 행 개수 totalRow");
 			return totalRow;
-			
 	}
 }

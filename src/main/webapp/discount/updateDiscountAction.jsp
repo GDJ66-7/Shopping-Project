@@ -2,6 +2,7 @@
 <%@page import="dao.DiscountDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	// 유효성검사
 	if(request.getParameter("discountNo") == null) {
 		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
 	}
@@ -17,7 +18,9 @@
 	System.out.println(discountRate + "<-- insertDiscountAction discountRate");
 	
 	
+	// DisocuntDao클래스 사용위한 객체 생성
 	DiscountDao dDao = new DiscountDao();
+	// update정보 vo에 입력
 	Discount d = new Discount();
 	d.setDiscountNo(discountNo);
 	d.setDiscountStart(discountStart);

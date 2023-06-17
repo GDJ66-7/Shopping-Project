@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	// discountNo를 통하여 할인정보 수정
 	if(request.getParameter("discountNo") == null){
 		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
 		return;

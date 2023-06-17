@@ -27,7 +27,7 @@
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	int totalRow = pDao.productListCnt1(categoryName, productName, ascDesc, discountProduct);
+	int totalRow = pDao.empProductListCnt(categoryName, productName, ascDesc, discountProduct);
 	System.out.println(totalRow + "<-- productList totalRow");
 	
 	int lastPage = totalRow / rowPerPage;
@@ -48,7 +48,7 @@
 		maxPage = lastPage;
 	}
 	
-	ArrayList<HashMap<String,Object>> pList = pDao.productList1(productName, categoryName, ascDesc, discountProduct, beginRow, rowPerPage);
+	ArrayList<HashMap<String,Object>> pList = pDao.empProductList(productName, categoryName, ascDesc, discountProduct, beginRow, rowPerPage);
 	
 	
 %>
@@ -257,9 +257,16 @@
 							<td>
 								<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 							</td>
-							<td>
-								<a style="text-align:center;" href="<%=request.getContextPath()%>/discount/insertDiscount.jsp?productNo=<%=productMap.get("productNo")%>&productName=<%=productMap.get("productName")%>"><img width="30" height="30" src="<%=request.getContextPath()%>/product/icon/할인.png"></a>
-							</td>
+				<%
+							// 할인가격이 없을경우에만 할인추가표시가 생성
+							if((int)productMap.get("productDiscountPrice") == ((int)productMap.get("productPrice"))) {
+				%>
+								<td>
+									<a style="text-align:center;" href="<%=request.getContextPath()%>/discount/insertDiscount.jsp?productNo=<%=productMap.get("productNo")%>&productName=<%=productMap.get("productName")%>"><img width="30" height="30" src="<%=request.getContextPath()%>/product/icon/할인.png"></a>
+								</td>
+				<% 
+							}
+				%>
 						</tr>
 				<% 
 						}

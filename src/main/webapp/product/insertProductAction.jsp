@@ -117,7 +117,7 @@
 	
 	System.out.println(insertP.getCategoryName() + "<-- insertProductAction insertP.getCategoryName()");
 	if(insertP.getCategoryName() == null) {
-		response.sendRedirect(request.getContextPath() +"/product/insertProduct.jsp");
+		response.sendRedirect(request.getContextPath() +"/main/empMain.jsp");
 		return;
 	}
 	
@@ -132,5 +132,5 @@
 	pDao.insertProduct(insertP, insertImgP);
 	
 	System.out.println("<-- insertProductAction 상품추가완료");
-	response.sendRedirect(request.getContextPath() +"/product/insertProduct.jsp");
+	response.sendRedirect(request.getContextPath() +"/main/empMain.jsp");
 %>

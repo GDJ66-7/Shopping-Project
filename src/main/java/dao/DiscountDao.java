@@ -3,9 +3,7 @@ package dao;
 import java.sql.*;
 import java.util.*;
 import util.*;
-import vo.Cart;
 import vo.Discount;
-import vo.Product;
 
 public class DiscountDao {
 	
@@ -16,15 +14,13 @@ public class DiscountDao {
 		/*
 		 	SELECT d.discount_no 할인번호, d.product_no 상품번호, p.product_name 상품이름, p.product_price 상품가격, p.product_price*(1- d.discount_rate) 상품할인가, d.discount_start 시작날짜, d.discount_end 종료날짜, d.discount_rate 할인율, d.createdate 생성날짜,  d.updatedate 수정날짜 
 				FROM discount d INNER JOIN product p ON d.product_no = p.product_no
-								
-				
 		 */
 		String sql = "SELECT d.discount_no 할인번호, d.product_no 상품번호, p.product_name 상품이름, p.product_price 상품가격, p.product_price*(1- d.discount_rate) 상품할인가, d.discount_start 시작날짜, d.discount_end 종료날짜, d.discount_rate 할인율, d.createdate 생성날짜,  d.updatedate 수정날짜 \r\n"
-				+ "				FROM discount d INNER JOIN product p \r\n"
+				+ "				FROM discount d INNER JOIN product p\r\n"
 				+ "				ON d.product_no = p.product_no";
 
 		if(!productName.equals("")) {
-			sql += " WHERE p.product_name '%" + productName + "%'";
+			sql += " WHERE p.product_name LIKE '%" + productName + "%'";
 		}
 			
 		sql += " LIMIT ?, ?";
@@ -48,6 +44,7 @@ public class DiscountDao {
 			d.put("updatedate",rs.getString("수정날짜"));
 			list.add(d);
 		}
+		
 		return list;
 	}
 	
@@ -64,7 +61,7 @@ public class DiscountDao {
 		String sql = "SELECT COUNT(*) FROM discount d INNER JOIN product p ON d.product_no = p.product_no";
 		
 		if(!productName.equals("")) {
-			sql += " WHERE p.product_name '%" + productName + "%'";
+			sql += " WHERE p.product_name LIKE '%" + productName + "%'";
 		}
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -148,6 +145,9 @@ public class DiscountDao {
 		
 		return row;
 	}
+	
+	
+	
 		
 
 	

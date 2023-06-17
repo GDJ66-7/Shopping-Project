@@ -218,6 +218,9 @@
 				</tr>
 				<%
 					for(HashMap<String,Object> dMap : discountList) {
+						// 할인율이 double타입이라 십의단위로 나타내고 싶어 형변환후 *100
+						double discountRate = (double) dMap.get("discountRate");
+						int discountRatePercentage = (int) (discountRate * 100);
 				%>
 					<tr>
 						<td>
@@ -242,7 +245,7 @@
 							<%=dMap.get("discountEnd") %>
 						</td>
 						<td>
-							<%=dMap.get("discountRate") %>
+							<%=discountRatePercentage %>%
 						</td>
 						<td>
 							<%=dMap.get("updatedate") %>

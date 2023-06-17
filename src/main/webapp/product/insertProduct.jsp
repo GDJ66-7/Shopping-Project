@@ -150,7 +150,6 @@
 			if($('#categoryNameId').val().length == 0) {
 				// 디버깅
 				console.log($('#categoryNameId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#categoryNameIdMsg').text('카테고리를 설정해주세요');
 				return;
 			}
@@ -158,7 +157,6 @@
 			if($('#nameId').val().length == 0) {
 				// 디버깅
 				console.log($('#nameId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#nameIdMsg').text('상품이름을 입력해주세요');
 				return;
 			}
@@ -166,7 +164,6 @@
 			if($('#priceId').val().length == 0) {
 				// 디버깅
 				console.log($('#priceId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#priceIdMsg').text('상품가격을 입력해주세요');
 				return;
 			}
@@ -174,7 +171,6 @@
 			if($('#statusId').val().length == 0) {
 				// 디버깅
 				console.log($('#statusId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#statusIdMsg').text('상품상태를 설정해주세요');
 				return;
 			}
@@ -182,7 +178,6 @@
 			if($('#stockId').val().length == 0) {
 				// 디버깅
 				console.log($('#stockId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#stockIdMsg').text('상품재고량을 입력해주세요');
 				return;
 			}
@@ -190,7 +185,6 @@
 			if($('#infoId').val().length == 0) {
 				// 디버깅
 				console.log($('#infoId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#infoIdMsg').text('상품정보를 입력해주세요');
 				return;
 			}
@@ -198,7 +192,6 @@
 			if($('#fileId').val().length == 0) {
 				// 디버깅
 				console.log($('#fileId').val());
-				// 메세지 값은 '' 으로 초기화
 				$('#fileIdMsg').text('상품사진을 설정해주세요');
 				return;
 			}

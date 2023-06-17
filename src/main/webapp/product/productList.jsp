@@ -59,7 +59,7 @@
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	int totalRow = pDao.productListCnt1(categoryName, productName, ascDesc, discountProduct);
+	int totalRow = pDao.productListCnt(categoryName, productName, ascDesc, discountProduct);
 	System.out.println(totalRow + "<-- productList totalRow");
 	
 	int lastPage = totalRow / rowPerPage;
@@ -93,7 +93,7 @@
 	}
 
 	// 상품 리스트 dao호출
-	ArrayList<HashMap<String, Object>> productList = pDao.productList1(productName, categoryName, ascDesc, discountProduct, beginRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> productList = pDao.productList(productName, categoryName, ascDesc, discountProduct, beginRow, rowPerPage);
 	
 	// 카테고리이름리스트 dao호출
 	ArrayList<HashMap<String, Object>> categoryNameList = cDao.categoryNameList();
