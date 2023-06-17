@@ -14,7 +14,7 @@ public class OrderDao {
 			ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql = "SELECT o.order_no 주문번호, p.product_name 상품이름, o.payment_status 결제상태, o.delivery_status 배송상태, o.order_cnt 수량, o.order_price 주문가격, o.order_address 주문배송지, o.updatedate 구매일 FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN product p ON p.product_no = o.product_no WHERE c.id = ? ORDER BY o.updatedate LIMIT ?,?";
+			String sql = "SELECT o.order_no 주문번호, p.product_name 상품이름, o.payment_status 결제상태, o.delivery_status 배송상태, o.order_cnt 수량, o.order_price 주문가격, o.order_address 주문배송지, o.updatedate 구매일, h.history_no 주문내역번호, p.product_no 상품번호 FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON h.product_no = p.product_no WHERE c.id = ? ORDER BY o.updatedate LIMIT ?,?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setInt(2, beginRow);
@@ -30,6 +30,8 @@ public class OrderDao {
 				m.put("주문가격", rs.getInt("주문가격"));
 				m.put("주문배송지", rs.getString("주문배송지"));
 				m.put("구매일", rs.getString("구매일"));
+				m.put("주문내역번호", rs.getInt("주문내역번호"));
+				m.put("상품번호", rs.getInt("상품번호"));
 				list.add(m);
 			}
 			return list;
@@ -39,7 +41,7 @@ public class OrderDao {
 			int row = 0;
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql ="SELECT count(*) FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN product p ON p.product_no = o.product_no WHERE c.id = ? ORDER BY o.updatedate";
+			String sql ="SELECT count(*)  FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON h.product_no = p.product_no WHERE c.id = ? ORDER BY o.updatedate";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -53,7 +55,7 @@ public class OrderDao {
 			ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql = "SELECT o.order_no 주문번호, p.product_name 상품이름, o.payment_status 결제상태, o.delivery_status 배송상태, o.order_cnt 수량, o.order_price 주문가격,o.order_address 주문배송지, o.updatedate 구매일 FROM orders o INNER JOIN product p ON p.product_no = o.product_no WHERE o.order_no = ?;";
+			String sql = "SELECT o.order_no 주문번호, p.product_name 상품이름, o.payment_status 결제상태, o.delivery_status 배송상태, o.order_cnt 수량, o.order_price 주문가격,o.order_address 주문배송지, o.updatedate 구매일 FROM orders o INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON p.product_no = h.product_no WHERE o.order_no = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, orderNo);
 			ResultSet rs = stmt.executeQuery();
