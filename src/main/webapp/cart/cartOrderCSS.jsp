@@ -6,24 +6,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>pillloMart</title>
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
     <!-- flaticon CSS -->
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
     <!-- style CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -305,7 +305,7 @@
                 <div class="radion_btn">
                   <input type="radio" id="f-option6" name="selector" />
                   <label for="f-option6">Paypal </label>
-                  <img src="img/product/single-product/card.jpg" alt="" />
+                  <img src="<%=request.getContextPath()%>/css/img/product/single-product/card.jpg" alt="" />
                   <div class="check"></div>
                 </div>
                 <p>
@@ -335,7 +335,7 @@
                   <div class="col-lg-8">
                       <div class="footer_menu">
                           <div class="footer_logo">
-                              <a href="index.html"><img src="img/logo.png" alt="#"></a>
+                              <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                           </div>
                           <div class="footer_menu_item">
                               <a href="index.html">Home</a>
@@ -380,30 +380,30 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <!--::footer_part end::-->
 
   <!-- jquery plugins here-->
-  <script src="js/jquery-1.12.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery-1.12.1.min.js"></script>
   <!-- popper js -->
-  <script src="js/popper.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/popper.min.js"></script>
   <!-- bootstrap js -->
-  <script src="js/bootstrap.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/bootstrap.min.js"></script>
   <!-- easing js -->
-  <script src="js/jquery.magnific-popup.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery.magnific-popup.js"></script>
   <!-- swiper js -->
-  <script src="js/swiper.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/swiper.min.js"></script>
   <!-- swiper js -->
-  <script src="js/mixitup.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/mixitup.min.js"></script>
   <!-- particles js -->
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.nice-select.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/owl.carousel.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery.nice-select.min.js"></script>
   <!-- slick js -->
-  <script src="js/slick.min.js"></script>
-  <script src="js/jquery.counterup.min.js"></script>
-  <script src="js/waypoints.min.js"></script>
-  <script src="js/contact.js"></script>
-  <script src="js/jquery.ajaxchimp.min.js"></script>
-  <script src="js/jquery.form.js"></script>
-  <script src="js/jquery.validate.min.js"></script>
-  <script src="js/mail-script.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/slick.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery.counterup.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/waypoints.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/contact.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery.ajaxchimp.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery.form.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/jquery.validate.min.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/mail-script.js"></script>
   <!-- custom js -->
-  <script src="js/custom.js"></script>
+  <script src="<%=request.getContextPath()%>/css/js/custom.js"></script>
 </body>
 </html>
