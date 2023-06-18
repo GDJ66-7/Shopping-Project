@@ -82,7 +82,7 @@
 				return;
 			}
 			
-			$('#insertDiscountId').submit();
+			$('#insertDiscountForm').submit();
 				
 			
 		});
@@ -93,7 +93,7 @@
 </head>
 <body>
 	<h1>할인 상품 추가하기</h1>
-	<form id="insertDiscountId" action="<%=request.getContextPath()%>/discount/insertDiscountAction.jsp">
+	<form id="insertDiscountForm" action="<%=request.getContextPath()%>/discount/insertDiscountAction.jsp">
 		<input type="hidden" name="productNo" value="<%=productNo%>">;
 		<table>
 			<tr>

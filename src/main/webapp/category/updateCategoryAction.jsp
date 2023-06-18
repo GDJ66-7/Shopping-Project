@@ -28,11 +28,12 @@
 	
 	int row = cDao.updateCategory(c);
 	
+	String msg = "";
 	if(row > 0 ) {
 		System.out.println("카테고리 변경 성공");
-		response.sendRedirect(request.getContextPath() + "/main/empMain.jsp");
+		response.sendRedirect(request.getContextPath() + "/category/categoryList.jsp?updateCategoryMsg="+msg);
 	} else {
 		System.out.println("카테고리 변경 실패");
-		response.sendRedirect(request.getContextPath() + "/category/categoryList.jsp");
+		response.sendRedirect(request.getContextPath() + "/category/categoryList.jsp?updateCategoryMsg2="+msg);
 	}
 %>

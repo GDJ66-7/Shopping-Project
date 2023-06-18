@@ -38,6 +38,34 @@
 </head>
 
 <body>
+	<!-- msg alert출력 -->
+	<%
+		if(request.getParameter("updateCategoryMsg") != null) {
+	%>
+			<script>
+				alert('카테고리수정이 완료되었습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("updateCategoryMsg2") != null) {
+	%>
+			<script>
+				alert('카테고리수정을 실패하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("insertCategoryMsg") != null) {
+	%>
+			<script>
+				alert('카테고리를 추가하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("insertCategoryMsg2") != null) {
+	%>
+			<script>
+				alert('카테고리추가를 실패하였습니다.');
+			</script>
+	<% 
+		}
+	%>
     <!--::header part start::-->
     <header class="main_menu home_menu">
         <div class="container">

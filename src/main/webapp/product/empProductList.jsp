@@ -158,6 +158,28 @@
   }
 </style>
 <body>
+	<!-- msg출력 -->
+	<%
+		if(request.getParameter("updateProductMsg") != null) {
+	%>
+			<script>
+				alert('상품수정이 완료되었습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("updateProductMsg2") != null) {
+	%>
+			<script>
+				alert('상품수정을 실패하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("insertproductMsg") != null) {
+	%>
+			<script>
+				alert('상품을 추가하였습니다.');
+			</script>
+	<% 
+		}
+	%>
     <!--::header part start::-->
     <header class="main_menu home_menu">
         <div class="container">

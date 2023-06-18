@@ -29,11 +29,12 @@
 	
 	int row = dDao.updateDiscount(d);
 	
+	String msg = "";
 	if(row > 0){
 		System.out.println("할인수정완료");
-		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
+		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?updateDiscountMsg="+msg);
 		return;
 	}
 	System.out.println("할인수정실패");
-	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
+	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?updateDiscountMsg2="+msg);
 %>

@@ -34,12 +34,13 @@
 	// insertDiscountDao실행
 	int row = dDao.insertDiscount(d);
 	
+	String msg ="";
 	if(row > 0){
 		System.out.println("할인적용완료");
-		response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp");
+		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?insertDiscountMsg="+msg);
 		return;
 	}
 	System.out.println("할인적용실패");
-	response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp");
+	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?insertDiscountMsg2="+msg);
 	
 %>

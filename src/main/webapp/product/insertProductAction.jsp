@@ -131,6 +131,7 @@
 	// 메소드 호출
 	pDao.insertProduct(insertP, insertImgP);
 	
+	String msg = "";
 	System.out.println("<-- insertProductAction 상품추가완료");
-	response.sendRedirect(request.getContextPath() +"/main/empMain.jsp");
+	response.sendRedirect(request.getContextPath() +"/product/empProductList.jsp?insertProductMsg="+msg);
 %>

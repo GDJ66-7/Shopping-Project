@@ -106,14 +106,17 @@
 			
 			int proImgRow = pDao.updateProductImg(req, productImg);
 			
+			String msg = "";
 			if(proImgRow > 0) {
 				System.out.println("상품 수정완료");
+				response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg="+msg);
+				return;
 			} else {
 				System.out.println("상품 수정실패");
+				response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg2="+msg);
 			}
 		}
 	}
 	
-	response.sendRedirect(request.getContextPath()+"/product/updateProduct.jsp");
 	
 %>

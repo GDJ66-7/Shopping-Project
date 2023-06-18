@@ -17,12 +17,13 @@
 	
 	int row = dDao.deleteDiscount(discountNo);
 	
+	String msg ="";
 	if(row > 0){
 		System.out.println("할인삭제완료");
-		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
+		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?deleteDiscountMsg="+msg);
 		return;
 	}
 	System.out.println("할인삭제실패");
-	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
+	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?deleteDiscountMsg2="+msg);
 	
 %>

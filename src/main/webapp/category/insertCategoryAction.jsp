@@ -25,12 +25,13 @@
 	category.setCategoryName(categoryName);
 	int row = cDao.insertCategory(category);
 	
+	String msg = "";
 	if(row > 0) {
 		System.out.println("카테고리 추가성공");
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		response.sendRedirect(request.getContextPath()+"/category/categoryList.jsp?insertCategoryMsg="+msg);
 		return;
 	}
 		System.out.println("카테고리 추가실패");
-		response.sendRedirect(request.getContextPath()+"/category/insertCategory.jsp");
-	
+		response.sendRedirect(request.getContextPath()+"/category/insertCategory.jsp?insertCategoryMsg2="+msg);
+		
 %>

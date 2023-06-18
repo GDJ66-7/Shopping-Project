@@ -149,6 +149,64 @@
   }
 </style>
 <body>
+	<!-- msg alert출력 -->
+	<%
+		if(request.getParameter("insertDiscountMsg") != null) {
+	%>
+			<script>
+				alert('할인상품등록이 완료되었습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("insertDiscountMsg2") != null) {
+	%>
+			<script>
+				alert('할인상품등록에 실패하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("updateDiscountMsg") != null) {
+	%>
+			<script>
+				alert('할인상품수정을 완료하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("updateDiscountMsg2") != null) {
+	%>
+			<script>
+				alert('할인상품수정을 실패하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("deleteDiscountMsg") != null) {
+	%>
+			<script>
+				alert('할인상품(개별)삭제를 완료하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("deleteDiscountMsg") != null) {
+	%>
+			<script>
+				alert('할인상품(개별)삭제를 완료하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("deleteDiscountMsg2") != null) {
+	%>
+			<script>
+				alert('할인상품(개별)삭제를 실패하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("allDeleteDiscountMsg") != null) {
+	%>
+			<script>
+				alert('기간만료할인상품(전체) 삭제를 완료하였습니다.');
+			</script>
+	<% 
+		} else if(request.getParameter("allDeleteDiscountMsg2") != null) {
+	%>
+			<script>
+				alert('기간만료할인상품(전체) 삭제를 실패하였습니다. (기간이 만료된 상품이 없을 수 있습니다.)');
+			</script>
+	<% 
+		}
+	%>
     <!--::header part start::-->
     <header class="main_menu home_menu">
         <div class="container">

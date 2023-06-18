@@ -11,11 +11,13 @@
 	DiscountDao dDao = new DiscountDao();
 	
 	int allRow = dDao.allDeleteDiscount();
+	
+	String msg = "";
 	if(allRow > 0){
 		System.out.println("할인기간지난 상품전체삭제완료");
-		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
+		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?allDeleteDiscountMsg="+msg);
 		return;
 	}
 	System.out.println("할인기간지난 상품삭제실패");
-	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");
+	response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp?allDeleteDiscountMsg2="+msg);
 %>	
