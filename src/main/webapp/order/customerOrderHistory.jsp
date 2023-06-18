@@ -132,7 +132,7 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">주문 상세 정보</h2>
         </div>
-  <h1>
+	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -140,7 +140,7 @@
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 	<%
 		for(HashMap<String, Object> s : list){
 	%>
@@ -216,7 +216,7 @@
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                             </div>
                         </div>
                     </div>

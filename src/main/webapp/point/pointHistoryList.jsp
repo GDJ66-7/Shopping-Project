@@ -125,7 +125,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
     <br><div class="col-12">
          	 <h2 class="contact-title">포인트 내역 상세보기</h2>
         </div>
-  		<h1>
+  		<p>
   			<%
   				if(request.getParameter("msg") != null){
   			%>
@@ -133,7 +133,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
   			<%
   				}
   			%>
-  		</h1>
+  		</p>
 		<table class="table table-bordered">
 			<tr>
 				<th>주문번호</th>
@@ -188,7 +188,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                             </div>
                         </div>
                     </div>

@@ -162,7 +162,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
     <br><div class="col-12">
          	 <h2 class="contact-title">수정할 정보입력</h2>
         </div>
-   <p>
+	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -173,15 +173,19 @@ String id = (String)(session.getAttribute("loginCstmId"));
 	</p>
 	<form action="<%=request.getContextPath()%>/customer/updateCustomerAction.jsp" method="post">
 			<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+			
 			<p>주소</p>
 			<span id="addressMsg" class="msg"></span> 
 			<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+			
 			<p>이메일</p>
 			<span id="emailMsg" class="msg"></span>
 			<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
+			
 			<p>전화번호</p>
 			<span id="telMsg" class="msg"></span>
 			<input type="tel" id="tel" name="cstmPhone" required="required" class="single-input"><br>
+			
 			<p>비밀번호</p>
 			<span id="pwMsg" class="msg"></span>
 			<input type="password" id="pw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
@@ -204,7 +208,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                             </div>
                         </div>
                     </div>

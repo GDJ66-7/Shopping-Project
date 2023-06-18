@@ -96,7 +96,7 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">정보 입력</h2>
         </div>
-   <h1>
+   <p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -104,10 +104,10 @@
          <% 
         	}
       	 %>		
-	</h1>
+	</p>>
 	<%
-	if(request.getParameter("fId") == null){
-%>
+		if(request.getParameter("fId") == null){
+	%>
 	<form action="<%=request.getContextPath()%>/customer/findIdAction.jsp" method="post">
 		이름<input type="text" name="cstmName" required="required" class="single-input"><br>
 		
@@ -119,14 +119,13 @@
 		
 		<button type="submit" class="genric-btn primary-border circle">아이디 찾기</button>
 	</form>
-<%
-	} else if(request.getParameter("fId") != null){
-%>	
-	아이디 <input type="text" value="<%=request.getParameter("fId")%>" class="single-input"><br>
-<%
-	}
-%>
-		
+	<%
+		} else if(request.getParameter("fId") != null){
+	%>	
+		아이디 <input type="text" value="<%=request.getParameter("fId")%>" class="single-input"><br>
+	<%
+		}
+	%>
     </div><br>
   <!-- ================ contact section end ================= -->
 
@@ -141,7 +140,7 @@
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                               <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                             </div>
                         </div>
                     </div>

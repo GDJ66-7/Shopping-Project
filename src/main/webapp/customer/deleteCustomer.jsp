@@ -97,7 +97,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
     <br><div class="col-12">
          	 <h2 class="contact-title">비밀번호 입력</h2>
         </div>
-   	<h1>
+   	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -105,7 +105,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 	<form action="<%=request.getContextPath()%>/customer/deleteCustomerAction.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
 					비밀번호 <input type="password" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>

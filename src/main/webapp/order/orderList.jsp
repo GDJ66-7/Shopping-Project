@@ -184,7 +184,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
     <br><div class="col-12">
          	 <h2 class="contact-title">주문 상세 정보</h2>
         </div>
-  	<h1>
+  	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -192,7 +192,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 	<form action="<%=request.getContextPath()%>/order/orderList.jsp" action="post">
 		<input type="text" name="id" placeholder="고객 이름" class="single-input"><br>
 		<input type="date" name="startDate">&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;<input type="date" name="endDate">
@@ -261,7 +261,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                               <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                             </div>
                         </div>
                     </div>

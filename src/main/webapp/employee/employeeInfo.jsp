@@ -105,7 +105,7 @@ System.out.println(id+"<--id");
     <br><div class="col-12">
          	 <h2 class="contact-title">관리자 회원정보</h2>
         </div>
-   	<h1>
+   	<p>
 		 <%
         	if(request.getParameter("msg") != null){
          %>
@@ -113,10 +113,10 @@ System.out.println(id+"<--id");
          <% 
         	}
       	 %>		
-	</h1>
+	</p>
 	<%
-	for(HashMap<String,Object> s : list){
-%>
+		for(HashMap<String,Object> s : list){
+	%>
 	<table class="table table-bordered">
 		<tr>
 			<td>사원이름</td>
@@ -135,9 +135,9 @@ System.out.println(id+"<--id");
 			<td><%=(String)(s.get("수정일"))%></td>
 		</tr>
 	</table>
-<%
-	}
-%>
+	<%
+		}
+	%>
       <div class="row">
         <div class="col-12">
           <h2 class="contact-title">주문 리스트</h2>
