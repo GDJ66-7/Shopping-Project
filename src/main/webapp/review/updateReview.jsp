@@ -10,9 +10,9 @@
 	}
 
 	// 로그인 세션 검사 -- 조회/수정/삭제
+	String id = (String)session.getAttribute("loginCstmId");
 	
 	// 리뷰one에서 받은 값 저장 & 메서드 호출 --- 수정 전 데이터 불러오기라 reviewOne과 동일
-	//int productNo = Integer.parseInt(request.getParameter("productNo"));
 	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	System.out.println(historyNo+"<-----updateReview historyNo");
@@ -23,6 +23,15 @@
 	Review reviewText = review.selectReviewOne(historyNo); //vo
 	ReviewImg reviewImg = review.selectReviewImg(historyNo); //vo
 	System.out.println(reviewImg+"<---- review updateImg");
+	
+	// 작성자와 로그인 멤버가 일치하지 않을때 redirect
+	if(id == null||!session.getAttribute("loginCstmId").equals(reviewText.getId())){
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+		return;
+	}
+	
+	System.out.println(id+"<---updateReview loginid");
+	System.out.println(reviewText.getId()+"<---updateReview writer");
 
 %>
 <!DOCTYPE html>
@@ -64,7 +73,7 @@ a{text-decoration: none;}
 <div class="container mt-3">
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰 수정하기</h2>
-<form action="<%=request.getContextPath()%>/review/updateReviewAction.jsp" method="post" enctype="multipart/form-data">
+<form id="updateReview" action="<%=request.getContextPath()%>/review/updateReviewAction.jsp" method="post" enctype="multipart/form-data">
 <input type="hidden" name="productNo" value="<%=productNo%>">
 <input type="hidden" name="historyNo" value="<%=historyNo%>">	
 	<%
@@ -78,7 +87,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>제목</td>
 				<td>
-				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" required="required" size=60;>
+				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" required="required" size=60; placeholder="제목을 입력해주세요(50자 이내)">
 				</td>
 			</tr>
 			<tr>
@@ -91,7 +100,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>내용</td>
 				<td>
-				<textarea name="reviewContent" id="reviewContent" cols="80" rows="10" style="resize: none;" required="required"><%=reviewText.getReviewContent()%></textarea>
+				<textarea name="reviewContent" id="reviewContent" cols="80" rows="10" style="resize: none;" required="required" placeholder="내용을 입력하세요(최대500자)"><%=reviewText.getReviewContent()%></textarea>
 				<span id="count"><em>0</em></span><em>/500</em>
 				</td>
 			</tr>
@@ -105,10 +114,22 @@ a{text-decoration: none;}
 			</tr>
 			</table>
 			<div>
-				<button type=submit id="button" class="btn btn-light">수정</button>
+				<button type=submit id="button" onclick="updateReview()" class="btn btn-light">수정</button>
 				<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">취소</a>
 			</div>
 		</form>
 	</div>
+<script>
+function updateReview() {
+	  let result = confirm("내용을 수정하시겠습니까?");
+	  if (result) {
+		  document.getElementById("updateReview").submit();
+		  alert("게시글 수정이 완료되었습니다.");
+	  }else{
+		  event.preventDefault();
+		    return;
+	}
+}
+</script>
 </body>
 </html>

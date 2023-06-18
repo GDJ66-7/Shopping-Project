@@ -5,24 +5,33 @@
 <%
 	request.setCharacterEncoding("utf-8");
 
-	/*if(request.getParameter("historyNo") == null  
-	|| request.getParameter("historyNo").equals("")
-	|| request.getParameter("productNo") == null
-	|| request.getParameter("productNo").equals("")){
-	response.sendRedirect(request.getContextPath() + "/product/productOne.jsp");
-	return;
-	}*/
-	String id = "customer2";
+	//로그인 유효성 검사
+	if(session.getAttribute("loginCstmId") == null) {
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+		return;
+	}
+	
+	//요청값 유효성 검사
+	if(request.getParameter("productNo") == null  
+	|| request.getParameter("productNo").equals("")
+	|| request.getParameter("historyNo") == null
+	|| request.getParameter("historyNo").equals("")){
+		response.sendRedirect(request.getContextPath() + "/product/productList.jsp");
+		return;
+	}
+	
+	String id = (String)session.getAttribute("loginCstmId");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
+	
+	System.out.println(productNo+"<---productNo review");
+	System.out.println(historyNo+"<---historyNo review");
 
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상품 리뷰 작성</title>
-</head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -42,10 +51,12 @@
 		});
 	});
 </script>
+<title>상품 리뷰 작성</title>
+</head>
 <body>
 <h2 style="text-align: center;">상품 리뷰 작성</h2>
 <div class="container mt-3">
-<form action="<%=request.getContextPath()%>/review/insertReviewAction.jsp" method="post" enctype="multipart/form-data">
+<form id="insertReview" action="<%=request.getContextPath()%>/review/insertReviewAction.jsp" method="post" enctype="multipart/form-data">
 <input type="hidden" name="historyNo" value="<%=historyNo%>">
 <input type="hidden" name="productNo" value="<%=productNo%>">
 <input type="hidden" name="id" value="<%=id%>">
@@ -60,7 +71,7 @@
 	<table class="table table-bordered">
 		<tr>
 			<td>제목</td>
-			<td><input type="text" name="reviewTitle" required="required" size=60;></td>	
+			<td><input type="text" name="reviewTitle" required="required" size=60; placeholder="제목을 입력해주세요(50자 이내)"></td>	
 		</tr>
 		<tr>
 			<td>내용</td>
@@ -74,10 +85,22 @@
 		</tr>
 	</table>
 	<div>
-		<button type=submit class="btn btn-light">작성</button>
+		<button type=submit class="btn btn-light" onclick="insertReview()">작성</button>
 		<a href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" class="btn btn-light">취소</a>
 	</div>
 </form>
 </div>
+<script>
+function insertReview() {
+	  let result = confirm("리뷰를 작성하시겠습니까?");
+	  if (result) {
+		  document.getElementById("insertReview").submit();
+		  alert("게시글이 작성되었습니다.");
+	} else {
+		event.preventDefault();
+	    return;
+	  }
+	}
+</script>
 </body>
 </html>

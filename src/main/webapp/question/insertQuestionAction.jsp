@@ -7,6 +7,10 @@
 	request.setCharacterEncoding("utf-8"); //post - action - request.encoding
 	
 	//로그인 세션 검사 추가
+	if(session.getAttribute("loginCstmId") == null) {
+		response.sendRedirect(request.getContextPath() + "/product/productOne.jsp");
+		return;
+	}
 	
 	// 객체 저장 & 생성
 	QuestionDao qDao = new QuestionDao();

@@ -5,8 +5,6 @@
 <%
 	request.setCharacterEncoding("utf-8");
 
-	//작성자 유효성 검사 추가하기
-	
 	//요청값 변수 저장
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	//System.out.println(qNo + "<----updateQuestionAction NO");
@@ -29,16 +27,16 @@
 	String qCategory = request.getParameter("qCategory");
 	String qTitle = request.getParameter("qTitle");
 	String qContent = request.getParameter("qContent");
-	//String Id = (String)session.getAttribute("Id"); -- 세션 검사 해야함
-	//System.out.println(Id);
+	String id = (String)session.getAttribute("loginCstmId");
 	
+	System.out.println(id+"<---updateQ id");
 	System.out.println(qCategory+"<---updateQ category");
 	System.out.println(qTitle+"<---updateQ title");
 	System.out.println(qContent+"<---updateQ content");
-	
+
 	// 객체 생성
 	QuestionDao qDao = new QuestionDao();
-	
+
 	// 객체 생성 요청값 저장
 	Question question = new Question();
 	question.setqNo(qNo);

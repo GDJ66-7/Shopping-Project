@@ -5,7 +5,11 @@
 <%
 	request.setCharacterEncoding("utf-8");
 
-	// 작성자 유효성 검사 추가하기
+	//세션 로그인 유효성 검사(관리자)
+	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId2") == null){
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+		return;
+	}
 	
 	// 요청값 변수 저장
 	int aNo = Integer.parseInt(request.getParameter("aNo"));
@@ -13,7 +17,7 @@
 
 	// 받아온 값 저장
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
-	String id = "admin";/*request.getParameter("id");*/
+	String id = (String)request.getParameter("id");
 	String aContent = request.getParameter("aContent");
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	

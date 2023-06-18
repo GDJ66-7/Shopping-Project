@@ -10,7 +10,6 @@
 <%
 	request.setCharacterEncoding("utf-8");
 		
-
 	String dir = request.getServletContext().getRealPath("/review/reviewImg");
 	System.out.println(dir+"<----");
 	int max = 10 * 1024 * 1024; // 10MB

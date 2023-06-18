@@ -13,10 +13,26 @@
 		return;
 	}
 
+	// 로그인 세션 - 상품 상세페이지 내에 있는 게시글 추가 삭제 기능 분리
+	// 관리자1 loginEmpId1, 최고관리자 세션이름 loginEmpId2, 고객 세션이름 loginCstmId
+	String id = "";
+	if(session.getAttribute("loginCstmId") != null) { //loginCstmId = 현재 로그인한 고객아이디
+		id = (String)session.getAttribute("loginCstmId");
+	}
+	System.out.println(id+"<---productOne cstm id");
+	
+	// 로그인 세션(2) 관리자 admin&user1 -- 문의글 접근 위함 
+	String empid = "";
+	if(session.getAttribute("loginEmpId1") != null) { //loginEmpId1&loginEmpId2 = 현재 로그인한 관리자아이디
+		empid = (String)session.getAttribute("loginEmpId1");
+	} else {
+		empid = (String)session.getAttribute("loginEmpId2");
+	}
+	System.out.println(empid+"<---login empid");
+	
 	// 리스트에서 받아온 값
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
 	OneDao one = new OneDao();
-	String id = "customer1";
 
 	// DAO 사용
 	HashMap<String,Object> p = one.selectProductOne(productNo);
@@ -24,6 +40,7 @@
 //-------------------------------------------------------------------------------------------------
 	
 	// 해당 상품 - 리뷰 페이징 -------------------------------------------------------------------------
+	// 페이징 다른 페이지 연동 오류 --- where product_no 조건 안 줌 --- 수정
 	// 페이징 1) 현재 페이지
 	int revcurrentPage = 1;
 	if(request.getParameter("revcurrentPage")!=null){ // 유효한 값이면 정상 출력
@@ -32,7 +49,7 @@
 	
 	// 페이징 2) 전체 페이지 (dao 쓰겠다 선언) -- 리뷰 페이징 변수는 앞에 'rev' 붙임
 	ReviewDao review = new ReviewDao();
-	int revtotalRow = review.selectReviewCnt(); //dao 전체 row
+	int revtotalRow = review.selectReviewCnt(productNo); //dao 전체 row
 	int revrowPerPage = 5; // 페이지 당 행의 수 5개씩 출력할 것
 	int revbeginRow = (revcurrentPage-1) * revrowPerPage; //시작 행 - 0부터
 	
@@ -64,7 +81,7 @@
 
 	// 페이징 2) 전체 페이지
 	QuestionDao questionDao = new QuestionDao();
-	int totalRow = questionDao.selectQuestionCnt(); //dao 전체 row
+	int totalRow = questionDao.selectQuestionCnt(productNo); //dao 전체 row
 	int rowPerPage = 5;  // 페이지 당 행의 수 5개씩 출력할 것
 	int beginRow = (currentPage-1) * rowPerPage; //시작 행
 	
@@ -176,7 +193,7 @@
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
 	<h3>상품리뷰</h3>
-	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>">추가</a><!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
+	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>&historyNo=<%=2%>">추가</a><!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
 	<table class="table" id="productReview">
 		<tr>
 			<th>제목</th>
@@ -229,7 +246,13 @@
 <!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
 <hr>
 	<h3>문의사항</h3>
-	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>">추가</a>
+<%
+	if(session.getAttribute("loginCstmId")!=null) { // 로그아웃 상태면 문의하기 버튼이 보이지 않는다. 로그인 상태면 모든 고객이 작성 가능
+%>
+	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>">문의하기</a>
+<%
+	}
+%>
 	<table class="table" id="productQnA">
 		<tr>
 			<th>번호</th>
@@ -257,6 +280,7 @@
 	}
 %>
 	</table>
+
 	<!-------------- 문의 사항 페이징 버튼 -------------------------------------------------------->
 	<div>
 	<%

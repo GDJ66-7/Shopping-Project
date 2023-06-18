@@ -9,9 +9,13 @@
 <%
 	// sendRedirect 경로 수정 필요
 
-	// 로그인 세션 추가 test
-	String id = "customer2";
-	System.out.println(id);
+	// 로그인 세션 추가 
+	if(session.getAttribute("loginCstmId") == null) {
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+		return;
+	}
+	String id = (String)session.getAttribute("loginCstmId");
+	System.out.println(id+"<----insert Review id");
 	
 	// 객체 생성 (text+img = DAO 하나)
 	ReviewDao reviewdao = new ReviewDao();

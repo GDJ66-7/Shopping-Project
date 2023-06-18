@@ -9,8 +9,6 @@
 		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 		return;	
 	}
-
-	//로그인 세션 검사 추가해야함(관리자)
 	
 	// 받아온 값 저장 - 수정할 aNo & 해당 qNo
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
@@ -18,12 +16,21 @@
 	int aNo = Integer.parseInt(request.getParameter("aNo"));
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	String aContent = request.getParameter("aContent");
-	String id = request.getParameter("id");
+	String empid = (String)session.getAttribute("loginEmpId1");
+	if (empid == null) { // 답변을 단 관리자
+	    empid = (String) session.getAttribute("loginEmpId2");
+	}
 	//System.out.println(aNo+"<----");
 	
 	// Dao 선언 & 저장 (view에서는 수정 전 내용 가져와야 하니까 answerOne)
 	AnswerDao answer = new AnswerDao();
 	Answer one = answer.answerOne(qNo);
+	
+	//로그인 세션 검사
+	if(!empid.equals(one.getId())){
+		response.sendRedirect(request.getContextPath()+"/question/questionOne.jsp?qNo="+qNo);
+		return;
+	}
 
 %>
 <!DOCTYPE html>
@@ -33,7 +40,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<%=request.getContextPath()%>/answer/updateAnswerAction.jsp" method="post"> 
+	<form id="updateAnswer" action="<%=request.getContextPath()%>/answer/updateAnswerAction.jsp" method="post"> 
 	<input type="hidden" name="aNo" value="<%=one.getaNo()%>">
 	<input type="hidden" name="qNo" value="<%=one.getqNo()%>">
 	<input type="hidden" name="id" value="<%=one.getId()%>">
@@ -47,9 +54,21 @@
 			</tr>
 		</table>
 		<div>
-			<button type=submit class="btn btn-light">수정</button>
+			<button type=submit class="btn btn-light" onclick="updateAnswer()">수정</button>
 			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=one.getqNo()%>&productNo=<%=productNo%>" class="btn btn-light">취소</a>
 		</div>
 	</form>
+<script>
+function updateAnswer() {
+  let result = confirm("답변을 수정하시겠습니까?");
+  if (result) {
+    document.getElementById("updateAnswer").submit();
+    alert("답변 수정 완료 되었습니다.");
+  } else {
+	event.preventDefault();
+    return false;
+  }
+}
+</script>
 </body>
 </html>

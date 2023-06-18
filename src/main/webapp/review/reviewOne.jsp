@@ -3,14 +3,19 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
-	
+	//리뷰는 모든 사용자가 볼 수 있다
 	if(request.getParameter("historyNo") == null
 	||request.getParameter("historyNo").equals("")){
 		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
 		return;	
 	}
-	
-	// 로그인 세션 검사 -- 조회/수정/삭제 test
+
+	// 로그인 세션 검사 -- 조회/수정/삭제
+	String id = "";
+	if(session.getAttribute("loginCstmId") != null) { //loginCstmId = 현재 로그인한 고객아이디
+		id = (String)session.getAttribute("loginCstmId");
+	}
+	System.out.println(id+"<---review LOGIN ID");
 	
 	// 리스트에서 받아온 값 저장 & 메서드 호출 & 객체 생성
 	int historyNo = Integer.parseInt(request.getParameter("historyNo"));
@@ -71,9 +76,26 @@ a{text-decoration: none;}
 		<td><%=reviewText.getCreatedate().substring(0,10)%></td>
 	</tr>
 </table>
-<a href="<%=request.getContextPath()%>/review/updateReview.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
 <a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">목록</a>
-<a href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&historyNo=<%=reviewText.getHistoryNo()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
+<%
+	if(id.equals(reviewText.getId())) { //로그인한 사용자와 작성자가 같을 때만 수정/삭제버튼 노출
+%>
+<a href="<%=request.getContextPath()%>/review/updateReview.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
+<a onclick="deleteReview()" href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&historyNo=<%=reviewText.getHistoryNo()%>&writerId=<%=reviewText.getId()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
+<%
+	}
+%>
 </div>
+<script>
+function deleteReview(){ //삭제 confirm 추가
+	let result = confirm("작성된 리뷰를 삭제하시겠습니까?");
+	if(result){
+		alert("삭제되었습니다");
+	}else{
+		event.preventDefault();
+	    return;
+	}
+}
+</script>
 </body>
 </html>

@@ -114,13 +114,14 @@ public class QuestionDao {
 	
 	
 	// 5) 문의 전체 row (view 페이징에 사용)
-	public int selectQuestionCnt() throws Exception {
+	public int selectQuestionCnt(int productNo) throws Exception {
 		
 		int totalrow = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELECT count(*) from question";
+		String sql = "SELECT count(*) from question where product_no=?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1,productNo);
 		ResultSet rs = stmt.executeQuery();
 		
 		if(rs.next()) {

@@ -4,19 +4,19 @@
 <%@ page import="java.util.*"%>
 <%
 	request.setCharacterEncoding("utf-8");
-
-	//작성자 유효성 검사 추가하기
-	
-	//
-	if(request.getParameter("qNo") == null
-	|| request.getParameter("qNo").equals("")){
-		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
-		return;
-	}
 	
 	//요청값 변수 저장
 	int qNo = Integer.parseInt(request.getParameter("qNo"));
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	String id = (String)session.getAttribute("loginCstmId");
+	
+	/*if(request.getParameter("qNo") == null
+	|| request.getParameter("qNo").equals("")
+	|| request.getParameter("loginCstmId")==null
+	|| request.getParameter("loginCstmId").equals("")){
+		response.sendRedirect(request.getContextPath()+"/product/productOne.jsp");
+		return;
+	}*/
 	
 	//객체 생성
 	QuestionDao qDao = new QuestionDao();
