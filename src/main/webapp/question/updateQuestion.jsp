@@ -75,7 +75,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>제목</td>
 				<td>
-				<input type="text" name="qTitle" id="qTitle" value="<%=one.getqTitle()%>" size=60; required="required" placeholder="제목을 입력하세요(50자 이내)">
+				<input type="text" name="qTitle" value="<%=one.getqTitle()%>" size=60; placeholder="제목을 입력하세요(50자 이내)">
 			</td>
 		</tr>
 		<tr>
@@ -93,7 +93,7 @@ a{text-decoration: none;}
 		<tr>
 			<td>내용</td>
 			<td>
-			<textarea name="qContent" id="qContent" cols="80" rows="10" style="resize: none;" required="required" placeholder="내용을 입력하세요(최대500자)"><%=one.getqContent()%></textarea>
+			<textarea name="qContent" cols="80" rows="10" style="resize: none;" id="qContent" placeholder="내용을 입력하세요(최대500자)"><%=one.getqContent()%></textarea>
 			<span id="count"><em>0</em></span><em>/500</em>
 			</td>
 			</tr>
@@ -106,7 +106,21 @@ a{text-decoration: none;}
 </div>
 <script>
 function QuestionUpdate() {
-	  let result = confirm("내용을 수정하시겠습니까?");
+	let form = document.getElementById("QuestionUpdate");
+	if (form.qContent.value.trim() === '') { // 공백 제거 후 비교
+		alert('내용을 입력해주세요');
+		form.qContent.focus();
+		event.preventDefault();
+		return;
+	}
+	if (form.qTitle.value.trim() === '') { // 공백 제거 후 비교
+		alert('제목을 입력해주세요');
+		form.qTitle.focus();
+		event.preventDefault();
+		return;
+	}
+	
+	let result = confirm("내용을 수정하시겠습니까?");
 	  if (result) {
 		  document.getElementById("QuestionUpdate").submit();
 		  alert("게시글 수정이 완료되었습니다.");

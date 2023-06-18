@@ -38,6 +38,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
+		var $reviewContent = $('textarea[name="reviewContent"]');
 		const MAX_COUNT = 500; // const 상수선언 사용하는 키워드(자바의 final과 유사함:변경될 수 없는 값)
 		$('#reviewContent').keyup(function(){ // 키보드를 눌렀다 떼면
 			let len = $('#reviewContent').val().length; // textarea === val 값으로 불러옴
@@ -48,7 +49,7 @@
 			} else {
 				$('#count').text(len); // 현재 입력된 글자수 출력
 			}
-		});
+		  });
 	});
 </script>
 <title>상품 리뷰 작성</title>
@@ -71,17 +72,17 @@
 	<table class="table table-bordered">
 		<tr>
 			<td>제목</td>
-			<td><input type="text" name="reviewTitle" required="required" size=60; placeholder="제목을 입력해주세요(50자 이내)"></td>	
+			<td><input type="text" name="reviewTitle" size=60; placeholder="제목을 입력해주세요(50자 이내)"></td>	
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea rows="5" cols="80" name="reviewContent" id="reviewContent" required="required" placeholder="내용을 입력하세요(최대500자)" style="resize: none;"></textarea>
+			<td><textarea rows="5" cols="80" name="reviewContent" id="reviewContent" placeholder="내용을 입력하세요(최대500자)" style="resize: none;"></textarea>
 			<span id="count"><em>0</em></span><em>/500</em>
 			</td>	
 		</tr>
 		<tr>
 			<td>사진 업로드</td>
-			<td><input type="file" name="reviewImg" required="required"></td>
+			<td><input type="file" name="reviewImg" accept="image/jpeg, image/jpg"></td>
 		</tr>
 	</table>
 	<div>
@@ -92,15 +93,35 @@
 </div>
 <script>
 function insertReview() {
-	  let result = confirm("리뷰를 작성하시겠습니까?");
+	let form = document.getElementById("insertReview");
+	if (form.reviewTitle.value.trim() === '') { // 공백 제거 후 비교
+		alert('제목을 입력해주세요');
+		form.reviewTitle.focus();
+		event.preventDefault();
+		return;
+	}
+	if (form.reviewContent.value.trim() === '') {
+		alert('내용을 입력해주세요');
+		form.reviewContent.focus();
+		event.preventDefault();
+		return;
+	}
+	if (form.reviewImg.value.trim() === '') {
+		alert('사진을 등록해주세요');
+		form.reviewImg.focus();
+		event.preventDefault();
+		return;
+	} // input file 유효성 검사 자바스크립트 방법도 시도해보기
+	
+	let result = confirm("리뷰를 등록하시겠습니까?");
 	  if (result) {
 		  document.getElementById("insertReview").submit();
-		  alert("게시글이 작성되었습니다.");
-	} else {
-		event.preventDefault();
-	    return;
-	  }
+		  alert("게시글 등록이 완료되었습니다.");
+	  }else{
+		  event.preventDefault();
+		    return;
 	}
+}
 </script>
 </body>
 </html>

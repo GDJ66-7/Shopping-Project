@@ -127,7 +127,7 @@ function QuestionDelete(){ //게시글 삭제 confirm 추가
 				<tr>
 					<td style="padding-right: 5pt;">comment</td>
 					<td>
-						<textarea rows="2" cols="100" name="aContent" placeholder="내용을 입력하세요" required="required"></textarea>
+						<textarea rows="2" cols="100" name="aContent" id="aContent" placeholder="내용을 입력하세요"></textarea>
 					</td>
 					<th>
 					<button type="submit" class="btn btn-light" onclick="insertAnswer()">답변입력</button>
@@ -140,13 +140,21 @@ function QuestionDelete(){ //게시글 삭제 confirm 추가
 %>
 <script>
 function insertAnswer() {
-	  let result = confirm("문의사항에 대한 답변을 입력하시겠습니까?");
-	  if (result) {
-		  document.getElementById("insertAnswer").submit();
-		  alert("답변이 등록되었습니다.");
-	  }else{
-		  event.preventDefault();
-		    return;
+	let form = document.getElementById("insertAnswer");
+	if (form.aContent.value.trim() === '') { // 공백 제거 후 비교
+		alert('내용을 입력해주세요');
+		form.aContent.focus();
+		event.preventDefault();
+		return;
+	}
+
+	let result = confirm("문의사항에 대한 답변을 입력하시겠습니까?");
+	if (result) {
+		form.submit();
+		alert("답변이 등록되었습니다.");
+	} else {
+		event.preventDefault();
+		return;
 	}
 }
 </script>

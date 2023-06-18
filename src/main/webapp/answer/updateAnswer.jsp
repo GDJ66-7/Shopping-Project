@@ -49,7 +49,7 @@
 		<tr>
 			<td>문의 답변 수정</td>
 			<td>
-			<textarea name="aContent" cols="80" rows="10" style="resize: none;" required="required"><%=one.getaContent()%></textarea>
+			<textarea name="aContent" cols="80" rows="10" style="resize: none;"><%=one.getaContent()%></textarea>
 			</td>
 			</tr>
 		</table>
@@ -60,14 +60,22 @@
 	</form>
 <script>
 function updateAnswer() {
-  let result = confirm("답변을 수정하시겠습니까?");
-  if (result) {
-    document.getElementById("updateAnswer").submit();
-    alert("답변 수정 완료 되었습니다.");
-  } else {
-	event.preventDefault();
-    return false;
-  }
+	let form = document.getElementById("updateAnswer");
+	if (form.aContent.value.trim() === '') { // 공백 제거 후 비교
+		alert('내용을 입력해주세요');
+		form.aContent.focus();
+		event.preventDefault();
+		return;
+	}
+	
+	let result = confirm("내용을 수정하시겠습니까?");
+	  if (result) {
+		  document.getElementById("updateAnswer").submit();
+		  alert("답변 수정이 완료되었습니다.");
+	  }else{
+		  event.preventDefault();
+		    return;
+	}
 }
 </script>
 </body>

@@ -59,7 +59,7 @@
 			<label for="qCategory">카테고리</label>
 		</td>
 		<td>
-			<select name="qCategory" id="qCategory">
+			<select name="qCategory">
 			<option value="배송">배송</option>
 			<option value="상품">상품</option>
 			<option value="기타">기타</option>
@@ -68,12 +68,12 @@
 	</tr>
 	<tr>
 		<td>제목</td>
-		<td><input type="text" name="qTitle" id="qTitle" required="required" size=60; placeholder="제목을 입력하세요(50자 이내)"></td>	
+		<td><input type="text" name="qTitle" size=60; placeholder="제목을 입력하세요(50자 이내)"></td>	
 	</tr>
 	<tr>
 		<td>내용</td>
 		<td>
-		<textarea rows="5" cols="80" name="qContent" id="qContent" required="required" placeholder="내용을 입력하세요(최대500자)" style="resize: none;"></textarea>
+		<textarea rows="5" cols="80" name="qContent" id="qContent" placeholder="내용을 입력하세요(최대500자)" style="resize: none;"></textarea>
 		<span id="count"><em>0</em></span><em>/500</em>
 		</td>
 	</tr>
@@ -86,11 +86,27 @@
 </div>
 <script>
 function insertQuestion() {
-	  let result = confirm("문의사항을 작성하시겠습니까?");
+	let form = document.getElementById("insertQuestion");
+	if (form.qTitle.value.trim() === '') { // 공백 제거 후 비교
+		alert('제목을 입력해주세요');
+		form.qTitle.focus();
+		event.preventDefault();
+		return;
+	}
+	if (form.qContent.value.trim() === '') {
+		alert('내용을 입력해주세요');
+		form.qContent.focus();
+		event.preventDefault();
+		return;
+	}
+	
+	let result = confirm("등록하시겠습니까?");
 	  if (result) {
 		  document.getElementById("insertQuestion").submit();
-		  alert("게시글이 작성되었습니다.");
-		 return;
+		  alert("게시글 등록이 완료되었습니다.");
+	  }else{
+		  event.preventDefault();
+		    return;
 	}
 }
 </script>

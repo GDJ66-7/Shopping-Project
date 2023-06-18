@@ -87,7 +87,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>제목</td>
 				<td>
-				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" required="required" size=60; placeholder="제목을 입력해주세요(50자 이내)">
+				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" size=60; placeholder="제목을 입력해주세요(50자 이내)">
 				</td>
 			</tr>
 			<tr>
@@ -100,7 +100,7 @@ a{text-decoration: none;}
 			<tr>
 				<td>내용</td>
 				<td>
-				<textarea name="reviewContent" id="reviewContent" cols="80" rows="10" style="resize: none;" required="required" placeholder="내용을 입력하세요(최대500자)"><%=reviewText.getReviewContent()%></textarea>
+				<textarea name="reviewContent" id="reviewContent" cols="80" rows="10" style="resize: none;" placeholder="내용을 입력하세요(최대500자)"><%=reviewText.getReviewContent()%></textarea>
 				<span id="count"><em>0</em></span><em>/500</em>
 				</td>
 			</tr>
@@ -121,10 +121,24 @@ a{text-decoration: none;}
 	</div>
 <script>
 function updateReview() {
-	  let result = confirm("내용을 수정하시겠습니까?");
+	let form = document.getElementById("updateReview");
+	if (form.reviewTitle.value.trim() === '') { // 공백 제거 후 비교
+		alert('제목을 입력해주세요');
+		form.reviewTitle.focus();
+		event.preventDefault();
+		return;
+	}
+	if (form.reviewContent.value.trim() === '') {
+		alert('내용을 입력해주세요');
+		form.reviewContent.focus();
+		event.preventDefault();
+		return;
+	}
+	
+	let result = confirm("리뷰를 등록하시겠습니까?");
 	  if (result) {
 		  document.getElementById("updateReview").submit();
-		  alert("게시글 수정이 완료되었습니다.");
+		  alert("게시글 등록이 완료되었습니다.");
 	  }else{
 		  event.preventDefault();
 		    return;

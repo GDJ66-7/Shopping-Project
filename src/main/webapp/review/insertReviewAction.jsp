@@ -24,7 +24,7 @@
 	String dir = request.getServletContext().getRealPath("/review/reviewImg"); // 프로젝트 내 reviewImg 파일 호출
 	System.out.println(dir+"<---dir"); // 실제 경로 <---dir 
 	
-	int max = 100 * 1024 * 1024; // 업로드 파일 크기 제한 
+	int max = 10 * 1024 * 1024; // 업로드 파일 크기 제한 
 	MultipartRequest mRequest = new MultipartRequest(request, dir, max, "utf-8", new DefaultFileRenamePolicy());
 	
 	String msg = "";
@@ -50,7 +50,7 @@
 
 	// --- 이미지
 	// 파일은 jpg만 업로드 가능
-	if(mRequest.getContentType("reviewImg").equals("image/jpeg") == false) { // 타입이 유효하지 않은 저장된 파일 삭제
+	/*if(mRequest.getContentType("reviewImg").equals("image/jpeg") == false) { // 타입이 유효하지 않은 저장된 파일 삭제
 		System.out.println("jpg파일이 아닙니다");
 		String saveFilename = mRequest.getFilesystemName("reviewImg");
 			System.out.println(saveFilename+"<----savefilename");
@@ -63,7 +63,7 @@
 		msg =URLEncoder.encode("JPG파일만 업로드 가능합니다.","utf-8");
 		response.sendRedirect(request.getContextPath()+"/review/insertReview.jsp?historyNo="+historyNo+"&productNo="+productNo+"&msg="+msg); //jsp?historyNo=..(추가)
 		return;
-			}
+			}*/
 	
  	// 2) input type = "file" 값(파일 메타 정보)반환 API(원본 파일 이름, 저장된 파일 이름, 컨텐츠 타입) 받아옴
 	String filetype = mRequest.getContentType("reviewImg"); // Img 받아온다. api 받는 타입 다름
