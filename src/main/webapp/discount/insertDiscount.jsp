@@ -7,6 +7,7 @@
 	// 유효성 검사 상품 번호를 이용하여 할인가격을 추가시키기 때문에 상품번호가 필수적
 	if(request.getParameter("productNo") == null) {
 		response.sendRedirect(request.getContextPath()+"/main/empMain.jsp");
+		return;
 	}
 
 	String productName = request.getParameter("productName");

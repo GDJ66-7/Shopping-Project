@@ -340,6 +340,9 @@
                         <div class="row">
 				            <%
 								for(HashMap<String, Object> productMap : productList) {
+									// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
+									java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+									String productPrice = numberFormat.format(productMap.get("productPrice"));
 									// 판매중인 상품만 상품 상세정보에 들어갈 수 있게 설정
 									if(productMap.get("productStatus").equals("판매중")){
 							%>
@@ -354,7 +357,7 @@
 											<a class="fontBlack center-align larger-text google-font" style="color: black; text-decoration: none;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><em><%=productMap.get("productName") %></em></a>
 											<br>	
 											<!-- 상품 가격 -->
-											<span class="fontBlackBold center-align larger-text">가격 : <%=productMap.get("productPrice") %></span>
+											<span class="fontBlackBold center-align larger-text">가격 : <%=productPrice %></span>
 											<br>
 							<% 
 											// 할인가가 있는 상품만 할인가격이 나오게 설정
@@ -391,7 +394,7 @@
 											<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>">
 											<span class="fontBlack center-align larger-text google-font" style="color : black;"><%=productMap.get("productName") %></span>
 											<br>
-											<span class="fontBlackBold center-align larger-text">가격 : <%=productMap.get("productPrice") %></span>
+											<span class="fontBlackBold center-align larger-text">가격 : <%=productPrice %></span>
 											<br>
 											<span style="color: red;" class="larger-text"><%=productMap.get("productStatus") %></span>
 											<br>

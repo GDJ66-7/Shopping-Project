@@ -143,7 +143,7 @@ public class DiscountDao {
 		return row;
 	}
 	
-	// 4)할인 상품 삭제
+	// 4)할인 상품 개별 삭제
 	public int deleteDiscount(int discountNo) throws Exception {
 		int row = 0;
 		DBUtil dbutil = new DBUtil();
@@ -163,6 +163,27 @@ public class DiscountDao {
 		return row;
 	}
 	
+	public int allDeleteDiscount() throws Exception {
+		int allRow = 0;
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		
+		/* discount_end가 지난 데이터는 전부 삭제.
+		  	DELETE
+			FROM discount
+			WHERE SYSDATE() > discount_end 
+		 */
+		
+		String sql = "DELETE\r\n"
+					+ "	FROM discount\r\n"
+					+ "	WHERE SYSDATE() > discount_end";
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		allRow = stmt.executeUpdate();
+		System.out.println(stmt + "<-- DiscountDao allDeleteDiscount stmt");
+		
+		return allRow;
+	}
 	
 	
 		

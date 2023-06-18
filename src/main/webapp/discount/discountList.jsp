@@ -1,3 +1,4 @@
+<%@page import="java.text.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
@@ -228,6 +229,7 @@
 		         </ul>
 		      	<button class="genric-btn primary-border circle" type="submit">검색</button>
 			</form>
+			<a class="genric-btn info-border circle" href="<%=request.getContextPath()%>/discount/allDeleteDiscountAction.jsp?">할인기간종료상품 전체삭제</a>
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
 					<th>할인번호</th>
@@ -244,6 +246,9 @@
 				</tr>
 				<%
 					for(HashMap<String,Object> dMap : discountList) {
+						java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+						String discountPrice = numberFormat.format(dMap.get("productPrice")); 
+						
 						// 할인율이 double타입이라 십의단위로 나타내고 싶어 형변환후 *100
 						double discountRate = (double) dMap.get("discountRate");
 						int discountRatePercentage = (int) (discountRate * 100);
@@ -259,7 +264,7 @@
 							<%=dMap.get("productName") %>
 						</td>
 						<td>
-							<%=(int)dMap.get("productPrice")%>원
+							<%=discountPrice %>원
 						</td>
 						<td>
 							<span style="color: red;"><%=(int)dMap.get("productDiscountPrice")%>원</span>

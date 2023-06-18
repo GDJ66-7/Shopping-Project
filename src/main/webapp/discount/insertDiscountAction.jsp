@@ -7,7 +7,8 @@
 		||request.getParameter("discountStart") == null
 		||request.getParameter("discountEnd") == null
 		||request.getParameter("discountRate") == null) {
-		response.sendRedirect(request.getContextPath()+"/main/empProductList.jsp");
+		response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp");
+		return;
 	}
 
 	int productNo = Integer.parseInt(request.getParameter("productNo"));

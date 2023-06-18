@@ -280,6 +280,9 @@
 				</tr>
 				<%
 					for(HashMap<String, Object> productMap : pList) {
+						java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+						String productPrice = numberFormat.format(productMap.get("productPrice")); 
+						String discountPrice = numberFormat.format(productMap.get("productDiscountPrice"));
 				%>
 						<tr>
 							<td><%=productMap.get("productNo") %></td>
@@ -293,10 +296,10 @@
 								<span  class="product-name" style="color: red;"><%=productMap.get("productName") %></span>
 							</td>
 							<td>
-								원가:<%=productMap.get("productPrice") %>
+								원가:<%=productPrice %>
 								<br>
 								
-								<span class="discounted-price">할인가:<%=productMap.get("productDiscountPrice") %></span>
+								<span class="discounted-price">할인가:<%=discountPrice %></span>
 							</td>
 				<% 
 						} else {
@@ -305,7 +308,7 @@
 								<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="50" height="50">
 								<span  class="product-name"><%=productMap.get("productName") %></span>
 							</td>
-							<td><%=productMap.get("productPrice") %></td>
+							<td><%=productPrice %>원</td>
 				<% 
 						}
 				%>
