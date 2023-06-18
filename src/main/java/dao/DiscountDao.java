@@ -8,7 +8,7 @@ import vo.Discount;
 public class DiscountDao {
 	
 	// 1. 상품 할인 리스트 조회
-	public ArrayList<HashMap<String, Object>> discountList(String productName, int beginRow, int rowPerPage) throws Exception {
+	public ArrayList<HashMap<String, Object>> discountList(String productName, String categoryName, int beginRow, int rowPerPage) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		/*
@@ -18,10 +18,18 @@ public class DiscountDao {
 		String sql = "SELECT d.discount_no 할인번호, d.product_no 상품번호, p.product_name 상품이름, p.product_price 상품가격, p.product_price*(1- d.discount_rate) 상품할인가, d.discount_start 시작날짜, d.discount_end 종료날짜, d.discount_rate 할인율, d.createdate 생성날짜,  d.updatedate 수정날짜 \r\n"
 				+ "				FROM discount d INNER JOIN product p\r\n"
 				+ "				ON d.product_no = p.product_no";
-
+		// 검색어만 있을때
 		if(!productName.equals("")) {
 			sql += " WHERE p.product_name LIKE '%" + productName + "%'";
+		} 
+		// 카테고리만 있을때
+		else if(!categoryName.equals("")) {
+			sql += " AND p.category_name = '" + categoryName + "'";
 		}
+		// 검색어 카테고리 둘다 있을때
+		else if (!productName.equals("") && !categoryName.equals("")) {
+	        sql += " AND p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+	    }
 			
 		sql += " LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -49,7 +57,7 @@ public class DiscountDao {
 	}
 	
 	// 1-1) 상품할인리스트 전체행 개수
-	public int productListCnt1(String productName) throws Exception {
+	public int productListCnt1(String productName, String categoryName) throws Exception {
 		int totalRow = 0;
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
@@ -60,9 +68,18 @@ public class DiscountDao {
 		
 		String sql = "SELECT COUNT(*) FROM discount d INNER JOIN product p ON d.product_no = p.product_no";
 		
+		// 검색어 있을대
 		if(!productName.equals("")) {
 			sql += " WHERE p.product_name LIKE '%" + productName + "%'";
-		}
+		} 
+		// 카테고리 있을때
+		else if(!categoryName.equals("")) {
+			sql += " AND p.category_name = '" + categoryName + "'";
+		} 
+		// 검색어 카테고리 둘다 있을때
+		else if (!productName.equals("") && !categoryName.equals("")) {
+	        sql += " AND p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
+	    }
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();

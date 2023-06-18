@@ -6,14 +6,23 @@
 <%
 	// dao 객체 생성
 	DiscountDao dDao = new DiscountDao();
-	
+	CategoryDao cDao = new CategoryDao();	
+
 	//관리자 할인상품리스트는 전체할인상품을 보여주므로 매개변수 공백값처리.
 	String productName =  request.getParameter("productName");
+	String categoryName = request.getParameter("categoryName");	
+	
+	
+	// 초기값이을 공백으로 잡아서 전체리스트를 출력하게 한다. (Dao에서 공백일때 초기값으로지정)
 	if(productName == null) {
 		productName = "";
 	}
+	if(categoryName == null) {
+		categoryName = "";
+	}
 	
-
+	System.out.println(productName + "<-- discountList productName");
+	System.out.println(categoryName + "<-- discountList categoryName");
 	
 	
 	// ----------------- 페이징 처리---------------------------
@@ -28,7 +37,7 @@
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	int totalRow = dDao.productListCnt1(productName);
+	int totalRow = dDao.productListCnt1(productName, categoryName);
 	System.out.println(totalRow + "<-- productList totalRow");
 	
 	int lastPage = totalRow / rowPerPage;
@@ -51,11 +60,13 @@
 	
 	// 1. 상품 할인 리스트 조회하기
 	ArrayList<HashMap<String, Object>> discountList = new ArrayList<>();
-	discountList = dDao.discountList(productName, beginRow, rowPerPage);
+	discountList = dDao.discountList(productName, categoryName, beginRow, rowPerPage);
+	ArrayList<HashMap<String,Object>> cList = cDao.categoryNameList();
 %>
 
 <!DOCTYPE html>
 <html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -200,6 +211,21 @@
 		      																		<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
 		      		<input style="text-align: center;" type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
 		      	</div>
+		      	<ul class="navbar-nav">
+               		<li>
+               			<input type="checkbox" name="categoryName" value="">전체보기
+              			<%
+                      		for(HashMap<String, Object> categoryNameMap : cList) {
+                      	%>	
+                     			<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
+                     			<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+                      			<%=categoryNameMap.get("categoryName")%>
+                      	<% 	
+                      			
+                      		}
+                      	%>
+                 	</li>
+		         </ul>
 		      	<button class="genric-btn primary-border circle" type="submit">검색</button>
 			</form>
 			<table style="width:100%; height:100%">
@@ -274,7 +300,7 @@
 				if(minPage>1) {
 			%>
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>">이전</a>
+						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">이전</a>
 					</li>
 			<%			
 				}
@@ -291,7 +317,7 @@
 					}else {					
 			%>		
 						<li class="list-group-item">
-							<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>&productName=<%=productName%>"><%=i%></a>
+							<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>"><%=i%></a>
 						</li>
 			<%				
 					}
@@ -302,7 +328,7 @@
 				if(maxPage != lastPage) {
 			%>
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>">다음</a>
+						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">다음</a>
 					</li>
 			<%	
 				}
