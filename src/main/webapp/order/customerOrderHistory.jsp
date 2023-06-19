@@ -174,7 +174,7 @@
 				<%
 					if(s.get("배송상태").equals("구매확정")){
 				%>
-				<td><a  class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/reveiew/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td>
+				<td><a  class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/review/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td>
 				<%
 					}
 				%>				
