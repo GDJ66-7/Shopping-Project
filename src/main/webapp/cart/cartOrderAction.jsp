@@ -66,13 +66,17 @@
 	int row6 = cartDao.deleteCheckedCart(id);
 	System.out.println(row6 + " <-- cartOrderAction row6");
 	
+	// 20. 결제 완료 상태로 변경 수정
+	int row7 = cartDao.updatePaymentStatus(id);
+	System.out.println(row7 + " <-- cartOrderAction row7");
 	
-	if(row1>0 && row2>0 && row3>0 && row4>0 && row5>0 && row6>0) {
+	if(row1>0 && row2>0 && row3>0 && row4>0 && row5>0 && row6>0 && row7>0) {
 		System.out.println("결제 성공");
+		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	} else {
 		System.out.println("결제 실패");
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		response.sendRedirect(request.getContextPath()+"/cart/cartList.jsp");
 		return;
 	}
 	

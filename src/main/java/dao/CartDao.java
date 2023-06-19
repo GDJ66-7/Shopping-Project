@@ -26,7 +26,7 @@ public class CartDao {
 		}
 		if(row>0) {	// 장바구니에 같은 상품이 있으므로 추가한 수량만큼 +한다.
 			String updateSql = "UPDATE cart "
-					+ "SET cart_cnt = cart_cnt + ? "
+					+ "SET cart_cnt = cart_cnt + ? ,updatedate = NOW() "
 					+ "WHERE product_no = ? AND id = ?";
 			PreparedStatement updateStmt = conn.prepareStatement(updateSql);
 			updateStmt.setInt(1, cart.getCartCnt());
@@ -123,7 +123,7 @@ public class CartDao {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "UPDATE cart "
-				+ "SET cart_cnt = ? "
+				+ "SET cart_cnt = ?, updatedate = NOW() "
 				+ "WHERE cart_no = ? AND id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, cart.getCartCnt());
@@ -139,7 +139,7 @@ public class CartDao {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String sql = "UPDATE cart "
-				+ "SET checked = ? "
+				+ "SET checked = ?, updatedate = NOW() "
 				+ "WHERE cart_no = ? AND id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, cart.getChecked());
@@ -408,8 +408,7 @@ public class CartDao {
 			rankPlusPoint = 0.0001;
 		}else {
 			rankPlusPoint = 0.00001;
-		}
-		
+		}	
 		String sql = "UPDATE customer "
 				+ "SET cstm_point = cstm_point + ?*(0.01 + ?), updatedate = NOW() "
 				+ "WHERE id = ? ";
@@ -495,7 +494,7 @@ public class CartDao {
 	}
 	
 	// 19. 장바구니에서 체크 된 상품 전체 삭제
-	public int deleteCheckedCart(String id)throws Exception {
+	public int deleteCheckedCart(String id) throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		String deleteSql = "DELETE FROM cart "
@@ -507,7 +506,21 @@ public class CartDao {
 		return row;
 	}
 	
-	
+	// 20. 결제 완료 상태로 변경
+	public int updatePaymentStatus(String id) throws Exception {
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+		String sql = "UPDATE orders "
+				+ "SET payment_status = '결제완료', updatedate = NOW() "
+				+ "WHERE id = ? AND payment_status ='결제대기'"
+				+ "ORDER BY order_no DESC "
+				+ "LIMIT 1 ";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, id);
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;
+	}
 	
 	
 }	
