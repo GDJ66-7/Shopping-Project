@@ -237,7 +237,6 @@
     <br>
     	<div class="col-12">
     		<div style="text-align:center;">
-		    	<a href="<%=request.getContextPath()%>/product/insertProduct.jsp">상품추가</a>
 	     		<form style="text-align:center;" id="empProductSearchForm" action="<%=request.getContextPath()%>/product/empProductList.jsp" method="get">
    																						<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
               		<input style="text-align: center;"  type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
@@ -286,7 +285,10 @@
 	                </script>
 		      	</div>
 		    </div>
-		      	<button class="genric-btn primary-border circle" type="submit">검색</button>
+		    <div style="right: = auto;">
+		    	<a class="genric-btn info-border circle" href="<%=request.getContextPath()%>/product/insertProduct.jsp">상품추가하기</a>
+		    </div>
+		    <br>
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
 					<th>번호</th>

@@ -16,7 +16,6 @@
 	
 	/*
 		String productName = null;
-	
 	*/
 	
 	String productName = request.getParameter("productName"); // null
@@ -239,7 +238,7 @@
 						</div>
                         <div class="hearer_icon d-flex align-items-center">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="cart.html">
+                            <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
                                 <i class="flaticon-shopping-cart-black-shape"></i>
                             </a>
                         </div>

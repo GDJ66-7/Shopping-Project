@@ -2,8 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
-
-
 <%
 	// dao 객체 생성
 	DiscountDao dDao = new DiscountDao();
@@ -287,7 +285,10 @@
 		         </ul>
 		      	<button class="genric-btn primary-border circle" type="submit">검색</button>
 			</form>
-			<a class="genric-btn info-border circle" href="<%=request.getContextPath()%>/discount/allDeleteDiscountAction.jsp?">할인기간종료상품 전체삭제</a>
+			<div>
+				<a class="genric-btn danger circle" href="<%=request.getContextPath()%>/discount/allDeleteDiscountAction.jsp?">할인기간종료상품 전체삭제</a>
+			</div>
+			<br>
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
 					<th>할인번호</th>
