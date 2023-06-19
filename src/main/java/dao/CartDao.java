@@ -305,7 +305,7 @@ public class CartDao {
 		if(row>0) {
 			String insertOrderSql = "INSERT INTO "
 					+ "orders(id, payment_status, delivery_status, order_cnt, order_price, order_address, createdate, updatedate) "
-					+ "VALUES( ?, '결제대기', '발송대기', ?, ?, ?, NOW(), NOW()) ";
+					+ "VALUES( ?, '결제대기', '배송중', ?, ?, ?, NOW(), NOW()) ";
 			PreparedStatement insertStmt = conn.prepareStatement(insertOrderSql);
 			insertStmt.setString(1, id);
 			insertStmt.setInt(2, totalCartCnt);
