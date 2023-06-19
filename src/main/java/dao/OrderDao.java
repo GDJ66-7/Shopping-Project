@@ -80,14 +80,14 @@ public class OrderDao {
 			System.out.println(orderNo + "<-- OrderDao cancelOrder orderNo");
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql = "  UPDATE orders SET payment_status = '취소', delivery_status = '구매취소', updatedate = now() WHERE order_no = ?;";
+			String sql = "  UPDATE orders SET payment_status = '취소', delivery_status = '구매취소', updatedate = now() WHERE order_no = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, orderNo);
 			row = stmt.executeUpdate();
 			return row ;
 		}
 		// 상품 구매취소시 포인트 변경
-		public int  cnacelPoint(int  orderNo) throws Exception{
+		public int  cancelPoint(int  orderNo) throws Exception{
 			int row = 0;
 			int point = 0;
 			System.out.println(orderNo + "<-- OrderDao cancelpoint orderNo");
@@ -107,6 +107,18 @@ public class OrderDao {
 			stmt2.setInt(1, orderNo);
 			stmt2.setInt(2, point);
 			row = stmt2.executeUpdate();
+			return row;
+		}
+		// 상품주문확정
+		public int complete(int orderNo) throws Exception {
+			int row = 0;
+			System.out.println(orderNo + "<-- OrderDao cancelpoint orderNo");
+			DBUtil dbUtil = new DBUtil(); 
+			Connection conn =  dbUtil.getConnection();
+			String sql = "UPDATE orders SET delivery_status ='구매확정', updatedate = now() WHERE order_no =?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, orderNo);
+			row = stmt.executeUpdate();
 			return row;
 		}
 }

@@ -144,7 +144,7 @@
 	<%
 		for(HashMap<String, Object> s : list){
 	%>
-		<table class="table table-bordered">
+		<table class="table">
 			<tr>
 				<td>주문번호</td>
 				<td>상품이름</td>
@@ -170,8 +170,11 @@
 				<td><a  class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/order/deleteOrder.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">주문취소하기</a></td>
 				<%
 					}
+					if(s.get("결제상태").equals("결제완료") && s.get("배송상태").equals("배송중")){
 				%>
+				<td><a class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/order/orderComplete.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">구매확정</a></td>
 				<%
+					}
 					if(s.get("배송상태").equals("구매확정")){
 				%>
 				<td><a  class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/review/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td>

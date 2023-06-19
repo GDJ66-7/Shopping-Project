@@ -28,6 +28,22 @@
 <html lang="zxx">
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		const MAX_COUNT = 50; // const 상수선언 사용하는 키워드 (자바의 final과 유사함)
+		$('#comment').keyup(function(){
+			let len = $('#comment').val().length;
+			if(len > MAX_COUNT){
+				let str = $('#comment').val().substring(0, MAX_COUNT);
+				$('#comment').val(str);
+				alert(MAX_COUNT+'자까지만 입력가능');
+			}else{
+				$('#count').text(len+"/"+(MAX_COUNT-len));	
+			}
+		});
+	});
+</script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -123,7 +139,7 @@
 	<%
 		for(HashMap<String, Object> s : list){
 	%>
-		<table class="table table-bordered">
+		<table class="table">
 			<tr>
 				<td>주문번호</td>
 				<td>상품이름</td>
@@ -149,6 +165,12 @@
 	<%
 		}
 	%>
+	<div>
+		<p>댓글(50자 이하) 현재:<span id="count">0</span>자</p>
+		<div>
+	공지사항 내용<textarea id="comment" rows="5" cols="60" name="" required="required" class="single-textarea"></textarea><br>
+		</div>
+	</div>
 	<button type="submit" class="genric-btn primary-border circle">주문 취소</button>
 	</form>
     </div><br>

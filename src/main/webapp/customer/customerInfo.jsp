@@ -287,161 +287,184 @@
     <!-- breadcrumb part end-->
 
   <!-- ================ contact section start ================= -->
-    <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">회원정보</h2>
-        </div>
-   	<p>
-		 <%
-        	if(request.getParameter("msg") != null){
-         %>
-        		<%=request.getParameter("msg") %>
-         <% 
-        	}
-      	 %>		
-	</p>
-	<%
-		if(id == null){
-	%>
-		<h1>로그인 해주시길 바랍니다.</h1>
-	<%
-		}
-	%>
-	<%
-		if(id != null){
-			for(HashMap<String, Object> s : list){
-	%>
-		<table class="table">
+    
+    <div style="display: flex;">
+	   	<p>
+			 <%
+	        	if(request.getParameter("msg") != null){
+	         %>
+	        		<%=request.getParameter("msg") %>
+	         <% 
+	        	}
+	      	 %>		
+		</p>
+		<br>
+   	<div style="flex-basis: 15%;">
+	     <table style="width: 100%; border-collapse: collapse;">
+     		<tr>
+     			<td><h2><br>조회</h2></td>
+     		</tr>
 			<tr>
-				<td><p>이름</p></td>
-				<td><%=(String)(s.get("고객이름"))%></td>
-				<td></td>
+				<td><br><a href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" class="genric-btn primary-border circle">주문내역</a></td>
 			</tr>
-			<tr>
-				<td><p>비밀번호</p></td>
-				<td>
-					<div id="byElement">*******</div>
-					<div id="myElement">
-						<form action="<%=request.getContextPath()%>/customer/updatePasswordAction.jsp" method="post">
-						<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-			
-						<p>현재 비밀번호</p>
-						<input type="password" name="onePw" placeholder="비밀번호" required="required" class="single-input"><br>
-	
-						<p>변경할 비밀번호</p>
-						<input type="password" name="pw" placeholder="비밀번호"  class="single-input" required="required"><br>
-	
-						<p>변경할 비밀번호 확인</p>
-						<input type="password" name="checkPw" placeholder="비밀번호 재확인" class="single-input" required="required"><br>
-			
-						<button type="button" id="toggle2Button" class="genric-btn primary-border circle">취소</button>
-						<button type="submit" class="genric-btn primary-border circle">완료</button>
-						</form>
-					</div></td>
-				<td>
-					<button id="toggleButton" type="button" class="genric-btn primary-border circle">비밀번호 변경</button>
-				</td>
 
-			</tr>
 			<tr>
-				<td><p>주소</p></td>
-				<td>
-					<div id="adEl"><%=(String)(s.get("고객주소"))%></div>
-					<div id="adBy">
-						<form action="<%=request.getContextPath()%>/customer/updateAddressAction.jsp" method="get" id="adForm">
-							<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-							<p>주소</p>
-							<p><span id="addressMsg" class="msg"></span></p> 
-							<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
-							<p>비밀번호</p>
-							<p><span id="adPwMsg" class="msg"></span></p>
-							<input type="password" id="adPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>					
-							<button type="button" id="adrCansel" class="genric-btn primary-border circle">취소</button>
-							<button type="button" id="adBtn" class="genric-btn primary-border circle">완료</button>
-						</form>
-					</div>
-				</td>
-				<td>
-					<button id="addressBtn" type="button" class="genric-btn primary-border circle">주소 변경</button>
-				</td>
-			</tr>
+				<td><br><a href="<%=request.getContextPath()%>/customer/updateCustomer.jsp" class="genric-btn primary-border circle">개인정보수정</a><td>
+			</td>
+
 			<tr>
-				<td><p>이메일</p></td>
-				<td>
-					<div id="emilEl"><%=(String)(s.get("고객이메일"))%></div>
-					<div id="emailBy">
-						<form action="<%=request.getContextPath()%>/customer/updateEmailAction.jsp" method="get" id="emForm">
-							<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-							<p>이메일</p>
-							<p><span id="emailMsg" class="msg"></span></p>
-							<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
-							<p>비밀번호</p>
-							<p><span id="emPwMsg" class="msg"></span></p>
-							<input type="password" id="emPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
-							<button type="button" id="emailCansel" class="genric-btn primary-border circle">취소</button>
-							<button type="button" id="emBtn" class="genric-btn primary-border circle">완료</button>
-						</form>
-					</div>
-				</td>
-				<td>
-					<button id="emailBtn" type="button" class="genric-btn primary-border circle">이메일 변경</button>
-				</td>
+				<td><br><a href="<%=request.getContextPath()%>/customer/customerPointList.jsp" class="genric-btn primary-border circle">포인트내역조회</a></td>
 			</tr>
+
 			<tr>
-				<td><p>생일</p></td>
-				<td><%=(String)(s.get("고객생일"))%></td>
-				<td></td>
+				<td><br><a href="<%=request.getContextPath()%>/customer/deleteCustomer.jsp" class="genric-btn primary-border circle">회원탈퇴</a></td>
 			</tr>
-			<tr>
-				<td><p>휴대전화</p></td>
-				<td>
-					<div id="phoneEl"><%=(String)(s.get("고객번호"))%></div>
-					<div id="phoneBy">
-						<form action="<%=request.getContextPath()%>/customer/updatePhoneAction.jsp" method="get" id="phForm">
-							<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
-							<p>전화번호</p>
-							<p><span id="telMsg" class="msg"></span></p>
-							<input type="tel" id="tel" name="cstmPhone" required="required" class="single-input"><br>
-							<p>비밀번호</p>
-							<p><span id="phPwMsg" class="msg"></span></p>
-							<input type="password" id="phPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
-							<button type="button" id="phoneCansel" class="genric-btn primary-border circle">취소</button>
-							<button type="submit" id="phBtn" class="genric-btn primary-border circle">완료</button>
-						</form>
-					</div>
-				</td>
-				<td>
-					<button id="phoneBtn" type="button" class="genric-btn primary-border circle">전화번호 변경</button>
-				</td>
-			</tr>
-			<tr>
-				<td><p>등급</p></td>
-				<td><%=(String)(s.get("고객등급"))%></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><p>포인트</p></td>
-				<td><%=(Integer)(s.get("고객포인트"))%></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><p>가입일</p></td>
-				<td><%=(String)(s.get("가입일"))%></td>
-				<td></td>
-			</tr>
-		</table>
-	<% 			
-			}
-		}
-	%>
-		<br><div class="col-12">
-         	 <h2 class="contact-title">회원정보 변경</h2>
-        </div>
-	<br><a href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" class="genric-btn primary-border circle">주문내역</a>&nbsp;&nbsp;
-	<a href="<%=request.getContextPath()%>/customer/updateCustomer.jsp" class="genric-btn primary-border circle">개인정보수정</a>&nbsp;&nbsp;
-	<a href="<%=request.getContextPath()%>/customer/customerPointList.jsp" class="genric-btn primary-border circle">포인트내역조회</a>&nbsp;&nbsp;
-	<a href="<%=request.getContextPath()%>/customer/deleteCustomer.jsp" class="genric-btn primary-border circle">회원탈퇴</a>
-    </div><br>
+	     </table>
+    </div>
+
+    	<div style="flex-basis: 85%;">
+				<%
+					if(id == null){
+				%>
+					<!--  <h1>로그인 해주시길 바랍니다.</h1> -->
+				<%
+					}
+				%>
+    		
+					<table class="table" style="width: 100%; border-collapse: collapse;">
+				<%
+					if(id != null){
+						for(HashMap<String, Object> s : list){
+				%>
+						<tr>
+			     			<td><br><h2>회원정보</h2></td>
+			     		</tr>
+						<tr>
+							<td><p>이름</p></td>
+							<td><%=(String)(s.get("고객이름"))%></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><p>비밀번호</p></td>
+							<td>
+								<div id="byElement">*******</div>
+								<div id="myElement">
+									<form action="<%=request.getContextPath()%>/customer/updatePasswordAction.jsp" method="post">
+									<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+						
+									<p>현재 비밀번호</p>
+									<input type="password" name="onePw" placeholder="비밀번호" required="required" class="single-input"><br>
+				
+									<p>변경할 비밀번호</p>
+									<input type="password" name="pw" placeholder="비밀번호"  class="single-input" required="required"><br>
+				
+									<p>변경할 비밀번호 확인</p>
+									<input type="password" name="checkPw" placeholder="비밀번호 재확인" class="single-input" required="required"><br>
+						
+									<button type="button" id="toggle2Button" class="genric-btn primary-border circle">취소</button>
+									<button type="submit" class="genric-btn primary-border circle">완료</button>
+									</form>
+								</div></td>
+							<td>
+								<button id="toggleButton" type="button" class="genric-btn primary-border circle">비밀번호 변경</button>
+							</td>
+			
+						</tr>
+						<tr>
+							<td><p>주소</p></td>
+							<td>
+								<div id="adEl"><%=(String)(s.get("고객주소"))%></div>
+								<div id="adBy">
+									<form action="<%=request.getContextPath()%>/customer/updateAddressAction.jsp" method="get" id="adForm">
+										<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+										<p>주소</p>
+										<p><span id="addressMsg" class="msg"></span></p> 
+										<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
+										<p>비밀번호</p>
+										<p><span id="adPwMsg" class="msg"></span></p>
+										<input type="password" id="adPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>					
+
+										<button type="button" id="adrCansel" class="genric-btn primary-border circle">취소</button>
+										<button type="button" id="adBtn" class="genric-btn primary-border circle">완료</button>
+									</form>
+								</div>
+							</td>
+							<td>
+								<button id="addressBtn" type="button" class="genric-btn primary-border circle">주소 변경</button>
+							</td>
+						</tr>
+						<tr>
+							<td><p>이메일</p></td>
+							<td>
+								<div id="emilEl"><%=(String)(s.get("고객이메일"))%></div>
+								<div id="emailBy">
+									<form action="<%=request.getContextPath()%>/customer/updateEmailAction.jsp" method="get" id="emForm">
+										<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+										<p>이메일</p>
+										<p><span id="emailMsg" class="msg"></span></p>
+										<input type="email" id="email" name="cstmEmail" required="required" class="single-input"><br>
+										<p>비밀번호</p>
+										<p><span id="emPwMsg" class="msg"></span></p>
+										<input type="password" id="emPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+										<button type="button" id="emailCansel" class="genric-btn primary-border circle">취소</button>
+										<button type="button" id="emBtn" class="genric-btn primary-border circle">완료</button>
+									</form>
+								</div>
+							</td>
+							<td>
+								<button id="emailBtn" type="button" class="genric-btn primary-border circle">이메일 변경</button>
+							</td>
+						</tr>
+						<tr>
+							<td><p>생일</p></td>
+							<td><%=(String)(s.get("고객생일"))%></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><p>휴대전화</p></td>
+							<td>
+								<div id="phoneEl"><%=(String)(s.get("고객번호"))%></div>
+								<div id="phoneBy">
+									<form action="<%=request.getContextPath()%>/customer/updatePhoneAction.jsp" method="get" id="phForm">
+										<input type="hidden" name="id" value="<%=id%>"><!-- 세션값아이디 히든으로 넘기기 -->
+										<p>전화번호</p>
+										<p><span id="telMsg" class="msg"></span></p>
+										<input type="tel" id="tel" name="cstmPhone" required="required" class="single-input"><br>
+										<p>비밀번호</p>
+										<p><span id="phPwMsg" class="msg"></span></p>
+										<input type="password" id="phPw" name="pw" placeholder="비밀번호" required="required" class="single-input"><br>
+										<button type="button" id="phoneCansel" class="genric-btn primary-border circle">취소</button>
+										<button type="submit" id="phBtn" class="genric-btn primary-border circle">완료</button>
+									</form>
+								</div>
+							</td>
+							<td>
+								<button id="phoneBtn" type="button" class="genric-btn primary-border circle">전화번호 변경</button>
+							</td>
+						</tr>
+						<tr>
+							<td><p>등급</p></td>
+							<td><%=(String)(s.get("고객등급"))%></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><p>포인트</p></td>
+							<td><%=(Integer)(s.get("고객포인트"))%></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><p>가입일</p></td>
+							<td><%=(String)(s.get("가입일"))%></td>
+							<td></td>
+						</tr>
+					</table>
+				<% 			
+						}
+					}
+				%>
+			</div>
+    	</div>
+    
   <!-- ================ contact section end ================= -->
 
   <!--::footer_part start::-->

@@ -24,7 +24,7 @@
 	int row = del.cancelOrder(orderNo);
 	if(row > 0){
 			OrderDao pointCancle = new OrderDao();
-			int pRow = pointCancle.cnacelPoint(orderNo);
+			int pRow = pointCancle.cancelPoint(orderNo);
 		if(pRow > 0){
 			msg = URLEncoder.encode("취소가완료되었습니다.","utf-8");
 			response.sendRedirect(request.getContextPath()+"/order/customerOrderHistory.jsp?msg="+msg);
