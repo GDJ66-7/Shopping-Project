@@ -106,14 +106,35 @@
 	
 %>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="zxx">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<title>상품페이지</title>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>상품 상세정보</title>
+    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 <body><!-- test  view 제품 12 카테고리/사진/이름/상품content출력 -->
 <script>
@@ -184,7 +205,7 @@
 	<!-- 장바구니 담기 버튼 -->
 	<form id="addCart" action="<%=request.getContextPath()%>/cart/insertCartAction.jsp" method="post">
 	<input type="hidden" name="productNo" value="<%=p.get("productNo")%>">
-	<input type="hidden" name="id" value="customer1"><!-- 테스트용 아이디 -->
+	<input type="hidden" name="id" value=<%=id%>>
 	<input type="button" name="minus" id="deQuantity" value="-"><!-- 수량(-) -->
 	<input type="text" name="cartCnt" id="selectCnt" value="1" readonly="readonly"><!-- 수량count -->
 	<input type="button" name="plus" id="upQuantity" value="+" ><!-- 수량(+) -->
@@ -193,7 +214,9 @@
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <hr>
 	<h3>상품리뷰</h3>
-	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>&historyNo=<%=2%>">추가</a><!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
+	<!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
+	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>&historyNo=<%=2%>">추가</a>
+	<!--------------------------------------------->
 	<table class="table" id="productReview">
 		<tr>
 			<th>제목</th>
@@ -201,7 +224,14 @@
 			<th>작성일</th>
 		</tr>
 <%
-	for(HashMap<String,Object> r : rlist){
+	if(rlist.isEmpty()){ //isEmpty = 리스트 null 체크
+%>
+	<tr>
+		<td colspan="3">등록된 리뷰가 없습니다.</td>
+	</tr>
+<%
+	}else{
+		for(HashMap<String,Object> r : rlist){
 %>
 		<tr>
 			<td>
@@ -212,6 +242,7 @@
 			<td><%=r.get("createdate")%></td>
 		</tr>
 <%
+		}
 	}
 %>
 	</table>
@@ -243,8 +274,8 @@
 		}
 	%>
 	</div>
+<br>
 <!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
-<hr>
 	<h3>문의사항</h3>
 <%
 	if(session.getAttribute("loginCstmId")!=null) { // 로그아웃 상태면 문의하기 버튼이 보이지 않는다. 로그인 상태면 모든 고객이 작성 가능
@@ -255,18 +286,23 @@
 %>
 	<table class="table" id="productQnA">
 		<tr>
-			<th>번호</th>
 			<th>문의유형</th>
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
 		</tr>
 <%
+	if(list.isEmpty()){ //isEmpty = 리스트 null 체크
+%>
+	<tr>
+		<td colspan="4">등록된 게시글이 없습니다.</td>
+	</tr>
+<%
+	}else{
 	for(HashMap<String,Object> q : list){
 		
 %>
 		<tr>
-			<td><%=q.get("qNo")%></td>
 			<td><%=q.get("category")%></td>
 			<td>
 			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=q.get("qNo")%>&productNo=<%=q.get("productNo")%>">
@@ -277,10 +313,10 @@
 			<td><%=q.get("createdate")%></td>
 		</tr>
 <%
+		}
 	}
 %>
 	</table>
-
 	<!-------------- 문의 사항 페이징 버튼 -------------------------------------------------------->
 	<div>
 	<%
@@ -309,6 +345,7 @@
 		}
 	%>
 	</div>
+<br>
 </div>
 </body>
 </html>

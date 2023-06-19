@@ -17,6 +17,7 @@
 	String id = (String)session.getAttribute("loginCstmId"); //현재 로그인한 아이디
 	String writerId = request.getParameter("writerId"); // 삭제버튼에서 받아온 값 작성자 아이디
 	
+	//로그인 유효성 검사
 	if(!id.equals(writerId)){
 		System.out.println("리뷰 삭제에 실패하였습니다. 작성자와 로그인 아이디가 일치하지 않습니다.");
 		response.sendRedirect(request.getContextPath()+"/review/reviewOne.jsp");
