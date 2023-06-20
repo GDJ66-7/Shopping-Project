@@ -288,7 +288,7 @@
     <!-- breadcrumb part end-->
 
   <!-- ================ contact section start ================= -->
-    
+    <div class="container">
     <div style="display: flex;">
 	   	<p>
 			 <%
@@ -465,7 +465,7 @@
 				%>
 			</div>
     	</div>
-    
+    </div>
   <!-- ================ contact section end ================= -->
 
   <!--::footer_part start::-->

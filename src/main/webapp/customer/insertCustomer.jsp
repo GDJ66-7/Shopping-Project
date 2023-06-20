@@ -357,7 +357,7 @@
 			<p><span id="questMsg" class="msg"></span></p>
 			<input type="text" id="quest" name="cstmQuestion" class="single-input"><br>
 			
-			<p>주소</p>
+			<p>주소(입력창 클릭시 검색가능)</p>
 			<p><span id="addressMsg" class="msg"></span></p>
 			<textarea name ="cstmAddress" id="address_kakao" cols ="33" rows="5" placeholder="주소입력" class="single-textarea" required="required" ></textarea><br>
 			
@@ -367,12 +367,12 @@
 			
 			<p>성별</p>	
 				    <p><span id="genderMsg" class="msg"></span></p>
-					<input type="radio" name="cstmGender" class="gender" value="남">남 &nbsp;
-   					<input type="radio" name="cstmGender" class="gender" value="여">여
+					<input type="radio" name="cstmGender" class="gender" value="남">&nbsp;남 &nbsp;
+   					<input type="radio" name="cstmGender" class="gender" value="여">&nbsp;여
 			<p>개인정보동의</p>
        			    <p><span id="agreeMsg" class="msg"></span></p>
-					<input type="radio" name="cstmAgree" class="agree" value="y">동의 &nbsp;
-           			<input type="radio" name="cstmAgree" class="agree" value="n">비동의
+					<input type="radio" name="cstmAgree" class="agree" value="y">&nbsp;동의 &nbsp;
+           			<input type="radio" name="cstmAgree" class="agree" value="n">&nbsp;비동의
        			    <br><br>
 			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;&nbsp;
       		<button type="reset" class="genric-btn primary-border circle">초기화</button>

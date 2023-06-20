@@ -20,7 +20,7 @@
 		//요청값 유효성 검사
 		if(request.getParameter("id") == null){
 			msg = URLEncoder.encode("카카오톡 로그인을 먼저 해주시길바랍니다","utf-8");
-			response.sendRedirect(request.getContextPath()+"/login/kakao_login.jsp?msg="+msg);
+			out.println("<script>alert('로그인창에서 로그인 해주시길바랍니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 			return;
 		}
 		//요청값 변수에 저장
