@@ -5,7 +5,8 @@
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		//response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 후 이용가능합니다'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 //세션아이디 변수에 저장

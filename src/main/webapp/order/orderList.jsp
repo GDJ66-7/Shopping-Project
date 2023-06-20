@@ -5,7 +5,7 @@
 <%
 //세션 확인 관리자만 들어올 수 있도록
 if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId") == null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+	out.println("<script>alert('관리자만 이용가능합니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	//요청값 디버깅

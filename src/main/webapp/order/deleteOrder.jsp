@@ -7,15 +7,14 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 후 이용가능합니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	System.out.println(request.getParameter("orderNo")+"<-- deleteOrder.jsp orderNo");
 	//메세지 출력 변수 선언
 	String msg = "";
 	if(request.getParameter("orderNo") == null || request.getParameter("orderNo").equals("")){
-		msg = URLEncoder.encode("취소할 주문을 선택해주세요","utf-8");
-		response.sendRedirect(request.getContextPath()+"/order/customerOrderHistory.jsp?msg="+msg);
+		out.println("<script>alert('취소할 주문을 선택해주세요.'); location.href='"+request.getContextPath() + "/order/customerOrderHistory.jsp';</script>");
 		return;
 	}
 	//요청값 변수에 저장

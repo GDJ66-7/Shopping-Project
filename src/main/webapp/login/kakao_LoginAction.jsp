@@ -9,7 +9,7 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") != null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 되어있습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 //요청값 디버깅
@@ -32,15 +32,13 @@
 		if(row == 1){
 			session.setAttribute("loginCstmId", id);
 			System.out.print("고객로그인 성공 새션정보 : " + session.getAttribute("loginCstmId"));
-			response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+			out.println("<script>alert('로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 			return;
 		} else if(row==0){
-			msg = URLEncoder.encode("회원가입이 안된아이디 입니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			out.println("<script>alert('회원가입이 안된아이디 입니다. 회원가입 후 로그인 해주세요.'); location.href='"+request.getContextPath() + "/login/login.jsp';</script>");
 			return;
 		} else if(row == 3){
-			msg = URLEncoder.encode("회원탈퇴한 아이디 이므로 로그인 할 수 없습니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/login/login.jsp?msg="+msg);
+			out.println("<script>alert('회원탈퇴한 아이디 이므로 로그인 할 수 없습니다.'); location.href='"+request.getContextPath() + "/login/login.jsp';</script>");
 			return;
 		}
 		

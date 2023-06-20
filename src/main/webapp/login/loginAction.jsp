@@ -9,7 +9,7 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") != null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 되어있습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	// 요청값 디버깅
@@ -49,8 +49,7 @@
 	int row = lg.login(idList);
 	
 	if(row == 3){
-		msg = URLEncoder.encode("회원탈퇴한 아이디 이므로 로그인 할 수 없습니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/login/login.jsp?msg="+msg);
+		out.println("<script>alert('회원탈퇴한 아이디 이므로 로그인 할 수 없습니다.'); location.href='"+request.getContextPath() + "/login/login.jsp';</script>");
 		return;
 	}
 	if(row == 0){
@@ -78,7 +77,7 @@
 	if(cstmCnt > 0){
 		session.setAttribute("loginCstmId", id);
 		System.out.print("고객로그인 성공 새션정보 : " + session.getAttribute("loginCstmId"));
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	if(empCnt > 0){
@@ -89,13 +88,13 @@
 	if(level.equals("2")){
 		session.setAttribute("loginEmpId2", id);
 		System.out.println("최고관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId2"));
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('최고관라지로 로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	if(level.equals("1")){
 		session.setAttribute("loginEmpId1", id);
 		System.out.println("일반관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId1"));
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('일반관리자로 로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 			}
 		}

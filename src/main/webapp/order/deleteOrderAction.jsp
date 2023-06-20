@@ -7,7 +7,7 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 후 이용가능합니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	System.out.println(request.getParameter("orderNo")+"<-- deleteOrder.jsp orderNo");
@@ -26,8 +26,7 @@
 			OrderDao pointCancle = new OrderDao();
 			int pRow = pointCancle.cancelPoint(orderNo);
 		if(pRow > 0){
-			msg = URLEncoder.encode("취소가완료되었습니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/order/customerOrderHistory.jsp?msg="+msg);
+			out.println("<script>alert('취소가 완료되었습니다.'); location.href='"+request.getContextPath() + "/order/customerOrderHistory.jsp';</script>");
 			return;
 		}else{ 
 			msg = URLEncoder.encode("현재 주문이 취소 불가능하므로 고객센터에 문의 바랍니다","utf-8");

@@ -9,7 +9,7 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 후 이용가능합니다'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 //요청값 디버깅
@@ -26,12 +26,12 @@
 		|| request.getParameter("pw").equals("")
 		|| request.getParameter("checkPw").equals("")){
 		msg = URLEncoder.encode("모두입력해주시길 바랍니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/deleteCustomer.jsp?msg="+msg);
+		out.println("<script>alert('모두입력해주시길 바랍니다.'); location.href='"+request.getContextPath() + "/customer/deleteCustomer.jsp';</script>");
 		return;
 	}
 	if(!request.getParameter("pw").equals(request.getParameter("checkPw"))){
 		msg = URLEncoder.encode("두개의 비밀번호 서로 맞지 않으므로 다시 입력 바랍니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/deleteCustomer.jsp?msg="+msg);
+		out.println("<script>alert('두개의 비밀번호 서로 맞지 않으므로 다시 입력 바랍니다.'); location.href='"+request.getContextPath() + "/customer/deleteCustomer.jsp';</script>");
 		return;
 	}
 	//요청값 변수에 저장
@@ -47,7 +47,7 @@
 	// 실행값에 따라 분기 0이상이면 비밀번호 맞고 0이면 비밀번호가 틀립니다.
 	if(ckRow == 0){
 		msg = URLEncoder.encode("비밀번호가 맞지 않으므로 다시 입력 바랍니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/deleteCustomer.jsp?msg="+msg);
+		out.println("<script>alert('비밀번호가 맞지 않으므로 다시 입력 바랍니다.'); location.href='"+request.getContextPath() + "/customer/deleteCustomer.jsp';</script>");
 		return;
 	}
 	// 삭제 메소드 선언
@@ -57,11 +57,11 @@
 	if(row > 0){
 		
 		session.invalidate(); // 기존 갖고있던 모든 세션을 지우고 갱신!
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('탈퇴완료되었습니다.'); location.href='"+request.getContextPath() + "/customer/deleteCustomer.jsp';</script>");
 		return;
 	}else if(row == 0){
 		msg = URLEncoder.encode("회원탈퇴에 문제가 생겼으므로 고객센터에 문의 바랍니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		out.println("<script>alert('회원탈퇴에 문제가 생겼으므로 고객센터에 문의 바랍니다.'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 		return;
 	}
 %>

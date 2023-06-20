@@ -7,7 +7,7 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") == null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그인 후 이용가능합니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	System.out.println(request.getParameter("orderNo")+"<-- orderComplete.jsp orderNo");
@@ -25,11 +25,10 @@
 	System.out.println(row + "<-- orderComplete row");
 	if(row == 0){
 		msg = URLEncoder.encode("구매확정이 불가능합니다. 고객센터에 문의 바랍니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/order/customerOrderHistory.jsp?msg="+msg);
+		out.println("<script>alert('구매확정이 불가능합니다. 고객센터에 문의 바랍니다.'); location.href='"+request.getContextPath() + "/order/customerOrderHistory.jsp';</script>");
 		return;
 	}else if(row > 0){
-		msg = URLEncoder.encode("구매확정이 완료되었습니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/order/customerOrderHistory.jsp?msg="+msg);
+		out.println("<script>alert('구매확정이 완료되었습니다.'); location.href='"+request.getContextPath() + "/order/customerOrderHistory.jsp';</script>");
 		return;
 	}
 	

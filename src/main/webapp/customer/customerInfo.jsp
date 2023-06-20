@@ -4,8 +4,9 @@
 <%
 //새션 확인 관리자아이디러 로그인 되어있다면 못들어와야됩니다.
 	if(session.getAttribute("loginEmpId1") != null 
-		|| session.getAttribute("loginEmpId2") != null){
-		response.sendRedirect(request.getContextPath()+"/employee/employeeInfo.jsp");
+		|| session.getAttribute("loginEmpId2") != null
+		|| session.getAttribute("loginCstmId") == null){
+		out.println("<script>alert('로그인 후 이용가능합니다'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	//세션아이디 변수에 저장
@@ -326,7 +327,7 @@
 				<%
 					if(id == null){
 				%>
-					<!--  <h1>로그인 해주시길 바랍니다.</h1> -->
+					<h1>로그인 해주시길 바랍니다.</h1>
 				<%
 					}
 				%>

@@ -11,7 +11,8 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") != null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그아웃 후 회원가입 하시길 바랍니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
+		//response.sendRedirect(request.getContextPath()+"/main/home.jsp");
 		return;
 	}
 	//요청값 디버깅
@@ -52,13 +53,15 @@
 		|| request.getParameter("cstmGender").equals("")
 		|| request.getParameter("cstmAgree").equals("")){
 			msg = URLEncoder.encode("모두입력해주시길 바랍니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			out.println("<script>alert('회원정보를 모두 입력해주시길 바랍니다.'); location.href='"+request.getContextPath() + "/customer/insertCustomer.jsp';</script>");
+			//response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
 			return;
 		}
 		//비밀번호 확인 같은지 체크
 		if(!request.getParameter("pw").equals(request.getParameter("checkPw"))){
 			msg = URLEncoder.encode("비밀번호가 서로 다릅니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			out.println("<script>alert('비밀번호가 서로 다릅니다.'); location.href='"+request.getContextPath() + "/customer/insertCustomer.jsp';</script>");
+			//response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
 			return;
 		}
 		
@@ -83,12 +86,14 @@
 		// Method 받아오는 값에 따라 상황별 분기
 		if(row == 3){
 			msg = URLEncoder.encode("이미 있는 아이디입니다. 다른아이디로 바꿔주시길바랍니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			//response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			out.println("<script>alert('중복된 아이디입니다.'); location.href='"+request.getContextPath() + "/customer/insertCustomer.jsp';</script>");
 			return;
 		}
 		if(row == 0){
 			msg = URLEncoder.encode("잘못된정보입니다. 다시입력해주시길바랍니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
+			out.println("<script>alert('잘못된정보입니다. 다시 입력해주시길 바랍니다.'); location.href='"+request.getContextPath() + "/customer/insertCustomer.jsp';</script>");
+			//response.sendRedirect(request.getContextPath()+"/customer/insertCustomer.jsp?msg="+msg);
 			return;
 		}
 		//클래스에 회원정보 담기
@@ -107,7 +112,8 @@
 		int inRow = insertCstm.insertCustomer(customer);
 		if(inRow > 0){
 			msg = URLEncoder.encode("회원가입 완료되었습니다..","utf-8");
-			response.sendRedirect(request.getContextPath()+"/login/login.jsp?msg="+msg);
+			out.println("<script>alert('회원가입완료되었습니다.'); location.href='"+request.getContextPath() + "/login/login.jsp';</script>");
+			//response.sendRedirect(request.getContextPath()+"/login/login.jsp?msg="+msg);
 			return;
 		}
 %>

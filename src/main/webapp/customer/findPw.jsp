@@ -6,7 +6,7 @@
 	if(session.getAttribute("loginEmpId1") != null 
 		|| session.getAttribute("loginEmpId2") != null
 		|| session.getAttribute("loginCstmId") != null){
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('로그아웃 후 이용가능합니다'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	String id = request.getParameter("id");

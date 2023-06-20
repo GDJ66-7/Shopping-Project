@@ -6,7 +6,7 @@
 <%
 //세션관리자만 들어올수있게
 	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId") == null){
-		response.sendRedirect(request.getContextPath()+"/notice/noticeList.jsp");
+		out.println("<script>alert('관리자만 이용가능합니다.'); location.href='"+request.getContextPath() + "/notice/noticeList.jsp';</script>");
 		return;
 	}
 	String msg = "";
@@ -24,12 +24,10 @@
 	int row = no.insertNotice(notice);
 		
 	if(row > 0){
-		msg = URLEncoder.encode("공지사항이 추가 완료되었습니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/notice/noticeList.jsp?msg="+msg);
+		out.println("<script>alert('공지사항이 추가 완료되었습니다.'); location.href='"+request.getContextPath() + "/notice/noticeList.jsp';</script>");
 		return;
 	} else if(row == 0){
-		msg = URLEncoder.encode("공지사항 추가가 불가합니다. 기술팀에 문의 바랍니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/notice/noticeList.jsp?msg="+msg);
+		out.println("<script>alert('공지사항 추가가 불가합니다. 기술팀에 문의 바랍니다.'); location.href='"+request.getContextPath() + "/notice/noticeList.jsp';</script>");
 		return;
 	}
 %>

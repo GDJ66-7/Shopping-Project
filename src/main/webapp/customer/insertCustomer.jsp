@@ -325,7 +325,9 @@
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post" id="singinForm">
 			<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>	<button type="button" id="ckId" class="genric-btn primary-border circle">중복체크</button><br>
 			<p><span id="idMsg" class="msg"></span></p>
-			<input type="text" name="id" id="id" value="<%=useId%>" placeholder="아이디" class="single-input"><br>
+			<input type="text" id="id" value="<%=useId%>" placeholder="아이디" class="single-input"><br>
+			<p>중복 확인된 아이디</p>
+			<input type="text" name="id" id="id" value="<%=useId%>" placeholder="아이디" class="single-input" readonly="readonly"><br>
 			
 			<p>비밀번호</p>
 			<p><span id="pwMsg" class="msg"></span></p>
