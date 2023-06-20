@@ -1,3 +1,5 @@
+상품수정
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.CategoryDao"%>
 <%@page import="vo.ProductImg"%>
@@ -42,8 +44,7 @@
 %>
 
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="zxx">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -56,18 +57,22 @@
 <script>
 	$(document).ready(function(){
 		
-		// 카테고리체크박스 선택시
-		$('.categoryCheckbox').change(function() {
-			// 체크박스의 값을 출력할 배열선언
-		    let checkedValues = [];
-			
-	    	$('.categoryCheckbox:checked').each(function() {
-	    		// checkbox 값을 push로 넣음
-	      		checkedValues.push($('.categoryCheckbox').val());
-	    	});
-	    	// 선택된 checkbox값 출력
-	    	console.log(checkedValues);
-	  	});
+		// categoryNameId유효성체크
+		$('#categoryNameId').change(function(){
+			// 카테고리 설정하면 input창에 값 대입
+			$('#categoryId').val($('#categoryNameId').val());
+			// 카테고리이름길이가 0 이면 작성된것이 없으므로 메세지전송
+			if($('#categoryId').val().length == 0) {
+				$('#categoryNameIdMsg').text('카테고리가 설정되지 않았습니다.');
+				return;
+			} else {
+				// 제대로 작성된경우 콘솔로그에 입력값 출력
+				console.log($('#categoryId').val());
+				// 메세지 값은 '' 으로 초기화
+				$('#categoryNameIdMsg').text('');
+				$('#nameId').focus();
+			}
+		});
 	
 		// nameId유효성체크
 		$('#nameId').blur(function(){
@@ -101,18 +106,20 @@
 			}
 		});
 		
-		// 상품상태체크박스 선택시
-		$('.status').change(function() {
-			// 체크박스의 값을 출력할 배열선언
-		    let statusValues = [];
-			
-	    	$('.status:checked').each(function() {
-	    		// checkbox 값을 push로 넣음
-	      		statusValues.push($('.status').val());
-	    	});
-	    	// 선택된 checkbox값 출력
-	    	console.log(statusValues);
-	  	});
+		// statusId유효성체크
+		$('#statusId').change(function(){
+			// 상품상태길이가 0 이면 작성된것이 없으므로 메세지전송
+			if($('#statusId').val().length == 0) {
+				$('#statusIdMsg').text('상품상태가 설정되지 않았습니다.');
+				return;
+			} else {
+				// 제대로 작성된경우 콘솔로그에 입력값 출력
+				console.log($('#statusId').val());
+				// 메세지 값은 '' 으로 초기화
+				$('#statusIdMsg').text('');
+				$('#stockId').focus();
+			}
+		});
 		
 		// stockId유효성체크
 		$('#stockId').blur(function(){
@@ -177,13 +184,11 @@
 		// 전송 유효성검사 하나라도 값이 입력되지 않으면 submit이 수행되지 않음.
 		$('#productBtn').click(function(){
 			
-			// 카테고리가 선택이 안됬거나 두개 이상이면
-			if($('.categoryCheckbox:checked').length != 1) {
-				$('#categoryNameIdMsg').text('카테고리를 1개선택해주세요');
+			if($('#categoryNameId').val().length == 0) {
+				// 디버깅
+				console.log($('#categoryNameId').val());
+				$('#categoryNameIdMsg').text('카테고리를 설정해주세요');
 				return;
-			// 제대로 선택되면
-			} else {
-				$('#categoryNameIdMsg').text('');
 			}
 			
 			if($('#nameId').val().length == 0) {
@@ -202,13 +207,11 @@
 				return;
 			}
 			
-			// 상품상태가 선택이 안됬거나 두개 이상이면
-			if($('.status:checked').length != 1) {
-				$('#statusIdMsg').text('상품상태를 1개선택해주세요');
+			if($('#statusId').val().length == 0) {
+				// 디버깅
+				console.log($('#statusId').val());
+				$('#statusIdMsg').text('상품상태를 설정해주세요');
 				return;
-			// 제대로 선택되면
-			} else {
-				$('#statusIdMsg').text('');
 			}
 			
 			if($('#stockId').val().length == 0) {
@@ -239,28 +242,28 @@
 		});
 	});
 </script>
-<!-- Required meta tags -->
+<head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>pillloMart</title>
-    <link rel="icon" href="/Shopping/css/img/favicon.png">
+    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/all.css">
-    <!-- flaticon CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/flaticon.css">
-    <link rel="stylesheet" href="/Shopping/css/css/themify-icons.css">
-    <!-- font awesome CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/magnific-popup.css">
-    <!-- swiper CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/slick.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
+    <!-- icon CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
+    <!-- magnific popup CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/nice-select.css">
     <!-- style CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 <body>
     <!--::header part start::-->
@@ -317,89 +320,85 @@
      <!-- ================ 카테고리추가 폼 ================= -->
 	<div class="container">
 	<div class="col-12">
-   	<br>
-	<form id="updateProductForm" action="<%=request.getContextPath()%>/product/updateProductAction.jsp" method="post" enctype="multipart/form-data">
-		<div class="row align-items-center justify-content-center">
-		<input type="hidden" name="productNo" value="<%=pMap.get("productNo") %>">
-		<input type="hidden" name="productImgNo" value="<%=pMap.get("productImgNo") %>">
-		<table class="table table-bordered">
-			<tr>
-				<th>카테고리 분류</th>
-				<td>
-					<!--  기존카테고리 보여주기 -->
-					<ul>
-						<li>
-						<%
-							for(HashMap<String, Object> map : cList ) {
-						%>
-								<input id="categoryNameId" class="categoryCheckbox" type="checkbox" name="categoryName" value="<%= map.get("categoryName") %>" autocomplete="off">
-	                             		<%=map.get("categoryName")%>
-						<% 	
-							}
-						%>
-						</li>
-					</ul>
-					<span id="categoryNameIdMsg" class="msg"></span>
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품 이름</th>
-				<td>
-					<input type="text" name="productName" id="nameId" placeholder="기존이름 :<%=pMap.get("productName")%>">
-					<span id="nameIdMsg" class="msg"></span>
-				</td>
-			</tr>
-			<tr>
-				<th>상품 가격</th>
-				<td>
-					<input type="text" name="productPrice" id="priceId" placeholder="기존가격 :<%=pMap.get("productPrice")%>">
-					<span id="priceIdMsg" class="msg"></span>
-				</td>
-			</tr>
-			<tr>
-				<th>상품 상태 기존 상태 : <%=pMap.get("productStatus")%></th>
-				<td>
-					<ul>
-						<li>
-							<input type="checkbox" name="productStatus" class="status" value="판매중">판매중
-							<input type="checkbox" name="productStatus" class="status" value="품절">품절
-							<input type="checkbox" name="productStatus" class="status" value="단종">단종
-						</li>
-					</ul>
-					<span id="statusIdMsg" class="msg"></span>
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품 재고</th>
-				<td>
-					<input type="text" name="productStock" id="stockId" placeholder="기존재고량 :<%=pMap.get("productStock")%>">
-					<span id="stockIdMsg" class="msg"></span>
-				</td>
-			</tr>
-			
-			<tr>
-				<th>상품 정보</th>
-				<td>
-					<textarea rows="3" cols="50" name="productInfo" id="infoId" placeholder="기존설명 :<%=pMap.get("productInfo") %>"></textarea>				
-					<span id="infoIdMsg" class="msg"></span>
-				</td>
-			</tr>
-			<tr>
-				<th>boardFile(수정전 사진이름 : <%=pMap.get("productOriFilename")%></th>
-				<td>
-					<input id="fileId" type="file" name="productFile">
-					<span id="fileIdMsg" class="msg"></span>
-				</td>
-			</tr>
-		</table>
-		</div>
-		<div class="button-container">
-		  <span style="text-align: left;"><button class="genric-btn primary circle" type="button" id="productBtn">상품수정</button></span>
-		  <span style="text-align: right;"><button class="genric-btn danger circle arrow" type="reset">초기화</button></span>
-		</div>
-	</form>
+	<br>
+		<form id="updateProductForm" action="<%=request.getContextPath()%>/product/updateProductAction.jsp" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="productNo" value="<%=pMap.get("productNo") %>">
+			<input type="hidden" name="productImgNo" value="<%=pMap.get("productImgNo") %>">
+			<table class="table table-bordered">
+				<tr>
+					<th>카테고리 분류</th>
+					<td>
+						<select id="categoryNameId">
+							<option value="">==선택하기==</option>
+							<%
+								for(HashMap<String, Object> cMap : cList) {
+							%>
+									<option value="<%=cMap.get("categoryName")%>">
+										<%=cMap.get("categoryName")%>
+									</option>
+							<% 
+								}
+							%>
+						</select>
+						<input type="text" name = "categoryName" id="categoryId" readonly="readonly" placeholder="기존 카테고리 :<%=pMap.get("categoryName")%>">
+						<span id="categoryNameIdMsg" class="msg"></span>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품 이름</th>
+					<td>
+						<input type="text" name="productName" id="nameId" placeholder="기존이름 :<%=pMap.get("productName")%>">
+						<span id="nameIdMsg" class="msg"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>상품 가격</th>
+					<td>
+						<input type="text" name="productPrice" id="priceId" placeholder="기존가격 :<%=pMap.get("productPrice")%>">
+						<span id="priceIdMsg" class="msg"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>상품 상태 기존 상태 : <%=pMap.get("productStatus")%></th>
+					<td>
+						<select id="statusId" name="productStatus">
+							<option value="판매중"> 판매중</option>
+							<option value="품절"> 품절</option>
+							<option value="단종"> 단종</option>
+						</select>	
+						<span id="statusIdMsg" class="msg"></span>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품 재고</th>
+					<td>
+						<input type="text" name="productStock" id="stockId" placeholder="기존재고량 :<%=pMap.get("productStock")%>">
+						<span id="stockIdMsg" class="msg"></span>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>상품 정보</th>
+					<td>
+						<textarea rows="3" cols="50" name="productInfo" id="infoId" placeholder="기존설명 :<%=pMap.get("productInfo") %>"></textarea>				
+						<span id="infoIdMsg" class="msg"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>boardFile(수정전 사진이름 : <%=pMap.get("productOriFilename")%></th>
+					<td>
+						<input id="fileId" type="file" name="productFile">
+						<span id="fileIdMsg" class="msg"></span>
+					</td>
+				</tr>
+			</table>
+			<div class="button-container">
+			  <span style="text-align: left;"><button class="genric-btn primary circle" type="button" id="productBtn">상품수정</button></span>
+			  <span style="text-align: right;"><button class="genric-btn danger circle arrow" type="reset">초기화</button></span>
+			</div>
+		</form>
     </div>
     </div>
   <!-- ================ contact section end ================= -->

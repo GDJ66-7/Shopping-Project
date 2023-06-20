@@ -3,17 +3,11 @@
 <%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	// 관리자로 로그인시 관리자메인화면으로 이동 
-	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
-		// 관리자 메인 화면으로 이동
-		response.sendRedirect("empMain.jsp");
-		return;
-	} 
-		
 	ProductDao pDao = new ProductDao();
 	
 	ArrayList<HashMap<String, Object>> productList = pDao.productListLimit3();
 	
+	ArrayList<HashMap<String, Object>> productList2 = pDao.productListLimit6();
 	
 %>
 
@@ -94,25 +88,27 @@
                     <div class="banner_text">
                         <div class="banner_text_iner">
                             <h1>Best quality
-                                pillow</h1>
-                            <p>Seamlessly empower fully researched 
-                                growth strategies and interoperable internal</p>
-                            <a href="product_list.html" class="btn_1">shop now</a>
-                        </div>
+                                furniture</h1>
+                            <p>"Experience products made with the finest ingredients."</p>
+                            <a href="<%=request.getContextPath()%>/product/productList.jsp" class="btn_1">Shop</a>
+                            <a href="<%=request.getContextPath()%>/product/productList.jsp?discountProduct=할인상품" class="btn_1">SALE</a>
+                       </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="banner_img">
-            <img src="<%=request.getContextPath()%>/css/img/banner.png" alt="#" class="img-fluid">
-            <img src="<%=request.getContextPath()%>/css/img/banner_pattern.png " alt="#" class="pattern_img img-fluid">
+            <img src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
+            <img src="<%=request.getContextPath()%>/css/img/banner_pattern.png" alt="#" class="pattern_img img-fluid">
         </div>
     </section>
-    <!-- banner part start-->
+ 	<!-- banner part end-->
 
     <!-- product list start-->
-    <section class="single_product_list">
-        <div class="container">
+    <br>
+    <br>
+    <br>
+    	<div class="container">
             <div class="row">
                 <div class="col-lg-12"> 
                 	<div class="col-lg-12">
@@ -121,13 +117,27 @@
 	                        <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->                                  
 						    <%
 	                        	for(HashMap<String,Object> map : productList) {
+	                        		// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
+	            					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+	            					String productPrice = numberFormat.format(map.get("productPrice"));
 	                        %>
-		                        	<div class="col-lg-4">
-		                        		<a style="display: block; text-align: center;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>"><img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200">
+		                        	<div style="text-align: center;" class="col-lg-4">
+		                        		<a style="display: block; text-align: center;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>">
+		                        			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200">
 		                        		</a>
-		                        		<span style="display: block; text-align: center;"><%=map.get("productPrice")%>원</span>	
-		                        		<br>	
-		                            	<a style="display: block; text-align: center;" href="product_list.html" class="btn_3">상품바로가기</a>
+		                        		
+		                        		<span style="font-weight: bold;">
+	                        				<%=map.get("productName") %>
+	                        			</span>
+	                        			
+		                        		<span style="display: block;">
+		                        			<%=productPrice %> ₩
+		                        		</span>	
+		                        		<br>
+		                        			
+		                            	<a style="display: block;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>" class="btn_3">
+		                            		상품바로가기
+		                            	</a>
 		                            </div>
 	                        <% 	
 	                        	}
@@ -137,67 +147,42 @@
                 </div>
             </div>
         </div>
-    </section>
     <!-- product list end-->
-
-
     <!-- trending item start-->
     <section class="trending_items">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section_tittle text-center">
-                        <h2>Trending Items</h2>
+                        <h2>인기 상품</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <div class="single_product_item_thumb">
-                            <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_1.png" alt="#" class="img-fluid">
-                        </div>
-                        <h3> <a href="single-product.html">Cervical pillow for airplane
-                        car office nap pillow</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_2.png" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_3.png" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_4.png" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Cervical pillow for airplane
-                        car office nap pillow</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_5.png" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Foam filling cotton slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="single_product_item">
-                        <img src="<%=request.getContextPath()%>/css/img/tranding_item/tranding_item_6.png" alt="#" class="img-fluid">
-                        <h3> <a href="single-product.html">Memory foam filling cotton Slow rebound pillows</a> </h3>
-                        <p>From $5</p>
-                    </div>
-                </div>
+               	<%
+               		for(HashMap<String,Object> proMap : productList2) {
+               		// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
+    					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+    					String productPrice = numberFormat.format(proMap.get("productPrice"));
+               	%>
+               		<div style="text-align: center;" class="col-lg-4">
+               		<div class="single_product_item">
+               			<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
+               				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="250" height="250">
+               			</a>
+               			<h3> 
+               				<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
+               					<%=proMap.get("productInfo") %>
+                   			</a> 
+                   		</h3>
+                   		<p>
+                   			<%=productPrice %> ₩
+                   		</p>
+               		</div>
+                   	</div>
+               	<% 
+               		}
+               	%>
             </div>
         </div>
     </section>
@@ -315,21 +300,19 @@
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
-                                <a href="about.html">About</a>
-                                <a href="product_list.html">Products</a>
-                                <a href="#">Pages</a>
-                                <a href="blog.html">Blog</a>
-                                <a href="contact.html">Contact</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
+                                <a href="<%=request.getContextPath()%>/product/ProductList.jsp">상품</a>
+                                <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
+                                <a href="<%=request.getContextPath()%>/customer/customerInfo.jsp">마이페이지</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="social_icon">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://ko-kr.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                            <a href="https://google.com"><i class="fab fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </div>
