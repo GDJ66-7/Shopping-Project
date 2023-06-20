@@ -30,7 +30,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <head>
     <!-- Required meta tags -->
@@ -105,9 +104,11 @@ a{text-decoration: none;}
 <br>
 <table class="table table-bordered">
 	<tr>
-		<tr>
-		<td style="text-align: center;"><strong><%=reviewText.getReviewTitle()%><strong></td>
-		</tr>
+		<td style="text-align: center;">
+		<span class="badge rounded-pill bg-light text-dark">Title</span>
+		<%=reviewText.getReviewTitle()%>
+		</td>
+	</tr>
 	<tr>
 		<td colspan="2">
 		<div class="customerReview">
@@ -121,12 +122,12 @@ a{text-decoration: none;}
 		</td>
 	</tr>
 </table>
-<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">목록</a>
+<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=reviewText.getProductNo()%>" class="genric-btn primary radius" style="font-size: 13px;">목록</a>
 <%
 	if(id.equals(reviewText.getId())) { //로그인한 사용자와 작성자가 같을 때만 수정/삭제버튼 노출
 %>
-<a href="<%=request.getContextPath()%>/review/updateReview.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="btn btn-light">수정</a>
-<a onclick="deleteReview()" href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&historyNo=<%=reviewText.getHistoryNo()%>&writerId=<%=reviewText.getId()%>" class="btn btn-outline-light text-dark" style="float: right;">삭제</a>
+<a href="<%=request.getContextPath()%>/review/updateReview.jsp?historyNo=<%=reviewText.getHistoryNo()%>&productNo=<%=reviewText.getProductNo()%>" class="genric-btn primary-border radius" style="font-size: 13px;">수정</a>
+<a onclick="deleteReview()" href="<%=request.getContextPath()%>/review/deleteReviewAction.jsp?productNo=<%=reviewText.getProductNo()%>&historyNo=<%=reviewText.getHistoryNo()%>&writerId=<%=reviewText.getId()%>" class="genric-btn primary-border radius" style="font-size: 13px; float: right;">삭제</a>
 <%
 	}
 %>
@@ -162,7 +163,7 @@ function deleteReview(){ //삭제 confirm 추가
                                 <a href="index.html"><img src="/Shopping/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                             </div>
                         </div>
                     </div>
@@ -224,6 +225,5 @@ shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희
     <script src="<%=request.getContextPath()%>/css/js/mail-script.js"></script>
     <!-- custom js -->
     <script src="<%=request.getContextPath()%>/css/js/custom.js"></script>
-</body>
 </body>
 </html>

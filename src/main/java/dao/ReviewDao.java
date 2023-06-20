@@ -68,7 +68,7 @@ public class ReviewDao {
 		
 		
 	// 리뷰 추가 (텍스트)
-	public int insertReview(Review review) throws Exception { // 리뷰 이미지 추가예정
+	public int insertReview(Review review) throws Exception {
 		
 		int row = 0;
 		DBUtil DButil = new DBUtil();
