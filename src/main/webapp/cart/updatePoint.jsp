@@ -64,26 +64,38 @@
         </div>
 	</section>
     <!-- breadcrumb part end-->
-    <br>
-<div class="container">
+<br>
+	<div style="text-align: center;">
 	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>">
-		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
-		
-		<table>
+		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">	
+		<table class="table table-borderless">
 			<tr>
-				<th>사용할 포인트</th>
 				<td>
+					<h3>사용할 포인트</h3>
 					<input type="number" name="inputPoint" min="0" max="<%=point%>" value="0" step="10" required="required">
 				</td>	
 			</tr>
 			<tr>
 				<td>
-					<input type="submit" value="포인트 사용하기">
+					<input class="btn_1" type="submit" value="포인트 사용" style="width:200px; height:40px; text-align: center; padding: 0; line-height: 20px;">
 				</td>
 			</tr>
 		</table>		
 	</form>
-</div>
+	
+	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp" method="post">
+		<input type="hidden" name="id" value="<%=id%>">
+		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
+		<input type="hidden" name="inputPoint" value="<%=point%>">	
+		<table class="table table-borderless">
+			<tr>
+				<td>
+					<input class="btn_1" type="submit" value="포인트 전체 사용" style="width:200px; height:40px; text-align: center; padding: 0; line-height: 20px; background-color:#e32368;">
+				</td>
+			</tr>
+		</table>		
+	</form>
+	</div>
 </body>
 </html>

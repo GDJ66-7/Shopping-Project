@@ -2,23 +2,38 @@
 <%@ page import="dao.*"%>
 <%@ page import="vo.*"%>
 <%@ page import="java.util.*"%>
+
 <%
 	//한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
-	
+%>
 
-	// 로그인 세션
-	String id = "customer1";
+<!-- 로그인 세션 시작 -->	
+<%
+	// 아이디 변수 초기화
+	String id = null;
+
+	// 관리자 계정으로 접속했을때
+	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+		out.println("<script>alert('관리자 계정으로 로그인 중'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
+	// 고객 계정으로 접속했을때
+	if(session.getAttribute("loginCstmId") != null) {
+		id = (String)(session.getAttribute("loginCstmId"));
+		System.out.println(id+ " <-- cartList id");
+	}
+
+	// 비회원으로 접속했을때
+	if(session.getAttribute("loginCstmId") == null) {
+		
+	}
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+%>	
+		
+<%	
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();
 	
@@ -39,6 +54,7 @@
 	        break;
 	    }
 	}
+	
 %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -89,7 +105,7 @@
 <br>	
 <br>	
 	<div class="container">
-		 <div class="cart_inner">
+		<div class="cart_inner">
 				<table class="table">
 					<thead>
 						<tr>
@@ -127,10 +143,10 @@
 									<form action="<%=request.getContextPath()%>/cart/updateCheckedAction.jsp" method="post">
 										<input type="hidden" name=id value="<%=(String)(c.get("아이디"))%>">
 										<input type="hidden" name=cartNo value="<%=(int)(c.get("장바구니번호"))%>">
-										<label>	
+										<label style="accent-color:#B08EAD;">	
 											<input type="radio" name="checked" value="y" <%=(checked.equals("y")) ? "checked" : ""%>> Y
 										</label>
-										<label>	
+										<label style="accent-color:#B08EAD;">	
 											<input type="radio" name="checked" value="n" <%=(checked.equals("n")) ? "checked" : ""%>> N
 										</label>
 										<br>
@@ -212,37 +228,45 @@
 						}
 					%>	
 				</table>
-              
-              
-              	<table class="table table-borderless" style="border-collapse: collapse; border: none;">
-					<tr>
-		                <td>
-		                	<a href="<%=request.getContextPath()%>/main/home.jsp">
-								<button class="btn_1" type="button">계속쇼핑하기</button>
-							</a>    
-		                </td>
-			            <%
-							if(CheckedItem) { // CheckedItem이 true이면 cartOrder로 (cartOrder.jsp)
-						%>
+                          
+			<table class="table table-borderless" style="border-collapse: collapse; border: none;">
+				<tr>
+					<td>
+						<a href="<%=request.getContextPath()%>/main/home.jsp">
+							<button class="btn_1" type="button">계속쇼핑하기</button>
+						</a>    
+		            </td>
+			        <%
+						if(CheckedItem) { // 체크된 상품이 있으면(y) cartOrder로
+					%>
+							<td style="text-align: right;">
+								<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+									<button class="btn_1" type="button">구매하기</button>
+								</a>
+							</td>
+					<%
+						} else { // 체크된 상품이 없으면(n) 이전페이지로
+							if(id == null) { // 비회원 계정이면
+					%>
 								<td style="text-align: right;">
-									<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
-										<button class="btn_1" type="button">구매하기</button>
-									</a>
-								</td>
-						<%
-							} else { // CheckedItem이 false이면 전페이지로
-						%>
+									<button class="btn_1" type="button" onclick="alert('로그인을 해주세요.');">구매하기</button>	
+								</td>					
+					<% 			
+							} else { // 고객 계정이면
+					%>
 								<td style="text-align: right;">
 									<button class="btn_1" type="button" onclick="alert('상품을 선택해주세요.');">구매하기</button>	
-								</td>
-						<%
-							} 
-						%>
-			     	</tr>
-				</table> 
-        </div>
-      </div>
-  <!--================End Cart Area =================-->
+								</td>			
+					<%			
+							}
+						} 
+					%>
+				</tr>
+			</table> 
+		</div>
+	</div>
+	<!--================End Cart Area =================-->
+	
     <!--::footer_part start::-->
     <footer class="footer_part">
         <div class="footer_iner">
