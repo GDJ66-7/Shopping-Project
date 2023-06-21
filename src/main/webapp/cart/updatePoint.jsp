@@ -28,15 +28,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script>
-	
-
-</script>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>pillloMart</title>
+    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
+    <!-- icon CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
+    <!-- magnific popup CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/nice-select.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 <body>
-	<h1>포인트 사용</h1>
+	<!-- breadcrumb part start-->
+    <section class="breadcrumb_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <h2>포인트 사용</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</section>
+    <!-- breadcrumb part end-->
+    <br>
+<div class="container">
 	<form action="<%=request.getContextPath()%>/cart/cartOrder.jsp" method="post">
 		<input type="hidden" name="id" value="<%=id%>">
 		<input type="hidden" name="selectAddress" value="<%=selectAddress%>">
@@ -55,5 +84,6 @@
 			</tr>
 		</table>		
 	</form>
+</div>
 </body>
 </html>

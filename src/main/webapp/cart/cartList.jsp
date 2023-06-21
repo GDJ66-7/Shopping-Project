@@ -230,10 +230,10 @@
 									</a>
 								</td>
 						<%
-							} else { // CheckedItem이 false이면 현재페이지로 (cartList.jsp)
+							} else { // CheckedItem이 false이면 전페이지로
 						%>
-								<td>
-									<button class="btn_1" type="button" onclick="history.back()" >구매하기</button>
+								<td style="text-align: right;">
+									<button class="btn_1" type="button" onclick="alert('상품을 선택해주세요.');">구매하기</button>	
 								</td>
 						<%
 							} 
@@ -242,7 +242,6 @@
 				</table> 
         </div>
       </div>
-
   <!--================End Cart Area =================-->
     <!--::footer_part start::-->
     <footer class="footer_part">

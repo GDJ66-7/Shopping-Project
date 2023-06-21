@@ -109,7 +109,7 @@
     	<!-- 구매자 정보 -->
     	<div class="cupon_area">
         	<div class="check_title">
-          		<h2>구매자 정보</h2>
+          		<h2><span style="font-size: 20px;">구매자 정보</span></h2>
 			</div>
 			
 			<table>	
@@ -137,7 +137,7 @@
     	<!-- 받는사람 정보 -->
 		<div class="returning_customer">
 			<div class="check_title">
-				<h2>받는 사람 정보</h2>
+				<h2><span style="font-size: 20px;">받는 사람 정보</span></h2>
 			</div>
 			<p> 이전에 고객님께서 쇼핑한 적이 있는 경우 아래 주소에서 하나를 선택해주십시오.
 				신규 고객인 경우 주소 추가를 눌러서 주소를 추가해주십시오.
@@ -179,7 +179,7 @@
       	<!--  결제 정보  -->
 		<div class="billing_details">
 			<div class="check_title">
-				<h2>포인트 사용</h2>
+				<h2><span style="font-size: 20px;">포인트 사용</span></h2>
             </div>
 		<br>
             
@@ -225,10 +225,11 @@
 			<div class="col-lg-4">
             	<div class="order_box">
             		<div style="text-align:center;">
-              			<h2>주문 내역</h2>
+              			<h1><span style="color: #B08EAD;">주문 내역</span></h1>
             		</div>
+            		<br>
               		<!-- 배송 상품 목록 -->
-						<table class="table table-borderless">	
+						<table class="table">	
 							<tr>
 								<th style="text-align:left;">상품이름</th>
 								<th>수량</th>
