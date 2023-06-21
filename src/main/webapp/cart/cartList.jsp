@@ -6,7 +6,18 @@
 	//한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
 	
+
+	// 로그인 세션
 	String id = "customer1";
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();
@@ -54,102 +65,12 @@
     <!-- style CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
+
 <body>
-	<!--::header part start::-->
-	<header class="main_menu home_menu">
-		<div class="container">
-			<div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-						<button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-
-						<div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
-							<ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="index.html">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="about.html">about</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        product
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                        <a class="dropdown-item" href="product_list.html"> product list</a>
-                                        <a class="dropdown-item" href="single-product.html">product details</a>
-                                        
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        pages
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="login.html"> 
-                                            login
-                                            
-                                        </a>
-                                        <a class="dropdown-item" href="checkout.html">product checkout</a>
-                                        <a class="dropdown-item" href="cart.html">shopping cart</a>
-                                        <a class="dropdown-item" href="confirmation.html">confirmation</a>
-                                        <a class="dropdown-item" href="elements.html">elements</a>
-                                    </div>
-                                </li>
-                                
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        blog
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="blog.html"> blog</a>
-                                        <a class="dropdown-item" href="single-blog.html">Single blog</a>
-                                    </div>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <div class="dropdown cart">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="flaticon-shopping-cart-black-shape"></i>
-                                </a>
-                                <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <div class="single_product">
-    
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
-    <!-- Header part end-->
-
+	<!-- 메인메뉴 시작 -->
+		<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	<!-- 메인메뉴 끝 -->
+	
     <!-- breadcrumb part start-->
     <section class="breadcrumb_part">
         <div class="container">
@@ -173,7 +94,7 @@
 					<thead>
 						<tr>
 							<th scope="col"><h5>선택</h5></th>
-							<th scope="col"><h5>상품이미지</h5></th>
+							<th scope="col"></th>
 							<th scope="col"><h5>상품이름</h5></th>
 							<th scope="col"><h5>상품가격</h5></th>
 							<th scope="col"><h5>할인금액</h5></th>
@@ -212,7 +133,8 @@
 										<label>	
 											<input type="radio" name="checked" value="n" <%=(checked.equals("n")) ? "checked" : ""%>> N
 										</label>
-										<input type="submit" value="변경">
+										<br>
+										<input class="btn_1" type="submit" value="변경" style="width:60px; height:30px; text-align: center; padding: 0; line-height: 20px;">
 									</form>
 								</td>
 								<!-- 상품 이미지 -->
@@ -221,7 +143,7 @@
 								</td>
 								<!-- 상품 이름 -->
 								<td>
-									<a href="<%=request.getContextPath()%>/product/productOne.jsp">
+									<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>">
 										<%=(String)(c.get("상품이름"))%>
 									</a>	
 								</td>
@@ -252,8 +174,10 @@
 										<%
 											}
 										%>
-										</select>	
-										<input type="submit" value="변경">		
+										</select>
+										<br>
+										<br>
+										<input class="btn_1" type="submit" value="변경" style="width:60px; height:30px; text-align: center; padding: 0; line-height: 20px;">
 									</form>
 				                </td>	
 								<!-- 전체가격 -->				
@@ -266,7 +190,7 @@
 									<form action="<%=request.getContextPath()%>/cart/deleteCartAction.jsp" method="post">
 										<input type="hidden" name="cartNo" value="<%=(int)(c.get("장바구니번호"))%>">
 										<input type="hidden" name="id" value="<%=(String)(c.get("아이디"))%>">				
-										<input type="submit" value="X">
+										<input class="btn_1" type="submit" value="X" style="width:30px; height:30px; text-align: center; padding: 0; line-height: 20px;">
 									</form>
 				                </td>
               				</tr>
@@ -275,13 +199,13 @@
 						%>	
               	</table>
                   
-				<table>
+				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
 					<%
 						for(HashMap<String, Object> c : list7) {			
 					%>
-							<tr>
+							<tr class="table table-borderless" style="text-align: center; border: 1px solid #B08EAD;">
 								<th>
-									총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span>
+									<h4>총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span></h4>
 								</th>
 							</tr>
 					<%
@@ -290,7 +214,7 @@
 				</table>
               
               
-              	<table class="table">
+              	<table class="table table-borderless" style="border-collapse: collapse; border: none;">
 					<tr>
 		                <td>
 		                	<a href="<%=request.getContextPath()%>/main/home.jsp">
@@ -300,7 +224,7 @@
 			            <%
 							if(CheckedItem) { // CheckedItem이 true이면 cartOrder로 (cartOrder.jsp)
 						%>
-								<td>
+								<td style="text-align: right;">
 									<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
 										<button class="btn_1" type="button">구매하기</button>
 									</a>
@@ -309,7 +233,7 @@
 							} else { // CheckedItem이 false이면 현재페이지로 (cartList.jsp)
 						%>
 								<td>
-									<button class="btn_1" type="button" onclick="history.back()">구매하기</button>
+									<button class="btn_1" type="button" onclick="history.back()" >구매하기</button>
 								</td>
 						<%
 							} 
@@ -322,7 +246,7 @@
   <!--================End Cart Area =================-->
     <!--::footer_part start::-->
     <footer class="footer_part">
-        <div class="footer_iner section_bg">
+        <div class="footer_iner">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-8">
@@ -331,21 +255,19 @@
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
-                                <a href="about.html">About</a>
-                                <a href="product_list.html">Products</a>
-                                <a href="#">Pages</a>
-                                <a href="blog.html">Blog</a>
-                                <a href="contact.html">Contact</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
+                                <a href="<%=request.getContextPath()%>/product/productList.jsp">상품</a>                       
+                                <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
+                                <a href="<%=request.getContextPath()%>/customer/customerInfo.jsp">마이페이지</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="social_icon">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://ko-kr.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                            <a href="https://google.com"><i class="fab fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </div>
