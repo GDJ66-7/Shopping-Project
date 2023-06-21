@@ -128,10 +128,9 @@
         	}
       	 %>		
 	</p>
-	<%
-		for(HashMap<String, Object> s : list){
-	%>
+	
 		<table class="table">
+		
 			<tr>
 				<td>주문번호</td>
 				<td>상품이름</td>
@@ -142,6 +141,9 @@
 				<td>주문배송지</td>
 				<td>구매일</td>
 			</tr>
+			<%
+				for(HashMap<String, Object> s : list){
+			%>
 			<tr>
 				<td><%=(Integer)(s.get("주문번호"))%></td>
 				<td><%=(String)(s.get("상품이름"))%></td>
@@ -169,10 +171,11 @@
 					}
 				%>				
 			</tr>
+			<%
+				}
+			%>
 		</table>
-	<%
-		}
-	%>
+	
 	<div style="text-align: center;">
 		<%
 			if(startPage > 5){

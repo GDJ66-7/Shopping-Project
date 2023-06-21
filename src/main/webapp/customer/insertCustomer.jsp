@@ -310,9 +310,9 @@
 			<p><span id="birthMsg" class="msg"></span></p>
 			<div class="date-container">
  				<input type="date" name="cstmBirth" id="birth" class="custom-date">
-			</div>
+			</div><br>
 			
-			<p>나이</p>
+			<br><p>나이</p>
 			<input type="text" id="age" readonly="readonly" class="single-input"><br>
 			
 			<p>전화번호</p>

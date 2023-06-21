@@ -28,7 +28,7 @@
 		
 		//메서드 DAO선언
 		MemberDao kaka = new MemberDao();
-		int row = kaka.checkId(id);
+		int row = kaka.checkIdkakao(id);
 		if(row == 1){
 			session.setAttribute("loginCstmId", id);
 			System.out.print("고객로그인 성공 새션정보 : " + session.getAttribute("loginCstmId"));

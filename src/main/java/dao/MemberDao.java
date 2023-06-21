@@ -409,13 +409,14 @@ public class MemberDao {
 		}
 		if(row == 0) {
 			return row;
-		} else {
+		} else if(row > 0){
 			PreparedStatement checkStmt = conn.prepareStatement("SELECT active FROM id_list WHERE id = ?");
 			checkStmt.setString(1, id);
 			ResultSet checkRs = checkStmt.executeQuery();
 			if(checkRs.next()) {
 				idAct = checkRs.getString("active");
 			}
+			System.out.println(idAct+"<-- kakaoCheck");
 			if(idAct.equals("y")) {
 				//로그인일자 업데이트
 				PreparedStatement csLoginStmt = conn.prepareStatement("UPDATE customer set cstm_last_login = now() WHERE id = ?");
