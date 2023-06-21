@@ -205,8 +205,10 @@
     	<div class="col-12">
     		<div style="text-align:center;">
 	     		<form style="text-align:center;" id="empProductSearchForm" action="<%=request.getContextPath()%>/product/empProductList.jsp" method="get">
-   																						<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
-              		<input style="text-align: center;"  type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+   					<div class="styled-input">
+	   																						<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
+	              		<input style="text-align: center;"  type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+                	</div>
                 	<ul class="navbar-nav">
                    		<li>					<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
                    			<br>
@@ -252,9 +254,15 @@
 	                </script>
 		      	</div>
 		    </div>
-		    <div style="right: = auto;">
-		    	<a class="genric-btn info-border circle" href="<%=request.getContextPath()%>/product/insertProduct.jsp">상품추가하기</a>
-		    </div>
+		    <%
+		    	if(session.getAttribute("loginEmpId2") != null) {
+		    %>
+				    <div style="right: = auto;">
+				    	<a class="genric-btn info-border circle" href="<%=request.getContextPath()%>/product/insertProduct.jsp">상품추가하기</a>
+				    </div>
+		    <% 
+		    	}
+		    %>
 		    <br>
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
@@ -375,31 +383,34 @@
     </div>
   <!-- ================ contact section end ================= -->
 
-  <!--::footer_part start::-->
-  <footer class="footer_part">
-        <div class="footer_iner section_bg">
-            <div class="container">
+  	<!--::footer_part start::-->
+  	<footer class="footer_part">
+		<div class="footer_iner">
+	    	<div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-8">
                         <div class="footer_menu">
                             <div class="footer_logo">
-                                <a href="index.html"><img src="/Shopping/css/img/logo.png" alt="#"></a>
+                                <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
+                                <a href="<%=request.getContextPath()%>/product/productList.jsp">상품</a>
+                                <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
+                                <a href="<%=request.getContextPath()%>/employee/employeeInfo.jsp">관리자정보</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="social_icon">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://ko-kr.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                            <a href="https://google.com"><i class="fab fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </div>
-            </div>
+	    	</div>
         </div>
         
         <div class="copyright_part">
@@ -408,8 +419,7 @@
                     <div class="col-lg-12">
                         <div class="copyright_text">
                             <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
                             <div class="copyright_link">
                                 <a href="#">Turms & Conditions</a>
                                 <a href="#">FAQ</a>

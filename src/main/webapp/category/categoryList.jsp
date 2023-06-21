@@ -88,9 +88,16 @@
   <!-- ================ contact section start ================= -->
     <div class="container">
     <br><div class="col-12">
-         	 <h2 style="text-align: center;" class="contact-title"> <br>
-	        	<a style="text-align: center;" class="genric-btn primary-border" href="<%=request.getContextPath()%>/category/insertCategory.jsp" >카테고리 추가하기</a>
-         	 </h2>
+    
+    		<%
+		    	if(session.getAttribute("loginEmpId2") != null) {
+		    %>
+		         	<h2 style="text-align: center;" class="contact-title"> <br>
+			        	<a style="text-align: center;" class="genric-btn primary-border" href="<%=request.getContextPath()%>/category/insertCategory.jsp" >카테고리 추가하기</a>
+		         	</h2>
+		    <% 
+		    	}
+		    %>
         </div>
 	<table class="table table-bordered">
 			<%
@@ -99,7 +106,13 @@
 					<tr>
 						<td style="text-align: center;">
 							<%=cMap.get("categoryName") %>
-							<a class="genric-btn primary-border circle" href=" <%=request.getContextPath() %>/category/updateCategory.jsp?categoryNo=<%=cMap.get("categoryNo")%>&categoryName=<%=cMap.get("categoryName")%>">수정하기</a>
+							<%
+								if(session.getAttribute("loginEmpId2") != null) {
+							%>
+								<a class="genric-btn primary-border circle" href=" <%=request.getContextPath() %>/category/updateCategory.jsp?categoryNo=<%=cMap.get("categoryNo")%>&categoryName=<%=cMap.get("categoryName")%>">수정하기</a>
+							<% 		
+								}
+							%>
 						</td>
 					</tr>
 			<% 
@@ -111,30 +124,33 @@
   <!-- ================ contact section end ================= -->
 
   <!--::footer_part start::-->
-  <footer class="footer_part">
-        <div class="footer_iner section_bg">
-            <div class="container">
+  	<footer class="footer_part">
+		<div class="footer_iner">
+	    	<div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-8">
                         <div class="footer_menu">
                             <div class="footer_logo">
-                                <a href="index.html"><img src="/Shopping/css/img/logo.png" alt="#"></a>
+                                <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
+                                <a href="<%=request.getContextPath()%>/product/productList.jsp">상품</a>
+                                <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
+                                <a href="<%=request.getContextPath()%>/employee/employeeInfo.jsp">관리자정보</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="social_icon">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://ko-kr.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                            <a href="https://google.com"><i class="fab fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </div>
-            </div>
+	    	</div>
         </div>
         
         <div class="copyright_part">
@@ -143,8 +159,7 @@
                     <div class="col-lg-12">
                         <div class="copyright_text">
                             <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
                             <div class="copyright_link">
                                 <a href="#">Turms & Conditions</a>
                                 <a href="#">FAQ</a>

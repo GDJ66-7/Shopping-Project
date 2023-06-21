@@ -68,7 +68,6 @@
         </div>
     </section>
  	<!-- banner part end-->
-
     <!-- product list start-->
     <br>
     <br>
@@ -88,21 +87,17 @@
 	                        %>
 		                        	<div style="text-align: center;" class="col-lg-4">
 		                        		<a style="display: block; text-align: center;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>">
-		                        			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="200" height="200">
+		                        			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="350" height="350">
 		                        		</a>
 		                        		
-		                        		<span style="font-weight: bold;">
+		                        		<span style="font-size: 15px;">
 	                        				<%=map.get("productName") %>
 	                        			</span>
 	                        			
-		                        		<span style="display: block;">
+		                        		<span style="display: block; font-weight: bold; font-size: 20px;">
 		                        			<%=productPrice %> ₩
 		                        		</span>	
 		                        		<br>
-		                        			
-		                            	<a style="display: block;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>" class="btn_3">
-		                            		상품바로가기
-		                            	</a>
 		                            </div>
 	                        <% 	
 	                        	}
@@ -113,6 +108,9 @@
             </div>
         </div>
     <!-- product list end-->
+    
+    
+    
     <!-- trending item start-->
     <br>
     <br>
@@ -135,13 +133,13 @@
                		<div style="text-align: center;" class="col-lg-4">
                		<div class="single_product_item">
                			<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
-               				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="250" height="250">
+               				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="300" height="300">
                			</a>
-               			<h3> 
+               			<br>
+               			<!--  <p style="font-weight: bold; font-size: 18px;"><%=proMap.get("productName") %></p>-->
                				<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
-               					<%=proMap.get("productInfo") %>
+               					<span style="font-size: 15px; color: black;"><%=proMap.get("productInfo") %></span>
                    			</a> 
-                   		</h3>
                    		<p>
                    			<%=productPrice %> ₩
                    		</p>
@@ -196,14 +194,20 @@
             <div class="row justify-content-between">
                 <div class="col-lg-6">
                     <div class="feature_part_tittle">
-                        <h3>Credibly innovate granular
-                        internal or organic sources
-                        whereas standards.</h3>
+                        <h3>"퀄리티와 스타일이 어우러진 최상의 선택, 이곳에서 특별한 공간을 완성하세요."</h3>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="feature_part_content">
-                        <p>Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources. Credibly innovate granular internal or “organic” sources whereas high standards in web-readiness.</p>
+                        <p>
+                        맞춤 가구로 인테리어를 더욱 완성해 보세요.
+                        <br>
+						스타일링의 마지막 조감도, 특별한 공간을 만들어보세요.
+						<br>
+						디테일에서 찾는 섬세함, 이곳에서 그 특별함을 느껴보세요.
+						<br>
+						세련된 공간의 비밀을 함께 풀어나가보세요.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -237,7 +241,7 @@
     </section>
     <!-- feature part end -->
 
-    <!-- subscribe part here -->
+    <!-- subscribe part here 
     <section class="subscribe_part section_padding">
         <div class="container">
             <div class="row justify-content-center">
@@ -254,7 +258,7 @@
             </div>
         </div>
     </section>
-    <!-- subscribe part end -->
+     subscribe part end -->
 
     <!--::footer_part start::-->
     <footer class="footer_part">
@@ -269,9 +273,20 @@
                             <div class="footer_menu_item">
                                 <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
                                 <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
-                                <a href="<%=request.getContextPath()%>/product/ProductList.jsp">상품</a>
+                                <a href="<%=request.getContextPath()%>/product/productList.jsp">상품</a>
                                 <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
-                                <a href="<%=request.getContextPath()%>/customer/customerInfo.jsp">마이페이지</a>
+                                <%	// 관리자는 관리자회원정보
+                                	if(session.getAttribute("loginEmpId2") != null || session.getAttribute("loginEmpId1") != null) {
+                                %>
+                                		<a href="<%=request.getContextPath()%>/employee/employeeInfo.jsp">관리자정보</a>
+                                <% 
+                                	// 고객은 고객회원정보
+                                	} else {
+                                %>
+                                		<a href="<%=request.getContextPath()%>/customer/customerInfo.jsp">마이페이지</a>
+                                <% 
+                                	}
+                                %>
                             </div>
                         </div>
                     </div>
@@ -292,8 +307,7 @@
                     <div class="col-lg-12">
                         <div class="copyright_text">
                             <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
                             <div class="copyright_link">
                                 <a href="#">Turms & Conditions</a>
                                 <a href="#">FAQ</a>

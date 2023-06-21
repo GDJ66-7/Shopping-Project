@@ -233,7 +233,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
-                        <h2>product list</h2>
+                        <h2>상품 목록</h2>
                     </div>
                 </div>
             </div>
@@ -314,7 +314,9 @@
 							</a>
 							<br>
 							<!-- 상품 이름 -->
-							<a class="fontBlackBold" style="color: black; text-decoration: none;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>"><em><%=productMap.get("productName") %></em></a>
+							<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>&productDiscountPrice=<%=productMap.get("productDiscountPrice") %>">
+								<span class="fontBlackBold" style="color: black; text-decoration: none;"><%=productMap.get("productName") %></span>
+							</a>
 							<br>	
 							<!-- 상품 가격 -->
 							<span class="fontBlackBold larger-text"><%=productPrice %> ₩</span>
@@ -421,55 +423,63 @@
     <!-- product list part end-->
     <!--::footer_part start::-->
     <footer class="footer_part">
-            <div class="footer_iner">
-                <div class="container">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-lg-8">
-                            <div class="footer_menu">
-                                <div class="footer_logo">
-                                    <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
-                                </div>
-                                <div class="footer_menu_item">
-                                    <a href="index.html">Home</a>
-                                    <a href="about.html">About</a>
-                                    <a href="product_list.html">Products</a>
-                                    <a href="#">Pages</a>
-                                    <a href="blog.html">Blog</a>
-                                    <a href="contact.html">Contact</a>
-                                </div>
+        <div class="footer_iner">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-8">
+                        <div class="footer_menu">
+                            <div class="footer_logo">
+                                <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
+                            </div>
+                            <div class="footer_menu_item">
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
+                                <a href="<%=request.getContextPath()%>/product/productList.jsp">상품</a>
+                                <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
+                                <%	// 관리자는 관리자회원정보
+                                	if(session.getAttribute("loginEmpId2") != null || session.getAttribute("loginEmpId1") != null) {
+                                %>
+                                		<a href="<%=request.getContextPath()%>/employee/employeeInfo.jsp">관리자정보</a>
+                                <% 
+                                	// 고객은 고객회원정보
+                                	} else {
+                                %>
+                                		<a href="<%=request.getContextPath()%>/customer/customerInfo.jsp">마이페이지</a>
+                                <% 
+                                	}
+                                %>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="social_icon">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="social_icon">
+                            <a href="https://ko-kr.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                            <a href="https://google.com"><i class="fab fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="copyright_part">
-                <div class="container">
-                    <div class="row ">
-                        <div class="col-lg-12">
-                            <div class="copyright_text">
-                                <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
+        
+        <div class="copyright_part">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-12">
+                        <div class="copyright_text">
+                            <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
-                                <div class="copyright_link">
-                                    <a href="#">Turms & Conditions</a>
-                                    <a href="#">FAQ</a>
-                                </div>
+                            <div class="copyright_link">
+                                <a href="#">Turms & Conditions</a>
+                                <a href="#">FAQ</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </footer>
-    
     <!--::footer_part end::-->
 
     <!-- jquery plugins here-->
