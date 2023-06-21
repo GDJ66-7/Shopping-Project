@@ -208,6 +208,7 @@
    					<div class="styled-input">
 	   																						<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
 	              		<input style="text-align: center;"  type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+                		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
                 	</div>
                 	<ul class="navbar-nav">
                    		<li>					<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
@@ -239,9 +240,6 @@
                            			}
                            		%>
                            	</li>
-		                   	<li>
-		                    <button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
-		            	</li>
 		         	</ul>
 	           	 </form>
 	                <!---------------------- js부분 -------------------------->
@@ -322,16 +320,16 @@
 							<td>
 								<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 							</td>
+							<td>
 				<%
 							// 할인가격이 없을경우에만 할인추가표시가 생성
 							if((int)productMap.get("productDiscountPrice") == ((int)productMap.get("productPrice"))) {
 				%>
-								<td>
 									<a style="text-align:center;" href="<%=request.getContextPath()%>/discount/insertDiscount.jsp?productNo=<%=productMap.get("productNo")%>&productName=<%=productMap.get("productName")%>"><img width="30" height="30" src="<%=request.getContextPath()%>/product/icon/할인.png"></a>
-								</td>
 				<% 
 							}
 				%>
+							</td>
 						</tr>
 				<% 
 						}

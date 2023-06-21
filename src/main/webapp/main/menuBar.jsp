@@ -135,7 +135,7 @@
             <div class="container ">
                 <!--  메뉴바 오른쪽 돋보기 상품검색기능 -->
                 <form class="d-flex justify-content-between search-inner" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
-                    <input type="text" class="form-control" name="searchName"  placeholder="상품이름검색">
+                    <input type="text" class="form-control" name="productName"  placeholder="상품이름검색">
                     <button type="submit" class="btn"></button>
                     <span class="ti-close" id="close_search" title="Close Search"></span>
                 </form>

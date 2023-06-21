@@ -250,6 +250,7 @@
                 	<li>					<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
                     	<div class="center-align">
                       		<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+                      		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
 	                    </div>
 	                    <br>
         				<label>
@@ -279,9 +280,6 @@
                             	}
                             %>
                          </li>
-		                 <li>
-		                 	<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
-		                 </li>
 	            </ul>
 	       	</form>
 	        <!---------------------- js부분 -------------------------->

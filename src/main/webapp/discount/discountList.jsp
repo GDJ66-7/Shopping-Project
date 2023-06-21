@@ -233,6 +233,7 @@
 		      	<div class="styled-input">
 		      																		<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
 		      		<input style="text-align: center;" type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
+		      		<button class="genric-btn primary-border circle" type="submit">검색</button>
 		      	</div>
 		      	<ul class="navbar-nav">
                		<li>
@@ -249,17 +250,33 @@
                       	%>
                  	</li>
 		         </ul>
-		      	<button class="genric-btn primary-border circle" type="submit">검색</button>
 			</form>
 			<%
 		    	if(session.getAttribute("loginEmpId2") != null) {
 		    %>
 					<div style="text-align:left;">
-						<a class="genric-btn danger circle" href="<%=request.getContextPath()%>/discount/allDeleteDiscountAction.jsp?">할인기간종료상품 전체삭제</a>
+						<a class="genric-btn primary-border circle" id="deleteDiscount"><span style="color: red;">할인기간종료상품 전체삭제</span></a>
 					</div>
 		    <% 
 		    	}
 		    %>
+		    
+		    <script>
+			$(document).ready(function() {
+				$('#deleteDiscount').click(function() {
+			    	event.preventDefault();
+			    	if (confirm("전체 할인 상품을 삭제하시겠습니까?")) {
+				        // 확인 버튼을 클릭하면 아래 주소로 이동
+				    	var url = '<%=request.getContextPath()%>/discount/allDeleteDiscountAction.jsp';
+				    	// url주소로 이동
+				    	window.location.href = url;
+			      	}else {
+			        	// 취소 버튼을 클릭한 경우에 수행할 동작을 여기에 작성
+			        	return;
+			      	}
+				});
+			});
+			</script>
 			<br>
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
