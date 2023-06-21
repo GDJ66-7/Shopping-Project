@@ -41,43 +41,8 @@
 
 <body>
     <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                    							<!--  이부분 경로 수정해야 로고 눌러도 홈으로 옴 -->
-                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-						<div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>
-                        <div class="hearer_icon d-flex align-items-center">
-                        <!--  돋보기 기능아직 없음 -->
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <!--  메뉴바 오른쪽 돋보기 상품검색기능 -->
-                <form class="d-flex justify-content-between search-inner" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
-                    <input type="text" class="form-control" name="searchName"  placeholder="상품이름검색">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
+    <!-- 메인메뉴 바 -->
+	<jsp:include page="/main/menuBar.jsp"></jsp:include>
     <!-- Header part end-->
 
     <!-- banner part start-->
@@ -149,6 +114,8 @@
         </div>
     <!-- product list end-->
     <!-- trending item start-->
+    <br>
+    <br>
     <section class="trending_items">
         <div class="container">
             <div class="row">
@@ -261,7 +228,7 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="single_feature_part">
-                        <img src="img/icon/feature_icon_4.svg" alt="#">
+                        <img src="<%=request.getContextPath()%>/css/img/icon/feature_icon_4.svg" alt="#">
                         <h4>Product with Gift</h4>
                     </div>
                 </div>
