@@ -88,7 +88,7 @@
 	if(level.equals("2")){
 		session.setAttribute("loginEmpId2", id);
 		System.out.println("최고관리자 로그인 성공 새션정보 : " + session.getAttribute("loginEmpId2"));
-		out.println("<script>alert('최고관라지로 로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
+		out.println("<script>alert('최고관리자로 로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 		return;
 	}
 	if(level.equals("1")){
