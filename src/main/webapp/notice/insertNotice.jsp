@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 //세션관리자만 들어올수있게
-	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId") == null){
+	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId2") == null){
 		response.sendRedirect(request.getContextPath()+"/notice/noticeList.jsp");
 		return;
 	}
@@ -13,7 +13,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		const MAX_COUNT = 50; // const 상수선언 사용하는 키워드 (자바의 final과 유사함)
+		const MAX_COUNT = 500; // const 상수선언 사용하는 키워드 (자바의 final과 유사함)
 		$('#comment').keyup(function(){
 			let len = $('#comment').val().length;
 			if(len > MAX_COUNT){
@@ -52,41 +52,9 @@
 
 <body>
     <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                         <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-						 <!-- 메인메뉴 바 -->
-                        <div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>  
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                           <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
+    <div>
+		<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	</div>  
     <!-- Header part end-->
 
     <!-- breadcrumb part start-->
@@ -111,7 +79,7 @@
   		<form action="<%=request.getContextPath()%>/notice/insertNoticeAction.jsp" method="get">
 			제목 : <input type="text" name="noticeTitle" required="required" class="single-input"><br>
 			<div>
-				<p>댓글(50자 이하) 현재:<span id="count">0</span>자</p>
+				<p>댓글(500자 이하) 현재:<span id="count">0</span>자</p>
 				<div>
 			공지사항 내용<textarea id="comment" rows="5" cols="60" name="noticeContent" required="required" class="single-textarea"></textarea><br>
 				</div>

@@ -21,6 +21,24 @@
 <html lang="zxx">
 
 <head>
+<style>
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  
+}
+
+.resize-handle {
+  width: 8px;
+  cursor: col-resize;
+  background-color: #f2f2f2;
+}
+</style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,41 +65,9 @@
 
 <body>
     <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                         <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-                         <!-- 메인메뉴 바 -->
-                        <div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                             <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
+    <div>
+		<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	</div>
     <!-- Header part end-->
 
     <!-- breadcrumb part start-->
@@ -112,42 +98,44 @@
   				}
   			%>
 		 </h2>
-		<table class="table table-bordered">
-			<%
-				for(HashMap<String, Object> s : noticeList){
-			%>
-			<tr>
-				<td>공지번호</td>
-				<td><%=(Integer)(s.get("번호"))%></td>
-			</tr>
-			<tr>
-				<td>작성일</td>
-				<td><%=(String)(s.get("작성일"))%></td>
-			</tr>
-			<tr>
-				<td>수정일</td>
-				<td><%=(String)(s.get("수정일"))%></td>
-			</tr>
-			<tr>
-				<td>제목</td>
-				<td><%=(String)(s.get("제목"))%></td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td><%=(String)(s.get("내용"))%></td>
-			</tr>
+		<table class="table">
+		  <colgroup>
+		    <col style="width: 20%">
+		    <col style="width: 80%">
+		  </colgroup>
+		  <% for(HashMap<String, Object> s : noticeList) { %>
+		    <tr>
+		      <th>공지번호</th>
+		      <td><%= (Integer)(s.get("번호")) %></td>
+		    </tr>
+		    <tr>
+		      <th>작성일</th>
+		      <td><%= (String)(s.get("작성일")) %></td>
+		    </tr>
+		    <tr>
+		      <th>수정일</th>
+		      <td><%= (String)(s.get("수정일")) %></td>
+		    </tr>
+		    <tr>
+		      <th>제목</th>
+		      <td><%= (String)(s.get("제목")) %></td>
+		    </tr>
+		    <tr>
+		      <th>내용</th>
+		      <td><%= (String)(s.get("내용")) %></td>
+		    </tr>
+		</table>
+
+
 			<%
 				if(loginEmpId1 != null || loginEmpId2 != null){
 			%>
-				<tr>
-					<td><a href="<%=request.getContextPath()%>/notice/updateNotice.jsp?noticeNo=<%=(Integer)(s.get("번호"))%>" class="genric-btn primary-border circle">수정하기</a></td>
-					<td><a href="<%=request.getContextPath()%>/notice/deleteNoticeAction.jsp?noticeNo=<%=(Integer)(s.get("번호"))%>" class="genric-btn primary-border circle">삭제하기</a></td>
-				</tr>
+					<a href="<%=request.getContextPath()%>/notice/updateNotice.jsp?noticeNo=<%=(Integer)(s.get("번호"))%>" class="genric-btn primary-border circle">수정하기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="<%=request.getContextPath()%>/notice/deleteNoticeAction.jsp?noticeNo=<%=(Integer)(s.get("번호"))%>" class="genric-btn primary-border circle">삭제하기</a>
 			<%
 					}	
-				}
+		  }
 			%>
-		</table>
     </div><br>
   <!-- ================ contact section end ================= -->
 

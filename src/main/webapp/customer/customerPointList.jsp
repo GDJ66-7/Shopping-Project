@@ -50,6 +50,25 @@
 <html lang="zxx">
 
 <head>
+<style>
+    /* 스타일링된 링크 */
+    .styled-link {
+      display: inline-block;
+      padding: 6px 10px; /* 패딩 */
+      background-color: #DBB5D6; /* 배경색 */
+      color: #F6F6F6; /* 텍스트 색상 */
+      text-decoration: none; /* 텍스트 장식 제거 */
+      border-radius: 4px; /* 테두리 반경 */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+      transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+    }
+    
+    /* 링크 호버 효과 */
+    .styled-link:hover {
+      background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+      color: #fff; /* 호버 시 텍스트 색상 변경 */
+    }
+</style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -76,41 +95,9 @@
 
 <body>
     <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                         <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-                        <!-- 메인메뉴 바 -->
-						<div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                          <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
+	<div>
+		<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	</div>
     <!-- Header part end-->
 
     <!-- breadcrumb part start-->
@@ -150,26 +137,24 @@
 		<%
 			}
 		%>
-		<div>
+		<div style="text-align: center;">
 			<%
 				if(startPage > 5){
 			%>
-				<a href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=startPage-1%>">이전</a>
+				<a class="styled-link" href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=startPage-1%>">이전</a>
 			<%
 				}
 				for(int i = startPage; i<=endPage; i++){
 			%>
-				<a href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=i%>"><%=i%></a>
+				<a class="styled-link" href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=i%>"><%=i%></a>
 			<%
 				}
 				if(endPage<lastPage){
 			%>
-				<a href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=endPage+1%>">다음</a>
+				<a class="styled-link" href="<%=request.getContextPath()%>/customer/coustomerPointList.jsp?currentPage=<%=endPage+1%>">다음</a>
 			<%
 				}
 			%>
-			&nbsp;
-				<a href="<%=request.getContextPath()%>/customer/customerInfo.jsp" class="genric-btn primary-border circle">마이페이지</a>
 		</div>
     </div><br>
   <!-- ================ contact section end ================= -->
