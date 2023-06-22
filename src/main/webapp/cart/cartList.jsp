@@ -6,12 +6,9 @@
 <%
 	//한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
-%>
 
-<!-- 로그인 세션 시작 -->	
-<%
-	// 아이디 변수 초기화
-	String id = null;
+	// -------------- 로그인 세션 -----------------
+	String id = null; // 아이디 변수 초기화
 
 	// 관리자 계정으로 접속했을때
 	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
@@ -22,17 +19,24 @@
 	// 고객 계정으로 접속했을때
 	if(session.getAttribute("loginCstmId") != null) {
 		id = (String)(session.getAttribute("loginCstmId"));
-		System.out.println(id+ " <-- cartList id");
+		System.out.println(id+ " <-- cartList 고객아이디");
 	}
-
+	
+	// 장바구니 세션이 없을때
+	HashMap<String, Cart> newCartList = (HashMap<String, Cart>) session.getAttribute("newCartList");
+	if (session.getAttribute("loginCstmId") == null && (newCartList == null || newCartList.isEmpty())) {
+		out.println("<script>alert('장바구니가 비어있습니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+    	return;
+	}
+	
 	// 비회원으로 접속했을때
 	if(session.getAttribute("loginCstmId") == null) {
-		
+		newCartList = (HashMap<String, Cart>) session.getAttribute("newCartList");
+		System.out.println(newCartList + " <-- cartList newCartList ");
+		System.out.println(id + " <-- cartList 비회원");
 	}
-
-	
 %>	
-		
+	
 <%	
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();
@@ -101,68 +105,113 @@
 	</section>
     <!-- breadcrumb part end-->
 
-	<!--================Cart Area =================-->
+	<!--================ Cart Area =================-->
 <br>	
 <br>	
 	<div class="container">
 		<div class="cart_inner">
-		
-			<!-- 비회원 계정으로 로그인 하였을때 시작 -->
-				
+			<!-- 비회원으로 로그인 -->
 			<%
-				if(id == null) { // 비회원 계정이면
+				if(id == null){ // 비회원
 			%>	
-				<!-- 
-				<table>
-					<tr>
-						<td style="text-align: right;">
-							<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
-								<button class="btn_1" type="button">구매하기</button>
-							</a>
-						</td>
-					</tr>
-				</table>	
-				 -->
-			<%
-				}		
-			%>		
-				
-			<!-- 비회원 계정으로 로그인 하였을때 끝 -->
-		
-			<!-- 고객 계정으로 로그인 하였을때 시작 -->
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col"><h5>선택</h5></th>
-						<th scope="col"></th>
-						<th scope="col"><h5>상품이름</h5></th>
-						<th scope="col"><h5>상품가격</h5></th>
-						<th scope="col"><h5>할인금액</h5></th>
-						<th scope="col"><h5>할인적용가격</h5></th>
-						<th scope="col"><h5>수량</h5></th>
-						<th scope="col"><h5>전체가격</h5></th>
-						<th scope="col"><h5>삭제</h5></th>				
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						for(HashMap<String, Object> c : list1) {
-							// 1. 변수에 조회한 값을 저장
-							int productNo = (int)(c.get("상품번호"));
-							int cartCnt = (int)(c.get("수량"));
-							String checked = (String)(c.get("체크"));
-					
-							// 2. 상품의 최대로 선택 가능한 개수(상품의 재고량만큼)
-							int totalCnt = cartDao.maxCartCnt(productNo);
-								
-							// 수량이 0이거나 재고가 없는 경우 해당 상품을 리스트에 표시하지 않는다
-							if(cartCnt ==0 || totalCnt==0) {
-								continue;	// 건너뛴다.
-							}
-					%>
+				<table class="table">
+					<thead>
 						<tr>
-							<!-- 상품 선택(체크) -->
-							<td>
+							<th scope="col"><h5>상품번호</h5></th>
+							<th scope="col"><h5>상품이름</h5></th>
+							<th scope="col"><h5>상품가격</h5></th>
+							<th scope="col"><h5>할인금액</h5></th>
+							<th scope="col"><h5>할인적용가격</h5></th>
+							<th scope="col"><h5>수량</h5></th>
+							<th scope="col"><h5>전체가격</h5></th>
+											
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for (Cart c : newCartList.values()) {
+						%>		
+							<tr>
+								<td><%=c.getProductNo()%></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><%=c.getCartCnt()%></td>
+								<td></td>
+							</tr>	
+						<%
+							}
+						%>										
+				</table>   
+			         
+				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
+					<%
+						for(HashMap<String, Object> c : list7) {			
+					%>
+							<tr class="table table-borderless" style="text-align: center; border: 1px solid #B08EAD;">
+								<th>
+									<h4>총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span></h4>
+								</th>
+							</tr>
+					<%
+						}
+					%>	
+				</table>
+	                          
+				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
+					<tr>
+						<td>
+							<a href="<%=request.getContextPath()%>/main/home.jsp">
+								<button class="btn_1" type="button">계속쇼핑하기</button>
+							</a>    
+			            </td>
+						<td style="text-align: right;">
+							<button class="btn_1" type="button" onclick="alert('로그인을 해주세요.');">구매하기</button>	
+						</td>			
+					</tr>
+					</tbody>
+				</table>
+			<%
+				}
+			%>					
+
+			<!-- 고객 계정으로 로그인 -->
+			<%
+				if(id != null){ // 고객 계정
+			%>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col"><h5>선택</h5></th>
+							<th scope="col"></th>
+							<th scope="col"><h5>상품이름</h5></th>
+							<th scope="col"><h5>상품가격</h5></th>
+							<th scope="col"><h5>할인금액</h5></th>
+							<th scope="col"><h5>할인적용가격</h5></th>
+							<th scope="col"><h5>수량</h5></th>
+							<th scope="col"><h5>전체가격</h5></th>
+							<th scope="col"><h5>삭제</h5></th>				
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for(HashMap<String, Object> c : list1) {
+								// 1. 변수에 조회한 값을 저장
+								int productNo = (int)(c.get("상품번호"));
+								int cartCnt = (int)(c.get("수량"));
+								String checked = (String)(c.get("체크"));
+						
+								// 2. 상품의 최대로 선택 가능한 개수(상품의 재고량만큼)
+								int totalCnt = cartDao.maxCartCnt(productNo);
+									
+								// 수량이 0이거나 재고가 없는 경우 해당 상품을 리스트에 표시하지 않는다
+								if(cartCnt ==0 || totalCnt==0) {
+									continue;	// 건너뛴다.
+							}
+						%>
+						<tr>
+							<td><!-- 상품 선택(체크) -->
 								<!-- 체크 상태를 수정 하기 위한 폼 -->
 								<form action="<%=request.getContextPath()%>/cart/updateCheckedAction.jsp" method="post">
 									<input type="hidden" name=id value="<%=(String)(c.get("아이디"))%>">
@@ -176,31 +225,25 @@
 									<br>
 									<input class="btn_1" type="submit" value="변경" style="width:60px; height:30px; text-align: center; padding: 0; line-height: 20px;">
 								</form>
-							</td>
-							<!-- 상품 이미지 -->
-							<td>
+							</td>	
+							<td><!-- 상품 이미지 -->
 								<img src="${pageContext.request.contextPath}/product/productImg/<%=c.get("상품이미지")%>" width="100" height="100">
 							</td>
-							<!-- 상품 이름 -->
-							<td>
+							<td><!-- 상품 이름 -->
 								<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>">
 									<%=(String)(c.get("상품이름"))%>
 								</a>	
 							</td>
-							<!-- 상품 가격 -->	
-							<td>
+							<td><!-- 상품 가격 -->	
 								<h5><%=(int)(c.get("상품가격"))%>원</h5>
-							</td>		
-							<!-- 할인 금액 -->				
-							<td>
+							</td>				
+							<td><!-- 할인 금액 -->	
 								<h5><%=(int)(c.get("할인금액"))%>원</h5>
 							</td>
-							<!-- 할인 적용 가격 -->
-							<td>
+							<td><!-- 할인 적용 가격 -->
 								<h5><%=(int)(c.get("할인상품가격"))%>원</h5>
 							</td>
-							<!-- 수량 -->
-							<td>
+							<td><!-- 수량 -->
 								<!-- 단일 상품 개수를 수정 하기 위한 폼 -->
 								<form action="<%=request.getContextPath()%>/cart/updateCartCntAction.jsp" method="post">
 									<input type="hidden" name=cartNo value="<%=(int)(c.get("장바구니번호"))%>">
@@ -219,13 +262,11 @@
 									<br>
 									<input class="btn_1" type="submit" value="변경" style="width:60px; height:30px; text-align: center; padding: 0; line-height: 20px;">
 								</form>
-			                </td>	
-							<!-- 전체가격 -->				
-			                <td>
-			                  <h5><%=(int)(c.get("전체가격"))%>원</h5>
+			                </td>				
+			                <td><!-- 전체가격 -->
+								<h5><%=(int)(c.get("전체가격"))%>원</h5>
 			                </td>
-			                <!-- 단일 상품 삭제 -->	
-			                <td>
+			                <td> <!-- 단일 상품 삭제 -->	
 			                	<!-- 단일행 삭제를 위한 폼 -->
 								<form action="<%=request.getContextPath()%>/cart/deleteCartAction.jsp" method="post">
 									<input type="hidden" name="cartNo" value="<%=(int)(c.get("장바구니번호"))%>">
@@ -233,54 +274,55 @@
 									<input class="btn_1" type="submit" value="X" style="width:30px; height:30px; text-align: center; padding: 0; line-height: 20px;">
 								</form>
 			                </td>
-             			</tr>
+	            		</tr>
+						<%
+							}
+						%>	
+				</table>             
+				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
+					<%
+						for(HashMap<String, Object> c : list7) {			
+					%>
+							<tr class="table table-borderless" style="text-align: center; border: 1px solid #B08EAD;">
+								<th>
+									<h4>총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span></h4>
+								</th>
+							</tr>
 					<%
 						}
 					%>	
-             </table>
-                  
-			<table class="table table-borderless" style="border-collapse: collapse; border: none;">
-				<%
-					for(HashMap<String, Object> c : list7) {			
-				%>
-						<tr class="table table-borderless" style="text-align: center; border: 1px solid #B08EAD;">
-							<th>
-								<h4>총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span></h4>
-							</th>
-						</tr>
-				<%
-					}
-				%>	
-			</table>
-                          
-			<table class="table table-borderless" style="border-collapse: collapse; border: none;">
-				<tr>
-					<td>
-						<a href="<%=request.getContextPath()%>/main/home.jsp">
-							<button class="btn_1" type="button">계속쇼핑하기</button>
-						</a>    
-		            </td>
-			        <%
-						if(CheckedItem) { // 체크된 상품이 있으면(y) cartOrder로
-					%>
-							<td style="text-align: right;">
-								<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
-									<button class="btn_1" type="button">구매하기</button>
-								</a>
-							</td>
-					<%
-						} else { // 체크된 상품이 없으면(n) cartList로
-					%>
-							<td style="text-align: right;">
-								<button class="btn_1" type="button" onclick="alert('상품을 선택해주세요.');">구매하기</button>	
-							</td>			
-					<%			
-						}	 
-					%>
-				</tr>
-			</table>
-			<!-- 고객 계정으로 로그인 하였을때 끝 -->
-			
+				</table>
+	                          
+				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
+					<tr>
+						<td>
+							<a href="<%=request.getContextPath()%>/main/home.jsp">
+								<button class="btn_1" type="button">계속쇼핑하기</button>
+							</a>    
+			            </td>
+				        <%
+							if(CheckedItem) { // 체크된 상품이 있으면(y) cartOrder로
+						%>
+								<td style="text-align: right;">
+									<a href="<%=request.getContextPath()%>/cart/cartOrder.jsp">
+										<button class="btn_1" type="button">구매하기</button>
+									</a>
+								</td>
+						<%
+							} else { // 체크된 상품이 없으면(n) cartList로
+						%>
+								<td style="text-align: right;">
+									<button class="btn_1" type="button" onclick="alert('상품을 선택해주세요.');">구매하기</button>	
+								</td>			
+						<%			
+							}	 
+						%>
+					</tr>
+					</tbody>
+				</table>
+			<%
+				}
+			%>	
 		</div>
 	</div>
 	<!--================End Cart Area =================-->
