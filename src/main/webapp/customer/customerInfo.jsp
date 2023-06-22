@@ -205,6 +205,51 @@
 	    });
 	}
 	</script>
+	<style>
+	  /* 스타일링된 링크 */
+	  .styled-link {
+	    display: inline-block;
+	    padding: 3px 5px; /* 패딩 */
+	    background-color: #DBB5D6; /* 배경색 */
+	    color: #F6F6F6; /* 텍스트 색상 */
+	    text-decoration: none; /* 텍스트 장식 제거 */
+	    border-radius: 6px; /* 테두리 반경 */
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+	    width: 120px; /* 크기 고정 */
+	     text-align: center; /* 글자 가운데 정렬 */
+	  }
+	
+	  /* 링크 호버 효과 */
+	  .styled-link:hover {
+	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+	    color: #fff; /* 호버 시 텍스트 색상 변경 */
+	  }
+	</style>
+	
+	<style>
+	  /* 스타일링된 링크 */
+	  .styled-linke {
+	    display: inline-block;
+	    padding: 3px 5px; /* 패딩 */
+	    background-color: #DBB5C8; /* 배경색 */
+	    color: #F6F6F6; /* 텍스트 색상 */
+	    text-decoration: none; /* 텍스트 장식 제거 */
+	    border-radius: 6px; /* 테두리 반경 */
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+	    width: 120px; /* 크기 고정 */
+	     text-align: center; /* 글자 가운데 정렬 */
+	      border: none; /* 태두리 없애기 */
+	  }
+	
+	  /* 링크 호버 효과 */
+	  .styled-linke:hover {
+	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+	    color: #fff; /* 호버 시 텍스트 색상 변경 */
+	  }
+	</style>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -269,29 +314,29 @@
 		</p>
 		<br>
    	<div style="flex-basis: 15%;">
+   	<br><h2>조회</h2>
 	     <table style="width: 100%; border-collapse: collapse;">
-     		<tr>
-     			<td><h2><br>조회</h2></td>
-     		</tr>
+     		
 			<tr>
-				<td><br><a href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" class="genric-btn primary-border circle">주문내역</a></td>
+				<td><br><a href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" class="styled-link">주문내역</a></td>
 			</tr>
 
 			<tr>
-				<td><br><a href="<%=request.getContextPath()%>/customer/updateCustomer.jsp" class="genric-btn primary-border circle">개인정보수정</a><td>
+				<td><br><a href="<%=request.getContextPath()%>/customer/updateCustomer.jsp" class="styled-link">개인정보수정</a><td>
 			</td>
 
 			<tr>
-				<td><br><a href="<%=request.getContextPath()%>/customer/customerPointList.jsp" class="genric-btn primary-border circle">포인트내역조회</a></td>
+				<td><br><a href="<%=request.getContextPath()%>/customer/customerPointList.jsp" class="styled-link">포인트내역조회</a></td>
 			</tr>
 
 			<tr>
-				<td><br><a href="<%=request.getContextPath()%>/customer/deleteCustomer.jsp" class="genric-btn primary-border circle">회원탈퇴</a></td>
+				<td><br><a href="<%=request.getContextPath()%>/customer/deleteCustomer.jsp" class="styled-link">회원탈퇴</a></td>
 			</tr>
 	     </table>
     </div>
 
     	<div style="flex-basis: 85%;">
+    	<br><h2>회원정보</h2>
 				<%
 					if(id == null){
 				%>
@@ -305,9 +350,6 @@
 					if(id != null){
 						for(HashMap<String, Object> s : list){
 				%>
-						<tr>
-			     			<td><br><h2>회원정보</h2></td>
-			     		</tr>
 						<tr>
 							<td><p>이름</p></td>
 							<td><%=(String)(s.get("고객이름"))%></td>
@@ -335,7 +377,7 @@
 									</form>
 								</div></td>
 							<td>
-								<button id="toggleButton" type="button" class="genric-btn primary-border circle">비밀번호 변경</button>
+								<button id="toggleButton" type="button" class="styled-linke">비밀번호 변경</button>
 							</td>
 			
 						</tr>
@@ -359,7 +401,7 @@
 								</div>
 							</td>
 							<td>
-								<button id="addressBtn" type="button" class="genric-btn primary-border circle">주소 변경</button>
+								<button id="addressBtn" type="button" class="styled-linke">주소 변경</button>
 							</td>
 						</tr>
 						<tr>
@@ -381,7 +423,7 @@
 								</div>
 							</td>
 							<td>
-								<button id="emailBtn" type="button" class="genric-btn primary-border circle">이메일 변경</button>
+								<button id="emailBtn" type="button" class="styled-linke">이메일 변경</button>
 							</td>
 						</tr>
 						<tr>
@@ -408,7 +450,7 @@
 								</div>
 							</td>
 							<td>
-								<button id="phoneBtn" type="button" class="genric-btn primary-border circle">전화번호 변경</button>
+								<button id="phoneBtn" type="button" class="styled-linke">전화번호 변경</button>
 							</td>
 						</tr>
 						<tr>

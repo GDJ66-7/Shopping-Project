@@ -82,7 +82,6 @@ String id = (String)(session.getAttribute("loginCstmId"));
 		
 		<button type="submit"class="genric-btn primary-border circle">탈퇴</button>
 	</form>
-	<br><a href="<%=request.getContextPath()%>/customer/customerInfo.jsp" class="genric-btn primary-border circle">마이페이지</a>
     </div><br>
   <!-- ================ contact section end ================= -->
 

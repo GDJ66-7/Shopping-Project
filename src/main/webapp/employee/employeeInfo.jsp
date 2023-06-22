@@ -107,12 +107,6 @@ System.out.println(id+"<--id");
 		}
 	%>
       <div class="row">
-        <div class="col-12">
-          <h2 class="contact-title">주문 리스트</h2>
-        </div>
-        <div class="col-lg-8">
-          
-        </div>
         <div class="col-lg-4">
           <div class="media contact-info">
             <div class="media-body">

@@ -69,6 +69,27 @@
       color: #fff; /* 호버 시 텍스트 색상 변경 */
     }
 </style>
+<style>
+	  /* 스타일링된 링크 */
+	  .styled-linke {
+	    display: inline-block;
+	    padding: 3px 5px; /* 패딩 */
+	    background-color: #DBB5D6; /* 배경색 */
+	    color: #F6F6F6; /* 텍스트 색상 */
+	    text-decoration: none; /* 텍스트 장식 제거 */
+	    border-radius: 6px; /* 테두리 반경 */
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+	    width: 120px; /* 크기 고정 */
+	     text-align: center; /* 글자 가운데 정렬 */
+	  }
+	
+	  /* 링크 호버 효과 */
+	  .styled-linke:hover {
+	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+	    color: #fff; /* 호버 시 텍스트 색상 변경 */
+	  }
+	</style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -132,14 +153,16 @@
 		<table class="table">
 		
 			<tr>
-				<td>주문번호</td>
+				<td style="width: 120px;">주문번호</td>
 				<td>상품이름</td>
-				<td>결제상태</td>
-				<td>배송상태</td>
-				<td>수량</td>
+				<td style="width: 120px;">결제상태</td>
+				<td  style="width: 120px;">배송상태</td>
+				<td  style="width: 60px;">수량</td>
 				<td>주문가격</td>
-				<td>주문배송지</td>
-				<td>구매일</td>
+				<td  style="width: 160px;">주문배송지</td>
+				<td  style="width: 140px;">구매일</td>
+				<td></td>
+				<td></td>
 			</tr>
 			<%
 				for(HashMap<String, Object> s : list){
@@ -156,17 +179,17 @@
 				<%
 					if(s.get("결제상태").equals("결제대기") || s.get("배송상태").equals("배송중")){
 				%>
-				<td><a  class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/order/deleteOrder.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">주문취소하기</a></td>
+				<td><a  class="styled-linke" href="<%=request.getContextPath()%>/order/deleteOrder.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">주문취소하기</a></td>
 				<%
 					}
 					if(s.get("결제상태").equals("결제완료") && s.get("배송상태").equals("배송중")){
 				%>
-				<td><a class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/order/orderComplete.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">구매확정</a></td>
+				<td><a class="styled-linke" href="<%=request.getContextPath()%>/order/orderComplete.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">구매확정</a></td>
 				<%
 					}
 					if(s.get("배송상태").equals("구매확정")){
 				%>
-				<td><a  class="genric-btn primary-border circle" href="<%=request.getContextPath()%>/review/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td>
+				<td><a class="styled-linke" href="<%=request.getContextPath()%>/review/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td>
 				<%
 					}
 				%>				

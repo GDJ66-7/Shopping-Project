@@ -15,6 +15,57 @@
 <html lang="zxx">
 
 <head>
+<style>
+  #ckId {
+    padding: 0px 20px; /* 원하는 패딩 값을 지정하세요 */
+    font-size: 10px; /* 원하는 폰트 크기를 지정하세요 */
+  }
+  /* 컨테이너 스타일 */
+.date-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* 가짜 input 스타일 */
+.custom-date {
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 가짜 input 아이콘 스타일 */
+.custom-date::after {
+  content: "\f073";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* 실제 input 요소 스타일 */
+.custom-date input[type="date"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* 가짜 input에 포커스 스타일 */
+.custom-date:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 2px lightblue; /* 포커스 시에 원하는 스타일을 적용하세요. */
+}
+</style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -85,12 +136,14 @@
 		<input type="text" name="cstmName" required="required" class="single-input"><br>
 		
 		<p>생년월일</p>
-		<input type="date" name="cstmBirth" ><br>
+		<div class="date-container">
+			<input type="date" name="cstmBirth" id="birth" class="custom-date">
+		</div><br><br>
 
 		<p>전화번호</p>
 		<input type="tel"  name="cstmPhone" required="required" class="single-input"><br>
 						
-		<p>태어난 동네</p>
+		<p>좋아하는 숫자</p>
 		<input type="text" name="cstmQuestion" required="required" class="single-input"><br>
 		
 		<button type="submit" class="genric-btn primary-border circle">비밀번호 찾기</button>

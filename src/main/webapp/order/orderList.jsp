@@ -240,9 +240,6 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 		</div>
 		&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="genric-btn primary-border circle">검색</button>
 	</form><br>
-	<%
-		for(HashMap<String, Object> s : allList){
-	%>
 		<table class="table">
 			<tr>
 				<td>주문자</td>
@@ -255,6 +252,9 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 				<td>주문배송지</td>
 				<td>구매일</td>
 			</tr>
+	<%
+		for(HashMap<String, Object> s : allList){
+	%>
 			<tr>
 				<td><%=(String)(s.get("주문자"))%></td>
 				<td><%=(String)(s.get("주문번호"))%></td>
@@ -266,10 +266,10 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 				<td><%=(String)(s.get("주문배송지"))%></td>
 				<td><%=(String)(s.get("구매일"))%></td>
 			</tr>
-		</table>
 	<%
 		}
 	%>
+		</table>
 	<div style="text-align: center;">
 		<%
 			if(startPage > 5){

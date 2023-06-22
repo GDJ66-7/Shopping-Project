@@ -161,7 +161,6 @@ String id = (String)(session.getAttribute("loginCstmId"));
 			<button type="button" id="signinBtn" class="genric-btn primary-border circle">수정</button>
 			<br><span id="clickMsg" class="msg"></span>
 		</form>
-		<br><a href="<%=request.getContextPath()%>/customer/customerInfo.jsp" class="genric-btn primary-border circle">마이페이지</a>
     </div><br>
   <!-- ================ contact section end ================= -->
 

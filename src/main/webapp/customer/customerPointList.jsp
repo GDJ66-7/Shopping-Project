@@ -119,24 +119,24 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">포인트 내역 목록</h2>
         </div>
-  		<%
-			for(HashMap<String, Object> s : list){
-		%>
 			<table class="table table-bordered">
 				<tr>
 					<td>주문번호</td>
 					<td>포인트 추가 또는 감소</td>
 					<td>적립일자</td>
 				</tr>
+  		<%
+			for(HashMap<String, Object> s : list){
+		%>
 				<tr>
 					<td><%=(Integer)(s.get("주문번호"))%></td>
 					<td><%=(String)(s.get("증감"))%><%=(Integer)(s.get("포인트"))%></td>
 					<td><%=(String)(s.get("적립일자"))%></td>
 				</tr>
-			</table>
 		<%
 			}
 		%>
+			</table>
 		<div style="text-align: center;">
 			<%
 				if(startPage > 5){

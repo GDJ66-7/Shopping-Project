@@ -177,10 +177,7 @@
   });
 </script>
 <style>
-  #ckId {
-    padding: 0px 20px; /* 원하는 패딩 값을 지정하세요 */
-    font-size: 10px; /* 원하는 폰트 크기를 지정하세요 */
-  }
+ 
   /* 컨테이너 스타일 */
 .date-container {
   position: relative;
@@ -226,6 +223,25 @@
   outline: none;
   box-shadow: 0 0 0 2px lightblue; /* 포커스 시에 원하는 스타일을 적용하세요. */
 }
+</style>
+<style>
+    /* 스타일링된 링크 */
+    .styled-link {
+      display: inline-block;
+      padding: 3px 5px; /* 패딩 */
+      background-color: #DBB5D6; /* 배경색 */
+      color: #F6F6F6; /* 텍스트 색상 */
+      text-decoration: none; /* 텍스트 장식 제거 */
+      border-radius: 6px; /* 테두리 반경 */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+      transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+    }
+    
+    /* 링크 호버 효과 */
+    .styled-link:hover {
+      background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+      color: #fff; /* 호버 시 텍스트 색상 변경 */
+    }
 </style>
 
     <!-- Required meta tags -->
@@ -289,9 +305,10 @@
       	 %>		
 	</p>
 		<form action="<%=request.getContextPath()%>/customer/insertCustomerAction.jsp" method="post" id="singinForm">
-			<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>	<button type="button" id="ckId" class="genric-btn primary-border circle">중복체크</button><br>
+			<p>아이디(카카오톡 이메일로 회원가입시 카카오톡으로 로그인가능)</p>	
 			<p><span id="idMsg" class="msg"></span></p>
 			<input type="text" id="id" value="<%=useId%>" placeholder="아이디" class="single-input"><br>
+			<button type="button" id="ckId" class="styled-link">중복체크</button><br><br>
 			<p>중복 확인된 아이디</p>
 			<input type="text" name="id" id="id" value="<%=useId%>" placeholder="아이디" class="single-input" readonly="readonly"><br>
 			
@@ -319,7 +336,7 @@
 			<p><span id="telMsg" class="msg"></span></p>
 			<input type="tel" id="tel" name="cstmPhone"  class="single-input"><br>
 			
-			<p>태어난 동네</p>
+			<p>좋아하는 숫자</p>
 			<p><span id="questMsg" class="msg"></span></p>
 			<input type="text" id="quest" name="cstmQuestion" class="single-input"><br>
 			
@@ -340,7 +357,7 @@
 					<input type="radio" name="cstmAgree" class="agree" value="y">&nbsp;동의 &nbsp;
            			<input type="radio" name="cstmAgree" class="agree" value="n">&nbsp;비동의
        			    <br><br>
-			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;&nbsp;
+			<button type="button" id="signinBtn" class="genric-btn primary-border circle">회원가입</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       		<button type="reset" class="genric-btn primary-border circle">초기화</button>
       		<br><span id="clickMsg" class="msg"></span>
 		</form>
