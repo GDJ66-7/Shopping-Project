@@ -11,6 +11,15 @@
 	}
 //세션아이디 변수에 저장
 	String id = (String)(session.getAttribute("loginCstmId"));
+// 날짜 검색했을때 변수 선언
+	String startDate = "";
+	String endDate = "";
+	if(request.getParameter("startDate") != null){
+		startDate = request.getParameter("startDate");
+	}
+	if(request.getParameter("endDate") != null ){
+		endDate = request.getParameter("endDate");
+	}
 	//보여줄페이지 첫번째 행 선언
 		int currentPage = 1; 
 		if(request.getParameter("currentPage") != null){
@@ -25,10 +34,10 @@
 		System.out.println(id+"<-- id");	
 	// 구매내역 리스트 메소드 사용
 	OrderDao li = new OrderDao();
-	ArrayList<HashMap<String, Object>> list =li.orderList(id, beginRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> list =li.orderList(id, startDate, endDate, beginRow, rowPerPage);
 	//총 행의 수를 얻기위한 메소드 사용
 	OrderDao tr = new OrderDao();
-	int totalRow = tr.selectOrder(id);
+	int totalRow = tr.selectOrder(id, startDate, endDate);
 	System.out.println(totalRow+"<-- totalRow");
 	// 라스트 페이즐 구하기 위한 변수선언
 	int lastPage = totalRow/rowPerPage;
@@ -89,7 +98,58 @@
 	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
 	    color: #fff; /* 호버 시 텍스트 색상 변경 */
 	  }
-	</style>
+</style>
+<style>
+  #ckId {
+    padding: 0px 20px; /* 원하는 패딩 값을 지정하세요 */
+    font-size: 10px; /* 원하는 폰트 크기를 지정하세요 */
+  }
+  /* 컨테이너 스타일 */
+.date-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* 가짜 input 스타일 */
+.custom-date {
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 가짜 input 아이콘 스타일 */
+.custom-date::after {
+  content: "\f073";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* 실제 input 요소 스타일 */
+.custom-date input[type="date"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* 가짜 input에 포커스 스타일 */
+.custom-date:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 2px lightblue; /* 포커스 시에 원하는 스타일을 적용하세요. */
+}
+</style>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -149,6 +209,15 @@
         	}
       	 %>		
 	</p>
+	<form action="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" action="post">
+
+		<div class="date-container">
+ 				<input type="date" name="startDate" id="birth" class="custom-date">
+ 				&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;
+ 				<input type="date" name="endDate" id="birth" class="custom-date">
+		</div>
+		&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="genric-btn primary-border circle">검색</button>
+	</form><br>
 	
 		<table class="table">
 		

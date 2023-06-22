@@ -119,7 +119,7 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">포인트 내역 목록</h2>
         </div>
-			<table class="table table-bordered">
+			<table class="table">
 				<tr>
 					<td>주문번호</td>
 					<td>포인트 추가 또는 감소</td>
@@ -130,7 +130,19 @@
 		%>
 				<tr>
 					<td><%=(Integer)(s.get("주문번호"))%></td>
-					<td><%=(String)(s.get("증감"))%><%=(Integer)(s.get("포인트"))%></td>
+					<td>
+					<%
+						if(s.get("증감").equals("+")){
+					%>
+						<span style="color: #0100FF;"><%=(String)(s.get("증감"))%><%=(Integer)(s.get("포인트"))%></span>
+					<%
+						}else{
+					%>
+						<span style="color: #FF0000;"><%=(String)(s.get("증감"))%><%=(Integer)(s.get("포인트"))%></span>
+					<%
+						}
+					%>
+					</td>
 					<td><%=(String)(s.get("적립일자"))%></td>
 				</tr>
 		<%

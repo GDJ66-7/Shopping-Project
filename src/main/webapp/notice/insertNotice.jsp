@@ -26,6 +26,7 @@
 		});
 	});
 </script>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -76,15 +77,15 @@
     <br><div class="col-12">
          	 <h2 class="contact-title">공지사항 추가</h2>
         </div>
-  		<form action="<%=request.getContextPath()%>/notice/insertNoticeAction.jsp" method="get">
-			제목 : <input type="text" name="noticeTitle" required="required" class="single-input"><br>
+  		<form action="<%=request.getContextPath()%>/notice/insertNoticeAction.jsp" method="get" >
+			제목 : <input type="text" name="noticeTitle"  required="required" class="single-input"><br>
 			<div>
 				<p>댓글(500자 이하) 현재:<span id="count">0</span>자</p>
 				<div>
 			공지사항 내용<textarea id="comment" rows="5" cols="60" name="noticeContent" required="required" class="single-textarea"></textarea><br>
 				</div>
 			</div>
-			<button type="submit" class="genric-btn primary-border circle">공지하기</button>
+			<button type="submit" class="genric-btn primary-border circle" >공지하기</button>
 		</form>
     </div><br>
   <!-- ================ contact section end ================= -->

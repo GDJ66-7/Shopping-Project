@@ -3,7 +3,7 @@
 <%@ page import = "java.util.*" %>
 <%
 //요청값 유효성 검사
-String search = null;
+String search = "";
 if(request.getParameter("search") != null){
 	search = request.getParameter("search");
 }
@@ -20,18 +20,13 @@ if(request.getParameter("search") != null){
 	// 사용할 변수 미리 선언
 	ArrayList<HashMap<String, Object>> noticeList = null;
 	int totalRow = 0;
-	if(search == null){
-		//메서드 선언
-		NoticeDao li = new NoticeDao();
-		noticeList = li.noticeList(beginRow, rowPerPage);
-		totalRow = li.noticeListRow();
-	} else if(search != null){
-		//메서드 선언 과 변수 선언
-		NoticeDao li = new NoticeDao();
-		noticeList = li.selectNoticeList(beginRow, rowPerPage, search);
-		totalRow = li.selectNoticeRow(search);
-	}
+	
+	//메서드 선언 과 변수 선언
+	NoticeDao li = new NoticeDao();
+	noticeList = li.selectNoticeList(beginRow, rowPerPage, search);
+	totalRow = li.selectNoticeRow(search);
 	System.out.println(totalRow+"<-- totalRow");
+	
 	// 라스트 페이즐 구하기 위한 변수선언
 	int lastPage = totalRow/rowPerPage;
 	if(totalRow%rowPerPage != 0){

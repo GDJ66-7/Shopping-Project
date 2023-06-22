@@ -10,11 +10,16 @@ import util.DBUtil;
 
 public class OrderDao {
 	// 고객 구매내역
-		public ArrayList<HashMap<String, Object>> orderList(String id, int beginRow, int rowPerPage) throws Exception{
+		public ArrayList<HashMap<String, Object>> orderList(String id, String startDate, String endDate, int beginRow, int rowPerPage) throws Exception{
 			ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql = "SELECT o.order_no 주문번호, p.product_name 상품이름, o.payment_status 결제상태, o.delivery_status 배송상태, o.order_cnt 수량, o.order_price 주문가격, o.order_address 주문배송지, o.updatedate 구매일, h.history_no 주문내역번호, p.product_no 상품번호 FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON h.product_no = p.product_no WHERE c.id = ? ORDER BY o.updatedate LIMIT ?,?";
+			String sql = "SELECT o.order_no 주문번호, p.product_name 상품이름, o.payment_status 결제상태, o.delivery_status 배송상태, o.order_cnt 수량, o.order_price 주문가격, o.order_address 주문배송지, o.updatedate 구매일, h.history_no 주문내역번호, p.product_no 상품번호 FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON h.product_no = p.product_no WHERE c.id = ?";
+			//날짜 검색했을때
+			if(!startDate.equals("") && !endDate.equals("")) {
+				sql+=" AND o.createdate between '"+startDate+"' AND '"+endDate+"'";
+			}
+			sql += " ORDER BY o.updatedate LIMIT ?, ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setInt(2, beginRow);
@@ -37,11 +42,16 @@ public class OrderDao {
 			return list;
 		}
 		// 고객 구매내역 총 갯수
-		public int selectOrder(String id) throws Exception {
+		public int selectOrder(String id, String startDate, String endDate) throws Exception {
 			int row = 0;
 			DBUtil dbUtil = new DBUtil(); 
 			Connection conn =  dbUtil.getConnection();
-			String sql ="SELECT count(*)  FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON h.product_no = p.product_no WHERE c.id = ? ORDER BY o.updatedate";
+			String sql ="SELECT count(*)  FROM customer c INNER JOIN orders o ON c.id = o.id INNER JOIN orders_history h ON h.order_no = o.order_no INNER JOIN product p ON h.product_no = p.product_no WHERE c.id = ?";
+			//날짜 검색했을때
+			if(!startDate.equals("") && !endDate.equals("")) {
+				sql+=" AND o.createdate between '"+startDate+"' AND '"+endDate+"'";
+			}
+			sql+= " ORDER BY o.updatedate";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();

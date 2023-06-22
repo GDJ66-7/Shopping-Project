@@ -51,34 +51,10 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 		response.sendRedirect(request.getContextPath()+"/order/orderList.jsp?msg="+msg);
 		return;
 	}
+	AdminOrderDao all = new AdminOrderDao();
+	allList = all.searchDateOrder(id, startDate, endDate, beginRow, rowPerPage);
+	totalRow = all.searchDateOrderRow(id, startDate, endDate);
 	
-	//검색조건별 메서드 분기
-	//1- 검색도 안하고 날짜도 검색안했을때 리스트 전체를 보여줄 메서드
-	if(id.equals("") && startDate.equals("") && endDate.equals("")){
-			AdminOrderDao all = new AdminOrderDao();
-			allList = all.orderAllList(beginRow, rowPerPage); 
-			totalRow = all.orderAllRow();
-		System.out.println("아무것도 검색안함");
-	//유저 이름만 검색했을때 리스트를 보여줄 메서드
-	}else if(!id.equals("") && startDate.equals("") && endDate.equals("")){
-			
-			AdminOrderDao idList = new AdminOrderDao();
-			allList = idList.searchOrderList(id, beginRow, rowPerPage);
-			totalRow = idList.searchOrderRow(id);
-			System.out.println("이름만 검색");
-	//날짜만 검색했을때 리스트를 보여줄 메소드
-	} else if(!startDate.equals("") && !endDate.equals("") && id.equals("")){
-			AdminOrderDao dateList = new AdminOrderDao();
-			allList = dateList.dateOrderList(startDate, endDate, beginRow, rowPerPage);
-			totalRow = dateList.dateOrderRow(startDate, endDate);
-			System.out.println("날짜만 검색");
-	//남짜와 유저 이름을 검색했을때 리스트를 보여주는 메서드
-	} else if(!id.equals("") && !startDate.equals("") && !endDate.equals("")){		
-		AdminOrderDao idDateList = new AdminOrderDao();
-		 allList = idDateList.searchDateOrder(id, startDate, endDate, beginRow, rowPerPage);
-		totalRow = idDateList.searchDateOrderRow(id, startDate, endDate);
-		System.out.println("날짜와 이름 검색");
-	}
 	System.out.println(totalRow+"<-- totalRow");
 	// 라스트 페이즐 구하기 위한 변수선언
 	int lastPage = totalRow/rowPerPage;
