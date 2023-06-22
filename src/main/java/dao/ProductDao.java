@@ -481,17 +481,17 @@ public class ProductDao {
 		if (discountProduct.equals("할인상품")) {
 		    // 할인 상품만 보는 경우
 			sql += " WHERE d.discount_no IS NOT NULL";
-
+			
 		    // 검색어와 카테고리 둘 다 있을 때
 		    if (!productName.equals("") && !categoryName.equals("")) {
 		        sql += " AND p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
 		    }
 		    // 검색어만 있을 때
-		    else if (!productName.equals("")) {
+		    else if (!productName.equals("") && categoryName.equals("")) {
 		        sql += " AND p.product_name LIKE '%" + productName + "%'";
 		    }
 		    // 카테고리만 있을 때
-		    else if (!categoryName.equals("")) {
+		    else if (!categoryName.equals("") && productName.equals("")) {
 		        sql += " AND p.category_name = '" + categoryName + "'";
 		    }
 		} else {
@@ -500,11 +500,11 @@ public class ProductDao {
 		        sql += " WHERE p.product_name LIKE '%" + productName + "%' AND p.category_name = '" + categoryName + "'";
 		    }
 		    // 검색어만 있을 때
-		    else if (!productName.equals("")) {
+		    else if (!productName.equals("") && categoryName.equals("")) {
 		        sql += " WHERE p.product_name LIKE '%" + productName + "%'";
 		    }
 		    // 카테고리만 있을 때
-		    else if (!categoryName.equals("")) {
+		    else if (!categoryName.equals("") && productName.equals("")) {
 		        sql += " WHERE p.category_name = '" + categoryName + "'";
 		    }
 		}

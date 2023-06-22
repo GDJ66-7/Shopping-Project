@@ -37,6 +37,13 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Slick 슬라이더 스타일 -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.css">
+    <!-- Slick 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.min.js"></script>
 </head>
 
 <body>
@@ -63,50 +70,67 @@
             </div>
         </div>
         <div class="banner_img">
-            <img src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
-            <img src="<%=request.getContextPath()%>/css/img/banner_pattern.png" alt="#" class="pattern_img img-fluid">
+        	<div class="slider-image">
+        		<a href="<%=request.getContextPath()%>/product/productList.jsp">
+           			<img src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
+           		</a>
+            </div>
+        	<div class="slider-image">
+        		<a href="<%=request.getContextPath()%>/product/productList.jsp?discountProduct=할인상품">
+           			<img src="<%=request.getContextPath()%>/main/mainImg/saleMain.jpg" alt="#" class="img-fluid">
+           		</a>
+            </div>
+        	<div class="slider-image">
+        		<a href="<%=request.getContextPath()%>/product/productList.jsp">
+           			<img src="<%=request.getContextPath()%>/main/mainImg/main2.jpg" alt="#" class="img-fluid">
+           		</a>
+            </div>
         </div>
     </section>
+    
+    <script>
+	    $(document).ready(function(){
+	        $('.banner_img').slick({
+	            dots: false, // 하단에 버튼여부
+	            autoplay: true, // 자동 재생 여부
+	            autoplaySpeed: 2000, // 자동 재생 간격 (3초)
+	            arrows: false // 이전/다음 버튼 숨김
+	        });
+	    });
+    </script>
  	<!-- banner part end-->
     <!-- product list start-->
     <br>
     <br>
     <br>
-    	<div class="container">
-            <div class="row">
-                <div class="col-lg-12"> 
-                	<div class="col-lg-12">
-                		<h2 style="text-align: center;">최신상품</h2>
-                		<div class="row">
-	                        <!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->                                  
-						    <%
-	                        	for(HashMap<String,Object> map : productList) {
-	                        		// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
-	            					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
-	            					String productPrice = numberFormat.format(map.get("productPrice"));
-	                        %>
-		                        	<div style="text-align: center;" class="col-lg-4">
-		                        		<a style="display: block; text-align: center;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>">
-		                        			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="350" height="350">
-		                        		</a>
-		                        		
-		                        		<span style="font-size: 15px;">
-	                        				<%=map.get("productName") %>
-	                        			</span>
-	                        			
-		                        		<span style="display: block; font-weight: bold; font-size: 20px;">
-		                        			<%=productPrice %> ₩
-		                        		</span>	
-		                        		<br>
-		                            </div>
-	                        <% 	
-	                        	}
-	                        %>                                   
-                    	</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+   	<div class="col-lg-12"> 
+       	<h2 style="text-align: center;">최신상품</h2>
+       		<div class="row">
+               	<!--  기존 사진 <img src="<%=request.getContextPath()%>/css/img/single_product_1.png" class="img-fluid" alt="#">-->                                  
+ 				<%
+                	for(HashMap<String,Object> map : productList) {
+                		// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
+    					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+    					String productPrice = numberFormat.format(map.get("productPrice"));
+                %>
+	                 	<div style="text-align: center;" class="col-lg-4">
+	                 		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>" style="display: block; text-align: center;">
+	                 			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="350" height="350">
+	                 		</a>
+	                 		<span style="font-size: 15px;">
+	                				<%=map.get("productName") %>
+	                			</span>
+	                			
+	                 		<span style="display: block; font-weight: bold; font-size: 20px;">
+	                 			<%=productPrice %> ₩
+	                 		</span>	
+	                 		<br>
+	                    </div>
+                <% 	
+                	}
+                %>                                   
+    		</div>
+	</div>
     <!-- product list end-->
     
     

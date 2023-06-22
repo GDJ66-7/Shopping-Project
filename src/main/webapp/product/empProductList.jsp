@@ -377,8 +377,7 @@
 				}
 			%>
 		</ul>
-        </div>
-    </div>
+	</div>
   <!-- ================ contact section end ================= -->
 
   	<!--::footer_part start::-->

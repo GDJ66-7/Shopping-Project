@@ -155,8 +155,8 @@
 		font-family: 'Sunflower', sans-serif;
     }
     .product-image {
-	    width: 250px;
-	    height: 250px;
+	    width: 300px;
+	    height: 300px;
 	    object-fit: cover;
   	}
   	
@@ -242,13 +242,13 @@
     <!-- breadcrumb part end-->
     
     <!-- product list part start-->
-    <div class="container">
-    	<div class="product_sidebar">
+    	<div>
         <!--  상품리스트 왼쪽 검색기능 -->
         	<form class="search-form" id="productSearchForm" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
             	<ul class="navbar-nav">
-                	<li>					<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
+                	<li>					
                     	<div class="center-align">
+                											<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
                       		<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
                       		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
 	                    </div>
@@ -268,18 +268,18 @@
 	        				<input type="radio" class="ascDesc" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
 	                    </label>
 	                    <br>
-                   		<li>
-                  			<%
-                          		for(HashMap<String, Object> categoryNameMap : categoryNameList) {
-                          	%>	
-                           			<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
-                           			<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
-                            		<%=categoryNameMap.get("categoryName")%>
-                            <% 	
-                            			
-                            	}
-                            %>
-                         </li>
+	                </li>
+                   	<li style="text-align: right;">
+                 		<%
+                         	for(HashMap<String, Object> categoryNameMap : categoryNameList) {
+                        %>	
+                          		<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
+                          		<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+                           		<%=categoryNameMap.get("categoryName")%>
+                        <% 	
+                           }
+                        %>
+                    </li>
 	            </ul>
 	       	</form>
 	        <!---------------------- js부분 -------------------------->
@@ -375,7 +375,6 @@
 		</div>
         </div>
     	</div>
-	</div>
    
  	<!--  페이징부분 -->
    	<ul class="pagination justify-content-center list-group list-group-horizontal">

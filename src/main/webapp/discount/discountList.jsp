@@ -31,13 +31,13 @@
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
 	// 페이지당 출력할 행의 수
-	int rowPerPage = 10;
+	int rowPerPage = 2;
 	
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	int totalRow = dDao.productListCnt1(productName, categoryName);
-	System.out.println(totalRow + "<-- productList totalRow");
+	int totalRow = dDao.discountListCnt(productName, categoryName);
+	System.out.println(totalRow + "<-- discountList totalRow");
 	
 	int lastPage = totalRow / rowPerPage;
 	//rowPerPage가 딱 나뉘어 떨어지지 않으면 그 여분을 보여주기 위해 +1
@@ -351,15 +351,13 @@
 				%>
 		</table>
 		<!--  페이징부분 -->
-			
 		  	<ul class="pagination justify-content-center list-group list-group-horizontal">
 			<% 
-				/*
 				// 최소페이지가 1보다크면 이전페이지(이전페이지는 만약 내가 11페이지면 1페이지로 21페이지면 11페이지로)버튼
 				if(minPage>1) {
 			%>
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">이전</a>
+						<a href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">이전</a>
 					</li>
 			<%			
 				}
@@ -376,7 +374,7 @@
 					}else {					
 			%>		
 						<li class="list-group-item">
-							<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>"><%=i%></a>
+							<a href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>"><%=i%></a>
 						</li>
 			<%				
 					}
@@ -387,11 +385,10 @@
 				if(maxPage != lastPage) {
 			%>
 					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">다음</a>
+						<a href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">다음</a>
 					</li>
 			<%	
 				}
-				*/
 			%>
 		</ul>
 		</div>
