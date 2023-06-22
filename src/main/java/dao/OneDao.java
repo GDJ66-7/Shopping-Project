@@ -11,10 +11,13 @@ public class OneDao {
 		HashMap<String, Object> p = new HashMap<>(); //hashMap선언
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "SELECT p.product_no productNo, p.category_name categoryName, p.product_name productName, p.product_price productPrice, p.product_status productStatus, p.product_stock productStock, p.product_info productInfo, p.updatedate updatedate, img.product_save_filename productSaveFilename, img.product_filetype productFiletype"
-					+ " FROM product p INNER JOIN product_img img"
-					+ " ON p.product_no = img.product_no"
-					+ " WHERE p.product_no = ?";
+		String sql = "SELECT p.product_no productNo, p.category_name categoryName,"
+				+"p.product_name productName, p.product_price productPrice, p.product_status productStatus,"
+				+"p.product_stock productStock, p.product_info productInfo, p.updatedate updatedate,"
+				+"img.product_save_filename productSaveFilename, img.product_filetype productFiletype,"
+				+"d.discount_rate discountRate, d.discount_start discountStart, d.discount_end discountEnd "
+				+"FROM product p INNER JOIN product_img img ON p.product_no = img.product_no "
+				+"LEFT JOIN discount d ON p.product_no = d.product_no WHERE p.product_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, productNo);
 		ResultSet rs = stmt.executeQuery();
@@ -29,8 +32,21 @@ public class OneDao {
 			p.put("productSaveFilename", rs.getString("productSaveFilename"));
 			p.put("productFiletype", rs.getString("productFiletype"));
 			p.put("updatedate", rs.getString("updatedate"));
+			p.put("discountRate", rs.getDouble("discountRate"));
+			p.put("discountStart", rs.getString("discountStart"));
+			p.put("discountEnd", rs.getString("discountEnd"));
 			System.out.println(p);
 		}
 		return p; //값 반환 - 결과값 저장
 	}
 }
+
+/*
+"SELECT p.product_no productNo, p.category_name categoryName,"
++"p.product_name productName, p.product_price productPrice, p.product_status productStatus,"
++"p.product_stock productStock, p.product_info productInfo, p.updatedate updatedate,"
++"img.product_save_filename productSaveFilename, img.product_filetype productFiletype,"
++"d.discount_rate discountRate, d.discount_start discountStart, d.discount_end discountEnd "
++"FROM product p INNER JOIN product_img img ON p.product_no = img.product_no "
++"LEFT JOIN discount d ON p.product_no = d.product_no WHERE p.product_no = ?;"
+*/

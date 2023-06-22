@@ -30,7 +30,6 @@
 	
 	// vo 저장 생성
 	Question question = new Question();
-	
 	question.setProductNo(productNo);
 	question.setId(id);
 	question.setqCategory(qCategory);

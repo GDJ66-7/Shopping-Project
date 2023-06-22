@@ -133,46 +133,247 @@
     <!-- style CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
+<style>
+.single_product_breadcrumb {
+    height: 150px !important;
+}
+.card_area {
+    margin-top: 30px;
+}
+.productInfo {
+  height: 300px;
+  max-height: 300px;
+}
+.col-md-5{
+  display: flex;
+}
+a{
+color: #000000;
+}
+a:hover{
+color: #B08EAD;
+}
+#productPrice{
+font-weight: 500;
+font-size: 17px; }
+</style>
 <body>
+	<header>
     <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-                        <!---- 메인메뉴 바 ---->
-                        <div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                             <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
+    <!-- 메인메뉴 바 -->
+	<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	</header>
+    <!-- Header part end-->
+<!-- breadcrumb part start-->
+<section class="breadcrumb_part single_product_breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                <h2>product</h2>
                 </div>
             </div>
         </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
-    <!-- Header part end-->
+    </div>
+</section>
+<!-- breadcrumb part end-->
+<!--================Single Product Area =================-->
+<br>
+<div class="container mt-3">
+	<input type="hidden" name="productStock" id="stock" value="<%=p.get("productStock")%>">
+		<div class="row">
+			<div class="col-md-5">
+				<img src="${pageContext.request.contextPath}/product/productImg/<%=p.get("productSaveFilename")%>">
+			</div>
+			<div class="col-md-7">
+				<div class="productInfo">
+					<table class="table">
+						<tr>
+							<td>category > <%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
+						</tr>
+						<tr>
+							<td><%=p.get("productName")%></td><!-- 상품이름 -->
+						</tr>
+						<!-- 할인가 적용중 -->
+						<%
+							double discountRate = (double)p.get("discountRate");
+							int productPrice = (Integer)p.get("productPrice");
+							double discountPrice = productPrice - (productPrice * discountRate);
+							if(p.get("discountRate") != null){
+						%>
+						<tr>
+							<td id="productPrice"><%=discountPrice%></td><!-- 상품가격 -->
+						</tr>
+						<%
+							}else{
+						%>
+						<tr>
+							<td id="productPrice"><%=p.get("productPrice")%></td>
+						</tr>
+						<%
+							}
+						%>
+						<tr>
+							<!-- <td><%=p.get("productInfo")%></td> 길이 고정 test-->
+							<td>Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources. Credibly innovate granular internal or “organic” sources whereas high standards in web-readiness. Credibly innovate granular internal or organic sources whereas high standards in web-readiness. Energistically scale future-proof core competencies vis-a-vis impactful experiences. Dramatically synthesize integrated schemas. with optimal networks.</td>
+						</tr>
+					</table>
+				</div>
+			<!-- 장바구니 담기 버튼 -->
+				<form id="addCart" action="<%=request.getContextPath()%>/cart/insertCartAction.jsp" method="post">
+					<input type="hidden" name="productNo" value="<%=p.get("productNo")%>">
+					<input type="hidden" name="id" value=<%=id%>>
+					<br><br>
+					<div class="card_area">
+            		<!-- 장바구니 수량 check - input은 최종 개수만 보냄 -->
+                     	<span id="deQuantity" class="btn btn-outline-light text-dark"><i class="ti-minus"></i></span> <!-- 수량(-) -->
+                     	<input type="text" name="cartCnt" id="selectCnt" value="1" readonly="readonly" class="btn" style="width: 60px;"> <!-- 수량 count -->
+                     	<span id="upQuantity"  class="btn btn-outline-light text-dark"><i class="ti-plus"></i></span> <!-- 수량(+) -->
+                  		<div><br>
+                  		<button id="addToCart" class="btn_3">add to cart</button>
+                  		</div>
+              		</div>
+				</form>
+			</div>
+		</div><!-- 전체 div는 맨 아래에 -->
+<!--================End Single Product Area =================-->
+<!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
+<br><br>
+	<h3>리뷰</h3>
+	<!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
+	<!-- <a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>&historyNo=<%=2%>">추가</a>-->
+	<!--------------------------------------------->
+	<table class="table" id="productReview">
+		<tr>
+			<th style="width : 50%;">제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+		</tr>
+<%
+	if(rlist.isEmpty()){ //isEmpty = 리스트 null 체크
+%>
+		<tr>
+			<td colspan="3">등록된 리뷰가 없습니다.</td>
+		</tr>
+<%
+	}else{
+		for(HashMap<String,Object> r : rlist){
+%>
+		<tr>
+			<td style="width : 50%;">
+			<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?historyNo=<%=r.get("historyNo")%>&productNo=<%=r.get("productNo")%>">
+			<%=r.get("reviewTitle")%></a>
+			</td>
+			<td><%=r.get("id")%></td>
+			<td><%=r.get("createdate")%></td>
+		</tr>
+<%
+		}
+	}
+%>
+	</table>
+<!-------------- 리뷰목록 페이징 버튼  -------------------------------------------------------->
+	<div>
+	<%
+		if(revminPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
+	%>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage-revpagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px">이전</a>
+	<%
+			}
+		for(int r = revminPage; r<=revmaxPage; r=r+1) {
+			if(r == revcurrentPage){
+	%>
+			<span class="genric-btn default radius" style="padding: 2px 12px"><%=r%></span>		
+	<%			
+			}else{	
+	%>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=r%>">
+		<span class="genric-btn default radius" style="padding: 2px 12px"><%=r%></span>
+		</a>
+	<%
+			}
+		}	
+		if(revmaxPage != revlastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
+	%>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage+revpagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px">다음</a>
+	<%
+		}
+	%>
+	</div>
+<br>
+<!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
+	<h3>상품 Q&A</h3>
+	<!-- 로그인 하지 않은 상태에서 문의하기를 누르면 로그인폼으로 이동 -->
+	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>" class="genric-btn primary small">문의하기</a>
+	<br><br>
+	<div id="productQnA">
+	<table class="table">
+		<tr>
+			<th>제목</th>
+			<th>문의유형</th>
+			<th>작성자</th>
+			<th>작성일</th>
+		</tr>
+<%
+	if(list.isEmpty()){ //isEmpty = 리스트 null 체크
+%>
+	<tr>
+		<td colspan="4">등록된 게시글이 없습니다.</td>
+	</tr>
+<%
+	}else{
+	for(HashMap<String,Object> q : list){
+		
+%>
+		<tr>
+			<td style="width : 50%;">
+			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=q.get("qNo")%>&productNo=<%=q.get("productNo")%>">
+			<%=q.get("title")%>
+			</a>
+			</td>
+			<td><%=q.get("category")%></td>
+			<td><%=q.get("id")%></td>
+			<td><%=q.get("createdate")%></td>
+		</tr>
+<%
+		}
+	}
+%>
+	</table>
+	</div>
+	<!-------------- 문의 사항 페이징 버튼 -------------------------------------------------------->
+	<div>
+	<%
+		if(minPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
+	%>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage-pagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px" >이전</a>
+	<%
+			}
+		for(int i = minPage; i<=maxPage; i=i+1) {
+			if(i == currentPage){
+	%>
+			<span class="genric-btn primary radius" style="padding: 2px 12px"><%=i%></span><!-- 현재페이지 -->
+	<%			
+			}else{	
+	%>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=i%>">
+		<span class="genric-btn default radius" style="padding: 2px 12px"><%=i%></span>
+		</a>
+	<%
+			}
+		}	
+		if(maxPage != lastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
+	%>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage+pagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px">다음</a>
+	<%
+		}
+	%>
+	</div>
+<!-- 페이징 로드 -->
+<br>
+</div>
 <script>
-	// 장바구니 버튼 ----------------------------------------------------------
+// 장바구니 버튼 ----------------------------------------------------------
 		$(document).ready(function() {
 		    $("#addToCart").click(function(event) {
 		        let stock = parseInt($("#stock").val());  // 상품 잔여 수량
@@ -208,180 +409,18 @@
                 cartCnt.val(quantity - 1);
             }
         });
-    });
+        
+        // 숫자 천단위 표시
+        function numberWithCommas(n) { // 함수 매개변수 n(number)
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+	        let productPrice = <%=discountPrice%>; // 서버에서 받아온 숫자
+	        let rePrice = numberWithCommas(productPrice); // 숫자를 천단위로 변환
+	        let priceText = rePrice +  "<span style='font-weight: bold;'>원</span>";//pricetext = id값
+	        $('#productPrice').html(priceText); // html 내 css 적용 html();
+  		});
 </script>
 
-<!-- <ul class="tab-tit">
-<li><a href="#productOne" role="button">상품 상세정보</a></li>
-
-<li><a href="#productReview" role="button">고객리뷰</a></li>
-<li><a href="#productQnA" role="button">상품 Q&amp;A</a></li>
-</ul> -->
-<div class="container mt-3">
-	<h3>상품상세</h3>
-	<input type="hidden" name="productStock" id="stock" value="<%=p.get("productStock")%>">
-	<table class="table" id="productOne">
-		<tr>
-			<td>카테고리 :<%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
-		</tr>
-		<tr>
-			<td><img src="${pageContext.request.contextPath}/product/productImg/<%=p.get("productSaveFilename")%>" width="100" height="100"></td>
-		</tr>
-		<tr>
-			<td><%=p.get("productName")%></td><!-- 상품이름 -->
-		</tr>
-		<tr>
-			<td><%=p.get("productPrice")%>원</td><!-- 상품가격 -->
-		</tr>
-		<tr>
-			<td><%=p.get("productInfo")%></td><!-- 상품정보 -->
-		</tr>
-	</table>
-	<!-- 장바구니 담기 버튼 -->
-	<form id="addCart" action="<%=request.getContextPath()%>/cart/insertCartAction.jsp" method="post">
-	<input type="hidden" name="productNo" value="<%=p.get("productNo")%>">
-	<input type="hidden" name="id" value=<%=id%>>
-	<input type="button" name="minus" id="deQuantity" value="-"><!-- 수량(-) -->
-	<input type="text" name="cartCnt" id="selectCnt" value="1" readonly="readonly"><!-- 수량count -->
-	<input type="button" name="plus" id="upQuantity" value="+" ><!-- 수량(+) -->
-	<button id="addToCart">장바구니에 담기</button><!-- 장바구니 버튼 클릭 시 addToCart 함수 호출 -->
-	</form>
-<!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
-<hr>
-	<h3>상품리뷰</h3>
-	<!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
-	<a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>&historyNo=<%=2%>">추가</a>
-	<!--------------------------------------------->
-	<table class="table" id="productReview">
-		<tr>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-		</tr>
-<%
-	if(rlist.isEmpty()){ //isEmpty = 리스트 null 체크
-%>
-	<tr>
-		<td colspan="3">등록된 리뷰가 없습니다.</td>
-	</tr>
-<%
-	}else{
-		for(HashMap<String,Object> r : rlist){
-%>
-		<tr>
-			<td>
-			<a href="<%=request.getContextPath()%>/review/reviewOne.jsp?historyNo=<%=r.get("historyNo")%>&productNo=<%=r.get("productNo")%>">
-			<%=r.get("reviewTitle")%></a>
-			</td>
-			<td><%=r.get("id")%></td>
-			<td><%=r.get("createdate")%></td>
-		</tr>
-<%
-		}
-	}
-%>
-	</table>
-	<!-------------- 리뷰목록 페이징 버튼  -------------------------------------------------------->
-	<div>
-	<%
-		if(revminPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
-	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage-revpagePerPage%>">이전</a>
-	<%
-			}
-		for(int r = revminPage; r<=revmaxPage; r=r+1) {
-			if(r == revcurrentPage){
-	%>
-			<span><%=r%></span>		
-	<%			
-			}else{	
-	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=r%>">
-		<%=r%>
-		</a>
-	<%
-			}
-		}	
-		if(revmaxPage != revlastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
-	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage+revpagePerPage%>">다음</a>
-	<%
-		}
-	%>
-	</div>
-<br>
-<!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
-	<h3>문의사항</h3>
-<%
-	if(session.getAttribute("loginCstmId")!=null) { // 로그아웃 상태면 문의하기 버튼이 보이지 않는다. 로그인 상태면 모든 고객이 작성 가능
-%>
-	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>">문의하기</a>
-<%
-	}
-%>
-	<table class="table" id="productQnA">
-		<tr>
-			<th>문의유형</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-		</tr>
-<%
-	if(list.isEmpty()){ //isEmpty = 리스트 null 체크
-%>
-	<tr>
-		<td colspan="4">등록된 게시글이 없습니다.</td>
-	</tr>
-<%
-	}else{
-	for(HashMap<String,Object> q : list){
-		
-%>
-		<tr>
-			<td><%=q.get("category")%></td>
-			<td>
-			<a href="<%=request.getContextPath()%>/question/questionOne.jsp?qNo=<%=q.get("qNo")%>&productNo=<%=q.get("productNo")%>">
-			<%=q.get("title")%>
-			</a>
-			</td>
-			<td><%=q.get("id")%></td>
-			<td><%=q.get("createdate")%></td>
-		</tr>
-<%
-		}
-	}
-%>
-	</table>
-	<!-------------- 문의 사항 페이징 버튼 -------------------------------------------------------->
-	<div>
-	<%
-		if(minPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
-	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage-pagePerPage%>">이전</a>
-	<%
-			}
-		for(int i = minPage; i<=maxPage; i=i+1) {
-			if(i == currentPage){
-	%>
-			<span><%=i%></span>		
-	<%			
-			}else{	
-	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=i%>">
-		<%=i%>
-		</a>
-	<%
-			}
-		}	
-		if(maxPage != lastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
-	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage+pagePerPage%>">다음</a>
-	<%
-		}
-	%>
-	</div>
-<br>
-</div>
   <!--::footer_part start::-->
   <footer class="footer_part">
         <div class="footer_iner section_bg">

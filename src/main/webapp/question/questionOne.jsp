@@ -3,10 +3,10 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <!-- 작성된 문의 사항 게시글 안에 답변까지 같이 있음(댓글) -->
-<!-- 관리자와 작성자만 접근가능한 페이지, 게시글에 대한 수정과 삭제는 작성자만 가능 관리자에게는 노출하지 않음 -->
-<!-- 답변은 댓글 형식(1개만 작성가능), 작성자에게는 댓글 입력창과, 댓글 수정 삭제 노출하지 않음 -->
+<!-- 1.관리자와 작성자만 접근가능한 페이지, 게시글에 대한 수정과 삭제는 작성자(고객)만 가능 관리자에게는 노출하지 않음 -->
+<!-- 2.답변은 댓글 형식(한개만 작성가능), 작성자(고객)에게는 댓글 입력창과, 댓글 수정 삭제 노출하지 않음 -->
+<!-- 3.해당 게시글의 답변한 관리자만 답변 수정&삭제 가능 -->
 <%
-	//일반관리자 세션이름 loginEmpId1  , 최고관리자 세션이름 loginEmpId2, 고객 세션이름 loginCstmId 입니다
 	// 유효성 검사
 	if(request.getParameter("qNo") == null
 	||request.getParameter("qNo").equals("")){
@@ -78,46 +78,14 @@
 .customerQna{text-align: right;}
 </style>
 <body>
-    <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-                        <!---- 메인메뉴 바 ---->
-                        <div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                             <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
+	<!--::header part start::-->
+	<header>
+	<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	</header>
     <!-- Header part end-->
 <div class="container mt-3">
 <br><br><br>
-<h2 style="text-align: center;">상품문의</h2>
+<h2 style="text-align: center;">상품Q&A</h2>
 <br>
 <table class="table table-bordered">
 	<tr>
@@ -166,7 +134,7 @@ function QuestionDelete(){ //게시글 삭제 confirm 추가
 <!------------------------------ 문의 사항 답변 --------------------------------------------------->
 	<br>
 	<div class="container mt-3">
-	<h4>답변내역</h4>
+	<h4>Answer</h4>
 <% 
 	if((empid!=null)&&!completeAnswer){ //답변이 하나라도 있는 상태면 폼 숨김
 %>
@@ -210,6 +178,7 @@ function insertAnswer() {
 }
 </script>
 <!---------------------------- 답변 결과셋 ----------------------------------------------------------->
+<hr>
 <% 
 	if (aone != null){ // 답변이 있을 시
 %>
@@ -226,7 +195,7 @@ function insertAnswer() {
 			<td style="width : 50%;"><%=aone.getaContent()%></td>
 			<td><%=aone.getCreatedate().substring(0,10)%></td>
 <%
-	if(empid!=null) {
+	if(empid.equals(aone.getId())) { // 해당 게시글에 답변한 관리자만 수정/삭제 가능
 %>
 			<td>
 				<a href="<%=request.getContextPath()%>/answer/updateAnswer.jsp?qNo=<%=one.getqNo()%>&aNo=<%=aone.getaNo()%>&productNo=<%=one.getProductNo()%>" class="genric-btn primary small">수정</a>

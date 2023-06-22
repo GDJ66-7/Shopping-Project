@@ -61,43 +61,12 @@ a{text-decoration: none;}
 .customerReview{text-align: center;}
 </style>
 <body>
-    <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="<%=request.getContextPath()%>/main/home.jsp"> <img src="<%=request.getContextPath()%>/css/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                        </button>
-                        <!---- 메인메뉴 바 ---->
-                        <div>
-							<jsp:include page="/main/menuBar.jsp"></jsp:include>
-						</div>
-                        <div class="hearer_icon d-flex align-items-center">
-                            <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                             <a href="<%=request.getContextPath()%>/cart/cartList.jsp">
-                                <i class="flaticon-shopping-cart-black-shape"></i>
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
-    </header>
-    <!-- Header part end-->
+<!--::header part start::-->
+<header>
+<jsp:include page="/main/menuBar.jsp"></jsp:include>
+</header>
+<!-- Header part end-->
+
 <div class="container mt-3">
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰</h2>
