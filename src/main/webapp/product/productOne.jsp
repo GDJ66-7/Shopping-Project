@@ -1,5 +1,6 @@
 <!-- view 상품 상세정보 페이지 카테고리/상품이름/가격/상태/(재고)/정보 -->
 <!-- 상세정보/리뷰/상품문의 다 같이 있기때문에 변수명 유의 -->
+<%@ page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*" %>
 <%@ page import="dao.*" %>
@@ -37,6 +38,9 @@
 	// DAO 사용
 	HashMap<String,Object> p = one.selectProductOne(productNo);
 	
+	// 상품가격 천단위 표시
+	DecimalFormat dc = new DecimalFormat("###,###,###");
+	
 //-------------------------------------------------------------------------------------------------
 	
 	// 해당 상품 - 리뷰 페이징 -------------------------------------------------------------------------
@@ -70,6 +74,7 @@
 	}
 	
 	ArrayList<HashMap<String,Object>> rlist = review.selectReviewListByPage(productNo, revbeginRow, revrowPerPage);
+	
 //-----------------------------------------------------------------------------------------------------
 	
 	// 해당 상품 - 문의 페이징 --------------------------------------------------------------------------
@@ -154,7 +159,7 @@ a:hover{
 color: #B08EAD;
 }
 #productPrice{
-font-weight: 500;
+font-weight: 700;
 font-size: 17px; }
 </style>
 <body>
@@ -190,25 +195,27 @@ font-size: 17px; }
 					<table class="table">
 						<tr>
 							<td>category > <%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
-						</tr>
+						</tr>						
 						<tr>
 							<td><%=p.get("productName")%></td><!-- 상품이름 -->
 						</tr>
-						<!-- 할인가 적용중 -->
+						<!-- 할인가 or 원가 -->
 						<%
 							double discountRate = (double)p.get("discountRate");
 							int productPrice = (Integer)p.get("productPrice");
 							double discountPrice = productPrice - (productPrice * discountRate);
-							if(p.get("discountRate") != null){
+							if(discountPrice == productPrice){
 						%>
 						<tr>
-							<td id="productPrice"><%=discountPrice%></td><!-- 상품가격 -->
+							<td id="productPrice"><%=dc.format(p.get("productPrice"))%>원</td>
 						</tr>
 						<%
 							}else{
 						%>
 						<tr>
-							<td id="productPrice"><%=p.get("productPrice")%></td>
+							<td id="productPrice">
+							<span><s>원가 <%=dc.format(p.get("productPrice"))%>원</s></span><br>
+							<span>할인가 <%=dc.format(discountPrice)%>원</span></td>
 						</tr>
 						<%
 							}
@@ -409,16 +416,8 @@ font-size: 17px; }
                 cartCnt.val(quantity - 1);
             }
         });
-        
-        // 숫자 천단위 표시
-        function numberWithCommas(n) { // 함수 매개변수 n(number)
-            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          }
-	        let productPrice = <%=discountPrice%>; // 서버에서 받아온 숫자
-	        let rePrice = numberWithCommas(productPrice); // 숫자를 천단위로 변환
-	        let priceText = rePrice +  "<span style='font-weight: bold;'>원</span>";//pricetext = id값
-	        $('#productPrice').html(priceText); // html 내 css 적용 html();
-  		});
+  	});
+  		
 </script>
 
   <!--::footer_part start::-->
