@@ -4,6 +4,8 @@
 <html lang="zxx">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script>
+
+
 	// 유효성 검사
 	$(document).ready(function(){
 		
@@ -17,6 +19,15 @@
 		})
 	})
 </script>
+	<%
+		if(request.getParameter("insertCategoryMsg2") != null) {
+	%>
+		<script>
+			alert('중복된 카테고리가 있거나 다른 문제로 추가에 실패하였습니다.');
+		</script>
+	<%
+		}
+	%>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">

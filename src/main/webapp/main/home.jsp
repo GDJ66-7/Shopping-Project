@@ -72,17 +72,17 @@
         <div class="banner_img">
         	<div class="slider-image">
         		<a href="<%=request.getContextPath()%>/product/productList.jsp">
-           			<img src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
+           			<img style="width: 1200px; height: 730px" src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
            		</a>
             </div>
         	<div class="slider-image">
         		<a href="<%=request.getContextPath()%>/product/productList.jsp?discountProduct=할인상품">
-           			<img src="<%=request.getContextPath()%>/main/mainImg/saleMain.jpg" alt="#" class="img-fluid">
+           			<img style="width: 1200px; height: 730px" src="<%=request.getContextPath()%>/main/mainImg/saleMain.jpg" alt="#" class="img-fluid">
            		</a>
             </div>
         	<div class="slider-image">
         		<a href="<%=request.getContextPath()%>/product/productList.jsp">
-           			<img src="<%=request.getContextPath()%>/main/mainImg/main2.jpg" alt="#" class="img-fluid">
+           			<img style="width: 1200px; height: 730px" src="<%=request.getContextPath()%>/main/mainImg/main2.jpg" alt="#" class="img-fluid">
            		</a>
             </div>
         </div>
@@ -139,39 +139,39 @@
     <br>
     <br>
     <section class="trending_items">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section_tittle text-center">
-                        <h2>인기 상품 Top6</h2>
-                    </div>
+    	<div class="row">
+        	<div class="col-lg-12">
+            	<div class="section_tittle text-center">
+                	<h2>인기 상품 Top6</h2>
                 </div>
             </div>
-            <div class="row">
-               	<%
-               		for(HashMap<String,Object> proMap : productList2) {
-               		// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
-    					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
-    					String productPrice = numberFormat.format(proMap.get("productPrice"));
-               	%>
-               		<div style="text-align: center;" class="col-lg-4">
-               		<div class="single_product_item">
-               			<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
-               				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="400" height="400">
-               			</a>
-               			<br>
-               			<!--  <p style="font-weight: bold; font-size: 18px;"><%=proMap.get("productName") %></p>-->
-               				<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
-               					<span style="font-size: 15px; color: black;"><%=proMap.get("productInfo") %></span>
-                   			</a> 
-                   		<p>
-                   			<%=productPrice %> ₩
-                   		</p>
-               		</div>
-                   	</div>
-               	<% 
-               		}
-               	%>
-            </div>
+        </div>
+        <div class="row">
+        	<%
+            	for(HashMap<String,Object> proMap : productList2) {
+             		// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
+  					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+  					String productPrice = numberFormat.format(proMap.get("productPrice"));
+            %>
+             		<div style="text-align: center;" class="col-lg-4">
+             		<div class="single_product_item">
+             			<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
+             				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="400" height="400">
+             			</a>
+             			<br>
+             			<!--  <p style="font-weight: bold; font-size: 18px;"><%=proMap.get("productName") %></p>-->
+             				<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
+             					<span style="font-size: 15px; color: black;"><%=proMap.get("productInfo") %></span>
+                 			</a> 
+                 		<p>
+                 			<%=productPrice %> ₩
+                 		</p>
+             		</div>
+                 	</div>
+            <% 
+             		}
+            %>
+          </div>
     </section>
     <!-- trending item end-->
 

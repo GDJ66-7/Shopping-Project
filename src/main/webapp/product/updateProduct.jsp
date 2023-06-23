@@ -1,4 +1,3 @@
-상품수정
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.CategoryDao"%>
@@ -315,7 +314,7 @@
 				<tr>
 					<th>상품 이름</th>
 					<td>
-						<input type="text" name="productName" id="nameId" placeholder="기존이름 :<%=pMap.get("productName")%>">
+						<input type="text" name="productName" id="nameId" placeholder="<%=pMap.get("productName")%>">
 						<span id="nameIdMsg" class="msg"></span>
 					</td>
 				</tr>

@@ -264,10 +264,13 @@
 		                <div class="form-check form-check-inline">
 		                    <input type="radio" class="form-check-input" name="discountProduct" value="" <% if(request.getParameter("discountProduct") == null || request.getParameter("discountProduct").equals("")) { %> checked <% } %>>
 		                    <label class="form-check-label">전체상품보기</label>
+		                    
 		                    <input type="radio" class="form-check-input" name="discountProduct" value="할인상품" <% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) { %> checked <% } %>>
 		                    <label class="form-check-label">할인상품보기</label>
+		                    
 		                    <input type="radio" class="form-check-input" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>
 		                    <label class="form-check-label">오래된순</label>
+		                    
 		                    <input type="radio" class="form-check-input" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>
 		                    <label class="form-check-label">최신순</label>
 	                	</div>

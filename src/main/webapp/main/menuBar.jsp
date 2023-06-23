@@ -91,7 +91,8 @@
 											</li>
 							        <%
 							        	}
-						
+							        	
+										// 세션에 로그인이 안되어 있을경우 login 표시
 							        	if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmpId2") == null && session.getAttribute("loginCstmId") == null) {
 								    %>
 									        <li class="nav-item">
@@ -100,11 +101,8 @@
 									            </a>
 								    	    </li>
 						    	    <%
-							        	}
-							        %>
-							        
-							        <%
-							        	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null || session.getAttribute("loginCstmId") != null) {
+						    	    	// 아닐경우 logout표시
+							        	} else {
 								    %>
 									         <li class="nav-item">
 									            <a class="nav-link" href="<%=request.getContextPath()%>/login/logoutAction.jsp">logout</a>
