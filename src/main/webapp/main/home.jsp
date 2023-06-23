@@ -93,7 +93,7 @@
 	        $('.banner_img').slick({
 	            dots: false, // 하단에 버튼여부
 	            autoplay: true, // 자동 재생 여부
-	            autoplaySpeed: 2000, // 자동 재생 간격 (3초)
+	            autoplaySpeed: 3000, // 자동 재생 간격 (3초)
 	            arrows: false // 이전/다음 버튼 숨김
 	        });
 	    });
@@ -113,7 +113,7 @@
     					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
     					String productPrice = numberFormat.format(map.get("productPrice"));
                 %>
-	                 	<div style="text-align: center;" class="col-lg-4">
+	                 	<div style="text-align: center;" class="col-lg-3">
 	                 		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>" style="display: block; text-align: center;">
 	                 			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="350" height="350">
 	                 		</a>
@@ -139,11 +139,10 @@
     <br>
     <br>
     <section class="trending_items">
-        <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section_tittle text-center">
-                        <h2>인기 상품</h2>
+                        <h2>인기 상품 Top6</h2>
                     </div>
                 </div>
             </div>
@@ -157,7 +156,7 @@
                		<div style="text-align: center;" class="col-lg-4">
                		<div class="single_product_item">
                			<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
-               				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="300" height="300">
+               				<img src="${pageContext.request.contextPath}/product/productImg/<%=proMap.get("productSaveFilename") %>" width="400" height="400">
                			</a>
                			<br>
                			<!--  <p style="font-weight: bold; font-size: 18px;"><%=proMap.get("productName") %></p>-->
@@ -173,7 +172,6 @@
                		}
                	%>
             </div>
-        </div>
     </section>
     <!-- trending item end-->
 
@@ -185,23 +183,23 @@
                     <div class="client_review_slider owl-carousel">
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="<%=request.getContextPath()%>/css/img/client.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/goowon.png" alt="#">
                             </div>
-                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
+                            <p>"구원이1"</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="<%=request.getContextPath()%>/css/img/client_1.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/goowon2.png" alt="#">
                             </div>
-                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
+                            <p>"구원이2"</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                         <div class="single_client_review">
                             <div class="client_img">
-                                <img src="<%=request.getContextPath()%>/css/img/client_2.png" alt="#">
+                                <img src="<%=request.getContextPath()%>/css/img/goowon3.png" alt="#">
                             </div>
-                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering.</p>
+                            <p>"구원이3"</p>
                             <h5>- Micky Mouse</h5>
                         </div>
                     </div>

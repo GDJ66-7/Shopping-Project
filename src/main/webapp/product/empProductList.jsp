@@ -156,6 +156,24 @@
   .styled-input input::placeholder {
     color: #999;
   }
+  
+  /* 스타일링된 링크 */
+  .styled-link {
+     display: inline-block;
+     padding: 6px 10px; /* 패딩 */
+     background-color: #DBB5D6; /* 배경색 */
+     color: #F6F6F6; /* 텍스트 색상 */
+     text-decoration: none; /* 텍스트 장식 제거 */
+     border-radius: 4px; /* 테두리 반경 */
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+     transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+   }
+   
+   /* 링크 호버 효과 */
+   .styled-link:hover {
+     background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+     color: #fff; /* 호버 시 텍스트 색상 변경 */
+   }
 </style>
 <body>
 	<!-- msg출력 -->
@@ -282,15 +300,17 @@
 						String discountPrice = numberFormat.format(productMap.get("productDiscountPrice"));
 				%>
 						<tr>
-							<td><%=productMap.get("productNo") %></td>
+							<td><a style="color: black;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>"><%=productMap.get("productNo") %></a></td>
 							<td><%=productMap.get("categoryName") %></td>
 				<% 			
 						// 할인이 들어간 상품은 빨간글씨로 이름표시하며 할인가도 같이 나옴
 						if ((int)productMap.get("productDiscountPrice") != ((int)productMap.get("productPrice"))) {
 				%>
 							<td>
-								<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="50" height="50">
-								<span  class="product-name" style="color: red;"><%=productMap.get("productName") %></span>
+								<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>">
+									<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="50" height="50">
+									<span  class="product-name" style="color: red;"><%=productMap.get("productName") %></span>
+								</a>
 							</td>
 							<td>
 								원가:<%=productPrice %>
@@ -302,8 +322,10 @@
 						} else {
 				%>
 							<td>
-								<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="50" height="50">
-								<span  class="product-name"><%=productMap.get("productName") %></span>
+								<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productMap.get("productNo")%>">
+									<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=productMap.get("productSaveFilename") %>" width="50" height="50">
+									<span style="color: black;" class="product-name"><%=productMap.get("productName") %></span>
+								</a>
 							</td>
 							<td><%=productPrice %>원</td>
 				<% 
@@ -336,15 +358,14 @@
 					}
 				%>
 		</table>
+		<br>
 		<!--  페이징부분 -->
-		  	<ul class="pagination justify-content-center list-group list-group-horizontal">
+		<div style="text-align: center;">
 			<% 
 				// 최소페이지가 1보다크면 이전페이지(이전페이지는 만약 내가 11페이지면 1페이지로 21페이지면 11페이지로)버튼
 				if(minPage>1) {
 			%>
-					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">이전</a>
-					</li>
+						<a class="styled-link" href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">이전</a>
 			<%			
 				}
 				// 최소 페이지부터 최대 페이지까지 표시
@@ -352,16 +373,12 @@
 					if(i == currentPage) {	// 현재페이지는 링크 비활성화
 			%>	
 						<!-- i와 현재페이지가 같은곳이라면 현재위치한 페이지 빨간색표시 -->
-						<li class="list-group-item">
-							<span style="color: red;"><%=i %></span>
-						</li>
+							<span class="styled-link" style="color: black;"><%=i %></span>
 			<%			
 					// i가 현재페이지와 다르다면 출력
 					}else {					
 			%>		
-						<li class="list-group-item">
-							<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>"><%=i%></a>
-						</li>
+							<a class="styled-link" href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>"><%=i%></a>
 			<%				
 					}
 				}
@@ -370,13 +387,11 @@
 				// 다음페이지(만약 내가 1페이지에서 누르면 11페이지로 11페이지에서 누르면 21페이지로)버튼
 				if(maxPage != lastPage) {
 			%>
-					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">다음</a>
-					</li>
+						<a class="styled-link" href="<%=request.getContextPath()%>/product/empProductList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">다음</a>
 			<%	
 				}
 			%>
-		</ul>
+		</div>
 	</div>
   <!-- ================ contact section end ================= -->
 

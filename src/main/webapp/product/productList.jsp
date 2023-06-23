@@ -53,7 +53,7 @@
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
 	// 페이지당 출력할 행의 수
-	int rowPerPage = 40;
+	int rowPerPage = 20;
 	
 	// 페이지당 시작 행번호
 	int beginRow = (currentPage-1) * rowPerPage;
@@ -110,43 +110,10 @@
     .center-align {
         text-align: center;
     }
-    .navbar-nav {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex; /* 가로로 아이템 나열 */
-        align-items: center;
-    }
-
-    .navbar-nav li {
-        margin-right: 15px;
-    }
-
-    .navbar-nav input[type="text"] {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .navbar-nav input[type="radio"],
-    .navbar-nav input[type="checkbox"] {
-        margin-right: 5px;
-    }
-
-    .navbar-nav label {
-        font-weight: bold;
-    }
 
     .fontBlackBold {
         color: black; /* a 태그의 텍스트 색상을 검정색으로 변경 */
         font-weight: bold; /* 텍스트를 강조하기 위해 글꼴을 굵게 설정 */
-        
-        
-        /* 다른 스타일 속성을 필요에 따라 추가할 수 있습니다. */
-    }
-    
-    .larger-text {
-        font-size: 1.2em; /* 원하는 글자 크기로 조정해주세요 */
     }
     
     .googleFont {
@@ -155,8 +122,8 @@
 		font-family: 'Sunflower', sans-serif;
     }
     .product-image {
-	    width: 300px;
-	    height: 300px;
+	    width: 400px;
+	    height: 400px;
 	    object-fit: cover;
   	}
   	
@@ -195,6 +162,26 @@
     font-size: 14px;
     color: #333;
   }
+  </style>
+  <style>
+  /* 스타일링된 링크 */
+  .styled-link {
+     display: inline-block;
+     padding: 6px 10px; /* 패딩 */
+     background-color: #DBB5D6; /* 배경색 */
+     color: #F6F6F6; /* 텍스트 색상 */
+     text-decoration: none; /* 텍스트 장식 제거 */
+     border-radius: 4px; /* 테두리 반경 */
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+     transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+   }
+   
+   /* 링크 호버 효과 */
+   .styled-link:hover {
+     background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+     color: #fff; /* 호버 시 텍스트 색상 변경 */
+   }
+  
 </style>
 <head>
     <!-- Required meta tags -->
@@ -233,7 +220,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
-                        <h2>상품 목록</h2>
+                        <h2>상품</h2>
                     </div>
                 </div>
             </div>
@@ -242,45 +229,50 @@
     <!-- breadcrumb part end-->
     
     <!-- product list part start-->
-    	<div>
+    	<div style="margin-left: 100px; margin-right: 100px; margin-bottom: 0px; margin-top: 30px;">
         <!--  상품리스트 왼쪽 검색기능 -->
         	<form class="search-form" id="productSearchForm" action="<%=request.getContextPath()%>/product/productList.jsp" method="post">
-            	<ul class="navbar-nav">
-                	<li>					
-                    	<div class="center-align">
-                											<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
-                      		<input type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
-                      		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
-	                    </div>
-	                    <br>
-        				<label>
-							<input type="radio" class="productList" name="discountProduct" value="" 
-							<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("")) {%> checked <%} %>> 전체상품보기
-						</label>
-							
-        				<label>
-							<input type="radio" class="productList" name="discountProduct" value="할인상품"
-							<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) {%> checked <%} %>> 할인상품보기
-						</label>
-    						
-        				<label>
-		                	<input type="radio" class="ascDesc" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
-	        				<input type="radio" class="ascDesc" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
-	                    </label>
-	                    <br>
-	                </li>
-                   	<li style="text-align: right;">
-                 		<%
-                         	for(HashMap<String, Object> categoryNameMap : categoryNameList) {
-                        %>	
-                          		<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
-                          		<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
-                           		<%=categoryNameMap.get("categoryName")%>
-                        <% 	
-                           }
-                        %>
-                    </li>
-	            </ul>
+	        	<label for="productName">
+             													<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
+                   	<input style="text-align: center;" type="text" placeholder="상품검색" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%>>
+                   		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
+                </label>
+                
+				<div class="checkbox">
+		        	<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="true">
+		               <p>카테고리</p>
+		            </button>
+		            <div class="collapse" id="categoryCollapse">
+		                <% 
+		                	for (HashMap<String, Object> categoryNameMap : categoryNameList) { 
+		                %>
+			                    <div class="form-check form-check-inline">
+			                        <input type="checkbox" class="form-check-input" name="categoryName" value="<%= categoryNameMap.get("categoryName") %>" <% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+			                        <label class="form-check-label"><%= categoryNameMap.get("categoryName") %></label>
+			                    </div>
+		                <% 
+		                	} 
+		                %>
+		            </div>
+		        </div>
+		        
+		        <div class="radio">
+		            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#sortCollapse" aria-expanded="true">
+		                <p>정렬</p>
+		            </button>
+		            <div class="collapse" id="sortCollapse">
+		                <div class="form-check form-check-inline">
+		                    <input type="radio" class="form-check-input" name="discountProduct" value="" <% if(request.getParameter("discountProduct") == null || request.getParameter("discountProduct").equals("")) { %> checked <% } %>>
+		                    <label class="form-check-label">전체상품보기</label>
+		                    <input type="radio" class="form-check-input" name="discountProduct" value="할인상품" <% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) { %> checked <% } %>>
+		                    <label class="form-check-label">할인상품보기</label>
+		                    <input type="radio" class="form-check-input" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>
+		                    <label class="form-check-label">오래된순</label>
+		                    <input type="radio" class="form-check-input" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>
+		                    <label class="form-check-label">최신순</label>
+	                	</div>
+		            </div>
+		        </div>
 	       	</form>
 	        <!---------------------- js부분 -------------------------->
             <script>
@@ -291,7 +283,6 @@
               		$('#productSearchForm').submit();
              	}); 
             </script>
-		</div>
         <!-- -----------------------     상품리스트 출력   ------------------------- -->
         <div class="col-md-12">
         <div class="product_list">
@@ -301,6 +292,7 @@
 					// 상품가격단위을 1000단위마다,를 넣기위해 NumberForMat클래스 사용
 					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
 					String productPrice = numberFormat.format(productMap.get("productPrice"));
+					String discountProductPrice = numberFormat.format(productMap.get("productDiscountPrice"));
 					// 판매중인 상품만 상품 상세정보에 들어갈 수 있게 설정
 					if(productMap.get("productStatus").equals("판매중")){
 			%>
@@ -324,7 +316,7 @@
 							
 							if ((int)productMap.get("productDiscountPrice") != ((int)productMap.get("productPrice"))) {
 			%>
-								<span class="fontBlackBold larger-text">할인가</span> : <span class="center-align larger-text" style="color: red; font-weight: bold;"><%=productMap.get("productDiscountPrice") %></span>
+								<span class="fontBlackBold larger-text">할인가</span> : <span class="center-align larger-text" style="color: red; font-weight: bold;"><%=discountProductPrice %></span>
 								<br>
 			<% 
 							}
@@ -373,18 +365,17 @@
 				}
 			%>
 		</div>
+		</div>
         </div>
-    	</div>
+    </div>
    
+   	<div style= "text-align: center;">
  	<!--  페이징부분 -->
-   	<ul class="pagination justify-content-center list-group list-group-horizontal">
 		<% 
 			// 최소페이지가 1보다크면 이전페이지(이전페이지는 만약 내가 11페이지면 1페이지로 21페이지면 11페이지로)버튼
 			if(minPage>1) {
 		%>
-				<li class="list-group-item">
-					<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">이전</a>
-				</li>
+					<a class="styled-link" href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">이전</a>
 		<%			
 			}
 			// 최소 페이지부터 최대 페이지까지 표시
@@ -392,16 +383,12 @@
 				if(i == currentPage) {	// 현재페이지는 링크 비활성화
 		%>	
 					<!-- i와 현재페이지가 같은곳이라면 현재위치한 페이지 빨간색표시 -->
-					<li class="list-group-item">
-						<span style="color: red;"><%=i %></span>
-					</li>
+						<span class="styled-link" style="color: black;"><%=i %></span>
 		<%			
 				// i가 현재페이지와 다르다면 출력
 				}else {					
 		%>		
-					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>"><%=i%></a>
-					</li>
+						<a class="styled-link" href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>"><%=i%></a>
 		<%				
 				}
 			}
@@ -410,13 +397,11 @@
 			// 다음페이지(만약 내가 1페이지에서 누르면 11페이지로 11페이지에서 누르면 21페이지로)버튼
 			if(maxPage != lastPage) {
 		%>
-				<li class="list-group-item">
-					<a href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">다음</a>
-				</li>
+					<a class="styled-link" href="<%=request.getContextPath()%>/product/productList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>&ascDesc=<%=ascDesc%>&discountProduct=<%=discountProduct%>">다음</a>
 		<%	
 			}
 		%>
-	</ul>
+	</div>
     <!-- product list part end-->
     <!--::footer_part start::-->
     <footer class="footer_part">

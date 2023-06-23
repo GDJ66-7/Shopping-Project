@@ -177,7 +177,7 @@ public class ProductDao {
 	}
 	*/
 	
-	// 3) home화면용 상품리스트 최신순 3개 product inner join product_img
+	// 3) home화면용 상품리스트 최신순 4개 product inner join product_img
 	public ArrayList<HashMap<String, Object>> productListLimit3() throws Exception {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
@@ -186,13 +186,13 @@ public class ProductDao {
 		SELECT p.product_no, p.product_name, p.product_price, p.product_price*(1- d.discount_rate) 상품할인가, p.product_status, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end
 		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no
 						LEFT OUTER JOIN discount d ON p.product_no = d.product_no
-		ORDER BY p.createdate DESC  LIMIT 0 , 3;
+		ORDER BY p.createdate DESC  LIMIT 0 , 4;
 		 */
 		
 		String sql = "SELECT p.product_no, p.product_name, p.product_price, p.product_price*(1- d.discount_rate) 상품할인가, p.product_status, p.product_info, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\r\n"
 				+ "		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no\r\n"
 				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no\r\n"
-				+ "		ORDER BY p.createdate DESC  LIMIT 0 , 3";
+				+ "		ORDER BY p.createdate DESC  LIMIT 0 , 4";
 		ArrayList<HashMap<String, Object>> productList = new ArrayList<HashMap<String, Object>>();
 		PreparedStatement stmt = conn.prepareStatement(sql);
 	

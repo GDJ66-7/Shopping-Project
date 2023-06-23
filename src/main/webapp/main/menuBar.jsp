@@ -30,10 +30,6 @@
 							    	<li class="nav-item">
 							            <a class="nav-link" href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
 							        </li>
-							        <!--  회사개요페이지 아직 미완성 -->
-							        <li class="nav-item">
-							            <a class="nav-link" href="about.html">회사개요</a>
-							        </li>
 							        <li class="nav-item">
 							            <a class="nav-link" href="<%=request.getContextPath()%>/product/productList.jsp" id="navbarDropdown_1">
 							                상품

@@ -96,6 +96,10 @@
     width: 100%;
   }
   
+  table.backgroundColor th {
+  	background-color: #e5f3ff;
+  }
+  
   th, td {
     border: 1px solid black;
     padding: 10px;
@@ -145,6 +149,24 @@
   .styled-input input::placeholder {
     color: #999;
   }
+  
+  /* 스타일링된 링크 */
+  .styled-link {
+     display: inline-block;
+     padding: 6px 10px; /* 패딩 */
+     background-color: #DBB5D6; /* 배경색 */
+     color: #F6F6F6; /* 텍스트 색상 */
+     text-decoration: none; /* 텍스트 장식 제거 */
+     border-radius: 4px; /* 테두리 반경 */
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+     transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+   }
+   
+   /* 링크 호버 효과 */
+   .styled-link:hover {
+     background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+     color: #fff; /* 호버 시 텍스트 색상 변경 */
+   }
 </style>
 <body>
 	<!-- msg alert출력 -->
@@ -278,6 +300,7 @@
 			});
 			</script>
 			<br>
+			<!-- 상품할인테이블 -->
 			<table style="width:100%; height:100%">
 				<tr class="backgroundColor">
 					<th>할인번호</th>
@@ -294,8 +317,10 @@
 				</tr>
 				<%
 					for(HashMap<String,Object> dMap : discountList) {
+						// 가격에 1000단위마다, 표시
 						java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
 						String discountPrice = numberFormat.format(dMap.get("productPrice")); 
+						String redDiscountPrice = numberFormat.format(dMap.get("productDiscountPrice")); 
 						
 						// 할인율이 double타입이라 십의단위로 나타내고 싶어 형변환후 *100
 						double discountRate = (double) dMap.get("discountRate");
@@ -306,16 +331,21 @@
 							<%=dMap.get("discountNo") %>
 						</td>
 						<td>
-							<%=dMap.get("productNo") %>
+							<a style="color: black;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=dMap.get("productNo")%>">
+								<%=dMap.get("productNo") %>
+							</a>
 						</td>
 						<td>
-							<%=dMap.get("productName") %>
+							<a style="color: black;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=dMap.get("productNo")%>">
+								<img class="product-image" src="${pageContext.request.contextPath}/product/productImg/<%=dMap.get("productSaveFileName") %>" width="50" height="50">
+								<%=dMap.get("productName") %>
+							</a>
 						</td>
 						<td>
 							<%=discountPrice %>원
 						</td>
 						<td>
-							<span style="color: red;"><%=(int)dMap.get("productDiscountPrice")%>원</span>
+							<span style="color: red;"><%=redDiscountPrice%>원</span>
 						</td>
 						<td>
 							<%=dMap.get("discountStart") %>
@@ -350,15 +380,14 @@
 					}
 				%>
 		</table>
+		<br>
 		<!--  페이징부분 -->
-		  	<ul class="pagination justify-content-center list-group list-group-horizontal">
+		<div style="text-align: center;">
 			<% 
 				// 최소페이지가 1보다크면 이전페이지(이전페이지는 만약 내가 11페이지면 1페이지로 21페이지면 11페이지로)버튼
 				if(minPage>1) {
 			%>
-					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">이전</a>
-					</li>
+						<a class="styled-link" href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=minPage-pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">이전</a>
 			<%			
 				}
 				// 최소 페이지부터 최대 페이지까지 표시
@@ -366,16 +395,12 @@
 					if(i == currentPage) {	// 현재페이지는 링크 비활성화
 			%>	
 						<!-- i와 현재페이지가 같은곳이라면 현재위치한 페이지 빨간색표시 -->
-						<li class="list-group-item">
-							<span style="color: red;"><%=i %></span>
-						</li>
+							<span class="styled-link" style="color: red;"><%=i %></span>
 			<%			
 					// i가 현재페이지와 다르다면 출력
 					}else {					
 			%>		
-						<li class="list-group-item">
-							<a href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>"><%=i%></a>
-						</li>
+							<a class="styled-link" href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=i%>&productName=<%=productName%>&categoryName=<%=categoryName%>"><%=i%></a>
 			<%				
 					}
 				}
@@ -384,13 +409,11 @@
 				// 다음페이지(만약 내가 1페이지에서 누르면 11페이지로 11페이지에서 누르면 21페이지로)버튼
 				if(maxPage != lastPage) {
 			%>
-					<li class="list-group-item">
-						<a href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">다음</a>
-					</li>
+						<a class="styled-link" href="<%=request.getContextPath()%>/discount/discountList.jsp?currentPage=<%=minPage+pagePerPage%>&productName=<%=productName%>&categoryName=<%=categoryName%>">다음</a>
 			<%	
 				}
 			%>
-		</ul>
+		</div>	
 		</div>
         </div>
     </div>
