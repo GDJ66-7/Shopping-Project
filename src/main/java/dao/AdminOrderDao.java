@@ -28,7 +28,7 @@ public class AdminOrderDao {
 		else if(!id.equals("") && !startDate.equals("") && !endDate.equals("")) {
 			sql+=" WHERE c.id like '%" + id + "%' AND o.createdate between '"+startDate+"' AND '"+endDate+"'";
 		}
-		sql += " ORDER BY o.updatedate LIMIT ?, ?";
+		sql += " ORDER BY o.updatedate desc LIMIT ?, ?";
 		System.out.println("sql___ 1"+sql);
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
@@ -67,7 +67,6 @@ public class AdminOrderDao {
 		else if(!id.equals("") && !startDate.equals("") && !endDate.equals("")) {
 			sql+=" WHERE c.id like '%" + id + "%' AND o.createdate between '"+startDate+"' AND '"+endDate+"'";
 		}
-		sql += " ORDER BY o.updatedate";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(2, startDate);
 		stmt.setString(3, endDate);

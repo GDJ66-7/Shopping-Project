@@ -19,7 +19,7 @@ public class OrderDao {
 			if(!startDate.equals("") && !endDate.equals("")) {
 				sql+=" AND o.createdate between '"+startDate+"' AND '"+endDate+"'";
 			}
-			sql += " ORDER BY o.updatedate LIMIT ?, ?";
+			sql += " ORDER BY o.updatedate desc LIMIT ?, ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setInt(2, beginRow);
@@ -51,7 +51,6 @@ public class OrderDao {
 			if(!startDate.equals("") && !endDate.equals("")) {
 				sql+=" AND o.createdate between '"+startDate+"' AND '"+endDate+"'";
 			}
-			sql+= " ORDER BY o.updatedate";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
