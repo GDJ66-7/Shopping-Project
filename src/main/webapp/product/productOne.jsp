@@ -139,6 +139,34 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 <style>
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+#re{
+font-weight: bold;
+font-family: 'Pretendard-Regular';
+}
+#pn{
+font-family: 'Pretendard-Regular';
+font-size: 17px;
+}
+#cn{
+font-family: 'Pretendard-Regular';
+color: #747474;
+}
+#pi{
+font-family: 'Pretendard-Regular';
+font-size: 17px;
+}
+#dp{
+color: #B08EAD;
+}
+#dpone{
+font-size: 20px;
+}
 .single_product_breadcrumb {
     height: 200px !important;
 }
@@ -159,8 +187,15 @@ a:hover{
 color: #B08EAD;
 }
 #productPrice{
+font-family: 'Pretendard-Regular';
 font-weight: 700;
 font-size: 17px; }
+.genric-btn{
+    display: inline-block;
+    outline: none;
+    line-height: 2;
+    padding:0px 10px;
+}
 </style>
 <body>
 	<header>
@@ -194,14 +229,15 @@ font-size: 17px; }
 				<div class="productInfo">
 					<table class="table">
 						<tr>
-							<td>category > <%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
+							<td id="cn">category > <%=p.get("categoryName")%></td><!-- 상품 카테고리 -->
 						</tr>						
 						<tr>
-							<td><%=p.get("productName")%></td><!-- 상품이름 -->
+							<td id="pn"><%=p.get("productName")%></td><!-- 상품이름 -->
 						</tr>
-						<!-- 할인가 or 원가 -->
+						<!-- 할인가 / 원가 -->
 						<%
 							double discountRate = (double)p.get("discountRate");
+							int discountRateP = (int)(discountRate*100);
 							int productPrice = (Integer)p.get("productPrice");
 							double discountPrice = productPrice - (productPrice * discountRate);
 							if(discountPrice == productPrice){
@@ -213,16 +249,16 @@ font-size: 17px; }
 							}else{
 						%>
 						<tr>
+							<!-- ₩ -->
 							<td id="productPrice">
-							<span><s><%=dc.format(p.get("productPrice"))%>원</s></span><br>
-							<span>할인가 <%=dc.format(discountPrice)%>원</span></td>
+							<span id="dp"><%=discountRateP%>% <s><%=dc.format(p.get("productPrice"))%></s></span><br>
+							<span id="dpone"><%=dc.format(discountPrice)%>원</span></td>
 						</tr>
 						<%
 							}
 						%>
 						<tr>
-							<!-- <td><%=p.get("productInfo")%></td> 길이 고정 test-->
-							<td>Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources. Credibly innovate granular internal or “organic” sources whereas high standards in web-readiness. Credibly innovate granular internal or organic sources whereas high standards in web-readiness. Energistically scale future-proof core competencies vis-a-vis impactful experiences. Dramatically synthesize integrated schemas. with optimal networks.</td>
+							<td id="pi"><%=p.get("productInfo")%></td>
 						</tr>
 					</table>
 				</div>
@@ -246,7 +282,7 @@ font-size: 17px; }
 <!--================End Single Product Area =================-->
 <!-- 2) 상품 리뷰 -------------------------------------------------------------------------->
 <br><br>
-	<h3>리뷰</h3>
+	<h3 id="re">리뷰</h3>
 	<!-- 마이페이지 작성/로그인 세션 테스트 하기 위해서 남겨둠 -->
 	<!-- <a href="<%=request.getContextPath()%>/review/insertReview.jsp?productNo=<%=productNo%>&historyNo=<%=2%>">추가</a>-->
 	<!--------------------------------------------->
@@ -284,32 +320,32 @@ font-size: 17px; }
 	<%
 		if(revminPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage-revpagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px">이전</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage-revpagePerPage%>" class="genric-btn default radius">이전</a>
 	<%
 			}
 		for(int r = revminPage; r<=revmaxPage; r=r+1) {
 			if(r == revcurrentPage){
 	%>
-			<span class="genric-btn default radius" style="padding: 2px 12px"><%=r%></span>		
+			<span class="genric-btn default radius"><%=r%></span>		
 	<%			
 			}else{	
 	%>
 		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=r%>">
-		<span class="genric-btn default radius" style="padding: 2px 12px"><%=r%></span>
+		<span class="genric-btn default radius"><%=r%></span>
 		</a>
 	<%
 			}
 		}	
 		if(revmaxPage != revlastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage+revpagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px">다음</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&revcurrentPage=<%=revminPage+revpagePerPage%>" class="genric-btn default radius">다음</a>
 	<%
 		}
 	%>
 	</div>
 <br>
 <!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
-	<h3>상품 Q&A</h3>
+	<h3 id="re">상품 Q&A</h3>
 	<!-- 로그인 하지 않은 상태에서 문의하기를 누르면 로그인폼으로 이동 -->
 	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>&productName=<%=p.get("productName")%>" class="genric-btn primary small">문의하기</a>
 	<br><br>
@@ -353,25 +389,25 @@ font-size: 17px; }
 	<%
 		if(minPage > 1) { //minpage가 1보다 클때 이전 페이지 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage-pagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px" >이전</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage-pagePerPage%>" class="genric-btn default radius">이전</a>
 	<%
 			}
 		for(int i = minPage; i<=maxPage; i=i+1) {
 			if(i == currentPage){
 	%>
-			<span class="genric-btn primary radius" style="padding: 2px 12px"><%=i%></span><!-- 현재페이지 -->
+			<span class="genric-btn primary radius"><%=i%></span><!-- 현재페이지 -->
 	<%			
 			}else{	
 	%>
 		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=i%>">
-		<span class="genric-btn default radius" style="padding: 2px 12px"><%=i%></span>
+		<span class="genric-btn default radius"><%=i%></span>
 		</a>
 	<%
 			}
 		}	
 		if(maxPage != lastPage) { // maxpage와 lastpage가 같지 않을 때 다음 출력
 	%>
-		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage+pagePerPage%>" class="genric-btn default radius" style="padding: 2px 12px">다음</a>
+		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=productNo%>&currentPage=<%=minPage+pagePerPage%>" class="genric-btn default radius">다음</a>
 	<%
 		}
 	%>

@@ -80,7 +80,9 @@ a{text-decoration: none;}
 	<tr>
 		<td colspan="2">
 		<div class="customerReview">
-		<div class="revimg"><img src="${pageContext.request.contextPath}/review/reviewImg/<%=(String)reviewImg.getReviewSaveFilename()%>" width="250" height="250"></div>
+		<div class="revimg">
+		<img src="${pageContext.request.contextPath}/review/reviewImg/<%=(String)reviewImg.getReviewSaveFilename()%>" width="250" height="250">
+		</div>
 		<p><%=reviewText.getReviewContent()%></p>
 		</div>
 		<div class="customer">

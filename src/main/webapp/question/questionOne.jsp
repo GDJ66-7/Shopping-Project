@@ -76,6 +76,16 @@
 </head>
 <style>
 .customerQna{text-align: right;}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+#an{
+ font-family: 'Pretendard-Regular';
+  font-weight: 600;
+}
 </style>
 <body>
 	<!--::header part start::-->
@@ -132,7 +142,7 @@ function QuestionDelete(){ //게시글 삭제 confirm 추가
 </script>
 <!------------------------------ 문의 사항 답변 --------------------------------------------------->
 	<br><br>
-	<h4>Answer</h4>
+	<h4 id="an">Answer</h4>
 <% 
 	if((empid!=null)&&!completeAnswer){ //답변이 하나라도 있는 상태면 폼 숨김
 %>
@@ -193,7 +203,7 @@ function insertAnswer() {
 			<td style="width : 50%;"><%=aone.getaContent()%></td>
 			<td><%=aone.getCreatedate().substring(0,10)%></td>
 <%
-	if(empid.equals(aone.getId())) { // 해당 게시글에 답변한 관리자만 수정/삭제 가능
+	if(empid!=null&&empid.equals(aone.getId())) { // 해당 게시글에 답변한 관리자만 수정/삭제 가능
 %>
 			<td>
 				<a href="<%=request.getContextPath()%>/answer/updateAnswer.jsp?qNo=<%=one.getqNo()%>&aNo=<%=aone.getaNo()%>&productNo=<%=one.getProductNo()%>" class="genric-btn primary small">수정</a>
