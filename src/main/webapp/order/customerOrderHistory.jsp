@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "dao.*" %>
 <%@ page import = "java.util.*" %>
+
 <%
 //새션 확인 로그인 안되어있다면 못들어와야됩니다.
 	if(session.getAttribute("loginEmpId1") != null 
@@ -186,7 +187,7 @@
 
     <!-- breadcrumb part start-->
     <section class="breadcrumb_part">
-        <div class="container">
+        <div class="container" style="margin-left: 70px; margin-right: 70px;">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
@@ -238,14 +239,16 @@
 			</tr>
 			<%
 				for(HashMap<String, Object> s : list){
+					java.text.NumberFormat numberFormat = java.text.NumberFormat.getInstance();
+					String productPrice = numberFormat.format(s.get("주문가격"));
 			%>
 			<tr>
 				<td><%=(Integer)(s.get("주문번호"))%></td>
-				<td><%=(String)(s.get("상품이름"))%></td>
+				<td><a style="color: #B08EAD;" href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=(Integer)(s.get("상품번호"))%>"><%=(String)(s.get("상품이름"))%></a></td>
 				<td><%=(String)(s.get("결제상태"))%></td>
 				<td><%=(String)(s.get("배송상태"))%></td>
 				<td><%=(Integer)(s.get("수량"))%></td>
-				<td><%=(Integer)(s.get("주문가격"))%></td>
+				<td><%=productPrice%></td>
 				<td><%=(String)(s.get("주문배송지"))%></td>
 				<td><%=(String)(s.get("구매일"))%></td>
 				<%
