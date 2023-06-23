@@ -59,6 +59,21 @@
 	    }
 	}
 	
+	// 담을 리스트
+	ArrayList<HashMap<String,Object>> list2 = new ArrayList<>();
+	// 비회원 접속했을때 장바구니 상품번호와 수량
+	if(session.getAttribute("loginId")==null){
+		HashMap<String, Cart> notLoginCart = (HashMap<String, Cart>) session.getAttribute("newCartList");
+		for(Cart c : newCartList.values()){
+			int productNo = (c.getProductNo());
+			int cartCnt = (c.getCartCnt());
+			// 21. 비회원 장바구니 출력
+			ArrayList<HashMap<String, Object>> cartItemList = cartDao.notLoginSelectCart(productNo, cartCnt);
+			list2.addAll(cartItemList);
+		}
+	}
+	
+	
 %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -117,32 +132,49 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col"><h5>상품번호</h5></th>
+							<th scope="col"></th>
 							<th scope="col"><h5>상품이름</h5></th>
 							<th scope="col"><h5>상품가격</h5></th>
 							<th scope="col"><h5>할인금액</h5></th>
 							<th scope="col"><h5>할인적용가격</h5></th>
 							<th scope="col"><h5>수량</h5></th>
-							<th scope="col"><h5>전체가격</h5></th>
-											
+							<th scope="col"><h5>전체가격</h5></th>			
 						</tr>
 					</thead>
 					<tbody>
 						<%
-							for (Cart c : newCartList.values()) {
-						%>		
-							<tr>
-								<td><%=c.getProductNo()%></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td><%=c.getCartCnt()%></td>
-								<td></td>
-							</tr>	
+							for(HashMap<String,Object> m : list2){ // 상품이름 상품가격 상품이미지 할인금액 할인상품가격 전체가격
+						%>
+							<tr>			
+								<td>
+									<img src="${pageContext.request.contextPath}/product/productImg/<%=(String)(m.get("상품이미지"))%>" width="100" height="100">
+								</td>
+								<td>
+									<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=(Integer)(m.get("상품번호"))%>">
+										<%=(String)(m.get("상품이름"))%>
+									</a>
+								</td>
+								<td>
+									<h5><%=(Integer)(m.get("상품가격"))%>원</h5>
+								</td>
+								<td>
+									<h5><%=(Integer)(m.get("할인금액"))%>원</h5>
+								</td>
+								<td>
+									<h5><%=(Integer)(m.get("할인상품가격"))%>원</h5>
+								</td>
+								<td>
+									<h5><%=(Integer)(m.get("수량"))%>개</h5>
+								</td>
+								<td>
+									<h5><%=(Integer)(m.get("전체가격"))%>원</h5>
+								</td>
+							</tr>
 						<%
 							}
-						%>										
+						%>
+						
+														
 				</table>   
 			         
 				<table class="table table-borderless" style="border-collapse: collapse; border: none;">

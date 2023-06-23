@@ -523,4 +523,51 @@ public class CartDao {
 	}
 	
 	
+	// 21. 비회원 장바구니 리스트 조회
+	public ArrayList<HashMap<String,Object>> notLoginSelectCart(int productNo, int cartCnt) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT "
+				+ "p.product_no 상품번호, "
+				+ "p.product_name 상품이름, "
+				+ "p.product_price 상품가격, "
+				+ "i.product_save_filename 상품이미지, "
+				+ "p.product_price - (p.product_price * (1- IFNULL(d.discount_rate, 0))) 할인금액, "
+				+ "p.product_price*(1-IFNULL(d.discount_rate, 0)) 할인상품가격, "
+				+ "p.product_price*(1- IFNULL(d.discount_rate, 0)) * ? 전체가격 "
+				+ "FROM product p "
+				+ "		LEFT OUTER JOIN product_img i ON p.product_no = i.product_no "
+				+ "		LEFT OUTER JOIN discount d ON p.product_no = d.product_no "
+				+ "WHERE p.product_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, cartCnt);
+		stmt.setInt(2, productNo);
+		ResultSet rs = stmt.executeQuery();
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		while(rs.next()) {
+			HashMap<String,Object> m = new HashMap<String,Object>();
+			m.put("수량",cartCnt);
+			m.put("상품번호",rs.getInt("상품번호"));
+			m.put("상품이름",rs.getString("상품이름"));
+			m.put("상품가격",rs.getInt("상품가격"));
+			m.put("상품이미지",rs.getString("상품이미지"));
+			m.put("할인금액",rs.getInt("할인금액"));
+			m.put("할인상품가격",rs.getInt("할인상품가격"));
+			m.put("전체가격",rs.getInt("전체가격"));
+			list.add(m);
+		}
+		return list;
+	}
+	
+	// 22. 비회원 장바구니 리스트 총 주문금액
+	public ArrayList<HashMap<String,Object>> notLoginSelectCartTotal(int productNo, int cartCnt) throws Exception {
+		
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		return list;
+	}
+	
+	
+	
+	
+	
 }	
