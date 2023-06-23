@@ -70,7 +70,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>pillloMart</title>
+    <title>GDJ-Mart</title>
     <link rel="icon" href="/Shopping/css/img/favicon.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Shopping/css/css/bootstrap.min.css">
