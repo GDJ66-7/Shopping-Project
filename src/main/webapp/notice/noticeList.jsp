@@ -52,7 +52,7 @@ if(request.getParameter("search") != null){
     .styled-link {
       display: inline-block;
       padding: 6px 10px; /* 패딩 */
-      background-color: #DBB5D6; /* 배경색 */
+      background-color: #B08EAD; /* 배경색 */
       color: #F6F6F6; /* 텍스트 색상 */
       text-decoration: none; /* 텍스트 장식 제거 */
       border-radius: 4px; /* 테두리 반경 */
@@ -62,7 +62,7 @@ if(request.getParameter("search") != null){
     
     /* 링크 호버 효과 */
     .styled-link:hover {
-      background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+      background-color: #B08EAD; /* 호버 시 배경색 변경 */
       color: #fff; /* 호버 시 텍스트 색상 변경 */
     }
 </style>
@@ -117,9 +117,9 @@ if(request.getParameter("search") != null){
          	 <h2 class="contact-title">공지사항 리스트</h2>
         </div>
   		<form action="<%=request.getContextPath()%>/notice/noticeList.jsp" method="get">
-		 	<input type="text" name="search" placeholder="공지사항 검색" class="single-input"><br>
+		 	<input type="text" name="search" placeholder="공지사항 검색(Enter)" class="single-input"><br>
 		 </form>
-		 <h2>
+		 <p>
 		  			<%
 		  				if(request.getParameter("msg") != null){
 		  			%>
@@ -127,7 +127,7 @@ if(request.getParameter("search") != null){
 		  			<%
 		  				}
 		  			%>
-		 </h2>
+		 </p>
 				 <table class="table">		
 					<tr>
 						<th>번호</th>

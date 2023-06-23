@@ -209,45 +209,48 @@
 	  /* 스타일링된 링크 */
 	  .styled-link {
 	    display: inline-block;
-	    padding: 3px 5px; /* 패딩 */
-	    background-color: #DBB5D6; /* 배경색 */
+	    padding: 6px 5px; /* 패딩 */
+	    background-color: #B08EAD; /* 배경색 */
 	    color: #F6F6F6; /* 텍스트 색상 */
 	    text-decoration: none; /* 텍스트 장식 제거 */
 	    border-radius: 6px; /* 테두리 반경 */
 	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
 	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
 	    width: 120px; /* 크기 고정 */
-	     text-align: center; /* 글자 가운데 정렬 */
+	    text-align: center; /* 글자 가운데 정렬 */
+	    font-size: 13px;
+		font-weight: 500;
+	     
 	  }
 	
 	  /* 링크 호버 효과 */
 	  .styled-link:hover {
-	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
-	    color: #fff; /* 호버 시 텍스트 색상 변경 */
+	    background-color: #fff; /* 호버 시 배경색 변경 */
+	    color: black; /* 호버 시 텍스트 색상 변경 */
+	    
 	  }
 	</style>
 	
 	<style>
 	  /* 스타일링된 링크 */
 	  .styled-linke {
+
 	    display: inline-block;
-	    padding: 3px 5px; /* 패딩 */
-	    background-color: #DBB5C8; /* 배경색 */
-	    color: #F6F6F6; /* 텍스트 색상 */
+	    padding: 6px 5px; /* 패딩 */
+	    background: #fff; /* 배경색 */
+	    color: #B08EAD; /* 텍스트 색상 */
 	    text-decoration: none; /* 텍스트 장식 제거 */
 	    border-radius: 6px; /* 테두리 반경 */
-	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
+	    
 	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
 	    width: 120px; /* 크기 고정 */
 	     text-align: center; /* 글자 가운데 정렬 */
-	      border: none; /* 태두리 없애기 */
+		  border: 1px solid #B08EAD;
+	      font-size: 13px;
+		  font-weight: 500;
 	  }
 	
-	  /* 링크 호버 효과 */
-	  .styled-linke:hover {
-	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
-	    color: #fff; /* 호버 시 텍스트 색상 변경 */
-	  }
+	  
 	</style>
 
     <!-- Required meta tags -->
@@ -376,7 +379,7 @@
 									<button type="submit" class="genric-btn primary-border circle">완료</button>
 									</form>
 								</div></td>
-							<td>
+							<td style=" text-align: center;  vertical-align: middle;">
 								<button id="toggleButton" type="button" class="styled-linke">비밀번호 변경</button>
 							</td>
 			
@@ -400,8 +403,8 @@
 									</form>
 								</div>
 							</td>
-							<td>
-								<button id="addressBtn" type="button" class="styled-linke">주소 변경</button>
+							<td style=" text-align: center;  vertical-align: middle;" >
+								<button id="addressBtn" type="button"  class="styled-linke">주소 변경</button>
 							</td>
 						</tr>
 						<tr>
@@ -422,7 +425,7 @@
 									</form>
 								</div>
 							</td>
-							<td>
+							<td style=" text-align: center;  vertical-align: middle;">
 								<button id="emailBtn" type="button" class="styled-linke">이메일 변경</button>
 							</td>
 						</tr>
@@ -449,7 +452,7 @@
 									</form>
 								</div>
 							</td>
-							<td>
+							<td style=" text-align: center;  vertical-align: middle;">
 								<button id="phoneBtn" type="button" class="styled-linke">전화번호 변경</button>
 							</td>
 						</tr>

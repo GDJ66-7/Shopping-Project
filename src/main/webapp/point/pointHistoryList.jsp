@@ -12,16 +12,20 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
+	String id ="";
+	if(request.getParameter("id") != null){
+		id = request.getParameter("id");
+	}
 	//페이지당 보여줄 행
 	int rowPerPage = 10;
 	// 시작할 행 알고리즘 사용
 	int beginRow = (currentPage -1) * rowPerPage;
 	//모든 고객 포인트 리스트 메소드 사용
 	PointDao li = new PointDao();
-	ArrayList<HashMap<String, Object>> pointList = li.pointList(beginRow, rowPerPage);
+	ArrayList<HashMap<String, Object>> pointList = li.pointList(beginRow, rowPerPage, id);
 	//총 행의 수를 얻기위한 메소드 사용
 		PointDao tr = new PointDao();
-		int totalRow = tr.pointRow();
+		int totalRow = tr.pointRow(id);
 	System.out.println(totalRow+"<-- totalRow");
 	// 라스트 페이즐 구하기 위한 변수선언
 	int lastPage = totalRow/rowPerPage;
@@ -48,7 +52,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
     .styled-link {
       display: inline-block;
       padding: 6px 10px; /* 패딩 */
-      background-color: #DBB5D6; /* 배경색 */
+      background-color: #B08EAD; /* 배경색 */
       color: #F6F6F6; /* 텍스트 색상 */
       text-decoration: none; /* 텍스트 장식 제거 */
       border-radius: 4px; /* 테두리 반경 */
@@ -58,7 +62,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
     
     /* 링크 호버 효과 */
     .styled-link:hover {
-      background-color: #FFB2D9; /* 호버 시 배경색 변경 */
+      background-color: #B08EAD; /* 호버 시 배경색 변경 */
       color: #fff; /* 호버 시 텍스트 색상 변경 */
     }
 </style>
@@ -112,6 +116,9 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
     <br><div class="col-12">
          	 <h2 class="contact-title">포인트 내역 상세보기</h2>
         </div>
+	    <form action="<%=request.getContextPath()%>/point/pointHistoryList.jsp" method="get">
+			 	<input type="text" name="id" placeholder="고객 검색(Enter)" class="single-input"><br>
+		 </form>
   		<p>
   			<%
   				if(request.getParameter("msg") != null){

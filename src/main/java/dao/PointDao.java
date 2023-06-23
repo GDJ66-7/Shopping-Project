@@ -10,11 +10,15 @@ import util.DBUtil;
 
 public class PointDao {
 	//관리자가 모든 고객 포인트 내역 조회 
-	public ArrayList<HashMap<String, Object>> pointList(int beginRow, int rowPerPage) throws Exception{
+	public ArrayList<HashMap<String, Object>> pointList(int beginRow, int rowPerPage, String id) throws Exception{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "SELECT c.id 고객아이디,p.order_no 주문번호, p.point_pm 증감, p.point 포인트, p.createdate 적립일자 FROM customer c INNER JOIN orders o ON  c.id = o.id INNER JOIN point_history p ON o.order_no = p.order_no ORDER BY p.createdate DESC  LIMIT ?, ?";
+		String sql = "SELECT c.id 고객아이디,p.order_no 주문번호, p.point_pm 증감, p.point 포인트, p.createdate 적립일자 FROM customer c INNER JOIN orders o ON  c.id = o.id INNER JOIN point_history p ON o.order_no = p.order_no";
+		if(!id.equals("")) {
+			sql += " WHERE c.id like '%"+id+"%'";
+		}
+		sql+=" ORDER BY p.createdate DESC  LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
@@ -56,7 +60,7 @@ public class PointDao {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "SELECT count(*) FROM customer c INNER JOIN orders o ON  c.id = o.id INNER JOIN point_history p ON o.order_no = p.order_no WHERE c.id = ? ORDER BY p.createdate DESC";
+		String sql = "SELECT count(*) FROM customer c INNER JOIN orders o ON  c.id = o.id INNER JOIN point_history p ON o.order_no = p.order_no WHERE c.id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, id);
 		ResultSet rs = stmt.executeQuery();
@@ -66,11 +70,14 @@ public class PointDao {
 		return row;
 	}
 	//모든 고객의 리스트 행의 수 조회
-	public int pointRow() throws Exception {
+	public int pointRow(String id) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil(); 
 		Connection conn =  dbUtil.getConnection();
-		String sql = "SELECT count(*) FROM customer";
+		String sql = "SELECT count(*) FROM customer c INNER JOIN orders o ON  c.id = o.id INNER JOIN point_history p ON o.order_no = p.order_no";
+		if(!id.equals("")) {
+			sql += " WHERE c.id like '%"+id+"%'";
+		}
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {

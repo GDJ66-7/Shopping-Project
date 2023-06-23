@@ -64,7 +64,7 @@
     .styled-link {
       display: inline-block;
       padding: 6px 10px; /* 패딩 */
-      background-color: #DBB5D6; /* 배경색 */
+      background-color: #B08EAD; /* 배경색 */
       color: #F6F6F6; /* 텍스트 색상 */
       text-decoration: none; /* 텍스트 장식 제거 */
       border-radius: 4px; /* 테두리 반경 */
@@ -82,23 +82,26 @@
 	  /* 스타일링된 링크 */
 	  .styled-linke {
 	    display: inline-block;
-	    padding: 3px 5px; /* 패딩 */
-	    background-color: #DBB5D6; /* 배경색 */
+	    padding: 6px 5px; /* 패딩 */
+	    background-color: #B08EAD; /* 배경색 */
 	    color: #F6F6F6; /* 텍스트 색상 */
 	    text-decoration: none; /* 텍스트 장식 제거 */
 	    border-radius: 6px; /* 테두리 반경 */
 	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
 	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
 	    width: 120px; /* 크기 고정 */
-	     text-align: center; /* 글자 가운데 정렬 */
+	    text-align: center; /* 글자 가운데 정렬 */
+	    font-size: 13px;
+		font-weight: 500;
+	     
 	  }
 	
 	  /* 링크 호버 효과 */
 	  .styled-linke:hover {
-	    background-color: #FFB2D9; /* 호버 시 배경색 변경 */
-	    color: #fff; /* 호버 시 텍스트 색상 변경 */
+	    background-color: #fff; /* 호버 시 배경색 변경 */
+	    color: black; /* 호버 시 텍스트 색상 변경 */
+	    
 	  }
-</style>
 <style>
   #ckId {
     padding: 0px 20px; /* 원하는 패딩 값을 지정하세요 */
@@ -246,6 +249,12 @@
 				<td><%=(String)(s.get("주문배송지"))%></td>
 				<td><%=(String)(s.get("구매일"))%></td>
 				<%
+					if(s.get("배송상태").equals("구매취소")){
+				%>
+					<td></td>
+					<td></td>
+				<%
+					}
 					if(s.get("결제상태").equals("결제대기") || s.get("배송상태").equals("배송중")){
 				%>
 				<td><a  class="styled-linke" href="<%=request.getContextPath()%>/order/deleteOrder.jsp?orderNo=<%=(Integer)(s.get("주문번호"))%>">주문취소하기</a></td>
@@ -258,7 +267,7 @@
 					}
 					if(s.get("배송상태").equals("구매확정")){
 				%>
-				<td><a class="styled-linke" href="<%=request.getContextPath()%>/review/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td>
+				<td><a class="styled-linke" href="<%=request.getContextPath()%>/review/insertReview.jsp?historyNo=<%=(Integer)(s.get("주문내역번호"))%>&productNo=<%=(Integer)(s.get("상품번호"))%>">리뷰쓰기</a></td><td></td>
 				<%
 					}
 				%>				
@@ -277,7 +286,7 @@
 			}
 			for(int i = startPage; i<=endPage; i++){
 		%>
-			<a class="styled-link" href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp?currentPage=<%=i%>"><%=i%></a>
+			<a class="styled-link"  href="<%=request.getContextPath()%>/order/customerOrderHistory.jsp?currentPage=<%=i%>"><%=i%></a>
 		<%
 			}
 			if(endPage<lastPage){
