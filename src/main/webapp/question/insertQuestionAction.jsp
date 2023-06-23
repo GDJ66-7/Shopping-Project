@@ -36,11 +36,12 @@
 	question.setqTitle(qTitle);
 	question.setqContent(qContent);
 	
-	int row = qDao.insertQuestion(question);
-	if(row ==1 ){
+	int qNo = qDao.insertQuestion(question);
+	if(	qNo !=0 ){ // 추가 성공시 바로 해당문의글로 이동
 		System.out.println("문의 추가 성공");
+		response.sendRedirect(request.getContextPath() +  "/question/questionOne.jsp?qNo=" + qNo + "&productNo=" + productNo);
+		return;
 	}
-	response.sendRedirect(request.getContextPath()+"/product/productOne.jsp?productNo="+productNo);
 	
 	
 %>

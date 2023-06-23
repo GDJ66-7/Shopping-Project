@@ -140,7 +140,7 @@
 </head>
 <style>
 .single_product_breadcrumb {
-    height: 150px !important;
+    height: 200px !important;
 }
 .card_area {
     margin-top: 30px;
@@ -166,7 +166,7 @@ font-size: 17px; }
 	<header>
     <!--::header part start::-->
     <!-- 메인메뉴 바 -->
-	<jsp:include page="/main/menuBar.jsp"></jsp:include>
+		<jsp:include page="/main/menuBar.jsp"></jsp:include>
 	</header>
     <!-- Header part end-->
 <!-- breadcrumb part start-->
@@ -214,7 +214,7 @@ font-size: 17px; }
 						%>
 						<tr>
 							<td id="productPrice">
-							<span><s>원가 <%=dc.format(p.get("productPrice"))%>원</s></span><br>
+							<span><s><%=dc.format(p.get("productPrice"))%>원</s></span><br>
 							<span>할인가 <%=dc.format(discountPrice)%>원</span></td>
 						</tr>
 						<%
@@ -311,7 +311,7 @@ font-size: 17px; }
 <!-- 3) 상품 문의사항 ----------------------------------------------------------------------->
 	<h3>상품 Q&A</h3>
 	<!-- 로그인 하지 않은 상태에서 문의하기를 누르면 로그인폼으로 이동 -->
-	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>" class="genric-btn primary small">문의하기</a>
+	<a href="<%=request.getContextPath()%>/question/insertQuestion.jsp?productNo=<%=productNo%>&productName=<%=p.get("productName")%>" class="genric-btn primary small">문의하기</a>
 	<br><br>
 	<div id="productQnA">
 	<table class="table">

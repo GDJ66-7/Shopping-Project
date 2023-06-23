@@ -36,7 +36,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>문의사항 상세보기</title>
+    <title>리뷰 작성</title>
     <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
@@ -80,7 +80,7 @@
 	<table class="table table-bordered">
 		<tr>
 			<td>제목</td>
-			<td><input type="text" name="reviewTitle" size=60; placeholder="제목을 입력해주세요(50자 이내)"></td>	
+			<td><input type="text" name="reviewTitle" id="reviewTitle" size=60; placeholder="제목을 입력해주세요(50자 이내)"></td>	
 		</tr>
 		<tr>
 			<td>내용</td>
@@ -114,6 +114,16 @@ $(document).ready(function(){
 			$('#count').text(len); // 현재 입력된 글자수 출력
 		}
 	  });
+	
+	const TMAX_COUNT = 50;
+	$('#reviewTitle').keyup(function(){ 
+		let len2 = $('#reviewTitle').val().length;
+		if(len2 > TMAX_COUNT) {
+			let str2 = $('#reviewTitle').val().substring(0,TMAX_COUNT);
+		$('#reviewTitle').val(str2);
+		alert('제목은'+TMAX_COUNT+'자까지만 입력 가능합니다')
+		} 
+	});
 });
 
 function insertReview() {

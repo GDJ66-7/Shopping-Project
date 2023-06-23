@@ -76,7 +76,7 @@
 			<tr>
 				<td>제목</td>
 				<td>
-				<input type="text" name="qTitle" value="<%=one.getqTitle()%>" size=60; placeholder="제목을 입력하세요(50자 이내)">
+				<input type="text" name="qTitle" id="qTitle" value="<%=one.getqTitle()%>" size=60; placeholder="제목을 입력하세요(50자 이내)">
 			</td>
 		</tr>
 		<tr>
@@ -122,6 +122,17 @@ $(document).ready(function(){
 		}
 		$count.text(len); //현재 입력된 글자수 출력
 	}
+	
+	const TMAX_COUNT = 50;
+	$('#qTitle').keyup(function(){ 
+		let len2 = $('#qTitle').val().length;
+		if(len2 > TMAX_COUNT) {
+			let str2 = $('#qTitle').val().substring(0,TMAX_COUNT);
+		$('#qTitle').val(str2);
+		alert('제목은'+TMAX_COUNT+'자까지만 입력 가능합니다')
+		} 
+	});
+	
 	$qContent.on('input', preContentCheck); // qContent내에 있는(이벤트종류:input,업데이트 콜백 함수)호출
 	preContentCheck(); // 수정 페이지가 로드될 때 원래 입력되어있던 글자 수 체크
 });

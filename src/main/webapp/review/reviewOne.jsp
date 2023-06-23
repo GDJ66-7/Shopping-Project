@@ -61,12 +61,11 @@ a{text-decoration: none;}
 .customerReview{text-align: center;}
 </style>
 <body>
-<!--::header part start::-->
-<header>
-<jsp:include page="/main/menuBar.jsp"></jsp:include>
-</header>
-<!-- Header part end-->
-
+	<!--::header part start::-->
+	<header>
+		<jsp:include page="/main/menuBar.jsp"></jsp:include>
+	</header>
+	<!-- Header part end-->
 <div class="container mt-3">
 <br><br><br>
 <h2 style="text-align: center;">상품 리뷰</h2>
@@ -121,7 +120,7 @@ function deleteReview(){ //삭제 confirm 추가
 }
 </script>
 
-  <!--::footer_part start::-->
+   <!--::footer_part start::-->
   <footer class="footer_part">
         <div class="footer_iner section_bg">
             <div class="container">

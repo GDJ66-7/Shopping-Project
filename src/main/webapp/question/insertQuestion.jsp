@@ -11,6 +11,7 @@
 	}
 	
 	int productNo = Integer.parseInt(request.getParameter("productNo"));
+	String productName = request.getParameter("productName");
 	
 	//로그인 세션(로그인 한 고객만(loginCstmId 작성 가능)
 	if(session.getAttribute("loginCstmId") == null) {
@@ -60,10 +61,20 @@
 			if(len > MAX_COUNT) {
 				let str = $('#qContent').val().substring(0,MAX_COUNT);
 			$('#qContent').val(str);
-			alert(MAX_COUNT+'자까지만 입력 가능합니다')
+			alert('내용은'+MAX_COUNT+'자까지만 입력 가능합니다')
 			} else {
 				$('#count').text(len); // 현재 입력된 글자수 출력
 			}
+		});
+		
+		const TMAX_COUNT = 50;
+		$('#qTitle').keyup(function(){ 
+			let len2 = $('#qTitle').val().length;
+			if(len2 > TMAX_COUNT) {
+				let str2 = $('#qTitle').val().substring(0,TMAX_COUNT);
+			$('#qTitle').val(str2);
+			alert('제목은'+TMAX_COUNT+'자까지만 입력 가능합니다')
+			} 
 		});
 	});
 </script>
@@ -82,6 +93,10 @@
 <input type="hidden" name="id" value="<%=id%>">
 <table class="table table-bordered">
 	<tr>
+		<td>상품이름</td>
+		<td><%=productName%></td>
+	</tr>
+	<tr>
 		<td>
 			<label for="qCategory">카테고리</label>
 		</td>
@@ -95,7 +110,7 @@
 	</tr>
 	<tr>
 		<td>제목</td>
-		<td><input type="text" name="qTitle" size=60; placeholder="제목을 입력하세요(50자 이내)"></td>	
+		<td><input type="text" name="qTitle" id="qTitle" size=60; placeholder="제목을 입력하세요(50자 이내)"></td>	
 	</tr>
 	<tr>
 		<td>내용</td>

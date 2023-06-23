@@ -119,7 +119,6 @@
 <%
 	}
 %>
-</div>
 <script>
 function QuestionDelete(){ //게시글 삭제 confirm 추가
 	let result = confirm("게시글을 삭제하시겠습니까?");
@@ -132,8 +131,7 @@ function QuestionDelete(){ //게시글 삭제 confirm 추가
 }
 </script>
 <!------------------------------ 문의 사항 답변 --------------------------------------------------->
-	<br>
-	<div class="container mt-3">
+	<br><br>
 	<h4>Answer</h4>
 <% 
 	if((empid!=null)&&!completeAnswer){ //답변이 하나라도 있는 상태면 폼 숨김
@@ -208,7 +206,6 @@ function insertAnswer() {
 	}
 %>
 	</table>
-	</div>
 <%
 	}else{
 %>
@@ -216,6 +213,7 @@ function insertAnswer() {
 <%
 	}
 %>
+</div>
 <script>
 function AnswerDelete(){ //답변 삭제 confirm 추가
 	let result = confirm("답변을 삭제하시겠습니까?");
@@ -228,7 +226,7 @@ function AnswerDelete(){ //답변 삭제 confirm 추가
 }
 </script>
 <br><br><br><br>
-  <!--::footer_part start::-->
+   <!--::footer_part start::-->
   <footer class="footer_part">
         <div class="footer_iner section_bg">
             <div class="container">

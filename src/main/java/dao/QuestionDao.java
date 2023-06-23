@@ -65,20 +65,24 @@ public class QuestionDao {
 	
 	// 상품문의 추가(회원)
 	public int insertQuestion(Question question) throws Exception {
-		int row = 0;
 		DBUtil DButil = new DBUtil();
 		Connection conn = DButil.getConnection();
-		String sql = "INSERT into question(q_no, product_no, id, q_category, q_title, q_content, createdate, updatedate) VALUES(?,?,?,?,?,?,now(),now())";
-		PreparedStatement stmt = conn.prepareStatement(sql);
+		String sql = "INSERT into question(q_no,product_no, id, q_category, q_title, q_content, createdate, updatedate) VALUES(?,?,?,?,?,?,now(),now())";
+		PreparedStatement stmt = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 		stmt.setInt(1, question.getqNo());
 		stmt.setInt(2, question.getProductNo());
 		stmt.setString(3, question.getId());
 		stmt.setString(4, question.getqCategory());
 		stmt.setString(5, question.getqTitle());
 		stmt.setString(6, question.getqContent());
-		row = stmt.executeUpdate();
+		stmt.executeUpdate(); // insert문 입력 후 자동키값 저장
 		
-		return row;
+		int qNo = 0;
+		ResultSet keyRs = stmt.getGeneratedKeys();
+		if(keyRs.next()) { //qNo key값
+			qNo = keyRs.getInt(1);
+		}
+			return qNo;
 	}
 	
 	

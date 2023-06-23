@@ -86,7 +86,7 @@
 			<tr>
 				<td>제목</td>
 				<td>
-				<input type="text" name="reviewTitle" value="<%=reviewText.getReviewTitle()%>" size=60; placeholder="제목을 입력해주세요(50자 이내)">
+				<input type="text" name="reviewTitle" id="reviewTitle" value="<%=reviewText.getReviewTitle()%>" size=60; placeholder="제목을 입력해주세요(50자 이내)">
 				</td>
 			</tr>
 			<tr>
@@ -133,6 +133,16 @@ $(document).ready(function(){
 			alert(MAX_COUNT + '자까지만 입력 가능합니다');
 			len = MAX_COUNT;
 		}
+		const TMAX_COUNT = 50;
+		$('#reviewTitle').keyup(function(){ 
+			let len2 = $('#reviewTitle').val().length;
+			if(len2 > TMAX_COUNT) {
+				let str2 = $('#reviewTitle').val().substring(0,TMAX_COUNT);
+			$('#reviewTitle').val(str2);
+			alert('제목은'+TMAX_COUNT+'자까지만 입력 가능합니다')
+			} 
+		});
+		
 		$count.text(len); //현재 입력된 글자수 출력
 	}
 	$reviewContent.on('input', preContentCheck); // reviewContent내에 있는(이벤트종류:input,업데이트 콜백 함수)호출
