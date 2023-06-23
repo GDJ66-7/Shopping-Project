@@ -225,24 +225,30 @@
 }
 </style>
 <style>
-    /* 스타일링된 링크 */
-    .styled-link {
-      display: inline-block;
-      padding: 3px 5px; /* 패딩 */
-      background-color: #DBB5D6; /* 배경색 */
-      color: #F6F6F6; /* 텍스트 색상 */
-      text-decoration: none; /* 텍스트 장식 제거 */
-      border-radius: 6px; /* 테두리 반경 */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 */
-      transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
-    }
-    
-    /* 링크 호버 효과 */
-    .styled-link:hover {
-      background-color: #FFB2D9; /* 호버 시 배경색 변경 */
-      color: #fff; /* 호버 시 텍스트 색상 변경 */
-    }
-</style>
+	  /* 스타일링된 링크 */
+	  .styled-link {
+	    display: inline-block;
+	    padding: 6px 5px; /* 패딩 */
+	    background-color: #B08EAD; /* 배경색 */
+	    color: #F6F6F6; /* 텍스트 색상 */
+	    text-decoration: none; /* 텍스트 장식 제거 */
+	    border-radius: 6px; /* 테두리 반경 */
+	   	border : none;
+	    transition: background-color 0.3s ease, color 0.3s ease; /* 호버 효과 전환 시간과 속도 조정 */
+	    width: 120px; /* 크기 고정 */
+	    text-align: center; /* 글자 가운데 정렬 */
+	    font-size: 13px;
+		font-weight: 500;
+	     
+	  }
+	
+	  /* 링크 호버 효과 */
+	  .styled-link:hover {
+	    background-color: #fff; /* 호버 시 배경색 변경 */
+	    color: black; /* 호버 시 텍스트 색상 변경 */
+	    
+	  }
+	</style>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
