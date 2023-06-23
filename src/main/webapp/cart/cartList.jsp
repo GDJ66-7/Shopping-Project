@@ -143,7 +143,9 @@
 					</thead>
 					<tbody>
 						<%
-							for(HashMap<String,Object> m : list2){ // 상품이름 상품가격 상품이미지 할인금액 할인상품가격 전체가격
+							int sum = 0; 
+							for(HashMap<String,Object> m : list2){ 
+								sum += (Integer) m.get("전체가격");
 						%>
 							<tr>			
 								<td>
@@ -172,23 +174,16 @@
 							</tr>
 						<%
 							}
-						%>
-						
-														
+						%>										
 				</table>   
 			         
 				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
-					<%
-						for(HashMap<String, Object> c : list7) {			
-					%>
+					
 							<tr class="table table-borderless" style="text-align: center; border: 1px solid #B08EAD;">
 								<th>
-									<h4>총 상품가격 <%=c.get("전체금액")%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=c.get("전체금액")%></span></h4>
+									<h4>총 상품가격 <%=sum%>원 + 총 배송비 0원 = 총 주문금액 <span style="color:red"><%=sum%></span></h4>
 								</th>
-							</tr>
-					<%
-						}
-					%>	
+							</tr>	
 				</table>
 	                          
 				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
@@ -199,7 +194,11 @@
 							</a>    
 			            </td>
 						<td style="text-align: right;">
-							<button class="btn_1" type="button" onclick="alert('로그인을 해주세요.');">구매하기</button>	
+							<a href="<%=request.getContextPath()%>/login/login.jsp">
+								<button class="btn_1" type="button" onclick="alert('로그인을 해주세요.');">
+									구매하기
+								</button>
+							</a>
 						</td>			
 					</tr>
 					</tbody>

@@ -559,15 +559,20 @@ public class CartDao {
 		return list;
 	}
 	
-	// 22. 비회원 장바구니 리스트 총 주문금액
-	public ArrayList<HashMap<String,Object>> notLoginSelectCartTotal(int productNo, int cartCnt) throws Exception {
-		
-		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
-		return list;
+	// 22. 비회원 장바구니 내용은 로그인시 cart 테이블에 추가
+	public int notLoginInsertCart(int productNo, int cartCnt, String id) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();	
+		String sql="INSERT INTO cart(product_no, id, cart_cnt, checked, createdate, updatedate) "
+				+ "VALUES(?, ?, ?, 'y', NOW(), NOW())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, productNo);
+		stmt.setInt(2, cartCnt);
+		stmt.setString(3, id);
+		int row = 0;
+		row = stmt.executeUpdate();
+		return row;	
 	}
-	
-	
-	
 	
 	
 }	
