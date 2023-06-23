@@ -1,5 +1,7 @@
 package dao;
 
+import javax.servlet.http.*;
+
 import util.*;
 import java.sql.*;
 import java.util.*;
@@ -560,19 +562,27 @@ public class CartDao {
 	}
 	
 	// 22. 비회원 장바구니 내용은 로그인시 cart 테이블에 추가
-	public int notLoginInsertCart(int productNo, int cartCnt, String id) throws Exception {
+	public void notLoginInsertCart(String id, HttpServletRequest request) throws Exception {
 		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();	
-		String sql="INSERT INTO cart(product_no, id, cart_cnt, checked, createdate, updatedate) "
-				+ "VALUES(?, ?, ?, 'y', NOW(), NOW())";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, productNo);
-		stmt.setInt(2, cartCnt);
-		stmt.setString(3, id);
-		int row = 0;
-		row = stmt.executeUpdate();
-		return row;	
-	}
+		Connection conn = dbUtil.getConnection();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginCstmId") != null) {	
+			HashMap<String, Cart> newCartList = (HashMap<String, Cart>)session.getAttribute("newCartList");
+			if (newCartList != null && !newCartList.isEmpty()) {
+		           String sql = "INSERT INTO cart(product_no, id, cart_cnt, checked, createdate, updatedate) "
+		           		+ "VALUES(?, ?, ?, 'y', NOW(), NOW())";
+		           PreparedStatement stmt = conn.prepareStatement(sql);
+		           for (Cart cart : newCartList.values()) {
+		           	stmt.setInt(1, cart.getProductNo());
+		               stmt.setString(2, id);
+		               stmt.setInt(3, cart.getCartCnt());
+		               stmt.executeUpdate();
+		           }
+		     newCartList.clear(); // 카트 세션 삭제
+			}
+		}
+	}	
+
 	
 	
 }	
