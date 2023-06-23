@@ -7,8 +7,27 @@
 	// 한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
 
-	String id = "customer1";
+	// 로그인 세션 유효성 검사 
+	String id = null; // 아이디 변수 초기화
 
+	//관리자 계정으로 접속했을때
+	if(session.getAttribute("loginEmpId1") != null || session.getAttribute("loginEmpId2") != null) {
+		out.println("<script>alert('관리자 계정으로 로그인 중'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
+	// 고객 계정으로 접속했을때
+	if(session.getAttribute("loginCstmId") != null) {
+		id = (String)(session.getAttribute("loginCstmId"));
+		System.out.println(id+ " <-- cartList 고객아이디");
+	}
+	
+	// 비회원으로 접속했을때
+	if(session.getAttribute("loginCstmId") == null) {	
+	out.println("<script>alert('비회원으로 로그인 중'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+	return;
+	}
+	
 	// updatePoint.jsp에서 받아 온 값이 있으면 inputPoint 변수에 값을 저장한다.
 	int inputPoint = 0;
 	if(request.getParameter("inputPoint")!= null) {
@@ -165,7 +184,7 @@
 					<tr>
 						<td>
 						<br>
-							<input class="btn_1" style="width:140px; height:30px; text-align: center; padding: 0; line-height: 20px;" type="submit" value="주소 선택">
+							<input id="addressSelection" class="btn_1" style="width:140px; height:30px; text-align: center; padding: 0; line-height: 20px;" type="submit" value="주소 선택">
 						</td>
 						<td>
 						<br>
