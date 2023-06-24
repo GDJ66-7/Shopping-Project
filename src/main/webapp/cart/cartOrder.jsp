@@ -65,8 +65,20 @@
 		totalCartCnt = (Integer)(c.get("총상품개수"));
 	}
 	
+	// 7. 고객 주소 정보를 변수에 저장
+	String customerAddress = "";
+	for(HashMap<String, Object> c : list7) {
+		customerAddress = (String)(c.get("배송주소"));
+	}
+	
 	// 10. 주소 내역 리스트 불러오기
 	ArrayList<String> list10 = cartDao.addressList(id);
+	
+	// 주소를 선택하지 않았을때 고객 주소를 기본값으로 설정
+	if(request.getParameter("selectAddress")== null) {
+		selectAddress = customerAddress;
+	}
+	
 %>
 
 <!DOCTYPE html>
@@ -140,6 +152,10 @@
 					<td><input type="text" value="<%=(String)(c.get("이름"))%>" readonly="readonly"></td>
 				</tr>
 				<tr>
+					<th> 구매자 주소</th>
+					<td><input type="text" value="<%=(String)(c.get("배송주소"))%>" readonly="readonly"></td>
+				</tr>
+				<tr>
 					<th>구매자 이메일</th>
 					<td><input type="text" value="<%=(String)(c.get("이메일"))%>" readonly="readonly"></td>
 				</tr>
@@ -167,6 +183,17 @@
 				<input type="hidden" name="inputPoint" value="<%=inputPoint%>">
 				<table>
 					<tr>
+						<th>기본 배송 주소</th>
+					</tr>
+					<tr>
+						<td style="accent-color:#B08EAD;">
+							<input type="radio" name="selectAddress" value="<%=customerAddress%>" checked="checked">
+							<%=customerAddress%>
+						<br>
+						<br>
+						</td>
+					</tr>
+					<tr>
 						<th>최근 배송 주소</th>
 					</tr>
 					<%
@@ -184,7 +211,7 @@
 					<tr>
 						<td>
 						<br>
-							<input id="addressSelection" class="btn_1" style="width:140px; height:30px; text-align: center; padding: 0; line-height: 20px;" type="submit" value="주소 선택">
+							<input class="btn_1" style="width:140px; height:30px; text-align: center; padding: 0; line-height: 20px;" type="submit" value="주소 선택">
 						</td>
 						<td>
 						<br>

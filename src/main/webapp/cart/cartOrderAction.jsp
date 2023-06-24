@@ -27,7 +27,6 @@
 	String selectAddress = request.getParameter("selectAddress");
 	int inputPoint = Integer.parseInt(request.getParameter("inputPoint"));
 				
-	
 	// Dao 객체 선언
 	CartDao cartDao = new CartDao();
 	
@@ -52,7 +51,6 @@
 	// 16. 총 결제금액의 1%만큼 포인트 적립(+)
 	int row3 = cartDao.customerPointPlus(totalPay, id);
 	System.out.println(row3 + " <-- cartOrderAction row3");
-	
 	
 	// 17. 포인트 이력에 사용한 포인트(-) 저장
 	int row4 = cartDao.pointHistoryMinus(inputPoint);
