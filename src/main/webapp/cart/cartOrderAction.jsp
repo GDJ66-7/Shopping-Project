@@ -70,7 +70,7 @@
 	
 	if(row1>0 && row2>0 && row3>0 && row4>0 && row5>0 && row6>0 && row7>0) {
 		System.out.println("결제 성공");
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('결제가 완료되었습니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
 		return;
 	} else {
 		System.out.println("결제 실패");

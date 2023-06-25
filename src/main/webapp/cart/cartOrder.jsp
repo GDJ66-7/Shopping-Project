@@ -174,10 +174,8 @@
 			<div class="check_title">
 				<h2><span style="font-size: 20px;">받는 사람 정보</span></h2>
 			</div>
-			<p> 이전에 고객님께서 쇼핑한 적이 있는 경우 아래 주소에서 하나를 선택해주십시오.
-				신규 고객인 경우 주소 추가를 눌러서 주소를 추가해주십시오.
-			</p>
-
+			<p> 주소를 선택하지 않으시면 고객님의 주소로 자동으로 선택됩니다.
+			주소 변경을 원하시면 주소를 추가하고 선택해주세요.</p>
 			<form class="row contact_form" action="<%=request.getContextPath()%>/cart/cartOrder.jsp" method="post">
 				<input type="hidden" name="id" value="<%=id%>">
 				<input type="hidden" name="inputPoint" value="<%=inputPoint%>">
