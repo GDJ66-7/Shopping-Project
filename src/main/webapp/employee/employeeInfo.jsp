@@ -121,7 +121,7 @@ System.out.println(id+"<--id");
 
   <!--::footer_part start::-->
   <footer class="footer_part">
-        <div class="footer_iner section_bg">
+        <div class="footer_iner">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-8">
@@ -130,16 +130,30 @@ System.out.println(id+"<--id");
                                 <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
+                                <a href="<%=request.getContextPath()%>/main/home.jsp">회사개요</a>
+                                <a href="<%=request.getContextPath()%>/product/productList.jsp">상품</a>
+                                <a href="<%=request.getContextPath()%>/notice/noticeList.jsp">공지사항</a>
+                                <%	// 관리자는 관리자회원정보
+                                	if(session.getAttribute("loginEmpId2") != null || session.getAttribute("loginEmpId1") != null) {
+                                %>
+                                		<a href="<%=request.getContextPath()%>/employee/employeeInfo.jsp">관리자정보</a>
+                                <% 
+                                	// 고객은 고객회원정보
+                                	} else {
+                                %>
+                                		<a href="<%=request.getContextPath()%>/customer/customerInfo.jsp">마이페이지</a>
+                                <% 
+                                	}
+                                %>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="social_icon">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://ko-kr.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                            <a href="https://google.com"><i class="fab fa-google-plus-g"></i></a>
                         </div>
                     </div>
                 </div>
@@ -152,8 +166,7 @@ System.out.println(id+"<--id");
                     <div class="col-lg-12">
                         <div class="copyright_text">
                             <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
+shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희 ** 쇼핑몰은 고객과 소통하면서 만들어갑니다.<i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">GDJ66</a><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
                             <div class="copyright_link">
                                 <a href="#">Turms & Conditions</a>
                                 <a href="#">FAQ</a>
