@@ -117,7 +117,7 @@
 	                 		<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=map.get("productNo")%>&productImgNo=<%=map.get("productImgNo")%>" style="display: block; text-align: center;">
 	                 			<img src="${pageContext.request.contextPath}/product/productImg/<%=map.get("productSaveFilename") %>" width="350" height="350">
 	                 		</a>
-	                 		<span style="font-size: 15px;">
+	                 		<span style="font-size: 15px; font: bolder;">
 	                				<%=map.get("productName") %>
 	                			</span>
 	                			
@@ -161,7 +161,7 @@
              			<br>
              			<!--  <p style="font-weight: bold; font-size: 18px;"><%=proMap.get("productName") %></p>-->
              				<a href="<%=request.getContextPath()%>/product/productOne.jsp?productNo=<%=proMap.get("productNo")%>&productImgNo=<%=proMap.get("productImgNo")%>">
-             					<span style="font-size: 15px; color: black;"><%=proMap.get("productInfo") %></span>
+             					<span style="font-size: 15px; color: black; font: bold;"><%=proMap.get("productName") %></span>
                  			</a> 
                  		<p>
                  			<%=productPrice %> ₩

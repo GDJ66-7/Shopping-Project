@@ -340,7 +340,7 @@
 						if(session.getAttribute("loginEmpId2") != null) {
 				%>
 							<td>
-								<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
+								<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>"><img width="30" height="30" src="<%=request.getContextPath()%>/product/icon/수정1.png"></a>
 							</td>
 							<td>
 				<%

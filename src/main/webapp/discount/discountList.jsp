@@ -364,12 +364,12 @@
 		    	%>
 							<td>
 								<a href="<%=request.getContextPath()%>/discount/updateDiscount.jsp?discountNo=<%=dMap.get("discountNo")%>&productName=<%=dMap.get("productName")%>&productNo=<%=dMap.get("productNo")%>&discountStart=<%=dMap.get("discountStart")%>"> 
-									수정
+									<img width="30" height="30" src="<%=request.getContextPath()%>/discount/discountIcon/수정1.png">
 								</a>
 							</td>
 							<td>
 								<a href="<%=request.getContextPath()%>/discount/deleteDiscountAction.jsp?discountNo=<%=dMap.get("discountNo")%>&productName=<%=dMap.get("productName")%>&productNo=<%=dMap.get("productNo")%>">
-									삭제
+									<img width="30" height="30" src="<%=request.getContextPath()%>/discount/discountIcon/삭제.png">
 								</a>
 							</td>
 		    	<% 
