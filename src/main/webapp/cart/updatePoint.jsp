@@ -3,7 +3,8 @@
 <%
 	//한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
-
+	
+	// 받아온 값 유효성 검사
 	if(request.getParameter("id")==null
 		|| request.getParameter("selectAddress")==null
 		|| request.getParameter("point")==null
@@ -14,10 +15,10 @@
 		return;	
 	}
 	
+	// 받아온 값을 변수에 저장
 	String id = request.getParameter("id");
 	int point = Integer.parseInt(request.getParameter("point"));
 	String selectAddress = request.getParameter("selectAddress");
-	
 	System.out.println(id + " <-- updatePoint id");
 	System.out.println(selectAddress + " <-- updatePoint selectAddress");
 	System.out.println(point + " <-- updatePoint point");

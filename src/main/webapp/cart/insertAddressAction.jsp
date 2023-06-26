@@ -17,7 +17,7 @@
 		return;
 	}
 
-	// // 받아온 값 변수에 저장
+	// 받아온 값 변수에 저장
 	String id = request.getParameter("id");
 	String addressName = request.getParameter("addressName");
 	String address = request.getParameter("address");

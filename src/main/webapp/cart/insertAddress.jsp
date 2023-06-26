@@ -3,11 +3,14 @@
 	//한글 깨짐 방지 인코딩
 	request.setCharacterEncoding("utf-8");
 
+	// 받아온 값 유효성 검사
 	if(request.getParameter("id") == null
 		|| request.getParameter("id").equals("")) {
 		response.sendRedirect(request.getContextPath()+"/cart/cartOrder.jsp");
 		return;
 	}
+	
+	// 받아온 값 변수에 저장
 	String id = request.getParameter("id");
 	System.out.println(id + " <-- insertAddress id");
 

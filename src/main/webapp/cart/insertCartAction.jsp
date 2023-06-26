@@ -86,10 +86,9 @@
 	    
 	 	// 동일 제품 추가안된 제품의 경우에는 새롭게 추가
 	    if (!ckProduct) {
-		
-		// 제품을 추가할때마다 새로운 ID값을 추가
-		cart.setId(UUID.randomUUID().toString());
-		newCartList.put(cart.getId(), cart);
+			// 제품을 추가할때마다 새로운 ID값을 추가
+			cart.setId(UUID.randomUUID().toString());
+			newCartList.put(cart.getId(), cart);
 	    }
 	 	
 		// 디버깅

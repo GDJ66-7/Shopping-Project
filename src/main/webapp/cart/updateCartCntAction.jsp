@@ -17,6 +17,7 @@
 		response.sendRedirect(request.getContextPath()+"/cart/cartList.jsp");
 		return;
 	}
+	
 	// 받아온 값 변수에 저장
 	int cartCnt = Integer.parseInt(request.getParameter("cartCnt"));
 	int cartNo = Integer.parseInt(request.getParameter("cartNo"));

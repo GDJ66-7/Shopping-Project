@@ -35,9 +35,7 @@
 		System.out.println(newCartList + " <-- cartList newCartList ");
 		System.out.println(id + " <-- cartList 비회원");
 	}
-%>	
 	
-<%	
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();
 	
@@ -59,8 +57,9 @@
 	    }
 	}
 	
-	// 담을 리스트
+	// 비회원 장바구니 세션 값을 담을 리스트 생성
 	ArrayList<HashMap<String,Object>> list2 = new ArrayList<>();
+	
 	// 비회원 접속했을때 장바구니 상품번호와 수량
 	if(session.getAttribute("loginId")==null){
 		HashMap<String, Cart> notLoginCart = (HashMap<String, Cart>) session.getAttribute("newCartList");
