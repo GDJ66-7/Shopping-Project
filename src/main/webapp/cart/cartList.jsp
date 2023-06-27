@@ -188,7 +188,7 @@
 				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
 					<tr>
 						<td>
-							<a href="<%=request.getContextPath()%>/main/home.jsp">
+							<a href="<%=request.getContextPath()%>/product/productList.jsp">
 								<button class="btn_1" type="button">계속쇼핑하기</button>
 							</a>    
 			            </td>
@@ -326,7 +326,7 @@
 				<table class="table table-borderless" style="border-collapse: collapse; border: none;">
 					<tr>
 						<td>
-							<a href="<%=request.getContextPath()%>/main/home.jsp">
+							<a href="<%=request.getContextPath()%>/product/productList.jsp">
 								<button class="btn_1" type="button">계속쇼핑하기</button>
 							</a>    
 			            </td>
