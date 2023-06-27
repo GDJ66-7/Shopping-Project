@@ -27,7 +27,10 @@
   border-collapse: collapse;
 }
 
-.table th,
+.table th{
+  padding: 8px;
+  
+}
 .table td {
   padding: 8px;
   
@@ -100,8 +103,8 @@
 		 </h2>
 		<table class="table">
 		  <colgroup>
-		    <col style="width: 20%">
-		    <col style="width: 80%">
+		    <col style="width: 10%">
+		    <col style="width: 90%">
 		  </colgroup>
 		  <% for(HashMap<String, Object> s : noticeList) { %>
 		    <tr>

@@ -30,7 +30,13 @@
 		MemberDao kaka = new MemberDao();
 		int row = kaka.checkIdkakao(id);
 		if(row == 1){
+			
 			session.setAttribute("loginCstmId", id);
+			
+			// 비회원 장바구니 세션에 담은 상품이 있으면 로그인한 아이디로 장바구니 옮김
+			CartDao cartDao = new CartDao();
+			cartDao.notLoginInsertCart(id, request);
+			
 			System.out.print("고객로그인 성공 새션정보 : " + session.getAttribute("loginCstmId"));
 			out.println("<script>alert('로그인 되었습니다.'); location.href='"+request.getContextPath() + "/main/home.jsp';</script>");
 			return;
