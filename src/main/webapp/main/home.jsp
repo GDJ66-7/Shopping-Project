@@ -72,17 +72,17 @@
         <div class="banner_img">
         	<div class="slider-image">
         		<a href="<%=request.getContextPath()%>/product/productList.jsp">
-           			<img style="width: 1200px; height: 680px" src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
+           			<img style="width: 1200px; height: 650px" src="<%=request.getContextPath()%>/main/mainImg/main.jpg" alt="#" class="img-fluid">
            		</a>
             </div>
         	<div class="slider-image">
         		<a href="<%=request.getContextPath()%>/product/productList.jsp?discountProduct=할인상품">
-           			<img style="width: 1200px; height: 680px" src="<%=request.getContextPath()%>/main/mainImg/saleMain.jpg" alt="#" class="img-fluid">
+           			<img style="width: 1200px; height: 650px" src="<%=request.getContextPath()%>/main/mainImg/saleMain.jpg" alt="#" class="img-fluid">
            		</a>
             </div>
         	<div class="slider-image">
         		<a href="<%=request.getContextPath()%>/product/productList.jsp">
-           			<img style="width: 1200px; height: 680px" src="<%=request.getContextPath()%>/main/mainImg/main2.jpg" alt="#" class="img-fluid">
+           			<img style="width: 1200px; height: 650px" src="<%=request.getContextPath()%>/main/mainImg/main2.jpg" alt="#" class="img-fluid">
            		</a>
             </div>
         </div>

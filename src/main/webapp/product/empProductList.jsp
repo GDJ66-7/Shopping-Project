@@ -223,42 +223,49 @@
     	<div class="col-12">
     		<div style="text-align:center;">
 	     		<form style="text-align:center;" id="empProductSearchForm" action="<%=request.getContextPath()%>/product/empProductList.jsp" method="get">
-   					<div class="styled-input">
-	   																						<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
-	              		<input style="text-align: center;"  type="text" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%> placeholder="상품이름검색">
-                		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
-                	</div>
-                	<ul class="navbar-nav">
-                   		<li>					<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
-                   			<br>
-	   						<label>
-								<input type="radio" class="productList" name="discountProduct" value="" 
-								<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("")) {%> checked <%} %>> 전체상품보기
-							</label>
-							
-	   						<label>
-								<input type="radio" class="productList" name="discountProduct" value="할인상품"
-								<% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) {%> checked <%} %>> 할인상품보기
-							</label>
-						
-	 						<label>
-	                  			<input type="radio" class="ascDesc" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>오래된순
-	  							<input type="radio" class="ascDesc" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>최신순
-	                		</label>
-                  			<br>
-                  			<li>
-                   				<%
-                           			for(HashMap<String, Object> categoryNameMap : cList) {
-                           		%>	
-                          					<input type="checkbox" name="categoryName"  value="<%=categoryNameMap.get("categoryName")%>" 
-                          					<% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
-                           					<%=categoryNameMap.get("categoryName")%>
-                           		<% 	
-                           			
-                           			}
-                           		%>
-                           	</li>
-		         	</ul>
+	   				<label for="productName">
+	             													<!-- value값이 초기엔 null이라 value값을 보여주지 않는다 ex) 침대를 검색시 침대값이 유지된 상태로 검색된다. -->
+	                   	<input style="text-align: center;" type="text" placeholder="상품검색" name="productName" <%if(request.getParameter("productName") != null) {%> value="<%=request.getParameter("productName")%>" <%}%>>
+	                   		<button class="genric-btn primary-border circle" type="submit" id="productBtn">검색</button>
+	                </label>
+                	<div class="checkbox">
+			        	<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="true">
+			               <p>카테고리</p>
+			            </button>
+			            <div class="collapse" id="categoryCollapse">
+			                <% 
+			                	for (HashMap<String, Object> categoryNameMap : cList) { 
+			                %>
+				                    <div class="form-check form-check-inline">
+				                        <input type="checkbox" class="form-check-input" name="categoryName" value="<%= categoryNameMap.get("categoryName") %>" <% if(request.getParameter("categoryName") != null && request.getParameter("categoryName").equals(categoryNameMap.get("categoryName"))) { %> checked <% } %>>
+				                        <label class="form-check-label"><%= categoryNameMap.get("categoryName") %></label>
+				                    </div>
+			                <% 
+			                	} 
+			                %>
+			            </div>
+		        	</div>
+		        	
+		        	<div class="radio">
+			            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#sortCollapse" aria-expanded="true">
+			                <p>정렬</p>
+			            </button>
+			            <div class="collapse" id="sortCollapse">
+			                <div class="form-check form-check-inline">
+			                    <input type="radio" class="form-check-input" name="discountProduct" value="" <% if(request.getParameter("discountProduct") == null || request.getParameter("discountProduct").equals("")) { %> checked <% } %>>
+			                    <label class="form-check-label">전체상품보기</label>
+			                    
+			                    <input type="radio" class="form-check-input" name="discountProduct" value="할인상품" <% if(request.getParameter("discountProduct") != null && request.getParameter("discountProduct").equals("할인상품")) { %> checked <% } %>>
+			                    <label class="form-check-label">할인상품보기</label>
+			                    
+			                    <input type="radio" class="form-check-input" name="ascDesc" value="asc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("asc")) { %> checked <% } %>>
+			                    <label class="form-check-label">오래된순</label>
+			                    
+			                    <input type="radio" class="form-check-input" name="ascDesc" value="desc" <% if(request.getParameter("ascDesc") != null && request.getParameter("ascDesc").equals("desc")) { %> checked <% } %>>
+			                    <label class="form-check-label">최신순</label>
+		                	</div>
+			            </div>
+			        </div>
 	           	 </form>
 	                <!---------------------- js부분 -------------------------->
 	              	 <script>
