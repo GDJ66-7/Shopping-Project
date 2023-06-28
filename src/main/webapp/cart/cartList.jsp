@@ -22,7 +22,7 @@
 		System.out.println(id+ " <-- cartList 고객아이디");
 	}
 	
-	// 장바구니 세션이 없을때
+	// 비회원으로 접속했고 장바구니 세션이 없을때
 	HashMap<String, Cart> newCartList = (HashMap<String, Cart>) session.getAttribute("newCartList");
 	if (session.getAttribute("loginCstmId") == null && (newCartList == null || newCartList.isEmpty())) {
 		out.println("<script>alert('장바구니가 비어있습니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
@@ -39,14 +39,12 @@
 	// dao 객체 생성
 	CartDao cartDao = new CartDao();
 	
-	// 7번 메소드 사용을 위해서 선언
-	int point = 0;
-	
 	// 7. 구매자정보, 받는사람정보, 결제정보 조회 메서드
 	ArrayList<HashMap<String, Object>> list7 = cartDao.cartOrderList(id);
 	
 	// 1. 장바구니 상품 목록 메서드
 	ArrayList<HashMap<String, Object>> list1 = cartDao.cartList(id);
+	
 	// 체크된 상품이 있는지 확인(구매하기 버튼관련)
 	boolean CheckedItem = false;
 	for(HashMap<String, Object> c : list1) {
