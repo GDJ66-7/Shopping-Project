@@ -54,8 +54,7 @@
 			int checkRow = checkPw.checkPw(onePw);
 			// 실행값에 따라 분기 0이상이면 비밀번호 맞고 0이면 비밀번호가 틀립니다.
 			if(checkRow == 0){
-				msg = URLEncoder.encode("비밀번호가 맞지 않으므로 다시 입력 바랍니다.","utf-8");
-				response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+				out.println("<script>alert('비밀번호가 맞지 않으므로 다시 입력 바랍니다.'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 				return;
 			}
 	//클래스 선언하고 변수 저장
@@ -68,20 +67,17 @@
 	int ckRow = ckPw.checkPwList(idList);
 	//chRow 가 0이상이면 이전 비밀번호이므로 if문으로 멈춘다
 	if(ckRow > 0){
-		msg = URLEncoder.encode("이전에 사용한 비밀번호이므로 다른 비밀번호를 사용하시길 바랍니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		out.println("<script>alert('이전에 사용한 비밀번호이므로 다른 비밀번호를 사용하시길 바랍니다.'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 		return;
 	}
 	//회원 비밀번호 를 변경하기 위해 메소드 사용
 	MemberDao chPw = new MemberDao();
 	int chRow = chPw.modifyIdList(idList);
 	if(chRow > 0){
-		msg = URLEncoder.encode("비밀번호가 변경이 완료되었습니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		out.println("<script>alert('변경 완료'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 		return;
 	} else if(chRow == 0){
-		msg = URLEncoder.encode("문제가 생겨 변경할 수 없습니다. 고객센터에 문의 바랍니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		out.println("<script>alert('문제가 생겨 변경할 수 없습니다. 고객센터에 문의 바랍니다'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 		return;
 	}
 %>

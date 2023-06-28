@@ -45,21 +45,18 @@
 		int checkRow = checkPw.checkPw(onePw);
 		// 실행값에 따라 분기 0이상이면 비밀번호 맞고 0이면 비밀번호가 틀립니다.
 		if(checkRow == 0){
-			msg = URLEncoder.encode("비밀번호가 맞지 않으므로 다시 입력 바랍니다.","utf-8");
-			response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+			out.println("<script>alert('비밀번호가 맞지 않으므로 다시 입력 바랍니다.'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 			return;
 		}
 	//수정 메서드 실행 선언
 	MemberDao updateEmail = new MemberDao();
 	int row = updateEmail.modifyEmail(email, id);
-	
+	//dao return 값이 0이상이면 수정완료라고 메세지 보내주고 0이면 수정불가라고 메세지 보냄
 	if(row > 0){
-		msg = URLEncoder.encode("수정이 완료되었습니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		out.println("<script>alert('수정완료'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 		return;
 	} else if(row == 0){
-		msg = URLEncoder.encode("수정 불가능합니다. 고객센터에 문의 바랍니다","utf-8");
-		response.sendRedirect(request.getContextPath()+"/customer/customerInfo.jsp?msg="+msg);
+		out.println("<script>alert('수정 불가능합니다. 고객센터에 문의 바랍니다.'); location.href='"+request.getContextPath() + "/customer/customerInfo.jsp';</script>");
 		return;
 	}
 %>
