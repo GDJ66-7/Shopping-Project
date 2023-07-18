@@ -114,7 +114,7 @@
 	insertP.setProductStock(productStock);
 	insertP.setProductInfo(productInfo);
 	
-	
+	// 디버깅
 	System.out.println(insertP.getCategoryName() + "<-- insertProductAction insertP.getCategoryName()");
 	if(insertP.getCategoryName() == null) {
 		response.sendRedirect(request.getContextPath() +"/main/empMain.jsp");

@@ -263,43 +263,43 @@ public class ProductDao {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		/*
-		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
-		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
+		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end
+		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no 
 						LEFT OUTER JOIN discount d ON p.product_no = d.product_no
 		WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end OR d.discount_start IS NULL;
 		*/	
 		
 		// 초기화면은 전체상품을 보여준다 특이사항(할인기간안에 있는 상품만 보여줌) 할인이 끝난 상품은 삭제시 나타남
-		String sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
-				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		String sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+				+ "		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no \n"
 				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
 				+ "		WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end OR d.discount_start IS NULL";
 		
 		if (discountProduct.equals("할인상품")) {
 		    // 할인 상품만 보는 경우
-		    sql = "  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
-		    		+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		    sql = "  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		    		+ "		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no \n"
 		    		+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
 		    		+ "		WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end";
 
 		    // 검색어와 카테고리 둘 다 있을 때
 		    if (!productName.equals("") && !categoryName.equals("")) {
-		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
-		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no \n"
 		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
 		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end  AND p.product_name LIKE '%" + productName + "%' AND category_name = '" + categoryName + "'";
 		    }
 		    // 검색어만 있을 때
 		    else if (!productName.equals("")) {
-		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
-		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        sql = "SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no \n"
 		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
 		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end  AND p.product_name LIKE '%" + productName + "%' ";
 		    }
 		    // 카테고리만 있을 때
 		    else if (!categoryName.equals("")) {
-		        sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
-		        		+ "FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		        sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+		        		+ "FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no \n"
 		        		+ "					LEFT OUTER JOIN discount d ON p.product_no = d.product_no\n"
 		        		+ "WHERE SYSDATE() BETWEEN d.discount_start AND d.discount_end AND category_name = '" + categoryName + "'";
 		    }
@@ -468,13 +468,13 @@ public class ProductDao {
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 		/*
-		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end
-		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no 
+		  SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end
+		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no 
 						LEFT OUTER JOIN discount d ON p.product_no = d.product_no;
 		*/	
 		
-		String sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, PI.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
-				+ "		FROM product p LEFT OUTER JOIN product_img PI ON p.product_no = PI.product_no \n"
+		String sql ="SELECT p.product_no, p.category_name, p.product_name, p.product_price, ifnull(p.product_price*(1- d.discount_rate), p.product_price) 상품할인가, p.product_status, p.product_stock, p.createdate, p.updatedate, pi.product_img_no, pi.product_save_filename, d.discount_no, d.discount_start, d.discount_end\n"
+				+ "		FROM product p LEFT OUTER JOIN product_img pi ON p.product_no = pi.product_no \n"
 				+ "						LEFT OUTER JOIN discount d ON p.product_no = d.product_no";
 
 		
