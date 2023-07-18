@@ -17,7 +17,7 @@ public class DiscountDao {
 				FROM discount d INNER JOIN product p ON d.product_no = p.product_no
 								INNER JOIN product_img pi ON d.product_no = pi.product_no
 		 */
-		String sql = "SELECT d.discount_no 할인번호, d.product_no 상품번호, p.product_name 상품이름, p.product_price 상품가격, p.product_price*(1- d.discount_rate) 상품할인가, d.discount_start 시작날짜, d.discount_end 종료날짜, d.discount_rate 할인율, d.createdate 생성날짜,  d.updatedate 수정날짜, pI.product_save_filename \r\n"
+		String sql = "SELECT d.discount_no 할인번호, d.product_no 상품번호, p.product_name 상품이름, p.product_price 상품가격, p.product_price*(1- d.discount_rate) 상품할인가, d.discount_start 시작날짜, d.discount_end 종료날짜, d.discount_rate 할인율, d.createdate 생성날짜,  d.updatedate 수정날짜, pi.product_save_filename \r\n"
 				+ "				FROM discount d INNER JOIN product p ON d.product_no = p.product_no\r\n"
 				+ "								INNER JOIN product_img pi ON d.product_no = pi.product_no";
 		// 검색어만 있을때
