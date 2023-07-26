@@ -15,29 +15,8 @@
 	System.out.println(request.getParameter("productStatus") + "productStatus");
 	System.out.println(request.getParameter("productStock") + "productStock");
 	System.out.println(request.getParameter("productInfo") + "productInfo");
-
 	
-	/*
-	// 유효성검사
-	if(request.getParameter("categoryName") == null
-		|| request.getParameter("productName") == null 
-		|| request.getParameter("productPrice") == null
-		|| request.getParameter("productStatus") == null 
-		|| request.getParameter("productStock") == null 
-		|| request.getParameter("productInfo") == null 
-		|| request.getParameter("categoryName").equals("")
-		|| request.getParameter("productName").equals("")
-		|| request.getParameter("productPrice").equals("")
-		|| request.getParameter("productStatus").equals("")
-		|| request.getParameter("productStock").equals("")
-		|| request.getParameter("productInfo").equals("")){
-		
-		System.out.println("null또는 공백있음");
-		response.sendRedirect(request.getContextPath()+"/product/insertProduct.jsp");
-		return;
-	}
-	*/
-		System.out.println("null또는 공백없음");
+	System.out.println("null또는 공백없음");
 		
 	//프로젝트안에 product폴더안에 productImg폴더의 위치를 반환
 	String dir = request.getServletContext().getRealPath("/product/productImg");

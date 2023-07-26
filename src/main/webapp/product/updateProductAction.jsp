@@ -7,19 +7,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-	/*
-	
-	// 요청값 분석
-	if(request.getParameter("categoryName")== null
-		|| request.getParameter("productName")== null
-		|| request.getParameter("productPrice")== null
-		|| request.getParameter("productStatus")== null
-		|| request.getParameter("productStock")== null
-		|| request.getParameter("productInfo")== null) {
-		response.sendRedirect(request.getContextPath()+"/product/updateProduct.jsp");
-		return;
-	}
-	*/
 	
 	//프로젝트아에 upload폴더의 위치를 반환
 	String dir = request.getServletContext().getRealPath("/product/productImg");

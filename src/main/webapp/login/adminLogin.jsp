@@ -149,7 +149,7 @@
                             <h3>로그인</h3>
                             <form class="row contact_form" action="<%=request.getContextPath()%>/login/loginAction.jsp" method="post" novalidate="novalidate">
                                 <div class="col-md-12 form-group p_star">
-                                    <input type="text" class="form-control" id="name" name="id" value="customer1"
+                                    <input type="text" class="form-control" id="name" name="id" value="admin"
                                         placeholder="Username">
                                 </div>
                                 <div class="col-md-12 form-group p_star">
