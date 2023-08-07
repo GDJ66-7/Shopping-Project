@@ -63,7 +63,7 @@
                                 furniture</h1>
                             <p>"Experience products made with the finest ingredients."</p>
                             <a href="<%=request.getContextPath()%>/product/productList.jsp" class="btn_1">Shop</a>
-                            <a href="<%=request.getContextPath()%>/product/productList.jsp?discountProduct=할인상품" class="btn_1">SALE</a>
+                            <a href="<%=request.getContextPath()%>/product/productList.jsp?discountProduct=할인상품" class="btn_1">special price</a>
                        </div>
                     </div>
                 </div>

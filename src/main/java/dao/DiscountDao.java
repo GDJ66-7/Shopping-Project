@@ -173,6 +173,7 @@ public class DiscountDao {
 		return row;
 	}
 	
+	// 5) 할인기간 지난 상품 전체 삭제
 	public int allDeleteDiscount() throws Exception {
 		int allRow = 0;
 		DBUtil dbutil = new DBUtil();
