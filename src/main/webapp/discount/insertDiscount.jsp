@@ -101,24 +101,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>GDJ-Mart</title>
-    <link rel="icon" href="/Shopping/css/img/favicon.png">
+    <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css">
     <!-- animate CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
     <!-- owl carousel CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/owl.carousel.min.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/all.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/all.css">
     <!-- flaticon CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/flaticon.css">
-    <link rel="stylesheet" href="/Shopping/css/css/themify-icons.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/themify-icons.css">
     <!-- font awesome CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/magnific-popup.css">
     <!-- swiper CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/slick.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/slick.css">
     <!-- style CSS -->
-    <link rel="stylesheet" href="/Shopping/css/css/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/style.css">
 </head>
 
 <body>
@@ -236,31 +236,31 @@ shopping &copy;<script>document.write(new Date().getFullYear());</script> 저희
     <!--::footer_part end::-->
 
     <!-- jquery plugins here-->
-    <script src="/Shopping/css/js/jquery-1.12.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery-1.12.1.min.js"></script>
     <!-- popper js -->
-    <script src="/Shopping/css/js/popper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/popper.min.js"></script>
     <!-- bootstrap js -->
-    <script src="/Shopping/css/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/bootstrap.min.js"></script>
     <!-- easing js -->
-    <script src="/Shopping/css/js/jquery.magnific-popup.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.magnific-popup.js"></script>
     <!-- swiper js -->
-    <script src="/Shopping/css/js/swiper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/swiper.min.js"></script>
     <!-- swiper js -->
-    <script src="/Shopping/css/js/mixitup.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/mixitup.min.js"></script>
     <!-- particles js -->
-    <script src="/Shopping/css/js/owl.carousel.min.js"></script>
-    <script src="/Shopping/css/js/jquery.nice-select.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/owl.carousel.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.nice-select.min.js"></script>
     <!-- slick js -->
-    <script src="/Shopping/css/js/slick.min.js"></script>
-    <script src="/Shopping/css/js/jquery.counterup.min.js"></script>
-    <script src="/Shopping/css/js/waypoints.min.js"></script>
-    <script src="/Shopping/css/js/contact.js"></script>
-    <script src="/Shopping/css/js/jquery.ajaxchimp.min.js"></script>
-    <script src="/Shopping/css/js/jquery.form.js"></script>
-    <script src="/Shopping/css/js/jquery.validate.min.js"></script>
-    <script src="/Shopping/css/js/mail-script.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/slick.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.counterup.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/contact.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.ajaxchimp.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.form.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/jquery.validate.min.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/mail-script.js"></script>
     <!-- custom js -->
-    <script src="/Shopping/css/js/custom.js"></script>
+    <script src="<%=request.getContextPath()%>/css/js/custom.js"></script>
 </body>
 
 </html>
