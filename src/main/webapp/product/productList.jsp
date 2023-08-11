@@ -334,7 +334,7 @@
 			%>
 								<a href="<%=request.getContextPath()%>/product/updateProduct.jsp?productNo=<%=productMap.get("productNo")%>&productImgNo=<%=productMap.get("productImgNo")%>">수정</a>
 								<br>
-								<a href="<%=request.getContextPath()%>/discount/insertDiscount.jsp?productNo=<%=productMap.get("productNo")%>">할인</a>
+								<a href="<%=request.getContextPath()%>/discount/insertDiscount.jsp?productNo=<%=productMap.get("productNo")%>&productName=<%=productMap.get("productName")%>">할인</a>
 			<% 						
 							}
 			%>
