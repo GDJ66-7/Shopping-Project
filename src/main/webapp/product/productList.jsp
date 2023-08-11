@@ -5,6 +5,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.ProductDao"%>
 <%
+	if(session.getAttribute("loginEmpId2") == null) {
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
 	request.setCharacterEncoding("utf-8");
 
 	// dao를 사용하기 위한 productDao클래스 객체 생성

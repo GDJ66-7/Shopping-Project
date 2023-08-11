@@ -35,6 +35,8 @@
 	System.out.println(productStock + "<-- updateProductAction productStock");
 	System.out.println(productInfo + "<-- updateProductAction productInfo");
 	
+	// alert 메세지 
+	String msg = "";
 	
 	// productDao사용하기 위해 객체생성
 	ProductDao pDao = new ProductDao();
@@ -59,8 +61,6 @@
 		return;
 	}
 
-	// alert 메세지 
-	String msg = "";
 	
 	if(mreq.getOriginalFileName("productFile") != null){
 		System.out.println("수정할파일있음");
@@ -74,8 +74,6 @@
 			if(f.exists()) {
 				f.delete();
 				System.out.println(dir + "\\" + saveFilename + "파일삭제완료");
-				
-				response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg3="+msg);
 			}
 		} else {
 			// jpeg파일이면 이전파일은 삭제후 db수정
@@ -108,6 +106,8 @@
 				response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg2="+msg);
 			}
 		}
+		// jpg파일이 들어오면 뜨는 alert메세지
+		response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg3="+msg);
 	}
 	
 	

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	if(session.getAttribute("loginEmpId2") == null) {
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
 	// discountNo를 통하여 할인정보 수정
 	if(request.getParameter("discountNo") == null){
 		response.sendRedirect(request.getContextPath()+"/discount/discountList.jsp");

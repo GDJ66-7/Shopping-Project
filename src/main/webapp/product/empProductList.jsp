@@ -4,6 +4,11 @@
 <%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	if(session.getAttribute("loginEmpId2") == null) {
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
 	ProductDao pDao = new ProductDao();
 	CategoryDao cDao = new CategoryDao();
 
@@ -190,7 +195,7 @@
 				alert('상품수정을 실패하였습니다.');
 			</script>
 	<% 
-		} else if(request.getParameter("insertproductMsg") != null) {
+		} else if(request.getParameter("insertProductMsg") != null) {
 	%>
 			<script>
 				alert('상품을 추가하였습니다.');
@@ -199,7 +204,7 @@
 		} else if(request.getParameter("updateProductMsg3") != null) {
 	%>
 			<script>
-			alert('jpg파일만 넣어주세요.');
+				alert('jpg파일만 넣어주세요.');
 			</script>
 	<% 
 		}

@@ -4,6 +4,11 @@
 <%@ page import="java.util.*"%>
 
 <%
+	if(session.getAttribute("loginEmpId2") == null) {
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
 	// 유효성 검사 상품 번호를 이용하여 할인가격을 추가시키기 때문에 상품번호가 필수적
 	if(request.getParameter("productNo") == null) {
 		response.sendRedirect(request.getContextPath()+"/main/empMain.jsp");

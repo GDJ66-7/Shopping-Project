@@ -3,6 +3,11 @@
 <%@page import="dao.CategoryDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	if(session.getAttribute("loginEmpId2") == null) {
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
 	// 상품추가시 카테고리를 분류해야하는데 카테고리는 외래키로 지정되어 있어 기존 값에서 선택해야한다
 	// 그러므로 카테고리 name리스트를 출력해 선택할 수 있도록 했다.
 	CategoryDao cDao = new CategoryDao();
@@ -21,6 +26,18 @@
 	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+	<!-- msg출력 -->
+	<%
+		if(request.getParameter("insertProductMsg404") != null) {
+	%>
+			<script>
+				alert('jpg파일만 넣어주세요.');
+			</script>
+	<% 
+		}
+	%>
+			
 <script>
 	//  js유효성검사 진행중 중도 하차상태(다시 복귀후 완성)
 	$(document).ready(function(){
@@ -207,6 +224,7 @@
 	});	
 		
 		
+	
 	
 </script>
 <head>

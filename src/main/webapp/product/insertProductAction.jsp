@@ -17,7 +17,10 @@
 	System.out.println(request.getParameter("productInfo") + "productInfo");
 	
 	System.out.println("null또는 공백없음");
-		
+	
+	// alert 메세지
+	String msg = "";
+	
 	//프로젝트안에 product폴더안에 productImg폴더의 위치를 반환
 	String dir = request.getServletContext().getRealPath("/product/productImg");
 	System.out.println(dir + " dir경로 확인");
@@ -39,7 +42,7 @@
 				f.delete();
 				System.out.println(dir + "\\" + saveFilename + "파일삭제완료");
 			}
-			response.sendRedirect(request.getContextPath() +"/product/insertProduct.jsp");
+			response.sendRedirect(request.getContextPath() +"/product/insertProduct.jsp?insertProductMsg404="+msg);
 			return;
 		}
 	
@@ -110,7 +113,7 @@
 	// 메소드 호출
 	pDao.insertProduct(insertP, insertImgP);
 	
-	String msg = "";
+	
 	System.out.println("<-- insertProductAction 상품추가완료");
 	response.sendRedirect(request.getContextPath() +"/product/empProductList.jsp?insertProductMsg="+msg);
 %>

@@ -7,9 +7,10 @@
 <%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+
 	// 관리자 로그인 요청값 검사 관리자2만이 상품수정 가능
 	if(session.getAttribute("loginEmpId2") == null) {
-		response.sendRedirect(request.getContextPath()+"/main/home.jsp");
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
 		return;
 	}
 	

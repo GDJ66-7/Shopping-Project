@@ -3,6 +3,11 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.*" %>
 <%
+	if(session.getAttribute("loginEmpId2") == null) {
+		out.println("<script>alert('최고 관리자만 접근 가능합니다.'); location.href='"+request.getContextPath()+"/main/home.jsp';</script>");
+		return;
+	}
+
 	// dao 객체 생성
 	DiscountDao dDao = new DiscountDao();
 	CategoryDao cDao = new CategoryDao();	
@@ -193,12 +198,6 @@
 	%>
 			<script>
 				alert('할인상품수정을 실패하였습니다.');
-			</script>
-	<% 
-		} else if(request.getParameter("deleteDiscountMsg") != null) {
-	%>
-			<script>
-				alert('할인상품(개별)삭제를 완료하였습니다.');
 			</script>
 	<% 
 		} else if(request.getParameter("deleteDiscountMsg") != null) {
