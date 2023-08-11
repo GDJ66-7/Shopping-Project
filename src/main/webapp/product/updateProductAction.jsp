@@ -59,6 +59,9 @@
 		return;
 	}
 
+	// alert 메세지 
+	String msg = "";
+	
 	if(mreq.getOriginalFileName("productFile") != null){
 		System.out.println("수정할파일있음");
 		// 수정할 파일이 있으면 jpeg파일인지 유효성 검사 jpeg파일이 아니면 삭제
@@ -71,6 +74,8 @@
 			if(f.exists()) {
 				f.delete();
 				System.out.println(dir + "\\" + saveFilename + "파일삭제완료");
+				
+				response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg3="+msg);
 			}
 		} else {
 			// jpeg파일이면 이전파일은 삭제후 db수정
@@ -93,7 +98,7 @@
 			
 			int proImgRow = pDao.updateProductImg(req, productImg);
 			
-			String msg = "";
+			
 			if(proImgRow > 0) {
 				System.out.println("상품 수정완료");
 				response.sendRedirect(request.getContextPath()+"/product/empProductList.jsp?updateProductMsg="+msg);

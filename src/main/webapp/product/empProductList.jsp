@@ -196,6 +196,12 @@
 				alert('상품을 추가하였습니다.');
 			</script>
 	<% 
+		} else if(request.getParameter("updateProductMsg3") != null) {
+	%>
+			<script>
+			alert('jpg파일만 넣어주세요.');
+			</script>
+	<% 
 		}
 	%>
     <!--::header part start::-->
