@@ -103,7 +103,7 @@
     <title>GDJ-Mart</title>
     <link rel="icon" href="<%=request.getContextPath()%>/css/img/favicon.png">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/bootstrap.min.css">
     <!-- animate CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/css/animate.css">
     <!-- owl carousel CSS -->
