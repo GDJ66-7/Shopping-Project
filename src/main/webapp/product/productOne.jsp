@@ -464,7 +464,7 @@ font-size: 17px; }
                     <div class="col-lg-8">
                         <div class="footer_menu">
                             <div class="footer_logo">
-                                <a href="index.html"><img src="/Shopping/css/img/logo.png" alt="#"></a>
+                                <a href="index.html"><img src="<%=request.getContextPath()%>/css/img/logo.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
                                 <a href="<%=request.getContextPath()%>/main/home.jsp">Home</a>
