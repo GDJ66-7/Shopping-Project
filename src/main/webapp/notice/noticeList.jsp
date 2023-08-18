@@ -113,9 +113,7 @@ if(request.getParameter("search") != null){
 
   <!-- ================ contact section start ================= -->
     <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">공지사항 리스트</h2>
-        </div>
+    <br>
   		<form action="<%=request.getContextPath()%>/notice/noticeList.jsp" method="get">
 		 	<input type="text" name="search" placeholder="공지사항 검색(Enter)" class="single-input"><br>
 		 </form>

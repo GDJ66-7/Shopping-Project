@@ -127,9 +127,7 @@ String id = (String)(session.getAttribute("loginCstmId"));
 
   <!-- ================ contact section start ================= -->
     <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">수정할 정보입력</h2>
-        </div>
+    <br>
 	<p>
 		 <%
         	if(request.getParameter("msg") != null){

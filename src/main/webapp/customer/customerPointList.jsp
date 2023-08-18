@@ -106,7 +106,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
-                        <h2>마이포인트</h2>
+                        <h2>My Point List</h2>
                     </div>
                 </div>
             </div>
@@ -116,9 +116,7 @@
 
   <!-- ================ contact section start ================= -->
     <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">포인트 내역 목록</h2>
-        </div>
+    <br>
 			<table class="table">
 				<tr>
 					<td>주문번호</td>

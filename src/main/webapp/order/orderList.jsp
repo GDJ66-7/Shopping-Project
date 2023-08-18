@@ -194,18 +194,7 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 
   <!-- ================ contact section start ================= -->
     <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">주문 상세 정보</h2>
-        </div>
-  	<p>
-		 <%
-        	if(request.getParameter("msg") != null){
-         %>
-        		<%=request.getParameter("msg") %>
-         <% 
-        	}
-      	 %>		
-	</p>
+    <br>
 	<form action="<%=request.getContextPath()%>/order/orderList.jsp" action="post">
 		<input type="text" name="id" placeholder="고객 이름" class="single-input"><br>
 		

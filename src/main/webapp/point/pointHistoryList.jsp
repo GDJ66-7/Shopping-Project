@@ -113,21 +113,10 @@ if(session.getAttribute("loginEmpId1") == null && session.getAttribute("loginEmp
 
   <!-- ================ contact section start ================= -->
     <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">포인트 내역 상세보기</h2>
-        </div>
+    <br>
 	    <form action="<%=request.getContextPath()%>/point/pointHistoryList.jsp" method="get">
 			 	<input type="text" name="id" placeholder="고객 검색(Enter)" class="single-input"><br>
 		 </form>
-  		<p>
-  			<%
-  				if(request.getParameter("msg") != null){
-  			%>
-  				<%=request.getParameter("msg")%>
-  			<%
-  				}
-  			%>
-  		</p>
 		<table class="table">
 			<tr>
 				<th>주문번호</th>

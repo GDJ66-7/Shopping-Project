@@ -201,18 +201,7 @@
 
   <!-- ================ contact section start ================= -->
     <div class="container">
-    <br><div class="col-12">
-         	 <h2 class="contact-title">주문 상세 정보</h2>
-        </div>
-	<p>
-		 <%
-        	if(request.getParameter("msg") != null){
-         %>
-        		<%=request.getParameter("msg") %>
-         <% 
-        	}
-      	 %>		
-	</p>
+    <br>
 	<form action="<%=request.getContextPath()%>/order/customerOrderHistory.jsp" action="post">
 
 		<div class="date-container">
@@ -223,11 +212,11 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="genric-btn primary-border circle">검색</button>
 	</form><br>
 	
-		<table class="table">
+		<table class="table" style="width:1300px;">
 		
 			<tr>
 				<td style="width: 120px;">주문번호</td>
-				<td>상품이름</td>
+				<td style="width: 120px;">상품이름</td>
 				<td style="width: 120px;">결제상태</td>
 				<td  style="width: 120px;">배송상태</td>
 				<td  style="width: 60px;">수량</td>
